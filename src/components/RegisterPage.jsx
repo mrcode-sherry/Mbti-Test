@@ -37,7 +37,7 @@ const RegisterPage = () => {
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number</label>
                             <div className="flex gap-2">
-                                <select required className="w-1/3 px-3 py-2 border rounded-md">
+                                <select required className="w-1/3 px-2 py-2 border rounded-md">
                                     <option value="+92">+92 (Pakistan)</option>
                                     <option value="+91">+91 (India)</option>
                                     <option value="+1">+1 (United States)</option>
@@ -67,7 +67,7 @@ const RegisterPage = () => {
                                     <option value="+254">+254 (Kenya)</option>
 
                                 </select>
-                                <input type="tel" required placeholder="3XXXXXXXXX" className="w-2/3 px-4 py-2 border rounded-md" />
+                                <input type="tel" required placeholder="3XXXXXXXXX" className="w-2/2 px-4 py-2 border rounded-md" />
                             </div>
                         </div>
 
@@ -101,7 +101,7 @@ const RegisterPage = () => {
                         {/* City */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                            <input type="text" required placeholder="Start typing your city..." className="w-full px-4 py-2 border rounded-md" />
+                            <input type="text" required placeholder="Your city" className="w-full px-4 py-2 border rounded-md" />
                         </div>
 
                         {/* Province */}
@@ -157,17 +157,10 @@ const RegisterPage = () => {
                                         <option value="continue">Continue</option>
                                     </select>
                                 </div>
-
-                                {schoolStatus === 'continue' && (
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Class</label>
-                                        <select className="w-full px-4 py-2 border rounded-md">
-                                            {classOptions.map((cls, index) => (
-                                                <option key={index} value={cls}>{cls}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                )}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Institute</label>
+                                    <input type="text" required placeholder="Your Institute" className="w-full px-4 py-2 border rounded-md" />
+                                </div>
                             </>
                         )}
 
@@ -195,6 +188,10 @@ const RegisterPage = () => {
                                         placeholder="e.g. FSC, ICS, ICOM"
                                         className="w-full px-4 py-2 border rounded-md"
                                     />
+                                </div>
+                                 <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Institute</label>
+                                    <input type="text" required placeholder="Your Institute" className="w-full px-4 py-2 border rounded-md" />
                                 </div>
                             </>
                         )}
@@ -224,6 +221,10 @@ const RegisterPage = () => {
                                         placeholder="e.g. BSCS, BBA"
                                         className="w-full px-4 py-2 border rounded-md"
                                     />
+                                </div>
+                                 <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Institute</label>
+                                    <input type="text" required placeholder="Your Institute" className="w-full px-4 py-2 border rounded-md" />
                                 </div>
                             </>
                         )}
