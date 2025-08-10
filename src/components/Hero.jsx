@@ -34,12 +34,12 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row text-center gap-4 justify-center">
             <Link
               href="/pricing"
-              className="bg-white text-[#14442E] font-semibold px-6 py-2 rounded hover:bg-gray-100 transition"
+              className="bg-white text-[#14442E] font-semibold cursor-pointer px-6 py-2 rounded hover:bg-gray-100 transition duration-300"
             >
               Try It Now
             </Link>
             <button
-              className="flex items-center gap-2 border border-white px-6 py-2 rounded hover:bg-white hover:text-[#14442E] transition"
+              className="flex items-center gap-2 border border-white px-6 py-2 rounded hover:bg-white hover:text-[#14442E] transition cursor-pointer duration-300"
             >
               <svg
                 fill="currentColor"
