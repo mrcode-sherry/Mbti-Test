@@ -1,36 +1,36 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const RegistrationSchema = new mongoose.Schema({
-  fullName: { type: String, required: true, trim: true },
-  email: { type: String, required: true, unique: true, lowercase: true },
-  countryCode: { type: String, required: true },
-  phoneNumber: { type: String, required: true },
-  password: { type: String, required: true },
+// ✅ Force remove cached model so schema changes apply immediately in dev mode
+if (mongoose.models.Register) {
+  mongoose.deleteModel("Register");
+}
 
-  maritalStatus: { type: String, enum: ['single', 'married', ''], default: '' },
-  gender: { type: String, enum: ['male', 'female', 'other', ''], default: '' },
-  city: { type: String, required: true },
-  province: { type: String, required: true },
-  age: { type: Number },
+const registerSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+      trim: true
+    },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [
+        /^[\w.%+-]+@(gmail|yahoo|hotmail)\.com$/i,
+        "Please enter a valid email address"
+      ]
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      minlength: [8, "Password must be at least 8 characters long"]
+      // 🔹 No regex here — handled in route
+    }
+  },
+  { timestamps: true }
+);
 
-  educationType: { type: String, enum: ['school', 'college', 'university', ''], default: '' },
-
-  // School fields
-  schoolStatus: { type: String, enum: ['completed', 'continue', ''], default: '' },
-  schoolInstitute: { type: String },
-
-  // College fields
-  collegeYear: { type: String, enum: ['1st', '2nd', 'completed', ''], default: '' },
-  collegeDegree: { type: String },
-  collegeInstitute: { type: String },
-
-  // University fields
-  universitySemester: { type: String },
-  universityDegree: { type: String },
-  universityInstitute: { type: String }
-}, { timestamps: true });
-
-// Avoid recompilation error in Next.js
-const Registration = mongoose.models.Registration || mongoose.model('Registration', RegistrationSchema);
-
-export default Registration;
+export default mongoose.model("Register", registerSchema);
