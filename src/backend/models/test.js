@@ -1,32 +1,27 @@
 import mongoose from 'mongoose';
 
 const testSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Auth',
-    required: true
-  },
   fullName: { type: String, required: true, trim: true },
   countryCode: { type: String, required: true },
   phoneNumber: { type: String, required: true },
   maritalStatus: { 
-  type: String, 
-  enum: ['single', 'married'], // empty option hata do
-  required: true 
-},
-gender: { 
-  type: String, 
-  enum: ['male', 'female', 'other'], 
-  required: true 
-},
+    type: String, 
+    enum: ['single', 'married'],
+    required: true 
+  },
+  gender: { 
+    type: String, 
+    enum: ['male', 'female', 'other'], 
+    required: true 
+  },
   city: { type: String, required: true },
   province: { type: String, required: true },
   age: { type: Number },
-educationType: { 
-  type: String, 
-  enum: ['school', 'college', 'university'], 
-  required: true 
-},
+  educationType: { 
+    type: String, 
+    enum: ['school', 'college', 'university'], 
+    required: true 
+  },
 
   // School fields
   schoolStatus: { type: String, enum: ['completed', 'continue', ''], default: '' },

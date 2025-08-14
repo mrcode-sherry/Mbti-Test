@@ -1,13 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  // Check login status on mount
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    setIsLoggedIn(!!user);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+    window.location.href = "/login";
+  };
 
   return (
     <header className="shadow-sm bg-white sticky top-0 z-50">
@@ -26,14 +39,23 @@ const Navbar = () => {
           <li><Link href="/contact">Contact</Link></li>
         </ul>
 
-        {/* Login Button */}
+        {/* Login / Logout Button */}
         <div className="hidden md:flex">
-          <Link
-            href="/login"
-            className="bg-[#14442E] text-[18px] text-white px-4 py-1 rounded hover:shadow-lg duration-500 hover:scale-105 hover:bg-[#0c2f1e] transition"
-          >
-            Login
-          </Link>
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="bg-[#14442E] text-[18px] text-white px-4 py-1 rounded hover:shadow-lg duration-500 hover:scale-105 hover:bg-[#0c2f1e] cursor-pointer transition"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              className="bg-[#14442E] text-[18px] text-white px-4 py-1 rounded hover:shadow-lg duration-500 hover:scale-105 hover:bg-[#0c2f1e] transition"
+            >
+              Login
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -51,13 +73,25 @@ const Navbar = () => {
             <li><Link href="/pricing" onClick={toggleMenu}>Pricing</Link></li>
             <li><Link href="/contact" onClick={toggleMenu}>Contact</Link></li>
             <li>
-              <Link
-                href="/login"
-                onClick={toggleMenu}
-                className="bg-[#14442E] text-white px-4 py-1 rounded w-fit"
-              >
-                Login
-              </Link>
+              {isLoggedIn ? (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    toggleMenu();
+                  }}
+                  className="bg-red-500 text-white px-4 py-1 rounded w-fit"
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={toggleMenu}
+                  className="bg-[#14442E] text-white px-4 py-1 rounded w-fit"
+                >
+                  Login
+                </Link>
+              )}
             </li>
           </ul>
         </div>
