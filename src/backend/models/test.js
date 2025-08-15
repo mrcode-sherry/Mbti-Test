@@ -1,41 +1,33 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const testSchema = new mongoose.Schema({
-  fullName: { type: String, required: true, trim: true },
-  countryCode: { type: String, required: true },
-  phoneNumber: { type: String, required: true },
-  maritalStatus: { 
-    type: String, 
-    enum: ['single', 'married'],
-    required: true 
+const testSchema = new mongoose.Schema(
+  {
+    fullName: { type: String, required: true },
+    gender: { type: String, required: true },
+    maritalStatus: { type: String, required: true },
+    countryCode: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
+    city: { type: String, required: true },
+    province: { type: String, required: true },
+    educationType: { type: String, required: true },
+
+    // School
+    schoolStatus: String,
+    schoolInstitute: String,
+
+    // College
+    collegeYear: String,
+    collegeDegree: String,
+    collegeInstitute: String,
+
+    // University
+    universitySemester: String,
+    universityDegree: String,
+    universityInstitute: String,
   },
-  gender: { 
-    type: String, 
-    enum: ['male', 'female', 'other'], 
-    required: true 
-  },
-  city: { type: String, required: true },
-  province: { type: String, required: true },
-  age: { type: Number },
-  educationType: { 
-    type: String, 
-    enum: ['school', 'college', 'university'], 
-    required: true 
-  },
+  { timestamps: true }
+);
 
-  // School fields
-  schoolStatus: { type: String, enum: ['completed', 'continue', ''], default: '' },
-  schoolInstitute: { type: String },
-
-  // College fields
-  collegeYear: { type: String, enum: ['1st', '2nd', 'completed', ''], default: '' },
-  collegeDegree: { type: String },
-  collegeInstitute: { type: String },
-
-  // University fields
-  universitySemester: { type: String },
-  universityDegree: { type: String },
-  universityInstitute: { type: String }
-}, { timestamps: true });
-
-export default mongoose.model('Test', testSchema);
+// ✅ Fix: prevent OverwriteModelError
+const Test = mongoose.models.Test || mongoose.model("Test", testSchema);
+export default Test;
