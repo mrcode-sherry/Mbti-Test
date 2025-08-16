@@ -1,10 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
-const TestPopupForm = ({ isOpen, onClose }) => {
-  const router = useRouter();
+const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
     fullName: '',
     countryCode: '+92',
@@ -31,7 +29,7 @@ const TestPopupForm = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
@@ -40,25 +38,11 @@ const TestPopupForm = ({ isOpen, onClose }) => {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/question', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || 'Failed to submit form');
-        setLoading(false);
-        return;
-      }
-
-      onClose();
-      router.push('/pricing');
+      // Delegate submission to parent. Expect boolean return.
+      const ok = await onSubmit?.(formData);
+      if (ok) onClose();
     } catch (err) {
-      setError('Something went wrong');
-      console.error(err);
+      setError(err?.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }

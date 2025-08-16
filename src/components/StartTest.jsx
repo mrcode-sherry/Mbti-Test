@@ -1,11 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { CheckCircle } from 'lucide-react';
 import TestPopupForm from './TestPopupForm';
 
 const StartTest = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  // Check login status on mount
+  useEffect(() => {
+    const user = localStorage.getItem('user'); // 👈 adjust if you use JWT or session
+    setIsLoggedIn(!!user);
+  }, []);
+
+  const handleStartTest = () => {
+    if (!isLoggedIn) {
+      // If not logged in, redirect to login
+      router.push('/login');
+    } else {
+      // If logged in, open the popup
+      setIsPopupOpen(true);
+    }
+  };
 
   return (
     <>
@@ -48,7 +67,7 @@ const StartTest = () => {
             </p>
 
             <button
-              onClick={() => setIsPopupOpen(true)}
+              onClick={handleStartTest}
               className="inline-block bg-[#14442E] text-white font-medium hover:shadow-lg duration-500 hover:scale-105 px-6 py-3 rounded hover:bg-[#0f3a26] transition"
             >
               Start Test

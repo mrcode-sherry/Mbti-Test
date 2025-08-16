@@ -1,8 +1,11 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PageBanner from './PageBanner';
 import FaqSection from './FaqSection';
 import { CheckCircle } from 'lucide-react';
+import PaymentProofPopup from './PaymentProofPopup';
+import TestPopupForm from './TestPopupForm';
+import { useRouter } from 'next/navigation';
 
 const FeatureItem = ({ text }) => (
   <li className="flex items-start gap-2 text-gray-700 text-sm">
@@ -12,6 +15,99 @@ const FeatureItem = ({ text }) => (
 );
 
 const PricingPage = () => {
+  const [isProofPopupOpen, setIsProofPopupOpen] = useState(false);
+  const [isTestPopupOpen, setIsTestPopupOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [hasSubmittedTest, setHasSubmittedTest] = useState(false);
+  const router = useRouter();
+
+  // Load user from localStorage
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch {}
+    }
+  }, []);
+
+  // Check if test exists for this email
+  const refreshSubmissionStatus = async (email) => {
+    try {
+      const res = await fetch(`/api/question/check?email=${encodeURIComponent(email)}`);
+      const data = await res.json();
+      const exists = !!data?.exists;
+      setHasSubmittedTest(exists);
+      if (exists) localStorage.setItem('testFormFilled', 'true');
+      return exists;
+    } catch {
+      const flag = localStorage.getItem('testFormFilled') === 'true';
+      setHasSubmittedTest(flag);
+      return flag;
+    }
+  };
+
+  useEffect(() => {
+    if (user?.email) refreshSubmissionStatus(user.email);
+  }, [user]);
+
+  // Send Proof button click
+  const handleSendProofClick = async () => {
+    if (!user) {
+      router.push('/login');
+      return;
+    }
+
+    const exists = await refreshSubmissionStatus(user.email);
+
+    if (exists) {
+      // ✅ Already submitted → open proof popup only
+      setIsProofPopupOpen(true);
+      setIsTestPopupOpen(false);
+    } else {
+      // ❌ Not submitted → open test form
+      setIsTestPopupOpen(true);
+    }
+  };
+
+  // Handle test form submission
+  const handleTestFormSubmit = async (formData) => {
+    try {
+      const payload = { ...formData, email: user.email };
+
+      const res = await fetch('/api/question', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        if (res.status === 409) {
+          // Already exists
+          alert('Your details are already submitted, please pay directly to start the test.');
+          setHasSubmittedTest(true);
+          localStorage.setItem('testFormFilled', 'true');
+          setIsTestPopupOpen(false);
+          setIsProofPopupOpen(true);
+          return true;
+        }
+        throw new Error(data?.message || 'Failed to submit form');
+      }
+
+      // Success → mark + open proof popup
+      localStorage.setItem('testFormFilled', 'true');
+      setHasSubmittedTest(true);
+      setIsTestPopupOpen(false);
+      setIsProofPopupOpen(true);
+      return true;
+    } catch (err) {
+      alert(err.message || 'Something went wrong.');
+      return false;
+    }
+  };
+
   return (
     <div>
       <PageBanner title="Pricing Plan" backgroundImage="/Banners/about-banner.jpg" />
@@ -32,7 +128,7 @@ const PricingPage = () => {
 
         {/* Main Grid Content */}
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Left Section - MBTI Test Info */}
+          {/* Left Section */}
           <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col justify-between h-full">
             <div>
               <h3 className="text-2xl font-bold text-[#14442E] mb-4">Start Your MBTI Test</h3>
@@ -71,7 +167,10 @@ const PricingPage = () => {
               </div>
             </div>
             <div className="text-center">
-              <button className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition cursor-pointer">
+              <button
+                onClick={handleSendProofClick}
+                className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition cursor-pointer"
+              >
                 Send Screenshot Proof
               </button>
             </div>
@@ -100,7 +199,10 @@ const PricingPage = () => {
               </div>
             </div>
             <div className="text-center">
-              <button className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition cursor-pointer">
+              <button
+                onClick={handleSendProofClick}
+                className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition cursor-pointer"
+              >
                 Send Screenshot Proof
               </button>
             </div>
@@ -108,10 +210,22 @@ const PricingPage = () => {
         </div>
       </section>
 
-      {/* FAQ Section */}
       <div>
         <FaqSection />
       </div>
+
+      {/* Test Form Popup */}
+      <TestPopupForm
+        isOpen={isTestPopupOpen}
+        onClose={() => setIsTestPopupOpen(false)}
+        onSubmit={handleTestFormSubmit}
+      />
+
+      {/* Payment Proof Popup */}
+      <PaymentProofPopup
+        isOpen={isProofPopupOpen}
+        onClose={() => setIsProofPopupOpen(false)}
+      />
     </div>
   );
 };
