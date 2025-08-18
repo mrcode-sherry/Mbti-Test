@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState, useEffect } from 'react';
 import PageBanner from './PageBanner';
 import FaqSection from './FaqSection';
@@ -21,17 +22,7 @@ const PricingPage = () => {
   const [hasSubmittedTest, setHasSubmittedTest] = useState(false);
   const router = useRouter();
 
-  // Load user from localStorage
-  useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch {}
-    }
-  }, []);
-
-  // Check if test exists for this email
+  // 🔹 Check with API
   const refreshSubmissionStatus = async (email) => {
     try {
       const res = await fetch(`/api/question/check?email=${encodeURIComponent(email)}`);
@@ -47,30 +38,52 @@ const PricingPage = () => {
     }
   };
 
+  // 🔹 Load user + check localStorage immediately
   useEffect(() => {
-    if (user?.email) refreshSubmissionStatus(user.email);
-  }, [user]);
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      try {
+        const parsed = JSON.parse(savedUser);
+        setUser(parsed);
 
-  // Send Proof button click
+        // ✅ Instantly lock test form if already filled
+        if (localStorage.getItem('testFormFilled') === 'true') {
+          setHasSubmittedTest(true);
+        }
+
+        // ✅ Still verify with API
+        if (parsed?.email) {
+          refreshSubmissionStatus(parsed.email);
+        }
+      } catch {}
+    }
+  }, []);
+
+  // 🔹 Handle "Send Proof" click
   const handleSendProofClick = async () => {
     if (!user) {
       router.push('/login');
       return;
     }
 
-    const exists = await refreshSubmissionStatus(user.email);
+    // ✅ localStorage check first
+    if (hasSubmittedTest || localStorage.getItem('testFormFilled') === 'true') {
+      setIsProofPopupOpen(true);
+      setIsTestPopupOpen(false);
+      return;
+    }
 
+    // ✅ fallback API check
+    const exists = await refreshSubmissionStatus(user.email);
     if (exists) {
-      // ✅ Already submitted → open proof popup only
       setIsProofPopupOpen(true);
       setIsTestPopupOpen(false);
     } else {
-      // ❌ Not submitted → open test form
       setIsTestPopupOpen(true);
     }
   };
 
-  // Handle test form submission
+  // 🔹 Handle test form submission
   const handleTestFormSubmit = async (formData) => {
     try {
       const payload = { ...formData, email: user.email };
@@ -85,7 +98,6 @@ const PricingPage = () => {
 
       if (!res.ok) {
         if (res.status === 409) {
-          // Already exists
           alert('Your details are already submitted, please pay directly to start the test.');
           setHasSubmittedTest(true);
           localStorage.setItem('testFormFilled', 'true');
@@ -96,7 +108,7 @@ const PricingPage = () => {
         throw new Error(data?.message || 'Failed to submit form');
       }
 
-      // Success → mark + open proof popup
+      // ✅ Success → lock form forever
       localStorage.setItem('testFormFilled', 'true');
       setHasSubmittedTest(true);
       setIsTestPopupOpen(false);
@@ -114,7 +126,7 @@ const PricingPage = () => {
 
       {/* Section Container */}
       <section className="bg-gray-100 py-16 px-6 md:px-12">
-        {/* Heading Section */}
+        {/* Heading */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-4 mb-4">
             <div className="w-12 h-px bg-[#14442E] opacity-40" />
@@ -126,13 +138,13 @@ const PricingPage = () => {
           </p>
         </div>
 
-        {/* Main Grid Content */}
+        {/* Grid */}
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Left Section */}
+          {/* Intro Section */}
           <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col justify-between h-full">
             <div>
               <h3 className="text-2xl font-bold text-[#14442E] mb-4">Start Your MBTI Test</h3>
-              <p className="text-gray-600 mb-6 leading-relaxed text-sm">
+              <p className="text-gray-600 mb-6 text-sm">
                 Our test is based on 70 scientifically designed MCQs. It will help you understand your unique personality type and behavior patterns.
               </p>
               <ul className="space-y-3">
@@ -169,7 +181,7 @@ const PricingPage = () => {
             <div className="text-center">
               <button
                 onClick={handleSendProofClick}
-                className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition cursor-pointer"
+                className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition"
               >
                 Send Screenshot Proof
               </button>
@@ -201,7 +213,7 @@ const PricingPage = () => {
             <div className="text-center">
               <button
                 onClick={handleSendProofClick}
-                className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition cursor-pointer"
+                className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition"
               >
                 Send Screenshot Proof
               </button>
@@ -210,9 +222,7 @@ const PricingPage = () => {
         </div>
       </section>
 
-      <div>
-        <FaqSection />
-      </div>
+      <FaqSection />
 
       {/* Test Form Popup */}
       <TestPopupForm
