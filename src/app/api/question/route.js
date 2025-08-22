@@ -1,3 +1,4 @@
+// /app/api/question/route.js
 import { NextResponse } from "next/server";
 import dbConnect from "@/backend/db";
 import Test from "@/backend/models/test";
@@ -17,6 +18,7 @@ export async function POST(req) {
       return NextResponse.json({ success: false, message: "Test already submitted" }, { status: 409 });
     }
 
+    // Save email along with test data
     const newTest = new Test({ email, ...testData });
     await newTest.save();
 

@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const testSchema = new mongoose.Schema(
   {
     fullName: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     gender: { type: String, required: true },
     maritalStatus: { type: String, required: true },
     countryCode: { type: String, required: true },
@@ -28,6 +29,6 @@ const testSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ✅ Fix: prevent OverwriteModelError
+// Prevent OverwriteModelError
 const Test = mongoose.models.Test || mongoose.model("Test", testSchema);
 export default Test;
