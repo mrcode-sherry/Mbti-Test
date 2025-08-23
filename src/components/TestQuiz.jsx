@@ -2,17 +2,22 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-// Dummy questions (10 questions per language for now)
 const dummyQuestions = {
   en: Array.from({ length: 10 }, (_, i) => ({
     title: `Sample Question ${i + 1}: What would you prefer?`,
     options: ['Option A', 'Option B'],
-    examples: ['You like to plan ahead and follow structure.', 'You prefer flexibility and spontaneity.']
+    examples: [
+      'You like to plan ahead and follow structure.',
+      'You prefer flexibility and spontaneity.'
+    ]
   })),
   ur: Array.from({ length: 10 }, (_, i) => ({
     title: `مثال سوال ${i + 1}: آپ کیا پسند کریں گے؟`,
     options: ['آپشن A', 'آپشن B'],
-    examples: ['آپ منصوبہ بندی اور نظم و ضبط کو ترجیح دیتے ہیں۔', 'آپ لچک اور بے ساختگی کو پسند کرتے ہیں۔']
+    examples: [
+      'آپ منصوبہ بندی اور نظم و ضبط کو ترجیح دیتے ہیں۔',
+      'آپ لچک اور بے ساختگی کو پسند کرتے ہیں۔'
+    ]
   }))
 };
 
@@ -27,7 +32,24 @@ const TestQuiz = () => {
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+
+    const checkTestCompletion = async () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user?.email) {
+        try {
+          const res = await fetch(`/api/testSubmission/check?email=${encodeURIComponent(user.email)}`);
+          const data = await res.json();
+          if (data.completed) {
+            router.push('/result'); // Already completed → go to result
+          }
+        } catch (err) {
+          console.error('Error checking test submission:', err);
+        }
+      }
+    };
+
+    checkTestCompletion();
+  }, [router]);
 
   const handleLanguageSelect = (lang) => {
     setLanguage(lang);
@@ -43,15 +65,29 @@ const TestQuiz = () => {
     setSelectedAnswers(updated);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentIndex + 1 < dummyQuestions[language].length) {
       setCurrentIndex(currentIndex + 1);
       setSelectedOptionIndex(null);
     } else {
       setLoading(true);
-      setTimeout(() => {
-        router.push('/result');
-      }, 2000);
+      try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user?.email) {
+          // Save test to new testSubmission API
+          await fetch('/api/testSubmission', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: user.email, answers: selectedAnswers })
+          });
+
+          localStorage.setItem(`testFormFilled:${user.email}`, 'true');
+          router.push('/result');
+        }
+      } catch (err) {
+        console.error('Test submission failed', err);
+        setLoading(false);
+      }
     }
   };
 
@@ -115,9 +151,7 @@ const TestQuiz = () => {
           >
             <div className="flex items-center gap-3 mb-3">
               <div className="w-5 h-5 rounded-full border-2 border-green-700 flex items-center justify-center">
-                {selectedOptionIndex === index && (
-                  <div className="w-2 h-2 rounded-full bg-green-700" />
-                )}
+                {selectedOptionIndex === index && <div className="w-2 h-2 rounded-full bg-green-700" />}
               </div>
               <p className="font-medium">{option}</p>
             </div>

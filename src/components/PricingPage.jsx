@@ -20,7 +20,7 @@ const PricingPage = () => {
   const [hasSubmittedTest, setHasSubmittedTest] = useState(false);
   const [isProofPopupOpen, setIsProofPopupOpen] = useState(false);
   const [isTestPopupOpen, setIsTestPopupOpen] = useState(false);
-  const [isWaitPopupOpen, setIsWaitPopupOpen] = useState(false); // ✅ Wait popup restored
+  const [isWaitPopupOpen, setIsWaitPopupOpen] = useState(false);
   const [checkingStatus, setCheckingStatus] = useState(false);
   const router = useRouter();
 
@@ -34,7 +34,8 @@ const PricingPage = () => {
       setHasSubmittedTest(exists);
       if (exists) localStorage.setItem(`testFormFilled:${email}`, 'true');
       return exists;
-    } catch {
+    } catch (err) {
+      console.warn("Test check failed, using localStorage fallback", err);
       const fallback = localStorage.getItem(`testFormFilled:${email}`) === 'true';
       setHasSubmittedTest(fallback);
       return fallback;
@@ -56,34 +57,49 @@ const PricingPage = () => {
   }, []);
 
   // ✅ Central Proof Status Checker
-  const checkProofStatus = async (email) => {
-    if (!email) return "none";
-    try {
-      const res = await fetch(`/api/screenshotfetch?email=${encodeURIComponent(email)}`, { cache: 'no-store' });
-      if (res.ok) {
-        const proofData = await res.json();
-        if (proofData.success && proofData.data) {
-          const proof = proofData.data;
+const checkProofStatus = async (email) => {
+  if (!email) return "none";
 
-          if (proof.status === "approved") {
-            router.push("/start_test"); // ✅ Start only after admin approval
-            return "approved";
-          }
-          if (proof.status === "pending") {
-            setIsWaitPopupOpen(true); // ✅ Show wait popup
-            return "pending";
-          }
-          if (proof.status === "rejected") {
-            alert("❌ Your proof was rejected. Please re-submit or contact support.");
-            return "rejected";
-          }
+  try {
+    const res = await fetch(`/api/screenshotfetch?email=${encodeURIComponent(email)}`, { cache: 'no-store' });
+    if (!res.ok) return "none";
+
+    const proofData = await res.json();
+    if (proofData.success && proofData.data) {
+      const proof = proofData.data;
+
+      if (proof.status === "approved") {
+        // ✅ Check if test is completed using new route
+        const testRes = await fetch(`/api/testSubmission/check?email=${encodeURIComponent(email)}`);
+        const testData = await testRes.json();
+
+        if (testData.completed) {
+          // Test already submitted → go to result
+          router.push("/result");
+        } else {
+          // Test not submitted yet → go to start_test
+          router.push("/start_test");
         }
+
+        return "approved";
       }
-    } catch (err) {
-      console.error("Proof check error:", err);
+
+      if (proof.status === "pending") {
+        setIsWaitPopupOpen(true);
+        return "pending";
+      }
+
+      if (proof.status === "rejected") {
+        alert("❌ Your proof was rejected. Please re-submit or contact support.");
+        return "rejected";
+      }
     }
-    return "none";
-  };
+  } catch (err) {
+    console.error("Proof check error:", err);
+  }
+
+  return "none";
+};
 
   // ✅ Handle Send Proof Button Click
   const handleSendProofClick = async () => {
@@ -92,6 +108,7 @@ const PricingPage = () => {
       return;
     }
 
+    if (checkingStatus) return; // prevent double clicks
     setCheckingStatus(true);
     try {
       // 1. Check if test form is submitted

@@ -7,7 +7,7 @@ export async function POST(req) {
   try {
     await dbConnect();
     const body = await req.json();
-    const { email, ...testData } = body;
+    const { email, ...data } = body;
 
     if (!email) {
       return NextResponse.json({ success: false, message: "Email required" }, { status: 400 });
@@ -15,16 +15,15 @@ export async function POST(req) {
 
     const exists = await Test.findOne({ email });
     if (exists) {
-      return NextResponse.json({ success: false, message: "Test already submitted" }, { status: 409 });
+      return NextResponse.json({ success: false, message: "Record already exists" }, { status: 409 });
     }
 
-    // Save email along with test data
-    const newTest = new Test({ email, ...testData });
-    await newTest.save();
+    const newRecord = new Test({ email, ...data });
+    await newRecord.save();
 
-    return NextResponse.json({ success: true, message: "Test submitted successfully" });
+    return NextResponse.json({ success: true, message: "Record saved successfully" });
   } catch (error) {
-    console.error("Submit Test Error:", error);
+    console.error("Save Error:", error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
