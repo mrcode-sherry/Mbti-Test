@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import PageBanner from './PageBanner';
 import FaqSection from './FaqSection';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, X } from 'lucide-react';
 import PaymentProofPopup from './PaymentProofPopup';
 import TestPopupForm from './TestPopupForm';
 import { useRouter } from 'next/navigation';
@@ -20,10 +20,11 @@ const PricingPage = () => {
   const [hasSubmittedTest, setHasSubmittedTest] = useState(false);
   const [isProofPopupOpen, setIsProofPopupOpen] = useState(false);
   const [isTestPopupOpen, setIsTestPopupOpen] = useState(false);
+  const [isWaitPopupOpen, setIsWaitPopupOpen] = useState(false); // ✅ Wait popup restored
   const [checkingStatus, setCheckingStatus] = useState(false);
   const router = useRouter();
 
-  // Check if user has submitted test
+  // ✅ Check if user has submitted test
   const refreshSubmissionStatus = async (email) => {
     if (!email) return false;
     try {
@@ -40,7 +41,7 @@ const PricingPage = () => {
     }
   };
 
-  // Load user and check test submission status
+  // ✅ Load user from localStorage
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (!savedUser) return;
@@ -54,7 +55,37 @@ const PricingPage = () => {
     }
   }, []);
 
-  // Handle "Send Screenshot Proof" click
+  // ✅ Central Proof Status Checker
+  const checkProofStatus = async (email) => {
+    if (!email) return "none";
+    try {
+      const res = await fetch(`/api/screenshotfetch?email=${encodeURIComponent(email)}`, { cache: 'no-store' });
+      if (res.ok) {
+        const proofData = await res.json();
+        if (proofData.success && proofData.data) {
+          const proof = proofData.data;
+
+          if (proof.status === "approved") {
+            router.push("/start_test"); // ✅ Start only after admin approval
+            return "approved";
+          }
+          if (proof.status === "pending") {
+            setIsWaitPopupOpen(true); // ✅ Show wait popup
+            return "pending";
+          }
+          if (proof.status === "rejected") {
+            alert("❌ Your proof was rejected. Please re-submit or contact support.");
+            return "rejected";
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Proof check error:", err);
+    }
+    return "none";
+  };
+
+  // ✅ Handle Send Proof Button Click
   const handleSendProofClick = async () => {
     if (!user?.email) {
       router.push('/login');
@@ -63,20 +94,26 @@ const PricingPage = () => {
 
     setCheckingStatus(true);
     try {
+      // 1. Check if test form is submitted
       const submitted = await refreshSubmissionStatus(user.email);
-      if (submitted) {
-        setIsTestPopupOpen(false);
-        setIsProofPopupOpen(true);
-      } else {
+      if (!submitted) {
         setIsProofPopupOpen(false);
         setIsTestPopupOpen(true);
+        return;
+      }
+
+      // 2. Check proof status
+      const status = await checkProofStatus(user.email);
+      if (status === "none") {
+        setIsTestPopupOpen(false);
+        setIsProofPopupOpen(true); // No proof → open upload popup
       }
     } finally {
       setCheckingStatus(false);
     }
   };
 
-  // Handle Test form submission
+  // ✅ Handle Test form submission
   const handleTestFormSubmit = async (formData) => {
     if (!user?.email) return false;
 
@@ -219,6 +256,7 @@ const PricingPage = () => {
 
       <FaqSection />
 
+      {/* ✅ Popups */}
       <TestPopupForm
         isOpen={isTestPopupOpen}
         onClose={() => setIsTestPopupOpen(false)}
@@ -230,6 +268,32 @@ const PricingPage = () => {
         onClose={() => setIsProofPopupOpen(false)}
         userEmail={user?.email || ''}
       />
+
+      {/* ✅ Wait Popup */}
+      {isWaitPopupOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
+            <button
+              onClick={() => setIsWaitPopupOpen(false)}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+            >
+              <X size={20} />
+            </button>
+
+            <h2 className="text-xl font-bold text-gray-800 mb-4">Proof Submitted</h2>
+            <p className="text-gray-600 text-sm mb-6">
+              ⏳ Your proof has been submitted. Please wait for admin approval within 24 hours. <br />
+              If not approved, you can try re-submitting or{' '}
+              <button
+                onClick={() => router.push('/contact')}
+                className="text-blue-600 underline"
+              >
+                contact us
+              </button>.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
