@@ -8,11 +8,12 @@ const ResultPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const savedResult = localStorage.getItem('testResult');
-    if (!savedResult) {
+    const savedResults = JSON.parse(localStorage.getItem('testResults') || '[]');
+    if (!savedResults.length) {
       router.push('/test');
     } else {
-      setResult(resultsData.find(r => r.type === savedResult));
+      const latestResult = savedResults[savedResults.length - 1];
+      setResult(resultsData.find(r => r.type === latestResult));
     }
   }, [router]);
 

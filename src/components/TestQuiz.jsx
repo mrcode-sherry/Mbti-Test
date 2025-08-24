@@ -52,20 +52,22 @@ const TestQuiz = () => {
   const getQuestions = () => (language === 'en' ? questionsEn : questionsUr);
 
   const calculateResult = () => {
-    // Simple calculation: count occurrences of MBTI types
-    const counts = {};
+    // Initialize counts for all dimensions
+    const counts = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
     selectedAnswers.forEach(ans => {
-      const dim = ans.dimension; // Each option should have dimension: "E", "I", etc.
-      if (dim) counts[dim] = (counts[dim] || 0) + 1;
+      if (ans.dimension && counts.hasOwnProperty(ans.dimension)) {
+        counts[ans.dimension]++;
+      }
     });
 
-    const type =
+    // Calculate MBTI type
+    return (
       (counts.E >= counts.I ? 'E' : 'I') +
       (counts.S >= counts.N ? 'S' : 'N') +
       (counts.T >= counts.F ? 'T' : 'F') +
-      (counts.J >= counts.P ? 'J' : 'P');
-
-    return type;
+      (counts.J >= counts.P ? 'J' : 'P')
+    );
   };
 
   const handleNext = async () => {
@@ -87,8 +89,12 @@ const TestQuiz = () => {
             body: JSON.stringify({ email: user.email, answers: selectedAnswers, result })
           });
 
-          localStorage.setItem(`testFormFilled:${user.email}`, 'true');
-          localStorage.setItem('testResult', result);
+          // Save multiple attempts
+          const prevResults = JSON.parse(localStorage.getItem('testResults') || '[]');
+          prevResults.push(result);
+          localStorage.setItem('testResults', JSON.stringify(prevResults));
+          localStorage.setItem('testResult', result); // latest attempt
+
           router.push('/result');
         }
       } catch (err) {
