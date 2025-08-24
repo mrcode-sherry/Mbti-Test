@@ -7,39 +7,63 @@ import { Menu, X } from 'lucide-react';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [hasSubmitted, setHasSubmitted] = useState(false); // ✅ Track test completion
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   useEffect(() => {
-    const loadUser = () => {
+    const loadUser = async () => {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
         try {
-          setUser(JSON.parse(storedUser));
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+
+          // ✅ Check test submission only if normal user (not admin)
+          if (parsedUser?.role !== 'admin' && parsedUser?.email) {
+            try {
+              const res = await fetch(
+                `/api/testSubmission/check?email=${encodeURIComponent(parsedUser.email)}`,
+                { cache: 'no-store' }
+              );
+              if (res.ok) {
+                const data = await res.json();
+                // ✅ API returns "completed", not "hasSubmitted"
+                setHasSubmitted(data.completed || false);
+              }
+            } catch (err) {
+              console.error("Error checking test submission:", err);
+              setHasSubmitted(false);
+            }
+          } else {
+            setHasSubmitted(false);
+          }
         } catch (err) {
           console.error('Invalid user in localStorage');
           localStorage.removeItem('user');
           setUser(null);
+          setHasSubmitted(false);
         }
       } else {
         setUser(null);
+        setHasSubmitted(false);
       }
     };
 
     // initial load
     loadUser();
 
-    // listen to "storage" events (including the manual dispatch)
+    // listen to "storage" events (for login/logout sync)
     window.addEventListener('storage', loadUser);
     return () => window.removeEventListener('storage', loadUser);
   }, []);
 
   const handleLogout = () => {
-    // Navbar logout (normal user)
     localStorage.removeItem('user');
     setUser(null);
+    setHasSubmitted(false);
 
-    // Let other parts know (optional for same-tab updates)
+    // Let other parts know
     window.dispatchEvent(new Event('storage'));
 
     window.location.href = '/login';
@@ -59,8 +83,15 @@ const Navbar = () => {
           <li><Link href="/pricing">Pricing</Link></li>
           <li><Link href="/contact">Contact</Link></li>
 
-          {/* Dashboard link will appear when role === 'admin' */}
-          {user?.role === 'admin' && <li><Link href="/dashboard">Dashboard</Link></li>}
+          {/* Dashboard link → only for admin */}
+          {user?.role === 'admin' && (
+            <li><Link href="/dashboard">Dashboard</Link></li>
+          )}
+
+          {/* ✅ Show Result only if user is normal AND test is completed */}
+          {user && user?.role !== 'admin' && hasSubmitted && (
+            <li><Link href="/result">Result</Link></li>
+          )}
         </ul>
 
         <div className="hidden md:flex">
@@ -72,7 +103,10 @@ const Navbar = () => {
               Logout
             </button>
           ) : (
-            <Link href="/login" className="bg-[#14442E] text-[18px] text-white px-4 py-1 rounded hover:shadow-lg duration-500 hover:scale-105 hover:bg-[#0c2f1e] transition">
+            <Link
+              href="/login"
+              className="bg-[#14442E] text-[18px] text-white px-4 py-1 rounded hover:shadow-lg duration-500 hover:scale-105 hover:bg-[#0c2f1e] transition"
+            >
               Login
             </Link>
           )}
@@ -90,7 +124,12 @@ const Navbar = () => {
             <li><Link href="/about" onClick={toggleMenu}>About</Link></li>
             <li><Link href="/pricing" onClick={toggleMenu}>Pricing</Link></li>
             <li><Link href="/contact" onClick={toggleMenu}>Contact</Link></li>
-            {user?.role === 'admin' && <li><Link href="/dashboard" onClick={toggleMenu}>Dashboard</Link></li>}
+            {user?.role === 'admin' && (
+              <li><Link href="/dashboard" onClick={toggleMenu}>Dashboard</Link></li>
+            )}
+            {user && user?.role !== 'admin' && hasSubmitted && (
+              <li><Link href="/result" onClick={toggleMenu}>Result</Link></li>
+            )}
             <li>
               {user ? (
                 <button
@@ -103,7 +142,11 @@ const Navbar = () => {
                   Logout
                 </button>
               ) : (
-                <Link href="/login" onClick={toggleMenu} className="bg-[#14442E] text-white px-4 py-1 rounded w-fit">
+                <Link
+                  href="/login"
+                  onClick={toggleMenu}
+                  className="bg-[#14442E] text-white px-4 py-1 rounded w-fit"
+                >
                   Login
                 </Link>
               )}

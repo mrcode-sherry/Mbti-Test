@@ -17,28 +17,45 @@ const FeatureItem = ({ text }) => (
 
 const PricingPage = () => {
   const [user, setUser] = useState(null);
-  const [hasSubmittedTest, setHasSubmittedTest] = useState(false);
+  const [hasSubmittedTestForm, setHasSubmittedTestForm] = useState(false); // popup form
+  const [hasCompletedTest, setHasCompletedTest] = useState(false); // actual test
   const [isProofPopupOpen, setIsProofPopupOpen] = useState(false);
   const [isTestPopupOpen, setIsTestPopupOpen] = useState(false);
   const [isWaitPopupOpen, setIsWaitPopupOpen] = useState(false);
   const [checkingStatus, setCheckingStatus] = useState(false);
   const router = useRouter();
 
-  // ✅ Check if user has submitted test
+  // ✅ Check if user has submitted popup form
   const refreshSubmissionStatus = async (email) => {
     if (!email) return false;
     try {
       const res = await fetch(`/api/question/check?email=${encodeURIComponent(email)}`, { cache: 'no-store' });
       const data = await res.json();
       const exists = data?.success && data.exists;
-      setHasSubmittedTest(exists);
+      setHasSubmittedTestForm(exists);
       if (exists) localStorage.setItem(`testFormFilled:${email}`, 'true');
       return exists;
     } catch (err) {
-      console.warn("Test check failed, using localStorage fallback", err);
+      console.warn("Test form check failed, using localStorage fallback", err);
       const fallback = localStorage.getItem(`testFormFilled:${email}`) === 'true';
-      setHasSubmittedTest(fallback);
+      setHasSubmittedTestForm(fallback);
       return fallback;
+    }
+  };
+
+  // ✅ Check if test is actually completed
+  const refreshTestCompletion = async (email) => {
+    if (!email) return false;
+    try {
+      const res = await fetch(`/api/testSubmission/check?email=${encodeURIComponent(email)}`, { cache: 'no-store' });
+      const data = await res.json();
+      const completed = data?.completed === true;
+      setHasCompletedTest(completed);
+      return completed;
+    } catch (err) {
+      console.warn("Test completion check failed", err);
+      setHasCompletedTest(false);
+      return false;
     }
   };
 
@@ -49,57 +66,59 @@ const PricingPage = () => {
     try {
       const parsed = JSON.parse(savedUser);
       setUser(parsed);
-      if (parsed?.email) refreshSubmissionStatus(parsed.email);
+      if (parsed?.email) {
+        refreshSubmissionStatus(parsed.email);
+        refreshTestCompletion(parsed.email);
+      }
     } catch {
       setUser(null);
-      setHasSubmittedTest(false);
+      setHasSubmittedTestForm(false);
+      setHasCompletedTest(false);
     }
   }, []);
 
   // ✅ Central Proof Status Checker
-const checkProofStatus = async (email) => {
-  if (!email) return "none";
+  const checkProofStatus = async (email) => {
+    if (!email) return "none";
 
-  try {
-    const res = await fetch(`/api/screenshotfetch?email=${encodeURIComponent(email)}`, { cache: 'no-store' });
-    if (!res.ok) return "none";
+    try {
+      const res = await fetch(`/api/screenshotfetch?email=${encodeURIComponent(email)}`, { cache: 'no-store' });
+      if (!res.ok) return "none";
 
-    const proofData = await res.json();
-    if (proofData.success && proofData.data) {
-      const proof = proofData.data;
+      const proofData = await res.json();
+      if (proofData.success && proofData.data) {
+        const proof = proofData.data;
 
-      if (proof.status === "approved") {
-        // ✅ Check if test is completed using new route
-        const testRes = await fetch(`/api/testSubmission/check?email=${encodeURIComponent(email)}`);
-        const testData = await testRes.json();
+        if (proof.status === "approved") {
+          // ✅ Check if test is completed
+          const testRes = await fetch(`/api/testSubmission/check?email=${encodeURIComponent(email)}`);
+          const testData = await testRes.json();
 
-        if (testData.completed) {
-          // Test already submitted → go to result
-          router.push("/result");
-        } else {
-          // Test not submitted yet → go to start_test
-          router.push("/start_test");
+          if (testData.completed) {
+            router.push("/result");
+          } else {
+            router.push("/start_test");
+          }
+
+          return "approved";
         }
 
-        return "approved";
-      }
+        if (proof.status === "pending") {
+          setIsWaitPopupOpen(true);
+          return "pending";
+        }
 
-      if (proof.status === "pending") {
-        setIsWaitPopupOpen(true);
-        return "pending";
+        if (proof.status === "rejected") {
+          alert("❌ Your proof was rejected. Please re-submit or contact support.");
+          return "rejected";
+        }
       }
-
-      if (proof.status === "rejected") {
-        alert("❌ Your proof was rejected. Please re-submit or contact support.");
-        return "rejected";
-      }
+    } catch (err) {
+      console.error("Proof check error:", err);
     }
-  } catch (err) {
-    console.error("Proof check error:", err);
-  }
 
-  return "none";
-};
+    return "none";
+  };
 
   // ✅ Handle Send Proof Button Click
   const handleSendProofClick = async () => {
@@ -123,7 +142,7 @@ const checkProofStatus = async (email) => {
       const status = await checkProofStatus(user.email);
       if (status === "none") {
         setIsTestPopupOpen(false);
-        setIsProofPopupOpen(true); // No proof → open upload popup
+        setIsProofPopupOpen(true);
       }
     } finally {
       setCheckingStatus(false);
@@ -145,7 +164,7 @@ const checkProofStatus = async (email) => {
 
       if (!res.ok) {
         if (res.status === 409) {
-          setHasSubmittedTest(true);
+          setHasSubmittedTestForm(true);
           localStorage.setItem(`testFormFilled:${user.email}`, 'true');
           setIsTestPopupOpen(false);
           setIsProofPopupOpen(true);
@@ -155,7 +174,7 @@ const checkProofStatus = async (email) => {
       }
 
       localStorage.setItem(`testFormFilled:${user.email}`, 'true');
-      setHasSubmittedTest(true);
+      setHasSubmittedTestForm(true);
       setIsTestPopupOpen(false);
       setIsProofPopupOpen(true);
       return true;
