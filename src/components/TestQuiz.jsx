@@ -2,24 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-const dummyQuestions = {
-  en: Array.from({ length: 10 }, (_, i) => ({
-    title: `Sample Question ${i + 1}: What would you prefer?`,
-    options: ['Option A', 'Option B'],
-    examples: [
-      'You like to plan ahead and follow structure.',
-      'You prefer flexibility and spontaneity.'
-    ]
-  })),
-  ur: Array.from({ length: 10 }, (_, i) => ({
-    title: `مثال سوال ${i + 1}: آپ کیا پسند کریں گے؟`,
-    options: ['آپشن A', 'آپشن B'],
-    examples: [
-      'آپ منصوبہ بندی اور نظم و ضبط کو ترجیح دیتے ہیں۔',
-      'آپ لچک اور بے ساختگی کو پسند کرتے ہیں۔'
-    ]
-  }))
-};
+// Import your actual JSON files
+import questionsEn from '../data/questions.en.json'; // English questions
+import questionsUr from '../data/questions.ur.json'; // Urdu questions
+import resultsData from '../data/results.json'; // Result mapping
 
 const TestQuiz = () => {
   const [isClient, setIsClient] = useState(false);
@@ -39,9 +25,7 @@ const TestQuiz = () => {
         try {
           const res = await fetch(`/api/testSubmission/check?email=${encodeURIComponent(user.email)}`);
           const data = await res.json();
-          if (data.completed) {
-            router.push('/result'); // Already completed → go to result
-          }
+          if (data.completed) router.push('/result');
         } catch (err) {
           console.error('Error checking test submission:', err);
         }
@@ -65,8 +49,29 @@ const TestQuiz = () => {
     setSelectedAnswers(updated);
   };
 
+  const getQuestions = () => (language === 'en' ? questionsEn : questionsUr);
+
+  const calculateResult = () => {
+    // Simple calculation: count occurrences of MBTI types
+    const counts = {};
+    selectedAnswers.forEach(ans => {
+      const dim = ans.dimension; // Each option should have dimension: "E", "I", etc.
+      if (dim) counts[dim] = (counts[dim] || 0) + 1;
+    });
+
+    const type =
+      (counts.E >= counts.I ? 'E' : 'I') +
+      (counts.S >= counts.N ? 'S' : 'N') +
+      (counts.T >= counts.F ? 'T' : 'F') +
+      (counts.J >= counts.P ? 'J' : 'P');
+
+    return type;
+  };
+
   const handleNext = async () => {
-    if (currentIndex + 1 < dummyQuestions[language].length) {
+    const questions = getQuestions();
+
+    if (currentIndex + 1 < questions.length) {
       setCurrentIndex(currentIndex + 1);
       setSelectedOptionIndex(null);
     } else {
@@ -74,14 +79,16 @@ const TestQuiz = () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user?.email) {
-          // Save test to new testSubmission API
+          const result = calculateResult();
+
           await fetch('/api/testSubmission', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: user.email, answers: selectedAnswers })
+            body: JSON.stringify({ email: user.email, answers: selectedAnswers, result })
           });
 
           localStorage.setItem(`testFormFilled:${user.email}`, 'true');
+          localStorage.setItem('testResult', result);
           router.push('/result');
         }
       } catch (err) {
@@ -99,22 +106,19 @@ const TestQuiz = () => {
         <h2 className="text-2xl font-bold mb-4">Select Language</h2>
         <p className="text-sm text-gray-500 mb-6">Once selected, test will begin and can't be repeated.</p>
         <div className="flex justify-center gap-4">
-          <button
-            onClick={() => handleLanguageSelect('en')}
-            className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg cursor-pointer duration-500 hover:scale-105 text-white px-6 py-2 rounded-lg transition"
-          >
+          <button onClick={() => handleLanguageSelect('en')} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg">
             English
           </button>
-          <button
-            onClick={() => handleLanguageSelect('ur')}
-            className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg cursor-pointer duration-500 hover:scale-105 text-white px-6 py-2 rounded-lg transition"
-          >
+          <button onClick={() => handleLanguageSelect('ur')} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg">
             اردو
           </button>
         </div>
       </div>
     );
   }
+
+  const questions = getQuestions();
+  const currentQuestion = questions[currentIndex];
 
   if (loading) {
     return (
@@ -125,8 +129,6 @@ const TestQuiz = () => {
     );
   }
 
-  const currentQuestion = dummyQuestions[language][currentIndex];
-
   return (
     <div className="max-w-4xl mx-auto bg-white mt-10 p-8 rounded-xl shadow-md">
       <div className="flex justify-between mb-6">
@@ -134,7 +136,7 @@ const TestQuiz = () => {
           Language: <strong>{language === 'en' ? 'English' : 'اردو'}</strong>
         </p>
         <p className="text-sm text-gray-600">
-          Progress: {currentIndex + 1} out of {dummyQuestions[language].length}
+          Progress: {currentIndex + 1} of {questions.length}
         </p>
       </div>
 
@@ -145,21 +147,17 @@ const TestQuiz = () => {
           <div
             key={index}
             onClick={() => handleOptionSelect(option, index)}
-            className={`cursor-pointer border rounded-xl p-5 transition ${
-              selectedOptionIndex === index ? 'border-green-700 shadow-md' : 'border-gray-300'
-            }`}
+            className={`cursor-pointer border rounded-xl p-5 transition ${selectedOptionIndex === index ? 'border-green-700 shadow-md' : 'border-gray-300'}`}
           >
             <div className="flex items-center gap-3 mb-3">
               <div className="w-5 h-5 rounded-full border-2 border-green-700 flex items-center justify-center">
                 {selectedOptionIndex === index && <div className="w-2 h-2 rounded-full bg-green-700" />}
               </div>
-              <p className="font-medium">{option}</p>
+              <p className="font-medium">{option.text}</p>
             </div>
             <div className="bg-gray-50 p-3 rounded-lg text-sm text-gray-600">
-              <p className="font-semibold mb-1">
-                {language === 'en' ? 'Example for this option:' : 'اس آپشن کی مثال:'}
-              </p>
-              <p>{currentQuestion.examples[index]}</p>
+              <p className="font-semibold mb-1">{language === 'en' ? 'Example:' : 'مثال:'}</p>
+              <p>{option.example}</p>
             </div>
           </div>
         ))}
@@ -167,11 +165,8 @@ const TestQuiz = () => {
 
       {selectedOptionIndex !== null && (
         <div className="flex justify-end mt-8">
-          <button
-            onClick={handleNext}
-            className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg cursor-pointer duration-500 hover:scale-105 text-white px-6 py-2 rounded-lg transition"
-          >
-            {currentIndex + 1 < dummyQuestions[language].length ? 'Next' : 'Finish'}
+          <button onClick={handleNext} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg">
+            {currentIndex + 1 < questions.length ? 'Next' : 'Finish'}
           </button>
         </div>
       )}

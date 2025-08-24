@@ -1,0 +1,1122 @@
+[
+    {
+        "id": 1,
+        "title": "In class, do you:",
+        "options": [
+            {
+                "text": "Talk with everyone?",
+                "example": "During break time at school: If you walk around and chat with many classmates — even those you don’t sit with — you're showing (a) Talk with everyone.",
+                "dimension": "E"
+            },
+            {
+                "text": "Talk only with a few specific people?",
+                "example": "During break time at school: If you sit with the same two or three friends and talk only to them, you're showing (b) Talk only with a few specific people.",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Are you more:",
+        "options": [
+            {
+                "text": "Realistic than imaginative?",
+                "example": "You and your friend are talking about the future. If you say, “I want to get good marks and find a job after school,” you are being realistic.",
+                "dimension": "S"
+            },
+            {
+                "text": "Imaginative than realistic?",
+                "example": "You and your friend are talking about the future. If you say, “I want to fly around the world on a magic bike,” you are being imaginative.",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "What feels worse to you:",
+        "options": [
+            {
+                "text": "Thinking a lot but not doing anything?",
+                "example": "You’re at home during summer holidays. If you say, “I have many ideas in my mind, but I never do them. That makes me feel bad,” you are choosing (a).",
+                "dimension": "N"
+            },
+            {
+                "text": "Doing the same things every day?",
+                "example": "You’re at home during summer holidays. If you say, “Every day is the same — eat, study, sleep — and it feels boring,” you are choosing (b).",
+                "dimension": "S"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "title": "What matters more to you:",
+        "options": [
+            {
+                "text": "Following rules?",
+                "example": "Two students are fighting in class. If you say, “They broke the rule, so they should be punished,” you care more about rules.",
+                "dimension": "T"
+            },
+            {
+                "text": "Understanding feelings?",
+                "example": "Two students are fighting in class. If you say, “Maybe they were feeling angry or sad,” you care more about feelings.",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "title": "Are you more drawn to:",
+        "options": [
+            {
+                "text": "Logical and convincing ideas?",
+                "example": "You watch a speech. If you like it because it gives strong reasons and facts, you are drawn to convincing ideas (option a).",
+                "dimension": "T"
+            },
+            {
+                "text": "Emotional and heart-touching ideas?",
+                "example": "You watch a speech. If you like it because it makes you feel something or touches your heart, you are drawn to emotional ideas (option b).",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "title": "How do you prefer to work?",
+        "options": [
+            {
+                "text": "By setting a fixed time",
+                "example": "You have homework to do. If you say, “I will do my homework at 5 PM every day,” you are choosing to work with a fixed time — that’s option (a).",
+                "dimension": "J"
+            },
+            {
+                "text": "Whenever you feel like it",
+                "example": "You have homework to do. If you say, “I’ll do my homework whenever I feel like it,” you are going with your mood or feeling — that’s option (b).",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "title": "When you make decisions, do you:",
+        "options": [
+            {
+                "text": "Think carefully before deciding?",
+                "example": "You see a new mobile phone that you really like. If you say, “Let me check my budget and think if I really need it,” you are making a careful decision.",
+                "dimension": "T"
+            },
+            {
+                "text": "Decide based on your feelings?",
+                "example": "You see a new mobile phone that you really like. If you say, “It looks cool! I’ll buy it right now,” you are making an emotional decision.",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "title": "Do you usually spend time with your friends:",
+        "options": [
+            {
+                "text": "A lot of time",
+                "example": "It's the weekend and you’re free from schoolwork. If you call your friends, go out, or chat with them for hours, you are someone who spends a lot of time with friends → (a)",
+                "dimension": "E"
+            },
+            {
+                "text": "A little time",
+                "example": "It's the weekend and you’re free from schoolwork. If you prefer staying alone, playing games, or reading without meeting friends much, you are someone who spends a little time with friends → (b)",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "title": "What kind of people get your attention more?",
+        "options": [
+            {
+                "text": "People who are smart and sensible (wise)",
+                "example": "You are sitting in class and two classmates are talking. One gives helpful advice and talks about real problems — you enjoy listening. That means you like wise people. (Option a)",
+                "dimension": "S"
+            },
+            {
+                "text": "People who have creative and unique ideas",
+                "example": "You are sitting in class and two classmates are talking. One shares fun and different ideas, like making a new game or drawing cartoons — you enjoy their creativity. That means you like creative people. (Option b)",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "title": "In your daily life, which question do you think about more?",
+        "options": [
+            {
+                "text": "What is the main point?",
+                "example": "You are given a group project at school. If you say, “First, let’s understand what this project is really about,” you are focusing on the main point (option a).",
+                "dimension": "N"
+            },
+            {
+                "text": "How can we do this?",
+                "example": "You are given a group project at school. If you say, “Let’s figure out how we can finish it step by step,” you are focusing on how to do the work (option b).",
+                "dimension": "S"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "title": "When you make a decision in life, what do you focus on more?",
+        "options": [
+            {
+                "text": "What the situation needs (the need of the time)?",
+                "example": "You promised your friend that you will not play games during study time. But one day your friend feels very sad and wants to play for a little fun. If you say, “Okay, let’s play. Right now my friend needs me,” you are choosing based on the situation → (a)",
+                "dimension": "F"
+            },
+            {
+                "text": "What the rules or principles say?",
+                "example": "You promised your friend that you will not play games during study time. If you say, “No, I promised not to play during study time,” you are following your principles/rules → (b)",
+                "dimension": "T"
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "title": "To pass the time, who would you prefer to talk to?",
+        "options": [
+            {
+                "text": "A new person or a foreigner",
+                "example": "You are waiting at a bus stop, and there is some time before the bus comes. If you feel excited to talk to a new person or someone from another country, you are choosing (a).",
+                "dimension": "E"
+            },
+            {
+                "text": "Someone you already know, like a friend",
+                "example": "You are waiting at a bus stop, and there is some time before the bus comes. If you feel more comfortable talking to your friend or someone you already know, you are choosing (b).",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "title": "Are you more:",
+        "options": [
+            {
+                "text": "Someone who follows a set time and routine?",
+                "example": "It’s Sunday and you plan your day. If you say, “I will study from 4 to 5 PM, then play from 5 to 6 PM,” you are following a set time → (a)",
+                "dimension": "J"
+            },
+            {
+                "text": "Someone who lives life in a relaxed and easy-going way?",
+                "example": "It’s Sunday and you plan your day. If you say, “I’ll study when I feel like it and play when I want,” you are living in a relaxed way → (b)",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "title": "When you have many things to do at once, do you feel:",
+        "options": [
+            {
+                "text": "Excited and motivated?",
+                "example": "You have homework from 3 subjects, a test to study for, and your friend invites you to a game. If you feel excited and say, “Yes! I like being busy and active,” then you are choosing (a).",
+                "dimension": "E"
+            },
+            {
+                "text": "Stressed and upset?",
+                "example": "You have homework from 3 subjects, a test to study for, and your friend invites you to a game. If you feel nervous or upset and say, “It’s too much! I need a break,” then you are choosing (b).",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "title": "Are you usually:",
+        "options": [
+            {
+                "text": "Aware of what’s happening in your friends' and relatives’ lives?",
+                "example": "Your cousin had a birthday last week. If you knew about the birthday, sent wishes, or asked how the party was, you are aware.",
+                "dimension": "E"
+            },
+            {
+                "text": "Unaware of what’s happening in your friends' and relatives’ lives?",
+                "example": "Your cousin had a birthday last week. If you didn’t know it was their birthday and didn’t ask anything, you are unaware.",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 16,
+        "title": "While doing your daily tasks, do you:",
+        "options": [
+            {
+                "text": "Do them the same way as other people?",
+                "example": "Your teacher tells everyone to make a chart for homework. If you make your chart just like your classmates — same colors, same design — then you choose (a).",
+                "dimension": "S"
+            },
+            {
+                "text": "Do them in your own unique way?",
+                "example": "Your teacher tells everyone to make a chart for homework. If you use different colors, add stickers, or design it in your own style — then you choose (b).",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 17,
+        "title": "When a teacher talks to people, how he/she should do?",
+        "options": [
+            {
+                "text": "Say clearly what they want to say",
+                "example": "In class, the teacher is teaching honesty. If the teacher says, “You should always tell the truth. Lying is wrong,” that’s a clear and direct way – like option (a).",
+                "dimension": "S"
+            },
+            {
+                "text": "Explain things using stories or examples",
+                "example": "In class, the teacher is teaching honesty. If the teacher says, “Let me tell you a story about a boy who lied and got into trouble,” that’s teaching by a story or example – like option (b).",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "title": "In relationships, what is more important to you?",
+        "options": [
+            {
+                "text": "Having similar thoughts and opinions",
+                "example": "You and your friend are working on a school project. If you feel happy when you both agree on the same ideas, you like similar thoughts → (a).",
+                "dimension": "T"
+            },
+            {
+                "text": "Respecting each other's feelings even if you think differently",
+                "example": "You and your friend are working on a school project. If you feel happy even when your friend has a different idea but you still understand and care about each other’s feelings, you value feelings more → (b).",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 19,
+        "title": "Is it easier for you to make decisions based on:",
+        "options": [
+            {
+                "text": "Justice and fairness?",
+                "example": "Your two friends had a fight. You are asked to help decide who was right. If you say, “I will listen to both sides and be fair, even if one is my best friend,” you are choosing justice and fairness (option a).",
+                "dimension": "T"
+            },
+            {
+                "text": "Knowing what is good or bad (right or wrong)?",
+                "example": "Your two friends had a fight. If you say, “I feel one friend was kind and the other was mean, so I will support the kind one,” you are choosing based on good and bad (right and wrong) (option b).",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 20,
+        "title": "How do you usually solve a problem?",
+        "options": [
+            {
+                "text": "By compromising (agreeing with others to keep peace)?",
+                "example": "You and your brother both want to watch different TV shows at the same time. If you say, “Let’s watch your show today and mine tomorrow,” you are solving the problem by compromising → (a).",
+                "dimension": "F"
+            },
+            {
+                "text": "By finding out the real reason behind the problem?",
+                "example": "You and your brother both want to watch different TV shows at the same time. If you ask, “Why do we always fight over the remote? Maybe we need a schedule,” you are trying to find the main reason for the problem → (b).",
+                "dimension": "T"
+            }
+        ]
+    },
+    {
+        "id": 21,
+        "title": "In thinking about your future life, are you more:",
+        "options": [
+            {
+                "text": "Serious and determined about your goals?",
+                "example": "You are in class 8 and thinking about how to become a doctor. If you say, 'I will start studying science from now and work hard every year,' you are being serious and determined (option a).",
+                "dimension": "J"
+            },
+            {
+                "text": "Or do you believe things will happen on their own with time?",
+                "example": "You are in class 8 and thinking about how to become a doctor. If you say, 'I will think about it later. Let’s see what happens in the future,' you believe things will happen with time (option b).",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 22,
+        "title": "When you have to talk to someone on the phone for an important reason:",
+        "options": [
+            {
+                "text": "You can do it easily",
+                "example": "You want to call a friend to ask about the school project. If you just call your friend and start talking, that means you choose (a) – you feel confident to talk directly.",
+                "dimension": "E"
+            },
+            {
+                "text": "You practice first and then talk",
+                "example": "You want to call a friend to ask about the school project. If you first think about what to say or say it to yourself, then call your friend, that means you choose (b) – you like to prepare first.",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 23,
+        "title": "When you hear or see a fact, what do you usually think?",
+        "options": [
+            {
+                "text": "The fact speaks for itself.",
+                "example": "Your teacher says, 'Ali got the highest marks in class.' If you think, 'That’s clear! Ali is the smartest, no need to explain more,' then you are choosing (a) – the fact is enough by itself.",
+                "dimension": "S"
+            },
+            {
+                "text": "We understand the fact better when we use rules or logic.",
+                "example": "Your teacher says, 'Ali got the highest marks in class.' If you think, 'Maybe Ali studied hard, followed a study plan, and used good methods – that’s why he got top marks,' then you are choosing (b).",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 24,
+        "title": "When you listen to other people’s opinions, do you feel:",
+        "options": [
+            {
+                "text": "A bit uncomfortable?",
+                "example": "You are in class and someone gives an opinion very different from yours. If you feel upset or confused and don’t like hearing different ideas, then your answer is (a).",
+                "dimension": "I"
+            },
+            {
+                "text": "More interested and curious?",
+                "example": "You are in class and someone gives an opinion very different from yours. If you feel interested and enjoy hearing how others think, even if you don’t agree, then your answer is (b).",
+                "dimension": "E"
+            }
+        ]
+    },
+    {
+        "id": 25,
+        "title": "What kind of personality do you have more?",
+        "options": [
+            {
+                "text": "Calm and cool",
+                "example": "At a birthday party: One friend sits quietly, smiles, and enjoys watching others — this is a calm person.",
+                "dimension": "I"
+            },
+            {
+                "text": "Energetic and excited",
+                "example": "At a birthday party: Another friend is dancing, laughing loudly, and starting games — this is an energetic person.",
+                "dimension": "E"
+            }
+        ]
+    },
+    {
+        "id": 26,
+        "title": "Which seems worse to you:",
+        "options": [
+            {
+                "text": "Being unfair?",
+                "example": "Imagine a teacher is checking students’ test papers. If the teacher gives good marks only to his favorite students and not based on answers, he is being unfair → (Option a).",
+                "dimension": "T"
+            },
+            {
+                "text": "Being unkind (without mercy)?",
+                "example": "Imagine a teacher is checking students’ test papers. If the teacher shouts at a student who made a mistake and makes them cry instead of helping them, he is being unkind → (Option b).",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 27,
+        "title": "In your life, do things happen mostly because:",
+        "options": [
+            {
+                "text": "You choose them to happen?",
+                "example": "You got selected for the school cricket team. If you say, 'I practiced every day and gave trials, that's why I got selected,' then your answer is (a).",
+                "dimension": "J"
+            },
+            {
+                "text": "They just happen by chance?",
+                "example": "You got selected for the school cricket team. If you say, 'I didn’t try much, but somehow they picked me,' then your answer is (b).",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 28,
+        "title": "Which sentence sounds better to you?",
+        "options": [
+            {
+                "text": "If something looks nice, you should just buy it.",
+                "example": "You go to a shop and see a cool watch. If you immediately buy it just because it looks good, you agree with (a).",
+                "dimension": "P"
+            },
+            {
+                "text": "Even if something looks nice, you should still decide carefully whether to buy it or not.",
+                "example": "You go to a shop and see a cool watch. If you think first, check the price, and ask yourself if you really need it, you agree with (b).",
+                "dimension": "J"
+            }
+        ]
+    },
+    {
+        "id": 29,
+        "title": "In class, is it easier for you to:",
+        "options": [
+            {
+                "text": "Share your opinion openly?",
+                "example": "Your teacher asks, 'What do you think about this topic?' If you raise your hand quickly and share your thoughts in front of everyone, you are choosing (a).",
+                "dimension": "E"
+            },
+            {
+                "text": "Or do you find it a little difficult to speak up?",
+                "example": "Your teacher asks, 'What do you think about this topic?' If you feel shy or nervous to speak, even if you have an idea, you are choosing (b).",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 30,
+        "title": "When you give your opinion to someone, do people usually:",
+        "options": [
+            {
+                "text": "Disagree with you only sometimes?",
+                "example": "You tell your friend which game you think is the best. If your friend usually agrees or just says, 'Hmm okay, maybe,' then choose (a).",
+                "dimension": "E"
+            },
+            {
+                "text": "Disagree with you most of the time?",
+                "example": "You tell your friend which game you think is the best. If your friend often says, 'No, I totally disagree!' or laughs at your choice, then choose (b).",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 31,
+        "title": "Children often do not:",
+        "options": [
+            {
+                "text": "Make themselves feel valuable",
+                "example": "A student gets a chance to take part in a school play. If the student says, 'I’m not good enough to act in front of others,' and refuses to try, they are not valuing themselves → (a).",
+                "dimension": "I"
+            },
+            {
+                "text": "Grow or use their imagination",
+                "example": "A student gets a chance to take part in a school play. If the student only memorizes lines but doesn’t act with expression or creativity, they are not using their imagination → (b).",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 32,
+        "title": "Which way helps you make decisions more easily?",
+        "options": [
+            {
+                "text": "By thinking about rules or what is fair (standard)",
+                "example": "Your friend didn’t do their homework, and you're the class monitor. If you say, 'Rules are rules. I have to report it,' you are using standard thinking.",
+                "dimension": "T"
+            },
+            {
+                "text": "By thinking about people’s feelings (feeling)",
+                "example": "Your friend didn’t do their homework, and you're the class monitor. If you say, 'Maybe my friend had a hard time. I should talk to them first,' you are using feeling thinking.",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 33,
+        "title": "Is your personality more:",
+        "options": [
+            {
+                "text": "Strict than kind?",
+                "example": "Imagine a classmate breaks a rule. If you say, 'Rules are rules! They should be punished,' then you're being strict (option a).",
+                "dimension": "T"
+            },
+            {
+                "text": "Kind than strict?",
+                "example": "Imagine a classmate breaks a rule. If you say, 'Maybe they made a mistake. Let’s give them another chance,' then you're being kind (option b).",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 34,
+        "title": "Which skill is more admirable in a job?",
+        "options": [
+            {
+                "text": "The ability to stay organized and work in a proper, planned way?",
+                "example": "You and your friend are asked to decorate a classroom. If you plan everything first, bring the right materials, and decorate step by step — you are using the organized and methodical skill (Option a).",
+                "dimension": "J"
+            },
+            {
+                "text": "The ability to adjust to situations and work with whatever is available?",
+                "example": "You and your friend are asked to decorate a classroom. If you don’t have everything but still manage to decorate nicely by using whatever is available — you are using the adapt and make-do skill (Option b).",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 35,
+        "title": "Which quality do you think is more important?",
+        "options": [
+            {
+                "text": "The ability to think big and without limits (infinite thinking)",
+                "example": "You and your friends are planning a school fun day. If you say, 'Let’s make it like a small theme park with rides and games everywhere!', you're using infinite thinking — dreaming big, even if it's difficult.",
+                "dimension": "N"
+            },
+            {
+                "text": "The ability to listen to others and accept new ideas (open-minded)",
+                "example": "You and your friends are planning a school fun day. If another friend says, 'How about a sports tournament instead?', and you say, 'Hmm, okay, that could work too,' you are being open-minded.",
+                "dimension": "S"
+            }
+        ]
+    },
+    {
+        "id": 36,
+        "title": "When you meet new people or talk in a different way (not like your normal day), how do you feel?",
+        "options": [
+            {
+                "text": "It makes you happy",
+                "example": "Your cousin invites you to a party where you don’t know many people. If you feel excited to meet new people, choose (a).",
+                "dimension": "E"
+            },
+            {
+                "text": "It makes you tired",
+                "example": "Your cousin invites you to a party where you don’t know many people. If you feel shy or tired and want to go home soon, choose (b).",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 37,
+        "title": "Are you more often:",
+        "options": [
+            {
+                "text": "A realistic kind of person?",
+                "example": "You are sitting in class, and the teacher asks, 'What do you want to do in life?' If you say, 'I want to become a doctor and help people in my city,' you are being a realistic person.",
+                "dimension": "S"
+            },
+            {
+                "text": "A dreamer (someone who imagines big or creative ideas)?",
+                "example": "You are sitting in class, and the teacher asks, 'What do you want to do in life?' If you say, 'I want to build a flying school in the clouds where students study with robots,' you are being a dreamer.",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 38,
+        "title": "What do you notice more in people?",
+        "options": [
+            {
+                "text": "How helpful or useful they are",
+                "example": "You meet a new student in your class. If you think, 'This student can help in studies or group work,' you are noticing how useful they are — (option a).",
+                "dimension": "T"
+            },
+            {
+                "text": "How good-looking or beautiful they are",
+                "example": "You meet a new student in your class. If you think, 'This student has nice clothes and a good face,' you are noticing how beautiful they are — (option b).",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 39,
+        "title": "Which feels more satisfying to you:",
+        "options": [
+            {
+                "text": "Talking well about a problem",
+                "example": "Your friend forgets your birthday. If you feel better just by telling them how you felt, choose (a).",
+                "dimension": "F"
+            },
+            {
+                "text": "Reaching an agreement on the problem",
+                "example": "Your friend forgets your birthday. If you feel better only after you both say sorry and move on, choose (b).",
+                "dimension": "T"
+            }
+        ]
+    },
+    {
+        "id": 40,
+        "title": "Who do you listen to more?",
+        "options": [
+            {
+                "text": "Your mind (brain)?",
+                "example": "Your best friend cheated in a test and the teacher asks you if you know anything. If you think, 'Telling the truth is the right thing,' and you tell the teacher, you are using your mind.",
+                "dimension": "T"
+            },
+            {
+                "text": "Your heart (feelings)?",
+                "example": "Your best friend cheated in a test and the teacher asks you if you know anything. If you think, 'I don’t want to hurt my friend,' and you stay quiet, you are listening to your heart.",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 41,
+        "title": "What kind of work feels more comfortable to you?",
+        "options": [
+            {
+                "text": "Work that must be finished within a time limit",
+                "example": "Your teacher gives you a school project. If you like to finish it on time and feel good when there's a deadline, then you prefer option (a) — time-bound work.",
+                "dimension": "J"
+            },
+            {
+                "text": "Work that can be done in a relaxed and easy way",
+                "example": "Your teacher gives you a school project. If you like to work slowly, when you feel ready, without stress, then you prefer option (b) — relaxed work.",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 42,
+        "title": "When you face a problem, do you usually:",
+        "options": [
+            {
+                "text": "Try to find the main cause of the problem?",
+                "example": "You and your classmate argue about who will present the project. If you say, 'Let’s talk and find out what really caused this fight,' you are choosing (a) – finding the main cause.",
+                "dimension": "N"
+            },
+            {
+                "text": "Try to solve it quickly with a compromise?",
+                "example": "You and your classmate argue about who will present the project. If you say, 'Okay, you present this time and I’ll do it next time,' you are choosing (b) – solving with a compromise.",
+                "dimension": "S"
+            }
+        ]
+    },
+    {
+        "id": 43,
+        "title": "What do you prefer:",
+        "options": [
+            {
+                "text": "Having many friends and short conversations?",
+                "example": "At school: If you enjoy saying hi to lots of students and having small chats with many of them, you prefer (a) many friends and short conversations.",
+                "dimension": "E"
+            },
+            {
+                "text": "Having a few close friends and deep connection?",
+                "example": "At school: If you enjoy spending time with just 1 or 2 close friends and talking about deep thoughts or feelings, you prefer (b) a few close friends and strong bond.",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 44,
+        "title": "What would you choose more often:",
+        "options": [
+            {
+                "text": "What is right (Haq)",
+                "example": "Your friend forgot his homework, but you know he studied hard. The teacher asks if she should mark him zero. If you say, 'He worked hard and knows the lesson, so he should not get zero,' you're choosing (a) What is right (Haq).",
+                "dimension": "F"
+            },
+            {
+                "text": "What is fair or by rule (Principle)",
+                "example": "Rules are rules—if homework is not submitted, he should get zero. You're choosing (b) What is fair or by rule.",
+                "dimension": "T"
+            }
+        ]
+    },
+    {
+        "id": 45,
+        "title": "What are you more interested in:",
+        "options": [
+            {
+                "text": "Making and selling things?",
+                "example": "You and your friends are working on a science fair project. If you like to build the model and present it to judges or people, you're more into making and selling.",
+                "dimension": "S"
+            },
+            {
+                "text": "Researching and designing things?",
+                "example": "You and your friends are working on a science fair project. If you like to think about new ideas, experiment, and plan how to make the project better, you're more into research and design.",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 46,
+        "title": "Which compliment is better?",
+        "options": [
+            {
+                "text": "This person is always helpful when needed",
+                "example": "Two students help their classmates in different ways. Ali always helps others with homework or carries someone’s bag when they’re hurt. He is helpful when people need support. → (a)",
+                "dimension": "T"
+            },
+            {
+                "text": "This person cares about other people’s feelings",
+                "example": "Sara always listens when someone is sad or upset. She says kind words and tries not to hurt anyone’s feelings. She cares about emotions. → (b)",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 47,
+        "title": "Which quality do you see more in yourself?",
+        "options": [
+            {
+                "text": "Strong thinking (Clear reason)",
+                "example": "Your little brother broke your headphones. If you say, 'You broke it, so you should pay for it or tell mom,' you're showing strong thinking (thinking with fairness and logic).",
+                "dimension": "T"
+            },
+            {
+                "text": "Caring thinking (Helping or kind-hearted)",
+                "example": "Your little brother broke your headphones. If you say, 'It’s okay, you didn’t mean it. I’ll fix it or buy a new one later,' you're showing caring thinking (thinking with heart and kindness).",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 48,
+        "title": "What kind of answer do you usually like more?",
+        "options": [
+            {
+                "text": "A final and unchangeable answer",
+                "example": "You had a fight with your best friend. They say, 'Yes, we will always be best friends, no matter what.' If you like hearing something clear and sure, choose (a).",
+                "dimension": "J"
+            },
+            {
+                "text": "A possible or first idea that can change later",
+                "example": "They say, 'Let’s see how things go. I still care about you, but I need some time.' If you're okay with an answer that leaves room for change, choose (b).",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 49,
+        "title": "When do you feel more relaxed?",
+        "options": [
+            {
+                "text": "After making a decision",
+                "example": "You are deciding whether to go on a school trip or not. If you feel calm after saying 'Yes, I’ll go' or 'No, I’ll stay,' then you are more relaxed after making a decision → (a)",
+                "dimension": "J"
+            },
+            {
+                "text": "Before making a decision",
+                "example": "If you feel calm before making the choice and feel tense after deciding, then you are more relaxed before the decision → (b)",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 50,
+        "title": "Are you:",
+        "options": [
+            {
+                "text": "Someone who can easily talk to strangers for a long time?",
+                "example": "You go to a birthday party and meet new people. If you start talking easily and enjoy the conversation with someone you’ve never met before, you are like option (a).",
+                "dimension": "E"
+            },
+            {
+                "text": "Someone who thinks hard about what to say when talking to strangers?",
+                "example": "If you feel shy or confused and have to think a lot before saying anything, you are like option (b).",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 51,
+        "title": "Do you mostly trust your:",
+        "options": [
+            {
+                "text": "Own experience?",
+                "example": "You are choosing where to sit in the classroom. If you think, 'Last time I sat near the front and I could hear the teacher well, so I’ll sit there again,' you are trusting your experience.",
+                "dimension": "S"
+            },
+            {
+                "text": "Guess or feeling in your heart (hunch)?",
+                "example": "If you think, 'I feel like sitting near the window today will be nice,' even without any reason, you are trusting your hunch (feeling).",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 52,
+        "title": "Do you feel you are more:",
+        "options": [
+            {
+                "text": "Practical than clever or creative?",
+                "example": "You have a school project due tomorrow. If you follow the teacher’s instructions exactly and finish it on time — that shows you are practical.",
+                "dimension": "S"
+            },
+            {
+                "text": "Clever or creative than practical?",
+                "example": "If you think of a new, fun way to present it with extra creativity — that shows you are clever or creative.",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 53,
+        "title": "Which person should be praised more?",
+        "options": [
+            {
+                "text": "The one who gives clear and logical reasons?",
+                "example": "One friend calmly explains step by step why a certain solution will work. If you feel the first friend should be praised more, choose (a).",
+                "dimension": "T"
+            },
+            {
+                "text": "The one who has strong emotions and feelings?",
+                "example": "The other friend speaks with deep feelings about how much they care and want to help. If you feel this friend should be praised more, choose (b).",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 54,
+        "title": "What quality do you want to see more in yourself?",
+        "options": [
+            {
+                "text": "The ability to be fair and just?",
+                "example": "You and your younger brother both want to use the computer. If you say, 'Let’s make a fair rule — 30 minutes each,' you are trying to be fair and just.",
+                "dimension": "T"
+            },
+            {
+                "text": "The ability to be kind and caring?",
+                "example": "If you say, 'You can use it first because you’ve been waiting patiently,' you are being kind and caring.",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 55,
+        "title": "What do you prefer to do?",
+        "options": [
+            {
+                "text": "Make a plan before starting the work",
+                "example": "You are going to hang out with your friends at the park. If you pack your bag with snacks, water, and a football, and decide what time to go and return — you prefer (a).",
+                "dimension": "J"
+            },
+            {
+                "text": "Start the work right away",
+                "example": "If you just leave the house quickly without thinking too much, and figure things out at the park — you prefer (b).",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 56,
+        "title": "In relationships, when something goes wrong, do you prefer:",
+        "options": [
+            {
+                "text": "To talk again and solve the issue?",
+                "example": "You had a fight with your best friend. If you think, 'We should talk and clear the misunderstanding,' then you choose (a).",
+                "dimension": "F"
+            },
+            {
+                "text": "To wait and let time fix it?",
+                "example": "If you think, 'I’ll stay quiet, maybe with time everything will be fine,' then you choose (b).",
+                "dimension": "T"
+            }
+        ]
+    },
+    {
+        "id": 57,
+        "title": "When the phone rings, do you:",
+        "options": [
+            {
+                "text": "Answer the call right away?",
+                "example": "You are playing a game or helping your mom, and suddenly your phone rings. If you pause the game or leave the task immediately to pick up, you are choosing (a).",
+                "dimension": "J"
+            },
+            {
+                "text": "Finish what you are doing first, then answer the call?",
+                "example": "If you wait to finish the current level in your game or complete your kitchen task first before answering the call, you are choosing (b).",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 58,
+        "title": "Which quality do you have more in yourself?",
+        "options": [
+            {
+                "text": "Strong thinking (Clear and firm opinion)",
+                "example": "Your friend says, 'Let’s play a new game today.' If you say, 'No, I only want to play the game I know,' you are showing strong thinking.",
+                "dimension": "T"
+            },
+            {
+                "text": "Open-minded (Ready to hear new ideas)",
+                "example": "If you say, 'Okay, I’ll try the new game with you,' you are being open-minded.",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 59,
+        "title": "What do you want to achieve in life, based on your priority?",
+        "options": [
+            {
+                "text": "Something that is a basic need",
+                "example": "Imagine you have some money saved. If you use it to buy school books or clothes, that is a need — something important for your life.",
+                "dimension": "S"
+            },
+            {
+                "text": "Something that is a desire or wish",
+                "example": "If you use the money to buy a new video game or cool shoes, that is a desire — something you want but don’t really need.",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 60,
+        "title": "Which seems like the bigger mistake:",
+        "options": [
+            {
+                "text": "Being too emotional or excited",
+                "example": "If you get too emotional when your family doesn't agree with your idea — like getting angry, sad, or overexcited — then (a) might feel like the bigger mistake.",
+                "dimension": "F"
+            },
+            {
+                "text": "Having too many goals or plans",
+                "example": "If you plan too many things at the same time — like learning guitar, starting a YouTube channel, and trying to bake all in one week — and end up doing nothing properly, then (b) might feel like the bigger mistake.",
+                "dimension": "J"
+            }
+        ]
+    },
+    {
+        "id": 61,
+        "title": "What do you see more in yourself?",
+        "options": [
+            {
+                "text": "A strong mind",
+                "example": "Your younger sibling breaks your mobile charger by mistake. If you stay calm and think logically to fix it, you are using your strong mind.",
+                "dimension": "T"
+            },
+            {
+                "text": "A soft heart",
+                "example": "If you feel sad for them and say, 'It’s alright, don’t cry,' you are showing a soft heart — showing care and understanding.",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 62,
+        "title": "Which situation do you like more:",
+        "options": [
+            {
+                "text": "One that is organized and planned",
+                "example": "If you like to make a plan for your weekend — study, play, visit friends — you like an organized day.",
+                "dimension": "J"
+            },
+            {
+                "text": "One that is relaxed and unplanned",
+                "example": "If you like to go with the flow and do whatever you feel like during the day without a fixed plan, you like a relaxed day.",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 63,
+        "title": "In your daily life, are you more:",
+        "options": [
+            {
+                "text": "Responsible than fun-loving?",
+                "example": "If you clean your room first before watching TV, you are responsible.",
+                "dimension": "J"
+            },
+            {
+                "text": "Fun-loving than responsible?",
+                "example": "If you start watching TV or playing first and clean later, you are fun-loving.",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 64,
+        "title": "In your school or community, are you the kind of person who:",
+        "options": [
+            {
+                "text": "Is open, and anyone can come and talk to you easily?",
+                "example": "If any student feels comfortable coming to you to talk, ask questions, or share jokes — you are open.",
+                "dimension": "E"
+            },
+            {
+                "text": "Stays more private, and only a few people can talk to you?",
+                "example": "If only your close friends come to talk to you, you are more private.",
+                "dimension": "I"
+            }
+        ]
+    },
+    {
+        "id": 65,
+        "title": "In books, what do you like more?",
+        "options": [
+            {
+                "text": "Words (written text)",
+                "example": "If you enjoy reading novels with full pages of writing, you prefer words.",
+                "dimension": "S"
+            },
+            {
+                "text": "Pictures or symbols",
+                "example": "If you like books with lots of pictures, diagrams, or comics, you prefer pictures.",
+                "dimension": "N"
+            }
+        ]
+    },
+    {
+        "id": 66,
+        "title": "What is more difficult for you?",
+        "options": [
+            {
+                "text": "To meet and talk to new people",
+                "example": "If making new friends at a party is difficult, then your answer is (a).",
+                "dimension": "I"
+            },
+            {
+                "text": "To work together with others",
+                "example": "If talking to people is easy but working in a group is hard, then your answer is (b).",
+                "dimension": "S"
+            }
+        ]
+    },
+    {
+        "id": 67,
+        "title": "What do you want more for yourself?",
+        "options": [
+            {
+                "text": "The skill to explain reasons clearly",
+                "example": "Your friend is sad. If you explain why it happened and what to do next time, you are choosing skill to explain reasons.",
+                "dimension": "T"
+            },
+            {
+                "text": "The power to show care and understand others (empathy)",
+                "example": "If you sit with them, listen, and say kind words, you are choosing the power to show care.",
+                "dimension": "F"
+            }
+        ]
+    },
+    {
+        "id": 68,
+        "title": "Which seems worse:",
+        "options": [
+            {
+                "text": "Being careless about rules",
+                "example": "If you think 'It’s just a game. No big deal if the rule was broken a little,' then you are okay with being less strict.",
+                "dimension": "P"
+            },
+            {
+                "text": "Being too critical of others",
+                "example": "If you say, 'You always break rules! You should play properly,' then you are being too critical.",
+                "dimension": "J"
+            }
+        ]
+    },
+    {
+        "id": 69,
+        "title": "Which kind of event do you prefer to go to?",
+        "options": [
+            {
+                "text": "An event that is planned and organized",
+                "example": "If you book a table, decide the restaurant, and check the menu before going, you like planned events.",
+                "dimension": "J"
+            },
+            {
+                "text": "An event that is casual and without planning",
+                "example": "If you just go out and decide where to eat when you reach, you like unplanned events.",
+                "dimension": "P"
+            }
+        ]
+    },
+    {
+        "id": 70,
+        "title": "When you joke, is your joking usually:",
+        "options": [
+            {
+                "text": "Planned and thought out?",
+                "example": "If you think before making a joke and plan your words, you are choosing planned.",
+                "dimension": "J"
+            },
+            {
+                "text": "Natural and just comes out?",
+                "example": "If you say something funny suddenly without thinking much, you are choosing natural.",
+                "dimension": "P"
+            }
+        ]
+    }
+]
