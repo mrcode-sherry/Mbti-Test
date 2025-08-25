@@ -135,8 +135,12 @@ const TestQuiz = () => {
     );
   }
 
+  // Add RTL for Urdu
+  const isUrdu = language === 'ur';
+  const directionClass = isUrdu ? 'text-right' : 'text-left';
+
   return (
-    <div className="max-w-4xl mx-auto bg-white mt-10 p-8 rounded-xl shadow-md">
+    <div className={`max-w-4xl mx-auto bg-white mt-10 p-8 rounded-xl shadow-md ${directionClass}`}>
       <div className="flex justify-between mb-6">
         <p className="text-sm text-gray-500">
           Language: <strong>{language === 'en' ? 'English' : 'اردو'}</strong>
@@ -155,13 +159,14 @@ const TestQuiz = () => {
             onClick={() => handleOptionSelect(option, index)}
             className={`cursor-pointer border rounded-xl p-5 transition ${selectedOptionIndex === index ? 'border-green-700 shadow-md' : 'border-gray-300'}`}
           >
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-5 h-5 rounded-full border-2 border-green-700 flex items-center justify-center">
+            <div className={`flex items-center gap-3 mb-3 ${isUrdu ? 'flex-row-reverse' : ''}`}>
+              {/* Circle fixed size so it never stretches */}
+              <div className="w-5 h-5 flex-shrink-0 rounded-full border-2 border-green-700 flex items-center justify-center">
                 {selectedOptionIndex === index && <div className="w-2 h-2 rounded-full bg-green-700" />}
               </div>
               <p className="font-medium">{option.text}</p>
             </div>
-            <div className="bg-gray-50 p-3 rounded-lg text-sm text-gray-600">
+            <div className="bg-gray-100 p-5 rounded-lg text-sm text-gray-600">
               <p className="font-semibold mb-1">{language === 'en' ? 'Example:' : 'مثال:'}</p>
               <p>{option.example}</p>
             </div>
@@ -170,7 +175,7 @@ const TestQuiz = () => {
       </div>
 
       {selectedOptionIndex !== null && (
-        <div className="flex justify-end mt-8">
+        <div className={`flex ${isUrdu ? 'justify-start' : 'justify-end'} mt-8`}>
           <button onClick={handleNext} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg">
             {currentIndex + 1 < questions.length ? 'Next' : 'Finish'}
           </button>
