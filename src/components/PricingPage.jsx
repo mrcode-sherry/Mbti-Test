@@ -17,11 +17,11 @@ const FeatureItem = ({ text }) => (
 
 const PricingPage = () => {
   const [user, setUser] = useState(null);
-  const [hasSubmittedTestForm, setHasSubmittedTestForm] = useState(false); // popup form
-  const [hasCompletedTest, setHasCompletedTest] = useState(false); // actual test
+  const [hasSubmittedTestForm, setHasSubmittedTestForm] = useState(false);
+  const [hasCompletedTest, setHasCompletedTest] = useState(false);
   const [isProofPopupOpen, setIsProofPopupOpen] = useState(false);
   const [isTestPopupOpen, setIsTestPopupOpen] = useState(false);
-  const [isWaitPopupOpen, setIsWaitPopupOpen] = useState(false);
+  const [proofStatus, setProofStatus] = useState("none"); // ✅ new: track proof status
   const [checkingStatus, setCheckingStatus] = useState(false);
   const router = useRouter();
 
@@ -35,8 +35,7 @@ const PricingPage = () => {
       setHasSubmittedTestForm(exists);
       if (exists) localStorage.setItem(`testFormFilled:${email}`, 'true');
       return exists;
-    } catch (err) {
-      console.warn("Test form check failed, using localStorage fallback", err);
+    } catch {
       const fallback = localStorage.getItem(`testFormFilled:${email}`) === 'true';
       setHasSubmittedTestForm(fallback);
       return fallback;
@@ -52,8 +51,7 @@ const PricingPage = () => {
       const completed = data?.completed === true;
       setHasCompletedTest(completed);
       return completed;
-    } catch (err) {
-      console.warn("Test completion check failed", err);
+    } catch {
       setHasCompletedTest(false);
       return false;
     }
@@ -69,6 +67,7 @@ const PricingPage = () => {
       if (parsed?.email) {
         refreshSubmissionStatus(parsed.email);
         refreshTestCompletion(parsed.email);
+        checkProofStatus(parsed.email);
       }
     } catch {
       setUser(null);
@@ -80,7 +79,6 @@ const PricingPage = () => {
   // ✅ Central Proof Status Checker
   const checkProofStatus = async (email) => {
     if (!email) return "none";
-
     try {
       const res = await fetch(`/api/screenshotfetch?email=${encodeURIComponent(email)}`, { cache: 'no-store' });
       if (!res.ok) return "none";
@@ -88,36 +86,29 @@ const PricingPage = () => {
       const proofData = await res.json();
       if (proofData.success && proofData.data) {
         const proof = proofData.data;
+        setProofStatus(proof.status); // ✅ update state
 
         if (proof.status === "approved") {
-          // ✅ Check if test is completed
-          const testRes = await fetch(`/api/testSubmission/check?email=${encodeURIComponent(email)}`);
-          const testData = await testRes.json();
-
-          if (testData.completed) {
-            router.push("/result");
-          } else {
-            router.push("/start_test");
-          }
-
+          refreshTestCompletion(email);
           return "approved";
         }
-
-        if (proof.status === "pending") {
-          setIsWaitPopupOpen(true);
-          return "pending";
-        }
-
-        if (proof.status === "rejected") {
-          alert("❌ Your proof was rejected. Please re-submit or contact support.");
-          return "rejected";
-        }
+        return proof.status;
       }
     } catch (err) {
       console.error("Proof check error:", err);
     }
-
     return "none";
+  };
+
+  // ✅ Auto-refresh proof status callback
+  const handleProofSubmitted = async () => {
+    if (!user?.email) return;
+    setProofStatus("pending"); // immediately show pending
+    // Poll until status changes
+    const interval = setInterval(async () => {
+      const status = await checkProofStatus(user.email);
+      if (status !== "pending") clearInterval(interval);
+    }, 2000);
   };
 
   // ✅ Handle Send Proof Button Click
@@ -126,11 +117,10 @@ const PricingPage = () => {
       router.push('/login');
       return;
     }
+    if (checkingStatus) return;
 
-    if (checkingStatus) return; // prevent double clicks
     setCheckingStatus(true);
     try {
-      // 1. Check if test form is submitted
       const submitted = await refreshSubmissionStatus(user.email);
       if (!submitted) {
         setIsProofPopupOpen(false);
@@ -138,7 +128,6 @@ const PricingPage = () => {
         return;
       }
 
-      // 2. Check proof status
       const status = await checkProofStatus(user.email);
       if (status === "none") {
         setIsTestPopupOpen(false);
@@ -152,7 +141,6 @@ const PricingPage = () => {
   // ✅ Handle Test form submission
   const handleTestFormSubmit = async (formData) => {
     if (!user?.email) return false;
-
     try {
       const payload = { ...formData, email: user.email };
       const res = await fetch('/api/question', {
@@ -288,6 +276,44 @@ const PricingPage = () => {
             </div>
           </div>
         </div>
+
+        {/* ✅ Status Section Below */}
+        {user && (
+          <div className="max-w-3xl mx-auto mt-12 p-6 bg-white shadow rounded-lg text-center">
+            {proofStatus === "pending" && (
+              <p className="text-yellow-600 font-medium">
+                ⏳ Your proof has been submitted. Waiting for admin approval.
+              </p>
+            )}
+
+            {proofStatus === "approved" && !hasCompletedTest && (
+              <button
+                onClick={() => router.push('/start_test')}
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg"
+              >
+                Start Test
+              </button>
+            )}
+
+            {proofStatus === "approved" && hasCompletedTest && (
+              <button
+                onClick={() => router.push('/result')}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
+              >
+                View Result
+              </button>
+            )}
+
+            {proofStatus === "rejected" && (
+              <button
+                onClick={handleSendProofClick}
+                className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg"
+              >
+                Resubmit Proof
+              </button>
+            )}
+          </div>
+        )}
       </section>
 
       <FaqSection />
@@ -298,38 +324,12 @@ const PricingPage = () => {
         onClose={() => setIsTestPopupOpen(false)}
         onSubmit={handleTestFormSubmit}
       />
-
       <PaymentProofPopup
         isOpen={isProofPopupOpen}
         onClose={() => setIsProofPopupOpen(false)}
         userEmail={user?.email || ''}
+        onProofSubmitted={handleProofSubmitted} // ✅ auto-refresh after submit
       />
-
-      {/* ✅ Wait Popup */}
-      {isWaitPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
-            <button
-              onClick={() => setIsWaitPopupOpen(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
-            >
-              <X size={20} />
-            </button>
-
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Proof Submitted</h2>
-            <p className="text-gray-600 text-sm mb-6">
-              ⏳ Your proof has been submitted. Please wait for admin approval within 24 hours. <br />
-              If not approved, you can try re-submitting or{' '}
-              <button
-                onClick={() => router.push('/contact')}
-                className="text-blue-600 underline"
-              >
-                contact us
-              </button>.
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

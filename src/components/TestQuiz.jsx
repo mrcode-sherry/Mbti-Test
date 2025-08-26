@@ -52,7 +52,6 @@ const TestQuiz = () => {
   const getQuestions = () => (language === 'en' ? questionsEn : questionsUr);
 
   const calculateResult = () => {
-    // Initialize counts for all dimensions
     const counts = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
 
     selectedAnswers.forEach(ans => {
@@ -61,7 +60,6 @@ const TestQuiz = () => {
       }
     });
 
-    // Calculate MBTI type
     return (
       (counts.E >= counts.I ? 'E' : 'I') +
       (counts.S >= counts.N ? 'S' : 'N') +
@@ -89,11 +87,10 @@ const TestQuiz = () => {
             body: JSON.stringify({ email: user.email, answers: selectedAnswers, result })
           });
 
-          // Save multiple attempts
           const prevResults = JSON.parse(localStorage.getItem('testResults') || '[]');
           prevResults.push(result);
           localStorage.setItem('testResults', JSON.stringify(prevResults));
-          localStorage.setItem('testResult', result); // latest attempt
+          localStorage.setItem('testResult', result);
 
           router.push('/result');
         }
@@ -135,9 +132,23 @@ const TestQuiz = () => {
     );
   }
 
-  // Add RTL for Urdu
   const isUrdu = language === 'ur';
   const directionClass = isUrdu ? 'text-right' : 'text-left';
+
+  // ✅ Checklist points (English/Urdu)
+  const checklist = language === 'en'
+    ? [
+        "70 Multiple Choice Questions",
+        "Choose Marital Status & Language",
+        "Result in PDF & Animated Video Format",
+        "Based on 16 MBTI Personality Types"
+      ]
+    : [
+        "70 کثیر الانتخاب سوالات",
+        "ازدواجی حیثیت اور زبان منتخب کریں",
+        "نتیجہ پی ڈی ایف اور ویڈیو فارمیٹ میں",
+        "16 MBTI شخصیات کی بنیاد پر نتیجہ"
+      ];
 
   return (
     <div className={`max-w-4xl mx-auto bg-white mt-10 p-8 rounded-xl shadow-md ${directionClass}`}>
@@ -150,6 +161,23 @@ const TestQuiz = () => {
         </p>
       </div>
 
+      {/* ✅ Checklist block with RTL support */}
+      <div className="grid md:grid-cols-1 gap-3 mb-6 bg-gray-100 p-4 rounded-lg">
+        {checklist.map((item, idx) => (
+          <div
+            key={idx}
+            className={`flex items-center gap-2 text-green-700 font-medium ${
+              isUrdu ? 'flex-row-reverse text-right' : ''
+            }`}
+          >
+            <span className="w-5 h-5 flex items-center justify-center rounded-full border-2 border-green-700">
+              ✓
+            </span>
+            <p>{item}</p>
+          </div>
+        ))}
+      </div>
+
       <h3 className="text-xl font-semibold mb-6">{currentQuestion.title}</h3>
 
       <div className="grid md:grid-cols-2 gap-8">
@@ -157,10 +185,11 @@ const TestQuiz = () => {
           <div
             key={index}
             onClick={() => handleOptionSelect(option, index)}
-            className={`cursor-pointer border rounded-xl p-5 transition ${selectedOptionIndex === index ? 'border-green-700 shadow-md' : 'border-gray-300'}`}
+            className={`cursor-pointer border rounded-xl p-5 transition ${
+              selectedOptionIndex === index ? 'border-green-700 shadow-md' : 'border-gray-300'
+            }`}
           >
             <div className={`flex items-center gap-3 mb-3 ${isUrdu ? 'flex-row-reverse' : ''}`}>
-              {/* Circle fixed size so it never stretches */}
               <div className="w-5 h-5 flex-shrink-0 rounded-full border-2 border-green-700 flex items-center justify-center">
                 {selectedOptionIndex === index && <div className="w-2 h-2 rounded-full bg-green-700" />}
               </div>
