@@ -29,9 +29,10 @@ const ratings = [
 const AboutPage = () => {
   return (
     <div className="bg-white text-[#14442E]">
-        <PageBanner title="About Us" backgroundImage="/Banners/about-banner.jpg" />
+      <PageBanner title="About Us" backgroundImage="/Banners/about-banner.jpg" />
+
       {/* Section 1: About Info */}
-      <section className="py-16 px-12 text-center">
+      <section className="py-16 md:px-16 px-8 text-center">
         {/* Top Heading */}
         <div className="flex items-center justify-center gap-4 mb-4">
           <div className="w-12 h-px bg-[#14442E] opacity-40" />
@@ -39,7 +40,7 @@ const AboutPage = () => {
           <div className="w-12 h-px bg-[#14442E] opacity-40" />
         </div>
 
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <h2 className="text-[29px] md:text-4xl font-bold mb-4">
           Discover Yourself with the MBTI Personality Test
         </h2>
 
@@ -49,23 +50,27 @@ const AboutPage = () => {
           With personalized results, animated videos, and PDF downloads, we’re helping thousands understand themselves better every day.
         </p>
 
-        <div className="grid gap-14 md:grid-cols-4 grid-cols-2">
+        {/* Ratings Grid */}
+        <div className="grid gap-14 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
           {ratings.map((item, index) => (
-            <div key={index} className="flex flex-col justify-between items-center gap-4 bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-lg transition">
+            <div
+              key={index}
+              className="flex flex-col justify-between items-center gap-4 bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-lg transition"
+            >
               <div className="w-20 h-20 flex items-center justify-center rounded-full bg-white shadow-inner">
                 {item.icon}
               </div>
-              <div className="bg-[#14442E] text-white font-semibold px-8 py-1 rounded-md flex items-center gap-4 text-[25px]">
+              <div className="bg-[#14442E] text-white font-semibold px-8 py-1 rounded-md flex items-center gap-4 text-[22px] sm:text-[25px]">
                 {item.value} <Star size={20} className="text-yellow-400" />
               </div>
-              <p className="text-[18px] font-bold">{item.label}</p>
+              <p className="text-[16px] sm:text-[18px] font-bold">{item.label}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Section 2: Testimonials */}
-      <section className="">
+      <section>
         <Testimonial />
       </section>
     </div>

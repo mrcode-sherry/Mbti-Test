@@ -20,7 +20,7 @@ const ResultPage = () => {
   if (!result) return null;
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-8 bg-white rounded-xl shadow-md">
+    <div className="max-w-4xl mx-auto pt-10 p-8 bg-white text-black rounded-xl shadow-md">
       <h2 className="text-3xl font-bold mb-4">{result.title}</h2>
       <p className="text-lg mb-6">{result.welcomeMessage}</p>
 

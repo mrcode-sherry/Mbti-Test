@@ -191,7 +191,7 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
 
           {/* STEP 3: TID */}
           {step === 3 && (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="text-gray-800 space-y-4">
               <h2 className="text-xl font-bold text-[#14442E] mb-4 text-center">
                 Enter TID Number
               </h2>
@@ -200,7 +200,7 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
                 value={tid}
                 onChange={(e) => setTid(e.target.value)}
                 placeholder="Enter TID number"
-                className="w-full border rounded-lg p-2"
+                className="w-full border rounded-lg p-2 text-gray-800"
               />
               <div className="flex justify-between mt-6">
                 <button

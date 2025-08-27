@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-// Import your actual JSON files
-import questionsEn from '../data/questions.en.json'; // English questions
-import questionsUr from '../data/questions.ur.json'; // Urdu questions
-import resultsData from '../data/results.json'; // Result mapping
+import questionsEn from '../data/questions.en.json';
+import questionsUr from '../data/questions.ur.json';
+import resultsData from '../data/results.json';
 
 const TestQuiz = () => {
   const [isClient, setIsClient] = useState(false);
@@ -106,7 +105,7 @@ const TestQuiz = () => {
   if (!language) {
     return (
       <div className="max-w-xl mx-auto p-6 text-center bg-white rounded-xl shadow-md mt-10">
-        <h2 className="text-2xl font-bold mb-4">Select Language</h2>
+        <h2 className="text-2xl font-bold text-black mb-4">Select Language</h2>
         <p className="text-sm text-gray-500 mb-6">Once selected, test will begin and can't be repeated.</p>
         <div className="flex justify-center gap-4">
           <button onClick={() => handleLanguageSelect('en')} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg">
@@ -135,7 +134,6 @@ const TestQuiz = () => {
   const isUrdu = language === 'ur';
   const directionClass = isUrdu ? 'text-right' : 'text-left';
 
-  // ✅ Checklist points (English/Urdu)
   const checklist = language === 'en'
     ? [
         "70 Multiple Choice Questions",
@@ -151,8 +149,9 @@ const TestQuiz = () => {
       ];
 
   return (
-    <div className={`max-w-4xl mx-auto bg-white mt-10 p-8 rounded-xl shadow-md ${directionClass}`}>
-      <div className="flex justify-between mb-6">
+    <div className={`max-w-4xl mx-auto bg-white mt-6 p-4 sm:p-6 md:p-8 rounded-xl shadow-md ${directionClass}`}>
+      {/* ✅ Progress Bar + Language */}
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-6">
         <p className="text-sm text-gray-500">
           Language: <strong>{language === 'en' ? 'English' : 'اردو'}</strong>
         </p>
@@ -161,41 +160,43 @@ const TestQuiz = () => {
         </p>
       </div>
 
-      {/* ✅ Checklist block with RTL support */}
-      <div className="grid md:grid-cols-1 gap-3 mb-6 bg-gray-100 p-4 rounded-lg">
+      {/* ✅ Checklist block */}
+      <div className="grid gap-3 mb-6 bg-gray-100 p-3 sm:p-4 rounded-lg">
         {checklist.map((item, idx) => (
           <div
             key={idx}
-            className={`flex items-center gap-2 text-green-700 font-medium ${
+            className={`flex items-start sm:items-center gap-2 text-green-700 font-medium ${
               isUrdu ? 'flex-row-reverse text-right' : ''
             }`}
           >
-            <span className="w-5 h-5 flex items-center justify-center rounded-full border-2 border-green-700">
+            <span className="w-5 h-5 flex items-center justify-center rounded-full border-2 border-green-700 flex-shrink-0">
               ✓
             </span>
-            <p>{item}</p>
+            <p className="text-sm sm:text-base">{item}</p>
           </div>
         ))}
       </div>
 
-      <h3 className="text-xl font-semibold mb-6">{currentQuestion.title}</h3>
+      {/* ✅ Question */}
+      <h3 className="text-lg sm:text-xl font-semibold mb-6 text-gray-700">{currentQuestion.title}</h3>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      {/* ✅ Options grid responsive */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
         {currentQuestion.options.map((option, index) => (
           <div
             key={index}
             onClick={() => handleOptionSelect(option, index)}
-            className={`cursor-pointer border rounded-xl p-5 transition ${
+            className={`cursor-pointer border rounded-xl p-4 sm:p-5 transition ${
               selectedOptionIndex === index ? 'border-green-700 shadow-md' : 'border-gray-300'
             }`}
           >
-            <div className={`flex items-center gap-3 mb-3 ${isUrdu ? 'flex-row-reverse' : ''}`}>
+            <div className={`flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 ${isUrdu ? 'flex-row-reverse' : ''}`}>
               <div className="w-5 h-5 flex-shrink-0 rounded-full border-2 border-green-700 flex items-center justify-center">
                 {selectedOptionIndex === index && <div className="w-2 h-2 rounded-full bg-green-700" />}
               </div>
-              <p className="font-medium">{option.text}</p>
+              <p className="font-medium text-sm sm:text-base text-gray-700">{option.text}</p>
             </div>
-            <div className="bg-gray-100 p-5 rounded-lg text-sm text-gray-600">
+            <div className="bg-gray-100 p-3 sm:p-5 rounded-lg text-xs sm:text-sm text-gray-600">
               <p className="font-semibold mb-1">{language === 'en' ? 'Example:' : 'مثال:'}</p>
               <p>{option.example}</p>
             </div>
@@ -203,9 +204,10 @@ const TestQuiz = () => {
         ))}
       </div>
 
+      {/* ✅ Next/Finish button */}
       {selectedOptionIndex !== null && (
-        <div className={`flex ${isUrdu ? 'justify-start' : 'justify-end'} mt-8`}>
-          <button onClick={handleNext} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg">
+        <div className={`flex ${isUrdu ? 'justify-start' : 'justify-end'} mt-6 sm:mt-8`}>
+          <button onClick={handleNext} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-4 sm:px-6 py-2 rounded-lg text-sm sm:text-base">
             {currentIndex + 1 < questions.length ? 'Next' : 'Finish'}
           </button>
         </div>

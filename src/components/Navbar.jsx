@@ -71,7 +71,7 @@ const Navbar = () => {
 
   return (
     <header className="shadow-sm bg-white sticky top-0 z-50">
-      <nav className="flex items-center justify-between px-12 py-4">
+      <nav className="flex items-center justify-between md:px-16 px-8 py-4">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 bg-green-500 rounded-sm" />
           <span className="text-xl font-bold text-[#14442E]">MBTI test</span>
@@ -118,7 +118,7 @@ const Navbar = () => {
       </nav>
 
       {isOpen && (
-        <div className="md:hidden bg-white px-6 pb-4">
+        <div className="md:hidden bg-white px-8 pb-4">
           <ul className="flex flex-col gap-4 text-[#14442E] font-medium">
             <li><Link href="/" onClick={toggleMenu}>Home</Link></li>
             <li><Link href="/about" onClick={toggleMenu}>About</Link></li>
@@ -137,7 +137,7 @@ const Navbar = () => {
                     handleLogout();
                     toggleMenu();
                   }}
-                  className="bg-red-500 text-white px-4 py-1 rounded w-fit"
+                  className="bg-[#14442E] text-white px-4 py-1 rounded w-fit"
                 >
                   Logout
                 </button>

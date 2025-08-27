@@ -5,7 +5,7 @@ import { ArrowRightCircle } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#14442E] text-white py-12 px-12">
+    <footer className="bg-[#14442E] text-white py-12 md:px-16 px-8">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
         {/* Column 1: Logo + Description */}
@@ -55,7 +55,7 @@ const Footer = () => {
             />
             <button
               type="submit"
-              className="bg-white text-[#14442E] px-4 py-2 -ml-15 rounded-md font-medium hover:bg-gray-100 transition"
+              className="bg-white text-[#14442E] px-4 py-2 md:-ml-15 rounded-md font-medium hover:bg-gray-100 transition"
             >
               Subscribe
             </button>

@@ -51,11 +51,11 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
   return (
     <div className="fixed inset-0 bg-black/90 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl px-10 py-7 overflow-y-auto max-h-[90vh]">
-        <h2 className="text-xl font-bold text-[#14442E] mb-4">Start Your Test</h2>
+        <h2 className="text-[20px] md:text-2xl font-bold text-[#14442E] mb-4">Start Your Test</h2>
 
         {error && <p className="text-red-600 mb-3">{error}</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 text-gray-800">
           <div>
             <label className="block font-medium mb-1">Full Name</label>
             <input
@@ -71,12 +71,12 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
 
           <div>
             <label className="block font-medium mb-1">Phone Number</label>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <select
                 name="countryCode"
                 value={formData.countryCode}
                 onChange={handleChange}
-                className="border p-2 rounded w-28"
+                className="border p-2 rounded w-full sm:w-28"
                 required
               >
                 <option value="+92">+92 (PK)</option>
@@ -92,7 +92,7 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
                 placeholder="Phone Number"
                 value={formData.phoneNumber}
                 onChange={handleChange}
-                className="border p-2 rounded flex-1"
+                className="border p-2 rounded w-full flex-1"
                 required
               />
             </div>

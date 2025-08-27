@@ -38,9 +38,9 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="bg-white py-16 px-12">
+    <section className="bg-white py-16 md:px-16 px-8">
       <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-3xl font-bold text-[#14442E] mb-4">How It Works</h2>
+        <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-4">How It Works</h2>
         <p className="text-gray-600 max-w-xl mx-auto mb-10">
           Follow these simple steps to discover your MBTI personality type.
         </p>

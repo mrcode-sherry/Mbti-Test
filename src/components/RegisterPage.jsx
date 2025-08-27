@@ -44,7 +44,7 @@ const RegisterPage = () => {
   return (
     <div>
       <PageBanner title="Registration" backgroundImage="/Banners/about-banner.jpg" />
-      <section className="py-16 px-6 bg-gray-100">
+      <section className="py-16 md:px-16 px-8 bg-gray-100">
         <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md border border-gray-200">
           <h2 className="text-2xl font-bold text-center text-[#14442E] mb-6">
             Create Your Account
@@ -62,7 +62,7 @@ const RegisterPage = () => {
             </p>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5 text-gray-800">
             {/* Name */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">

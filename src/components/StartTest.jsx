@@ -11,12 +11,12 @@ const StartTest = () => {
   };
 
   return (
-    <section className="bg-gray-100 py-16 px-12">
+    <section className="bg-gray-100 py-16 md:px-16 px-8">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
         
         {/* Left Side: Details */}
         <div className="flex-1">
-          <h2 className="text-3xl font-bold text-[#14442E] mb-4">Start Your MBTI Test</h2>
+          <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-4">Start Your MBTI Test</h2>
           <p className="text-gray-700 text-sm mb-6">
             Our test is based on 70 scientifically designed MCQs. It will help you understand your unique personality type and behavior patterns.
           </p>

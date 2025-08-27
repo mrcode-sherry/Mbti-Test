@@ -176,7 +176,7 @@ const PricingPage = () => {
     <div>
       <PageBanner title="Pricing Plan" backgroundImage="/Banners/about-banner.jpg" />
 
-      <section className="bg-gray-100 py-16 px-6 md:px-12">
+      <section className="bg-gray-100 py-16 md:px-16 px-8">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-4 mb-4">
             <div className="w-12 h-px bg-[#14442E] opacity-40" />
@@ -185,7 +185,7 @@ const PricingPage = () => {
             </p>
             <div className="w-12 h-px bg-[#14442E] opacity-40" />
           </div>
-          <p className="text-3xl md:text-5xl font-bold md:w-[1100px] w-full mx-auto mb-4">
+          <p className="text-[29px] md:text-4xl text-black font-bold md:w-[1100px] w-full mx-auto mb-4">
             Start Your{' '}
             <span className="text-green-700 font-semibold underline">MBTI Test</span> With Flexible
             Payment Options
@@ -281,27 +281,49 @@ const PricingPage = () => {
         {user && (
           <div className="max-w-3xl mx-auto mt-12 p-6 bg-white shadow rounded-lg text-center">
             {proofStatus === "pending" && (
-              <p className="text-yellow-600 font-medium">
-                ⏳ Your proof has been submitted. Waiting for admin approval.
-              </p>
+              <div className="space-y-2">
+                <p className="text-yellow-600 font-medium">
+                  ⏳ Your proof has been submitted. Waiting for admin approval.
+                </p>
+                {/* ✅ Added extra explanation */}
+                <p className="text-gray-600 text-sm">
+                  Your proof has been received and is currently under review. This usually takes a
+                  few hours. If your proof is not approved within <strong>24 hours</strong>, please{" "}
+                  <a href="/contact" className="text-blue-600 underline">
+                    contact us here
+                  </a>.
+                </p>
+              </div>
             )}
 
             {proofStatus === "approved" && !hasCompletedTest && (
-              <button
-                onClick={() => router.push('/start_test')}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg"
-              >
-                Start Test
-              </button>
+              <div className="text-center space-y-3">
+                <p className="text-gray-700 text-sm">
+                  ✅ Your payment proof has been approved.
+                  You can now begin your MBTI test and answer all 70 questions.
+                  Take your time and answer honestly for accurate results.
+                </p>
+                <button
+                  onClick={() => router.push('/start_test')}
+                  className="bg-[#14442E] text-white px-6 py-2 rounded-lg hover:bg-[#0c2f1e]"
+                >
+                  Start Test
+                </button>
+              </div>
             )}
-
             {proofStatus === "approved" && hasCompletedTest && (
-              <button
-                onClick={() => router.push('/result')}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
-              >
-                View Result
-              </button>
+              <div className="text-center space-y-3">
+                <p className="text-gray-700 text-sm">
+                  🎉 You have successfully completed your MBTI test.
+                  Your personalized results are ready to view now.
+                </p>
+                <button
+                  onClick={() => router.push('/result')}
+                  className="bg-[#14442E] text-white px-6 py-2 rounded-lg hover:bg-[#0c2f1e]"
+                >
+                  View Result
+                </button>
+              </div>
             )}
 
             {proofStatus === "rejected" && (

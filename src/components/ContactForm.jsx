@@ -62,16 +62,20 @@ const ContactForm = () => {
   return (
     <>
       <PageBanner title="Contact Us" backgroundImage="/Banners/about-banner.jpg" />
-      <section className="py-16 px-12 bg-white">
+      <section className="py-16 md:px-16 px-8 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
           {/* Left Side: Form */}
           <div className="flex-1">
-            <h3 className="text-sm uppercase tracking-wide text-gray-500 mb-2">Contact Us</h3>
-            <h2 className="text-3xl font-bold text-[#14442E] mb-6">
+            <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="w-12 h-px bg-[#14442E] opacity-40" />
+          <p className="uppercase text-sm tracking-widest text-[#14442E] font-medium">Contact Us</p>
+          <div className="w-12 h-px bg-[#14442E] opacity-40" />
+        </div>
+            <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-6">
               We're Here To Provide <span className="underline text-[#14442E]">24X7 Support</span>
             </h2>
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 text-gray-800 md:grid-cols-2 gap-6">
               <input
                 type="text"
                 name="firstName"

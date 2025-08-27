@@ -46,7 +46,7 @@ const LoginPage = () => {
     <div>
       <PageBanner title="Login" backgroundImage="/Banners/about-banner.jpg" />
 
-      <section className="py-16 px-6 bg-gray-100">
+      <section className="py-16 md:px-16 px-8 bg-gray-100">
         <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md border border-gray-200">
           <h2 className="text-2xl font-bold text-center text-[#14442E] mb-6">
             Login to Your Account
@@ -64,7 +64,7 @@ const LoginPage = () => {
             </p>
           )}
 
-          <form className="space-y-5" onSubmit={handleSubmit}>
+          <form className="space-y-5 text-gray-800" onSubmit={handleSubmit}>
             {/* Email */}
             <div>
               <label
