@@ -6,18 +6,19 @@ import FooterBar from "@/components/FooterBar";
 export const metadata = {
   title: "MBTI Test App",
   description: "Take your personality test based on MBTI.",
+  icons: {
+    icon: "/favicon.ico", // optional
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
+      <body className="antialiased font-sans">
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
           rel="stylesheet"
         />
-      </head>
-      <body className="antialiased font-sans">
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
