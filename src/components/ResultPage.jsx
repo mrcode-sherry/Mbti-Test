@@ -10,7 +10,7 @@ const ResultPage = () => {
   useEffect(() => {
     const savedResults = JSON.parse(localStorage.getItem('testResults') || '[]');
     if (!savedResults.length) {
-      router.push('/test');
+      router.push('/result');
     } else {
       const latestResult = savedResults[savedResults.length - 1];
       setResult(resultsData.find(r => r.type === latestResult));
