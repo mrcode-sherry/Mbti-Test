@@ -236,7 +236,7 @@ const PricingPage = () => {
               <button
                 onClick={handleSendProofClick}
                 disabled={checkingStatus}
-                className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
+                className="bg-[#14442E] hover:bg-[#0f3a26] cursor-pointer hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {checkingStatus ? 'Checking…' : 'Send Screenshot Proof'}
               </button>
@@ -269,7 +269,7 @@ const PricingPage = () => {
               <button
                 onClick={handleSendProofClick}
                 disabled={checkingStatus}
-                className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
+                className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg cursor-pointer duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {checkingStatus ? 'Checking…' : 'Send Screenshot Proof'}
               </button>
@@ -305,7 +305,7 @@ const PricingPage = () => {
                 </p>
                 <button
                   onClick={() => router.push('/start_test')}
-                  className="bg-[#14442E] text-white px-6 py-2 rounded-lg hover:bg-[#0c2f1e]"
+                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-6 py-2 rounded-lg hover:bg-[#0c2f1e]"
                 >
                   Start Test
                 </button>
@@ -319,7 +319,7 @@ const PricingPage = () => {
                 </p>
                 <button
                   onClick={() => router.push('/result')}
-                  className="bg-[#14442E] text-white px-6 py-2 rounded-lg hover:bg-[#0c2f1e]"
+                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-6 py-2 rounded-lg hover:bg-[#0c2f1e]"
                 >
                   View Result
                 </button>
@@ -329,7 +329,7 @@ const PricingPage = () => {
             {proofStatus === "rejected" && (
               <button
                 onClick={handleSendProofClick}
-                className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg"
+                className="bg-red-600 hover:bg-red-700 cursor-pointer duration-300 text-white px-6 py-2 rounded-lg"
               >
                 Resubmit Proof
               </button>

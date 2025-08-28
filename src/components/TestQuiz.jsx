@@ -108,10 +108,10 @@ const TestQuiz = () => {
         <h2 className="text-2xl font-bold text-black mb-4">Select Language</h2>
         <p className="text-sm text-gray-500 mb-6">Once selected, test will begin and can't be repeated.</p>
         <div className="flex justify-center gap-4">
-          <button onClick={() => handleLanguageSelect('en')} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg">
+          <button onClick={() => handleLanguageSelect('en')} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg cursor-pointer duration-300">
             English
           </button>
-          <button onClick={() => handleLanguageSelect('ur')} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg">
+          <button onClick={() => handleLanguageSelect('ur')} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg cursor-pointer duration-300">
             اردو
           </button>
         </div>
@@ -207,7 +207,7 @@ const TestQuiz = () => {
       {/* ✅ Next/Finish button */}
       {selectedOptionIndex !== null && (
         <div className={`flex ${isUrdu ? 'justify-start' : 'justify-end'} mt-6 sm:mt-8`}>
-          <button onClick={handleNext} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-4 sm:px-6 py-2 rounded-lg text-sm sm:text-base">
+          <button onClick={handleNext} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-4 sm:px-6 py-2 rounded-lg text-sm sm:text-base cursor-pointer duration-300">
             {currentIndex + 1 < questions.length ? 'Next' : 'Finish'}
           </button>
         </div>

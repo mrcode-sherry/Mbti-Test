@@ -48,7 +48,7 @@ const StartTest = () => {
 
           <button
             onClick={handleStartTest}
-            className="inline-block bg-[#14442E] text-white font-medium hover:shadow-lg duration-500 hover:scale-105 px-6 py-3 rounded hover:bg-[#0f3a26] transition"
+            className="inline-block bg-[#14442E] text-white font-medium hover:shadow-lg cursor-pointer duration-500 hover:scale-105 px-6 py-3 rounded hover:bg-[#0f3a26] transition"
           >
             Start Test
           </button>

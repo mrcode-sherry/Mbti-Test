@@ -22,7 +22,7 @@ const Modal = ({ isOpen, onClose, children }) => {
       >
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-600 hover:text-red-600 transition duration-200 text-xl"
+          className="absolute top-3 right-3 cursor-pointer duration-300 text-gray-600 hover:text-red-600 transition text-xl"
         >
           ✖
         </button>
@@ -158,7 +158,7 @@ const DashboardPage = () => {
       <aside className="w-64 bg-[#1B5A3D] text-white p-6 space-y-2">
         <h2 className="text-xl font-bold mb-6">Admin Panel</h2>
         <button
-          className={`block w-full text-left px-4 py-2 rounded cursor-pointer ${
+          className={`block w-full text-left cursor-pointer duration-300 px-4 py-2 rounded ${
             activeTab === "test" ? "bg-gray-600" : "hover:bg-gray-700"
           }`}
           onClick={() => setActiveTab("test")}
@@ -166,7 +166,7 @@ const DashboardPage = () => {
           Test Form Data
         </button>
         <button
-          className={`block w-full text-left px-4 py-2 rounded cursor-pointer ${
+          className={`block w-full text-left px-4 py-2 rounded cursor-pointer duration-300 ${
             activeTab === "contact" ? "bg-gray-600" : "hover:bg-gray-700"
           }`}
           onClick={() => setActiveTab("contact")}
@@ -174,7 +174,7 @@ const DashboardPage = () => {
           Contact Form Data
         </button>
         <button
-          className="block w-full text-center px-4 py-2 mt-5 rounded bg-red-600 cursor-pointer hover:bg-red-700"
+          className="block w-full text-center px-4 py-2 mt-5 rounded bg-red-600 cursor-pointer duration-300 hover:bg-red-700"
           onClick={handleLogout}
         >
           Logout
@@ -218,7 +218,7 @@ const DashboardPage = () => {
                     </span>
                     <button
                       onClick={() => setSelectedTest(t)}
-                      className="ml-4 text-sm text-blue-600 hover:underline"
+                      className="ml-4 text-sm text-blue-600 hover:underline cursor-pointer duration-300"
                     >
                       See More Details
                     </button>
@@ -253,7 +253,7 @@ const DashboardPage = () => {
                     </span>
                     <button
                       onClick={() => setSelectedContact(c)}
-                      className="ml-4 text-sm text-blue-600 hover:underline"
+                      className="ml-4 text-sm text-blue-600 hover:underline cursor-pointer duration-300"
                     >
                       See More Details
                     </button>
@@ -306,13 +306,13 @@ const DashboardPage = () => {
                 <div className="mt-4 space-x-3">
                   <button
                     onClick={() => handleApprove(selectedTest.email)}
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+                    className="bg-green-600 text-white px-4 py-2 cursor-pointer duration-300 rounded-lg hover:bg-green-700"
                   >
                     Approve & Start Test
                   </button>
                   <button
                     onClick={() => handleReject(selectedTest.email)}
-                    className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                    className="bg-red-600 text-white px-4 py-2 rounded-lg cursor-pointer duration-300 hover:bg-red-700"
                   >
                     Reject
                   </button>

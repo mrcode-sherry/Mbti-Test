@@ -43,23 +43,18 @@ const Footer = () => {
 
         {/* Column 4: Newsletter */}
         <div className=''>
-          <h3 className="text-lg font-semibold mb-4">Subscribe to Newsletter</h3>
+          <h3 className="text-lg font-semibold mb-4">Ready to Begin Your Test?</h3>
           <p className="text-sm text-gray-300 mb-3">
-            Get updates about new features, test types, and insights.
+            Click below to start your assessment and discover your insights.
           </p>
-          <form className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="email"
-              placeholder="Your email"
-              className="px-4 py-2 rounded-md text-white border text-sm placeholder-white focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="bg-white text-[#14442E] px-4 py-2 md:-ml-15 rounded-md font-medium hover:bg-gray-100 transition"
-            >
-              Subscribe
-            </button>
-          </form>
+          <Link href="/pricing">
+          <button
+            type="button"
+            className="bg-white text-[#14442E] px-6 py-2 hover:scale-105 duration-300 rounded-md font-medium hover:bg-gray-100 transition w-fit cursor-pointer"
+          >
+            Start Test
+          </button>
+          </Link>
         </div>
       </div>
     </footer>

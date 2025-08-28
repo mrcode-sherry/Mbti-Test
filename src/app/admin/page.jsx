@@ -61,7 +61,7 @@ const AdminLoginPage = () => {
           />
         </div>
 
-        <button type="submit" className="w-full bg-green-700 text-white py-2 rounded hover:bg-green-800">
+        <button type="submit" className="w-full cursor-pointer duration-300 bg-green-700 text-white py-2 rounded hover:bg-green-800">
           Login
         </button>
       </form>

@@ -86,7 +86,7 @@ const FaqSection = () => {
             {/* Question Button */}
             <button
               onClick={() => toggleIndex(index)}
-              className="flex justify-between items-center w-full text-left px-5 py-4 cursor-pointer focus:outline-none transition"
+              className="flex justify-between items-center w-full text-left px-5 py-4 cursor-pointer duration-300 focus:outline-none transition"
             >
               <div className="flex items-start gap-2 text-[#14442E] font-medium flex-1 text-sm sm:text-base">
                 {faq.icon}

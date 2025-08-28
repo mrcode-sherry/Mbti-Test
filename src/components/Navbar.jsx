@@ -112,7 +112,7 @@ const Navbar = () => {
           )}
         </div>
 
-        <button onClick={toggleMenu} className="md:hidden text-[#14442E]">
+        <button onClick={toggleMenu} className="md:hidden text-[#14442E] cursor-pointer duration-300">
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </nav>
@@ -137,7 +137,7 @@ const Navbar = () => {
                     handleLogout();
                     toggleMenu();
                   }}
-                  className="bg-[#14442E] text-white px-4 py-1 rounded w-fit"
+                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-4 py-1 rounded w-fit"
                 >
                   Logout
                 </button>

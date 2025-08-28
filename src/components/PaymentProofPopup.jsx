@@ -124,7 +124,7 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
           {/* Close */}
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-lg"
+            className="absolute top-3 right-3 cursor-pointer duration-300 text-gray-500 hover:text-gray-800 text-lg"
           >
             ✕
           </button>
@@ -138,13 +138,13 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
               <div className="flex flex-col gap-4">
                 <button
                   onClick={() => setStep(2)}
-                  className="bg-[#14442E] text-white px-5 py-3 rounded-lg"
+                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-5 py-3 rounded-lg"
                 >
                   Upload Screenshot
                 </button>
                 <button
                   onClick={() => setStep(3)}
-                  className="bg-[#14442E] text-white px-5 py-3 rounded-lg"
+                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-5 py-3 rounded-lg"
                 >
                   Enter TID Number
                 </button>
@@ -161,7 +161,7 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
               <button
                 type="button"
                 onClick={openCloudinaryWidget}
-                className="bg-[#14442E] text-white px-4 py-2 rounded-lg"
+                className="bg-[#14442E] cursor-pointer duration-300 text-white px-4 py-2 rounded-lg"
               >
                 Open Cloudinary Upload Widget
               </button>
@@ -174,14 +174,14 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="text-gray-600 hover:underline text-sm"
+                  className="text-gray-600 cursor-pointer duration-300 hover:underline text-sm"
                 >
                   ← Back
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="bg-[#14442E] text-white px-5 py-2 rounded-lg"
+                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-5 py-2 rounded-lg"
                 >
                   {submitting ? "Submitting…" : "Submit Proof"}
                 </button>
@@ -206,14 +206,14 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="text-gray-600 hover:underline text-sm"
+                  className="text-gray-600 cursor-pointer duration-300 hover:underline text-sm"
                 >
                   ← Back
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="bg-[#14442E] text-white px-5 py-2 rounded-lg"
+                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-5 py-2 rounded-lg"
                 >
                   {submitting ? "Submitting…" : "Submit Proof"}
                 </button>
@@ -229,7 +229,7 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
           <div className="bg-white rounded-xl shadow-lg w-full max-w-sm p-6 text-center relative">
             <button
               onClick={() => setSuccessPopup(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-lg"
+              className="absolute top-3 right-3 text-gray-500 cursor-pointer duration-300 hover:text-gray-800 text-lg"
             >
               ✕
             </button>
@@ -245,7 +245,7 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
             </p>
             <button
               onClick={() => setSuccessPopup(false)}
-              className="bg-[#14442E] text-white px-5 py-2 rounded-lg"
+              className="bg-[#14442E] cursor-pointer duration-300 text-white px-5 py-2 rounded-lg"
             >
               Close
             </button>
