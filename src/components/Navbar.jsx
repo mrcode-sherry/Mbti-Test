@@ -68,6 +68,13 @@ const Navbar = () => {
     window.location.href = '/login';
   };
 
+  // ✅ Helper function to safely show initials
+  const getUserInitial = () => {
+    if (user?.name && user.name.length > 0) return user.name.charAt(0).toUpperCase();
+    if (user?.email && user.email.length > 0) return user.email.charAt(0).toUpperCase();
+    return "?"; // fallback
+  };
+
   return (
     <>
       {/* ✅ Navbar */}
@@ -109,7 +116,7 @@ const Navbar = () => {
 
                 {/* ✅ User Initial Circle */}
                 <div className="w-9 h-9 flex items-center justify-center rounded-full bg-[#14442E] text-white font-bold uppercase ml-1">
-                  {user?.name ? user.name.charAt(0) : user.email.charAt(0)}
+                  {getUserInitial()}
                 </div>
               </>
             ) : (
@@ -160,7 +167,7 @@ const Navbar = () => {
                     
                     {/* ✅ User Initial Circle in Mobile */}
                     <div className="w-9 h-9 flex items-center justify-center rounded-full bg-[#14442E] text-white font-bold uppercase">
-                      {user?.name ? user.name.charAt(0) : user.email.charAt(0)}
+                      {getUserInitial()}
                     </div>
                   </div>
                 ) : (
