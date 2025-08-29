@@ -1,22 +1,32 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRightCircle } from 'lucide-react';
+import { Facebook, Instagram } from 'lucide-react';
 
 const Footer = () => {
   return (
     <footer className="bg-[#14442E] text-white py-12 md:px-16 px-8">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
-        {/* Column 1: Logo + Description */}
+        {/* Column 1: Logo + Description + Socials */}
         <div>
           <div className="flex items-center gap-2 mb-4">
             <div className="w-6 h-6 bg-green-500 rounded-sm" />
             <span className="text-2xl font-bold">MBTI Test</span>
           </div>
-          <p className="text-gray-300 text-sm leading-relaxed">
-            Explore your unique personality traits with our MBTI-based test system. Multilingual, simple, and insightful for personal and professional growth.
+          <p className="text-gray-300 text-sm leading-relaxed mb-4">
+            Explore your unique personality traits with our MBTI-based test system. Multilingual, simple and professional growth.
           </p>
+
+          {/* Social Icons */}
+          <div className="flex gap-4">
+            <Link href="https://facebook.com" target="_blank" className="hover:text-green-400 transition">
+              <Facebook size={20} />
+            </Link>
+            <Link href="https://instagram.com" target="_blank" className="hover:text-green-400 transition">
+              <Instagram size={20} />
+            </Link>
+          </div>
         </div>
 
         {/* Column 2: Quick Links */}
@@ -34,7 +44,7 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4">Explore</h3>
           <ul className="flex flex-col gap-2 text-sm">
-            <li><Link href="/start-test" className="hover:underline">Start Test</Link></li>
+            <li><Link href="/pricing" className="hover:underline">Start Test</Link></li>
             <li><Link href="/privacy-policy" className="hover:underline">Privacy Policy</Link></li>
             <li><Link href="/terms" className="hover:underline">Terms & Conditions</Link></li>
             <li><Link href="/faq" className="hover:underline">FAQs</Link></li>
@@ -42,18 +52,18 @@ const Footer = () => {
         </div>
 
         {/* Column 4: Newsletter */}
-        <div className=''>
+        <div>
           <h3 className="text-lg font-semibold mb-4">Ready to Begin Your Test?</h3>
           <p className="text-sm text-gray-300 mb-3">
             Click below to start your assessment and discover your insights.
           </p>
           <Link href="/pricing">
-          <button
-            type="button"
-            className="bg-white text-[#14442E] px-6 py-2 hover:scale-105 duration-300 rounded-md font-medium hover:bg-gray-100 transition w-fit cursor-pointer"
-          >
-            Start Test
-          </button>
+            <button
+              type="button"
+              className="bg-white text-[#14442E] px-6 py-2 hover:scale-105 duration-300 rounded-md font-medium hover:bg-gray-100 transition w-fit cursor-pointer"
+            >
+              Start Test
+            </button>
           </Link>
         </div>
       </div>

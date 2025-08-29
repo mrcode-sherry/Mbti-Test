@@ -24,6 +24,7 @@ const ResultPage = () => {
       <h2 className="text-3xl font-bold mb-4">{result.title}</h2>
       <p className="text-lg mb-6">{result.welcomeMessage}</p>
 
+      {/* Meaning */}
       <h3 className="text-xl font-semibold mb-2">Meaning</h3>
       <ul className="list-disc ml-5 mb-6">
         {Object.entries(result.meaning).map(([key, value]) => (
@@ -32,17 +33,53 @@ const ResultPage = () => {
       </ul>
       <p className="mb-6"><strong>Summary:</strong> {result.meaning.summary}</p>
 
+      {/* Lifestyle */}
       <h3 className="text-xl font-semibold mb-2">Lifestyle</h3>
-      <ul className="list-disc ml-5 mb-6">{result.lifestyle.map((item, i) => <li key={i}>{item}</li>)}</ul>
+      <ul className="list-disc ml-5 mb-6">
+        {result.lifestyle.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
 
+      {/* Strengths */}
       <h3 className="text-xl font-semibold mb-2">Strengths</h3>
-      <ul className="list-disc ml-5 mb-6">{result.strengths.map((item, i) => <li key={i}>{item}</li>)}</ul>
+      <ul className="list-disc ml-5 mb-6">
+        {result.strengths.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
 
+      {/* Weaknesses */}
       <h3 className="text-xl font-semibold mb-2">Weaknesses</h3>
-      <ul className="list-disc ml-5 mb-6">{result.weaknesses.map((item, i) => <li key={i}>{item}</li>)}</ul>
+      <ul className="list-disc ml-5 mb-6">
+        {result.weaknesses.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
 
+      {/* Success Meaning */}
+      <h3 className="text-xl font-semibold mb-2">Success Meaning</h3>
+      <ul className="list-disc ml-5 mb-6">
+        {result.successMeaning.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
+
+      {/* Strategies */}
+      <h3 className="text-xl font-semibold mb-2">Strategies</h3>
+      <ul className="list-disc ml-5 mb-6">
+        {result.strategies.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
+
+      {/* Problems */}
+      <h3 className="text-xl font-semibold mb-2">Problems</h3>
+      <ul className="list-disc ml-5 mb-6">
+        {result.problems.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
+
+      {/* Rules */}
+      <h3 className="text-xl font-semibold mb-2">Rules</h3>
+      <ul className="list-disc ml-5 mb-6">
+        {result.rules.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
+
+      {/* Careers */}
       <h3 className="text-xl font-semibold mb-2">Careers</h3>
-      <ul className="list-disc ml-5 mb-6">{result.careers.map((item, i) => <li key={i}>{item}</li>)}</ul>
+      <ul className="list-disc ml-5 mb-6">
+        {result.careers.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
     </div>
   );
 };

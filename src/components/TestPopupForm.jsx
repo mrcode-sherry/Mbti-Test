@@ -20,7 +20,6 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
     collegeInstitute: '',
     universitySemester: '',
     universityDegree: '',
-    universityInstitute: ''
   });
 
   const [loading, setLoading] = useState(false);
@@ -279,18 +278,6 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
                   name="universityDegree"
                   placeholder="University Degree"
                   value={formData.universityDegree}
-                  onChange={handleChange}
-                  className="border p-2 rounded w-full"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block font-medium mb-1">University Institute</label>
-                <input
-                  type="text"
-                  name="universityInstitute"
-                  placeholder="University Institute"
-                  value={formData.universityInstitute}
                   onChange={handleChange}
                   className="border p-2 rounded w-full"
                   required

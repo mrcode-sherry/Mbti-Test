@@ -28,7 +28,6 @@ const Navbar = () => {
               );
               if (res.ok) {
                 const data = await res.json();
-                // ✅ API returns "completed", not "hasSubmitted"
                 setHasSubmitted(data.completed || false);
               }
             } catch (err) {
@@ -70,91 +69,132 @@ const Navbar = () => {
   };
 
   return (
-    <header className="shadow-sm bg-white sticky top-0 z-50">
-      <nav className="flex items-center justify-between md:px-16 px-8 py-4">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-green-500 rounded-sm" />
-          <span className="text-xl font-bold text-[#14442E]">MBTI test</span>
-        </div>
+    <>
+      {/* ✅ Navbar */}
+      <header className="shadow-sm bg-white sticky top-0 z-50">
+        <nav className="flex items-center justify-between md:px-16 px-8 py-4">
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 bg-green-500 rounded-sm" />
+            <span className="text-xl font-bold text-[#14442E]">MBTI test</span>
+          </div>
 
-        <ul className="hidden md:flex items-center gap-6 text-[#14442E] text-[17px] font-medium mx-auto">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/about">About</Link></li>
-          <li><Link href="/pricing">Pricing</Link></li>
-          <li><Link href="/contact">Contact</Link></li>
+          {/* Desktop Menu */}
+          <ul className="hidden md:flex items-center gap-6 text-[#14442E] text-[17px] font-medium mx-auto">
+            <li><Link href="/">Home</Link></li>
+            <li><Link href="/about">About</Link></li>
+            <li><Link href="/pricing">Pricing</Link></li>
+            <li><Link href="/contact">Contact</Link></li>
 
-          {/* Dashboard link → only for admin */}
-          {user?.role === 'admin' && (
-            <li><Link href="/dashboard">Dashboard</Link></li>
-          )}
-
-          {/* ✅ Show Result only if user is normal AND test is completed */}
-          {user && user?.role !== 'admin' && hasSubmitted && (
-            <li><Link href="/result">Result</Link></li>
-          )}
-        </ul>
-
-        <div className="hidden md:flex">
-          {user ? (
-            <button
-              onClick={handleLogout}
-              className="bg-[#14442E] text-[18px] text-white px-4 py-1 rounded hover:shadow-lg duration-500 hover:scale-105 hover:bg-[#0c2f1e] cursor-pointer transition"
-            >
-              Logout
-            </button>
-          ) : (
-            <Link
-              href="/login"
-              className="bg-[#14442E] text-[18px] text-white px-4 py-1 rounded hover:shadow-lg duration-500 hover:scale-105 hover:bg-[#0c2f1e] transition"
-            >
-              Login
-            </Link>
-          )}
-        </div>
-
-        <button onClick={toggleMenu} className="md:hidden text-[#14442E] cursor-pointer duration-300">
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </nav>
-
-      {isOpen && (
-        <div className="md:hidden bg-white px-8 pb-4">
-          <ul className="flex flex-col gap-4 text-[#14442E] font-medium">
-            <li><Link href="/" onClick={toggleMenu}>Home</Link></li>
-            <li><Link href="/about" onClick={toggleMenu}>About</Link></li>
-            <li><Link href="/pricing" onClick={toggleMenu}>Pricing</Link></li>
-            <li><Link href="/contact" onClick={toggleMenu}>Contact</Link></li>
             {user?.role === 'admin' && (
-              <li><Link href="/dashboard" onClick={toggleMenu}>Dashboard</Link></li>
+              <li><Link href="/dashboard">Dashboard</Link></li>
             )}
+
             {user && user?.role !== 'admin' && hasSubmitted && (
-              <li><Link href="/result" onClick={toggleMenu}>Result</Link></li>
+              <li><Link href="/result">Result</Link></li>
             )}
-            <li>
-              {user ? (
+          </ul>
+
+          {/* Desktop Right Side */}
+          <div className="hidden md:flex items-center gap-3">
+            {user ? (
+              <>
+                {/* Logout Button */}
                 <button
-                  onClick={() => {
-                    handleLogout();
-                    toggleMenu();
-                  }}
-                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-4 py-1 rounded w-fit"
+                  onClick={handleLogout}
+                  className="bg-[#14442E] text-[18px] text-white px-4 py-1 rounded hover:shadow-lg duration-500 hover:scale-105 hover:bg-[#0c2f1e] cursor-pointer transition"
                 >
                   Logout
                 </button>
-              ) : (
-                <Link
-                  href="/login"
-                  onClick={toggleMenu}
-                  className="bg-[#14442E] text-white px-4 py-1 rounded w-fit"
-                >
-                  Login
-                </Link>
+
+                {/* ✅ User Initial Circle */}
+                <div className="w-9 h-9 flex items-center justify-center rounded-full bg-[#14442E] text-white font-bold uppercase ml-1">
+                  {user?.name ? user.name.charAt(0) : user.email.charAt(0)}
+                </div>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className="bg-[#14442E] text-[18px] text-white px-4 py-1 rounded hover:shadow-lg duration-500 hover:scale-105 hover:bg-[#0c2f1e] transition"
+              >
+                Login
+              </Link>
+            )}
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button onClick={toggleMenu} className="md:hidden text-[#14442E] cursor-pointer duration-300">
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </nav>
+
+        {/* Mobile Dropdown Menu */}
+        {isOpen && (
+          <div className="md:hidden bg-white px-8 pb-4">
+            <ul className="flex flex-col gap-4 text-[#14442E] font-medium">
+              <li><Link href="/" onClick={toggleMenu}>Home</Link></li>
+              <li><Link href="/about" onClick={toggleMenu}>About</Link></li>
+              <li><Link href="/pricing" onClick={toggleMenu}>Pricing</Link></li>
+              <li><Link href="/contact" onClick={toggleMenu}>Contact</Link></li>
+
+              {user?.role === 'admin' && (
+                <li><Link href="/dashboard" onClick={toggleMenu}>Dashboard</Link></li>
               )}
-            </li>
-          </ul>
+
+              {user && user?.role !== 'admin' && hasSubmitted && (
+                <li><Link href="/result" onClick={toggleMenu}>Result</Link></li>
+              )}
+
+              <li>
+                {user ? (
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        toggleMenu();
+                      }}
+                      className="bg-[#14442E] cursor-pointer duration-300 text-white px-4 py-1 rounded w-fit"
+                    >
+                      Logout
+                    </button>
+                    
+                    {/* ✅ User Initial Circle in Mobile */}
+                    <div className="w-9 h-9 flex items-center justify-center rounded-full bg-[#14442E] text-white font-bold uppercase">
+                      {user?.name ? user.name.charAt(0) : user.email.charAt(0)}
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={toggleMenu}
+                    className="bg-[#14442E] text-white px-4 py-1 rounded w-fit"
+                  >
+                    Login
+                  </Link>
+                )}
+              </li>
+            </ul>
+          </div>
+        )}
+      </header>
+
+      {/* ✅ Notification Bar (only if user logged in) */}
+      {user && (
+        <div className="bg-gray-100 text-green-900 text-center py-2 px-4 text-md font-medium">
+          {!hasSubmitted ? (
+            <p>
+              You are now logged in. You can start the test after paying the fee.{" "}
+              <Link href="/pricing" className="underline text-green-700 hover:text-green-900">Pay Fees</Link>
+            </p>
+          ) : (
+            <p>
+              You have passed the test. You can now view your result.{" "}
+              <Link href="/result" className="underline text-green-700 hover:text-green-900">Result</Link>
+            </p>
+          )}
         </div>
       )}
-    </header>
+    </>
   );
 };
 

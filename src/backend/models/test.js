@@ -24,7 +24,6 @@ const testSchema = new mongoose.Schema(
     // University
     universitySemester: String,
     universityDegree: String,
-    universityInstitute: String,
   },
   { timestamps: true }
 );

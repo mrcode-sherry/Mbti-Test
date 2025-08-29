@@ -111,7 +111,7 @@ const TestQuiz = () => {
           <button onClick={() => handleLanguageSelect('en')} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg cursor-pointer duration-300">
             English
           </button>
-          <button onClick={() => handleLanguageSelect('ur')} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg cursor-pointer duration-300">
+          <button onClick={() => handleLanguageSelect('ur')} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg cursor-pointer duration-300 urdu-font">
             اردو
           </button>
         </div>
@@ -132,7 +132,7 @@ const TestQuiz = () => {
   }
 
   const isUrdu = language === 'ur';
-  const directionClass = isUrdu ? 'text-right' : 'text-left';
+  const directionClass = isUrdu ? 'text-right urdu-font' : 'text-left';
 
   const checklist = language === 'en'
     ? [
@@ -153,7 +153,7 @@ const TestQuiz = () => {
       {/* ✅ Progress Bar + Language */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-6">
         <p className="text-sm text-gray-500">
-          Language: <strong>{language === 'en' ? 'English' : 'اردو'}</strong>
+          Language: <strong className={isUrdu ? "urdu-font" : ""}>{language === 'en' ? 'English' : 'اردو'}</strong>
         </p>
         <p className="text-sm text-gray-600">
           Progress: {currentIndex + 1} of {questions.length}
@@ -165,9 +165,7 @@ const TestQuiz = () => {
         {checklist.map((item, idx) => (
           <div
             key={idx}
-            className={`flex items-start sm:items-center gap-2 text-green-700 font-medium ${
-              isUrdu ? 'flex-row-reverse text-right' : ''
-            }`}
+            className={`flex items-start sm:items-center gap-2 text-green-700 font-medium ${isUrdu ? 'flex-row-reverse text-right urdu-font' : ''}`}
           >
             <span className="w-5 h-5 flex items-center justify-center rounded-full border-2 border-green-700 flex-shrink-0">
               ✓
@@ -178,7 +176,9 @@ const TestQuiz = () => {
       </div>
 
       {/* ✅ Question */}
-      <h3 className="text-lg sm:text-xl font-semibold mb-6 text-gray-700">{currentQuestion.title}</h3>
+      <h3 className={`text-lg sm:text-xl font-semibold mb-6 text-gray-700 ${isUrdu ? 'urdu-font' : ''}`}>
+        {currentQuestion.title}
+      </h3>
 
       {/* ✅ Options grid responsive */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
@@ -190,7 +190,7 @@ const TestQuiz = () => {
               selectedOptionIndex === index ? 'border-green-700 shadow-md' : 'border-gray-300'
             }`}
           >
-            <div className={`flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 ${isUrdu ? 'flex-row-reverse' : ''}`}>
+            <div className={`flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 ${isUrdu ? 'flex-row-reverse urdu-font' : ''}`}>
               <div className="w-5 h-5 flex-shrink-0 rounded-full border-2 border-green-700 flex items-center justify-center">
                 {selectedOptionIndex === index && <div className="w-2 h-2 rounded-full bg-green-700" />}
               </div>
@@ -198,7 +198,7 @@ const TestQuiz = () => {
             </div>
             <div className="bg-gray-100 p-3 sm:p-5 rounded-lg text-xs sm:text-sm text-gray-600">
               <p className="font-semibold mb-1">{language === 'en' ? 'Example:' : 'مثال:'}</p>
-              <p>{option.example}</p>
+              <p className={isUrdu ? 'urdu-font' : ''}>{option.example}</p>
             </div>
           </div>
         ))}
