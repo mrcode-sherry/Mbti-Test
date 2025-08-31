@@ -42,6 +42,12 @@ const LoginPage = () => {
     }
   };
 
+  // 🔹 Handle Google Login
+  const handleGoogleLogin = () => {
+    // Redirect to backend route for Google OAuth
+    window.location.href = "/api/auth/google";
+  };
+
   return (
     <div>
       <PageBanner title="Login" backgroundImage="/Banners/about-banner.jpg" />
@@ -64,6 +70,7 @@ const LoginPage = () => {
             </p>
           )}
 
+          {/* Existing Email/Password Form */}
           <form className="space-y-5 text-gray-800" onSubmit={handleSubmit}>
             {/* Email */}
             <div>
@@ -123,6 +130,26 @@ const LoginPage = () => {
               </button>
             </div>
           </form>
+
+          {/* Divider */}
+          <div className="flex items-center my-6">
+            <hr className="flex-grow border-gray-300" />
+            <span className="px-3 text-gray-500 text-sm">OR</span>
+            <hr className="flex-grow border-gray-300" />
+          </div>
+
+          {/* Google Login */}
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 py-2 rounded-md hover:shadow-lg cursor-pointer transition"
+          >
+            <img
+              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+              alt="Google"
+              className="w-5 h-5"
+            />
+            <span className="text-gray-700 font-medium">Continue with Google</span>
+          </button>
 
           {/* Redirect to Register */}
           <p className="text-sm text-center text-gray-600 mt-4">

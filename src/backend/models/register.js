@@ -23,11 +23,26 @@ const registerSchema = new mongoose.Schema(
         "Please enter a valid email address"
       ]
     },
+    // ❗ Password now conditionally required (only for credentials users)
     password: {
       type: String,
-      required: [true, "Password is required"],
-      minlength: [8, "Password must be at least 8 characters long"]
-      // 🔹 No regex here — handled in route
+      minlength: [8, "Password must be at least 8 characters long"],
+      required: function () {
+        // Required when provider is missing or explicitly "credentials"
+        return !this.provider || this.provider === "credentials";
+      },
+      select: false, // (optional) avoid returning hash by default
+    },
+
+    // New fields for OAuth
+    provider: {
+      type: String,
+      enum: ["credentials", "google"],
+      default: "credentials",
+    },
+    googleId: {
+      type: String,
+      default: null,
     }
   },
   { timestamps: true }
