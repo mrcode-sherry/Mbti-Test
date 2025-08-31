@@ -21,7 +21,7 @@ const Slider = () => {
             key={idx}
             className="w-1/2 md:w-1/4 flex-shrink-0 flex justify-center items-center"
           >
-            <div className="w-40 h-40 flex justify-center items-center rounded-xl mx-3 p-4 hover:shadow-lg transition">
+            <div className="w-60 h-60 flex justify-center items-center rounded-xl mx-3 p-4 hover:shadow-lg transition">
               <img
                 src={src}
                 alt={`Logo ${idx}`}
