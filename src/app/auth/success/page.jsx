@@ -1,8 +1,10 @@
 'use client';
-import { useEffect } from 'react';
+
+import { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function GoogleAuthSuccess() {
+// ✅ Wrap component with Suspense
+function GoogleAuthContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -11,19 +13,39 @@ export default function GoogleAuthSuccess() {
     const email = searchParams.get('email') || '';
 
     if (email) {
-      // matches your current app: localStorage "user" is what Navbar and flows read
+      // Build the user object
       const user = { name, email, provider: 'google' };
+
+      // Save in localStorage
       localStorage.setItem('user', JSON.stringify(user));
-      // let other listeners (Navbar) update
+
+      // Trigger storage event so Navbar / other listeners update
       window.dispatchEvent(new Event('storage'));
 
-      // You can change this to wherever you want to land users
+      // Redirect user
       router.replace('/');
     } else {
       router.replace('/login');
     }
   }, [router, searchParams]);
 
-  // Simple "holding" UI if you want (or keep null)
-  return null;
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <p className="text-lg font-medium text-gray-600">
+        Signing you in with Google...
+      </p>
+    </div>
+  );
+}
+
+export default function GoogleAuthSuccess() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-lg font-medium text-gray-600">Loading...</p>
+      </div>
+    }>
+      <GoogleAuthContent />
+    </Suspense>
+  );
 }
