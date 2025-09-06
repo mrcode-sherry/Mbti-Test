@@ -21,18 +21,18 @@ const steps = [
   },
   {
     icon: <Languages size={32} className="text-[#14442E]" />,
-    title: 'Choose Status & Language',
-    description: 'Tell us if you are single or married, then choose English or Urdu.',
+    title: 'Take the Test',
+    description: 'Answer simple questions about your preferences and choices. No right or wrong—just about you.',
   },
   {
     icon: <ListTodo size={32} className="text-[#14442E]" />,
-    title: 'Take the Test',
-    description: 'Answer 70 MCQs to identify your MBTI personality type.',
+    title: 'Get Your Personalized Report',
+    description: 'Receive a clear report highlighting your strengths, weaknesses, success style, and potential career paths.',
   },
   {
     icon: <FileCheck2 size={32} className="text-[#14442E]" />,
-    title: 'Get Your Result',
-    description: 'Download your result as a PDF and watch a personality animation video.',
+    title: 'Plan Your Future with Clarity',
+    description: 'Use your results to choose subjects, careers, or even understand relationships better confusion replaced by direction.',
   },
 ];
 

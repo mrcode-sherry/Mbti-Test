@@ -40,14 +40,12 @@ const AboutPage = () => {
           <div className="w-12 h-px bg-[#14442E] opacity-40" />
         </div>
 
-        <h2 className="text-[29px] md:text-4xl font-bold mb-4">
-          Discover Yourself with the MBTI Personality Test
+        <h2 className="text-[29px] md:text-4xl font-bold mb-4 text-[#14442E]">
+          Guiding students from uncertainty to opportunity
         </h2>
 
         <p className="text-gray-600 max-w-3xl mx-auto mb-12 text-sm sm:text-base">
-          Our platform helps individuals explore their unique personalities using the trusted MBTI (Myers-Briggs Type Indicator) model. 
-          Whether you’re a student, a professional, single, or married — our multilingual, step-by-step test experience provides deep insights into your character traits, strengths, and preferences. 
-          With personalized results, animated videos, and PDF downloads, we’re helping thousands understand themselves better every day.
+          Every student should have clarity about their future, in our opinion at Aptitude Counsel. We assist youth in identifying their inherent strengths, shortcomings, and distinct strategy for success through the use of the globally accepted MBTI® (Myers-Briggs Type Indicator). Our in-depth reports highlight each student's personal definition of success, potential obstacles, and guidelines for personal development. Schools, colleges, and organizations all across the world use the MBTI®, one of the most reliable personality tests available. Students who work with us not only plan their professions but also learn about themselves first.
         </p>
 
         {/* Ratings Grid */}

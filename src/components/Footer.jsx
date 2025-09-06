@@ -15,7 +15,7 @@ const Footer = () => {
             <span className="text-2xl font-bold">MBTI Test</span>
           </div>
           <p className="text-gray-300 text-sm leading-relaxed mb-4">
-            Explore your unique personality traits with our MBTI-based test system. Multilingual, simple and professional growth.
+            Aptitude Counsel helps students discover strengths, overcome weaknesses, and choose the right career with trusted MBTI guidance. Your clarity, confidence, and future start here.
           </p>
 
           {/* Social Icons */}
@@ -35,7 +35,7 @@ const Footer = () => {
           <ul className="flex flex-col gap-2 text-sm">
             <li><Link href="/" className="hover:underline">Home</Link></li>
             <li><Link href="/about" className="hover:underline">About</Link></li>
-            <li><Link href="/pricing" className="hover:underline">Pricing</Link></li>
+            <li><Link href="/pricing" className="hover:underline">Fees</Link></li>
             <li><Link href="/contact" className="hover:underline">Contact</Link></li>
           </ul>
         </div>

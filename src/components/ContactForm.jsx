@@ -72,7 +72,7 @@ const ContactForm = () => {
           <div className="w-12 h-px bg-[#14442E] opacity-40" />
         </div>
             <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-6">
-              We're Here To Provide <span className="underline text-[#14442E]">24X7 Support</span>
+              Support that’s always within your reach
             </h2>
 
             <form onSubmit={handleSubmit} className="grid grid-cols-1 text-gray-800 md:grid-cols-2 gap-6">

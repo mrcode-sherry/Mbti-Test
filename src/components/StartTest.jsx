@@ -16,7 +16,8 @@ const StartTest = () => {
         
         {/* Left Side: Details */}
         <div className="flex-1">
-          <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-4">Start Your MBTI Test</h2>
+          <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-4">Benefits of Taking the Test
+</h2>
           <p className="text-gray-700 text-sm mb-6">
             Our test is based on 70 scientifically designed MCQs. It will help you understand your unique personality type and behavior patterns.
           </p>

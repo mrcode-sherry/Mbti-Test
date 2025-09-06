@@ -174,21 +174,19 @@ const PricingPage = () => {
 
   return (
     <div>
-      <PageBanner title="Pricing Plan" backgroundImage="/Banners/about-banner.jpg" />
+      <PageBanner title="Fees Plan" backgroundImage="/Banners/about-banner.jpg" />
 
       <section className="bg-gray-100 py-16 md:px-16 px-8">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-4 mb-4">
             <div className="w-12 h-px bg-[#14442E] opacity-40" />
             <p className="uppercase text-sm tracking-widest text-[#14442E] font-medium">
-              Pricing Plan
+              Fees Plan
             </p>
             <div className="w-12 h-px bg-[#14442E] opacity-40" />
           </div>
-          <p className="text-[29px] md:text-4xl text-black font-bold md:w-[1100px] w-full mx-auto mb-4">
-            Start Your{' '}
-            <span className="text-green-700 font-semibold underline">MBTI Test</span> With Flexible
-            Payment Options
+          <p className="text-[29px] md:text-4xl text-[#14442E] font-bold md:w-[1100px] w-full mx-auto mb-4">
+            Because the cost of confusion is higher
           </p>
         </div>
 

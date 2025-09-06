@@ -81,16 +81,19 @@ const Navbar = () => {
       <header className="shadow-sm bg-white sticky top-0 z-50">
         <nav className="flex items-center justify-between md:px-16 px-8 py-4">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-green-500 rounded-sm" />
-            <span className="text-xl font-bold text-[#14442E]">MBTI test</span>
+          <div className="flex items-center">
+            <img src="/logo/mbtilogo.png" alt="" className='w-12 h-12'/>
+            <div className='flex flex-col'>
+              <span className="text-[22px] font-bold text-[#00311A] mt-3">APTITUDE</span>
+            <span className="text-[18px] font-bold text-[#175434] -mt-3">COUNSEL</span>
+            </div>
           </div>
 
           {/* Desktop Menu */}
           <ul className="hidden md:flex items-center gap-6 text-[#14442E] text-[17px] font-medium mx-auto">
             <li><Link href="/">Home</Link></li>
             <li><Link href="/about">About</Link></li>
-            <li><Link href="/pricing">Pricing</Link></li>
+            <li><Link href="/pricing">Fees</Link></li>
             <li><Link href="/contact">Contact</Link></li>
 
             {user?.role === 'admin' && (
@@ -141,7 +144,7 @@ const Navbar = () => {
             <ul className="flex flex-col gap-4 text-[#14442E] font-medium">
               <li><Link href="/" onClick={toggleMenu}>Home</Link></li>
               <li><Link href="/about" onClick={toggleMenu}>About</Link></li>
-              <li><Link href="/pricing" onClick={toggleMenu}>Pricing</Link></li>
+              <li><Link href="/pricing" onClick={toggleMenu}>Fees</Link></li>
               <li><Link href="/contact" onClick={toggleMenu}>Contact</Link></li>
 
               {user?.role === 'admin' && (
