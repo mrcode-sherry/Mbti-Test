@@ -1,3 +1,4 @@
+import Benefits from "@/components/Benefits";
 import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
 import Slider from "@/components/Slider";
@@ -10,6 +11,9 @@ export default function Home() {
     <div className="overflow-hidden">
       <section>
       <Hero/>
+    </section>
+    <section>
+      <Benefits/>
     </section>
     <section>
       <Testimonial/>

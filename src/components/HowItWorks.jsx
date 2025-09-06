@@ -10,27 +10,27 @@ import {
 
 const steps = [
   {
-    icon: <UserPlus size={32} className="text-[#14442E]" />,
+    icon: <UserPlus  className="text-[#14442E] h-10 w-10" />,
     title: 'Register Account',
     description: 'Sign up with your name, email, and password to begin.',
   },
   {
-    icon: <CreditCard size={32} className="text-[#14442E]" />,
+    icon: <CreditCard  className="text-[#14442E] h-10 w-10" />,
     title: 'Submit Test Fee',
     description: 'Pay via JazzCash or EasyPaisa and upload a screenshot for confirmation.',
   },
   {
-    icon: <Languages size={32} className="text-[#14442E]" />,
+    icon: <Languages  className="text-[#14442E] h-10 w-10" />,
     title: 'Take the Test',
     description: 'Answer simple questions about your preferences and choices. No right or wrong—just about you.',
   },
   {
-    icon: <ListTodo size={32} className="text-[#14442E]" />,
+    icon: <ListTodo className="text-[#14442E] h-10 w-10" />,
     title: 'Get Your Personalized Report',
     description: 'Receive a clear report highlighting your strengths, weaknesses, success style, and potential career paths.',
   },
   {
-    icon: <FileCheck2 size={32} className="text-[#14442E]" />,
+    icon: <FileCheck2 className="text-[#14442E] h-10 w-10" />,
     title: 'Plan Your Future with Clarity',
     description: 'Use your results to choose subjects, careers, or even understand relationships better confusion replaced by direction.',
   },
@@ -45,10 +45,10 @@ const HowItWorks = () => {
           Follow these simple steps to discover your MBTI personality type.
         </p>
 
-        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5">
+        <div className="grid gap-8 md:h-[430px] grid-cols-1 md:grid-cols-3">
           {steps.map((step, index) => (
             <div key={index} className="bg-gray-100 p-6 rounded-lg shadow-sm hover:shadow-md transition">
-              <div className="mb-4">{step.icon}</div>
+              <div className="mb-4 flex justify-center"><span>{step.icon}</span></div>
               <h3 className="text-lg font-semibold text-[#14442E] mb-2">{step.title}</h3>
               <p className="text-sm text-gray-600">{step.description}</p>
             </div>
