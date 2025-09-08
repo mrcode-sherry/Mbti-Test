@@ -19,13 +19,13 @@ export default function Home() {
       <Testimonial/>
     </section>
     <section>
-      <HowItWorks/>
+      <Comparison/>
     </section>
     <section>
       <Slider/>
     </section>
     <section>
-      <Comparison/>
+      <HowItWorks/>
     </section>
     </div>
     </>

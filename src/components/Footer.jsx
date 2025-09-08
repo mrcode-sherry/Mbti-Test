@@ -10,10 +10,13 @@ const Footer = () => {
 
         {/* Column 1: Logo + Description + Socials */}
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-6 h-6 bg-green-500 rounded-sm" />
-            <span className="text-2xl font-bold">MBTI Test</span>
-          </div>
+          <Link href="/" className="flex items-center mb-4">
+            <img src="/logo/mbtilogowhite1.png" alt="" className='w-12 h-12'/>
+            <div className='flex flex-col'>
+              <span className="text-[22px] font-bold text-white mt-3">APTITUDE</span>
+            <span className="text-[18px] font-bold text-gray-100 -mt-3">COUNSEL</span>
+            </div>
+          </Link>
           <p className="text-gray-300 text-sm leading-relaxed mb-4">
             Aptitude Counsel helps students discover strengths, overcome weaknesses, and choose the right career with trusted MBTI guidance. Your clarity, confidence, and future start here.
           </p>

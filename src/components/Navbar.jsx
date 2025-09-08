@@ -81,13 +81,13 @@ const Navbar = () => {
       <header className="shadow-sm bg-white sticky top-0 z-50">
         <nav className="flex items-center justify-between md:px-16 px-8 py-4">
           {/* Logo */}
-          <div className="flex items-center">
+          <Link href="/" className="flex items-center">
             <img src="/logo/mbtilogo.png" alt="" className='w-12 h-12'/>
             <div className='flex flex-col'>
               <span className="text-[22px] font-bold text-[#00311A] mt-3">APTITUDE</span>
             <span className="text-[18px] font-bold text-[#175434] -mt-3">COUNSEL</span>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Menu */}
           <ul className="hidden md:flex items-center gap-6 text-[#14442E] text-[17px] font-medium mx-auto">
