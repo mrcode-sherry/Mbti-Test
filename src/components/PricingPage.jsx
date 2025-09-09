@@ -210,26 +210,36 @@ const PricingPage = () => {
 
           {/* Standard Plan */}
           <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col justify-between h-full">
-            <div>
-              <h3 className="text-2xl font-bold text-[#14442E] mb-4">Standard Plan - Rs. 1000</h3>
-              <ul className="space-y-3 mb-6">
-                <FeatureItem text="Full MBTI Test (70 Questions)" />
-                <FeatureItem text="PDF Personality Report" />
-                <FeatureItem text="Animated Video Result" />
-                <FeatureItem text="16 Personality Types Explained" />
-                <FeatureItem text="Access on Any Device" />
-              </ul>
-              <div className="text-center text-gray-700 text-sm space-y-2 mb-4">
-                <div>
-                  <span className="font-semibold">JazzCash:</span> 0301-2345678 <br />
-                  <span className="text-gray-500 text-xs">Ali Raza</span>
-                </div>
-                <div>
-                  <span className="font-semibold">EasyPaisa:</span> 0321-9876543 <br />
-                  <span className="text-gray-500 text-xs">Hassan Shah</span>
-                </div>
+            <div className="flex flex-col flex-grow">
+              {/* Plan Title */}
+              <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">
+                Standard
+              </h3>
+
+              {/* Benefits Section */}
+              <div className="bg-gray-100 rounded-lg p-4 mb-6 h-80">
+                <h4 className="text-lg font-semibold text-[#14442E] mb-4 border-b border-gray-300 pb-2">
+                  Benefits
+                </h4>
+                <ul className="space-y-3 text-gray-700 text-sm leading-relaxed">
+                  <FeatureItem text="Report on your Strengths" />
+                  <FeatureItem text="Report on your weaknesses " />
+                  <FeatureItem text="What is success means to you" />
+                  <FeatureItem text="Strategies for your success" />
+                  <FeatureItem text="Problematic areas" />
+                  <FeatureItem text="Rules for succeed" />
+                </ul>
+              </div>
+
+              {/* Price */}
+              <div className="mt-auto text-center mb-6">
+                <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block">
+                  Rs. 1000
+                </h3>
               </div>
             </div>
+
+            {/* Button */}
             <div className="text-center">
               <button
                 onClick={handleSendProofClick}
@@ -243,26 +253,37 @@ const PricingPage = () => {
 
           {/* Premium Plan */}
           <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col justify-between h-full">
-            <div>
-              <h3 className="text-2xl font-bold text-[#14442E] mb-4">Premium Plan - Rs. 1500</h3>
-              <ul className="space-y-3 mb-6">
-                <FeatureItem text="All Standard Features" />
-                <FeatureItem text="Advanced Personality Insights" />
-                <FeatureItem text="Career Recommendation Report" />
-                <FeatureItem text="Downloadable Certificate" />
-                <FeatureItem text="Priority Support" />
-              </ul>
-              <div className="text-center text-gray-700 text-sm space-y-2 mb-4">
-                <div>
-                  <span className="font-semibold">JazzCash:</span> 0301-2345678 <br />
-                  <span className="text-gray-500 text-xs">Ali Raza</span>
-                </div>
-                <div>
-                  <span className="font-semibold">EasyPaisa:</span> 0321-9876543 <br />
-                  <span className="text-gray-500 text-xs">Hassan Shah</span>
-                </div>
+            <div className="flex flex-col flex-grow">
+              {/* Plan Title */}
+              <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">
+                Premium
+              </h3>
+
+              {/* Benefits Section */}
+              <div className="bg-gray-100 rounded-lg p-4 mb-6 h-80">
+                <h4 className="text-lg font-semibold text-[#14442E] mb-4 border-b border-gray-300 pb-2">
+                  Benefits
+                </h4>
+                <ul className="space-y-3 text-gray-700 text-sm leading-relaxed">
+                  <FeatureItem text="Report on your Strengths" />
+                  <FeatureItem text="Report on your weaknesses " />
+                  <FeatureItem text="What is success means to you" />
+                  <FeatureItem text="Strategies for your success" />
+                  <FeatureItem text="Problematic areas" />
+                  <FeatureItem text="Rules for succeed" />
+                  <FeatureItem text="Careers" />
+                </ul>
+              </div>
+
+              {/* Price */}
+              <div className="mt-auto text-center mb-6">
+                <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block">
+                  Rs. 1500
+                </h3>
               </div>
             </div>
+
+            {/* Button */}
             <div className="text-center">
               <button
                 onClick={handleSendProofClick}
@@ -273,6 +294,8 @@ const PricingPage = () => {
               </button>
             </div>
           </div>
+
+
         </div>
 
         {/* ✅ Status Section Below */}

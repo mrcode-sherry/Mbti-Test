@@ -87,7 +87,7 @@ const Comparison = () => {
           <thead>
             <tr>
               <th className="text-left py-3 px-4 font-semibold text-gray-700">
-                Features
+                Benefits
               </th>
               {plans.map((plan, index) => (
                 <th
