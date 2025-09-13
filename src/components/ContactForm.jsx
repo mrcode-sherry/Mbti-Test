@@ -175,8 +175,7 @@ const ContactForm = () => {
           <div className="bg-[#14442E] text-white p-6 rounded-lg flex-1 max-w-md">
             <h3 className="text-xl font-semibold mb-3">Say Hello!</h3>
             <p className="text-sm text-gray-200 mb-6">
-              Aliquam lectus urna, tempus ac lectus et, gravida bibendum nisl. Nulla consequat
-              ham ultricies metus et purus laoreet aliquam.
+              At Aptitude Counsel, we believe no student should feel lost about their future. Whether you are in Matric, Intermediate, or just starting to think about your career, we are here to guide you.
             </p>
 
             <Image

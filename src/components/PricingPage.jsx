@@ -190,26 +190,10 @@ const PricingPage = () => {
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Info Card */}
-          <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col justify-between h-full">
-            <div>
-              <h3 className="text-2xl font-bold text-[#14442E] mb-4">Start Your MBTI Test</h3>
-              <p className="text-gray-600 mb-6 text-sm">
-                Our test is based on 70 scientifically designed MCQs. It will help you understand
-                your unique personality type and behavior patterns.
-              </p>
-              <ul className="space-y-3">
-                <FeatureItem text="70 Multiple Choice Questions" />
-                <FeatureItem text="Choose Marital Status & Language" />
-                <FeatureItem text="Result in PDF & Animated Video Format" />
-                <FeatureItem text="Result Based on 16 MBTI Personality Types" />
-              </ul>
-            </div>
-          </div>
+        <div className="max-w-7xl items-center mx-auto flex justify-center gap-10">
 
           {/* Standard Plan */}
-          <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col justify-between h-full">
+          <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col w-[400px] justify-between h-full">
             <div className="flex flex-col flex-grow">
               {/* Plan Title */}
               <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">
@@ -252,7 +236,7 @@ const PricingPage = () => {
           </div>
 
           {/* Premium Plan */}
-          <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col justify-between h-full">
+          <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col w-[400px] justify-between h-full">
             <div className="flex flex-col flex-grow">
               {/* Plan Title */}
               <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">

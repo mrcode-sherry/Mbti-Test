@@ -5,8 +5,6 @@ import {
   CreditCard,
   Clock,
   FileCheck,
-  Download,
-  ShieldCheck,
   MonitorSmartphone,
   ChevronDown,
   ChevronUp,
@@ -17,37 +15,25 @@ const faqs = [
     icon: <CreditCard className="text-[#14442E] w-5 h-5 min-w-[20px]" />,
     question: 'How do I pay for the test?',
     answer:
-      'You can pay using JazzCash or EasyPaisa. The account name and number are listed above. After payment, simply upload the screenshot to verify.',
+      'You can pay using JazzCash or Bank Account. The account name and number are listed above. After payment, simply upload the screenshot to verify.',
   },
   {
     icon: <Clock className="text-[#14442E] w-5 h-5 min-w-[20px]" />,
     question: "What if the admin is busy and doesn't verify my payment immediately?",
     answer:
-      'Sometimes it might take a little time to verify your screenshot if the admin is busy. Don’t worry — just wait patiently. If your proof is not approved within 24 hours, feel free to contact us via our contact page or support number.',
+      'Sometimes it might take a little time to verify your screenshot if the admin is busy. Don’t worry — just wait patiently. If your proof is not approved within few minutes, feel free to contact us via our contact page or support number.',
   },
   {
     icon: <FileCheck className="text-[#14442E] w-5 h-5 min-w-[20px]" />,
     question: 'What happens after I submit the payment screenshot?',
     answer:
-      "Once your payment screenshot is verified, you'll get instant access to the test page where you can begin your MBTI assessment.",
+      "Once your payment screenshot is verified, you'll get instant access to the test page.",
   },
   {
     icon: <Clock className="text-[#14442E] w-5 h-5 min-w-[20px]" />,
     question: 'How long does the test take?',
     answer:
-      'The test has 70 multiple choice questions and takes about 10 to 15 minutes to complete.',
-  },
-  {
-    icon: <Download className="text-[#14442E] w-5 h-5 min-w-[20px]" />,
-    question: 'What will I get after the test?',
-    answer:
-      'You’ll receive a personalized MBTI result in downloadable PDF format along with a short animated video explaining your personality type.',
-  },
-  {
-    icon: <ShieldCheck className="text-[#14442E] w-5 h-5 min-w-[20px]" />,
-    question: 'Is this MBTI test scientifically valid?',
-    answer:
-      'Yes, our test is based on the widely recognized MBTI (Myers-Briggs Type Indicator) framework and consists of 70 thoughtfully designed questions.',
+      'It will take about 10 to 15 minutes to complete.',
   },
   {
     icon: <MonitorSmartphone className="text-[#14442E] w-5 h-5 min-w-[20px]" />,
