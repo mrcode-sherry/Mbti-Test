@@ -190,10 +190,10 @@ const PricingPage = () => {
           </p>
         </div>
 
-        <div className="max-w-7xl items-center mx-auto flex justify-center gap-10">
+        <div className="grid grid-cols-1 gap-10 md:flex md:justify-center md:items-center">
 
           {/* Standard Plan */}
-          <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col w-[400px] justify-between h-full">
+          <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[400px] justify-between h-full">
             <div className="flex flex-col flex-grow">
               {/* Plan Title */}
               <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">
@@ -236,7 +236,7 @@ const PricingPage = () => {
           </div>
 
           {/* Premium Plan */}
-          <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col w-[400px] justify-between h-full">
+          <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[400px] justify-between h-full">
             <div className="flex flex-col flex-grow">
               {/* Plan Title */}
               <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">
