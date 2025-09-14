@@ -14,11 +14,11 @@ const Modal = ({ isOpen, onClose, children }) => {
     <div
       id="modal-overlay"
       onClick={handleOutsideClick}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-2"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-xl shadow-lg max-w-4xl w-full p-8 relative"
+        className="bg-white rounded-xl shadow-lg w-full max-w-4xl p-4 sm:p-8 relative overflow-y-auto max-h-[90vh]"
       >
         <button
           onClick={onClose}
@@ -153,12 +153,12 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen">
       {/* Sidebar */}
-      <aside className="w-64 bg-[#1B5A3D] text-white p-6 space-y-2">
-        <h2 className="text-xl font-bold mb-6">Admin Panel</h2>
+      <aside className="w-full md:w-64 bg-[#1B5A3D] text-white p-4 sm:p-6 space-y-2">
+        <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Admin Panel</h2>
         <button
-          className={`block w-full text-left cursor-pointer duration-300 px-4 py-2 rounded ${
+          className={`block w-full text-left cursor-pointer duration-300 px-3 py-2 rounded ${
             activeTab === "test" ? "bg-gray-600" : "hover:bg-gray-700"
           }`}
           onClick={() => setActiveTab("test")}
@@ -166,7 +166,7 @@ const DashboardPage = () => {
           Test Form Data
         </button>
         <button
-          className={`block w-full text-left px-4 py-2 rounded cursor-pointer duration-300 ${
+          className={`block w-full text-left px-3 py-2 rounded cursor-pointer duration-300 ${
             activeTab === "contact" ? "bg-gray-600" : "hover:bg-gray-700"
           }`}
           onClick={() => setActiveTab("contact")}
@@ -174,7 +174,7 @@ const DashboardPage = () => {
           Contact Form Data
         </button>
         <button
-          className="block w-full text-center px-4 py-2 mt-5 rounded bg-red-600 cursor-pointer duration-300 hover:bg-red-700"
+          className="block w-full text-center px-3 py-2 mt-4 rounded bg-red-600 cursor-pointer duration-300 hover:bg-red-700"
           onClick={handleLogout}
         >
           Logout
@@ -182,10 +182,10 @@ const DashboardPage = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8">
+      <main className="flex-1 p-4 sm:p-8 overflow-x-auto">
         {activeTab === "welcome" && (
           <div>
-            <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Admin Dashboard</h1>
             <p>Welcome, Admin! 🎉</p>
           </div>
         )}
@@ -193,7 +193,7 @@ const DashboardPage = () => {
         {/* Test Data */}
         {activeTab === "test" && (
           <div>
-            <h2 className="text-2xl font-semibold mb-4">Test Form Data</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Test Form Data</h2>
             {loadingTests ? (
               <p>Loading...</p>
             ) : tests.length > 0 ? (
@@ -201,10 +201,10 @@ const DashboardPage = () => {
                 {tests.map((t, i) => (
                   <li
                     key={t._id}
-                    className="flex items-center justify-between p-3 border rounded bg-gray-50 shadow-sm"
+                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 border rounded bg-gray-50 shadow-sm"
                   >
-                    <span className="w-8 font-bold text-gray-600">{i + 1}.</span>
-                    <span className="flex-1">
+                    <span className="w-full sm:w-8 font-bold text-gray-600">{i + 1}.</span>
+                    <span className="flex-1 text-sm sm:text-base">
                       <span className="font-semibold">{t.fullName}</span> |{" "}
                       <span className="text-gray-700">{t.email}</span> |{" "}
                       {t.screenshotUrl ? (
@@ -218,7 +218,7 @@ const DashboardPage = () => {
                     </span>
                     <button
                       onClick={() => setSelectedTest(t)}
-                      className="ml-4 text-sm text-blue-600 hover:underline cursor-pointer duration-300"
+                      className="text-sm text-blue-600 hover:underline cursor-pointer duration-300"
                     >
                       See More Details
                     </button>
@@ -234,7 +234,7 @@ const DashboardPage = () => {
         {/* Contact Data */}
         {activeTab === "contact" && (
           <div>
-            <h2 className="text-2xl font-semibold mb-4">Contact Form Data</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Contact Form Data</h2>
             {loadingContacts ? (
               <p>Loading...</p>
             ) : contacts.length > 0 ? (
@@ -242,10 +242,10 @@ const DashboardPage = () => {
                 {contacts.map((c, i) => (
                   <li
                     key={c._id}
-                    className="flex items-center justify-between p-3 border rounded bg-gray-50 shadow-sm"
+                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 border rounded bg-gray-50 shadow-sm"
                   >
-                    <span className="w-8 font-bold text-gray-600">{i + 1}.</span>
-                    <span className="flex-1">
+                    <span className="w-full sm:w-8 font-bold text-gray-600">{i + 1}.</span>
+                    <span className="flex-1 text-sm sm:text-base">
                       <span className="font-semibold">
                         {c.firstName} {c.lastName}
                       </span>{" "}
@@ -253,7 +253,7 @@ const DashboardPage = () => {
                     </span>
                     <button
                       onClick={() => setSelectedContact(c)}
-                      className="ml-4 text-sm text-blue-600 hover:underline cursor-pointer duration-300"
+                      className="text-sm text-blue-600 hover:underline cursor-pointer duration-300"
                     >
                       See More Details
                     </button>
@@ -272,8 +272,8 @@ const DashboardPage = () => {
         {selectedTest && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Details */}
-            <div className="space-y-1">
-              <h3 className="text-xl font-semibold mb-2">Test Details</h3>
+            <div className="space-y-1 text-sm sm:text-base">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">Test Details</h3>
               <p><b>Name:</b> {selectedTest.fullName}</p>
               <p><b>Email:</b> {selectedTest.email}</p>
               <p><b>Gender:</b> {selectedTest.gender}</p>
@@ -288,12 +288,12 @@ const DashboardPage = () => {
 
             {/* Proof + Approve / Reject */}
             <div>
-              <h3 className="text-xl font-semibold mb-2">Payment Proof</h3>
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">Payment Proof</h3>
               {selectedTest.screenshotUrl ? (
                 <img
                   src={selectedTest.screenshotUrl}
                   alt="Proof"
-                  className="max-w-full rounded border h-[450px]"
+                  className="w-full max-h-[350px] sm:h-[450px] object-contain rounded border"
                 />
               ) : selectedTest.tid ? (
                 <p><b>TID:</b> {selectedTest.tid}</p>
@@ -303,7 +303,7 @@ const DashboardPage = () => {
 
               {/* ✅ Approve/Reject buttons */}
               {selectedTest.status === "pending" && (
-                <div className="mt-4 space-x-3">
+                <div className="mt-4 flex flex-col sm:flex-row gap-2 sm:space-x-3">
                   <button
                     onClick={() => handleApprove(selectedTest.email)}
                     className="bg-green-600 text-white px-4 py-2 cursor-pointer duration-300 rounded-lg hover:bg-green-700"
@@ -336,8 +336,8 @@ const DashboardPage = () => {
       {/* Contact Modal */}
       <Modal isOpen={!!selectedContact} onClose={() => setSelectedContact(null)}>
         {selectedContact && (
-          <div className="space-y-1">
-            <h3 className="text-xl font-semibold mb-2">Contact Details</h3>
+          <div className="space-y-1 text-sm sm:text-base">
+            <h3 className="text-lg sm:text-xl font-semibold mb-2">Contact Details</h3>
             <p><b>Name:</b> {selectedContact.firstName} {selectedContact.lastName}</p>
             <p><b>Email:</b> {selectedContact.email}</p>
             <p><b>Phone:</b> {selectedContact.phoneNumber}</p>

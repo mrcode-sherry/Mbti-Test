@@ -63,7 +63,7 @@ const ContactForm = () => {
     <>
       <PageBanner title="Contact Us" backgroundImage="/Banners/about-banner.jpg" />
       <section className="py-16 md:px-16 px-8 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-20">
           {/* Left Side: Form */}
           <div className="flex-1">
             <div className="flex items-center justify-center gap-4 mb-4">
@@ -179,10 +179,10 @@ const ContactForm = () => {
             </p>
 
             <Image
-              src="/contact/support-image.jpg"
+              src="/contact/contactimage.jpg"
               alt="Support Agent"
               width={400}
-              height={300}
+              height={400}
               className="rounded-md mb-4"
             />
 
