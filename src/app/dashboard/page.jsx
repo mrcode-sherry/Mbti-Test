@@ -185,17 +185,17 @@ const DashboardPage = () => {
       <main className="flex-1 p-4 sm:p-8 overflow-x-auto bg-white">
         {activeTab === "welcome" && (
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Admin Dashboard</h1>
-            <p>Welcome, Admin! 🎉</p>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-black">Admin Dashboard</h1>
+            <p className="text-gray-900">Welcome, Admin! 🎉</p>
           </div>
         )}
 
         {/* Test Data */}
         {activeTab === "test" && (
           <div>
-            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Test Form Data</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">Test Form Data</h2>
             {loadingTests ? (
-              <p>Loading...</p>
+              <p className="text-black">Loading...</p>
             ) : tests.length > 0 ? (
               <ul className="space-y-2">
                 {tests.map((t, i) => (
@@ -205,7 +205,7 @@ const DashboardPage = () => {
                   >
                     <span className="w-full sm:w-8 font-bold text-gray-600">{i + 1}.</span>
                     <span className="flex-1 text-sm sm:text-base">
-                      <span className="font-semibold">{t.fullName}</span> |{" "}
+                      <span className="text-black font-semibold">{t.fullName}</span> |{" "}
                       <span className="text-gray-700">{t.email}</span> |{" "}
                       {t.screenshotUrl ? (
                         <span className="text-green-600 font-medium">Screenshot uploaded</span>
@@ -214,7 +214,7 @@ const DashboardPage = () => {
                       ) : (
                         <span className="text-red-600 font-medium">Not uploaded yet</span>
                       )}{" "}
-                      | <span>Status: {t.status}</span>
+                      | <span className="text-gray-900">Status: {t.status}</span>
                     </span>
                     <button
                       onClick={() => setSelectedTest(t)}
@@ -226,7 +226,7 @@ const DashboardPage = () => {
                 ))}
               </ul>
             ) : (
-              <p>No test form data yet.</p>
+              <p className="text-red-600">No test form data yet.</p>
             )}
           </div>
         )}
@@ -234,9 +234,9 @@ const DashboardPage = () => {
         {/* Contact Data */}
         {activeTab === "contact" && (
           <div>
-            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Contact Form Data</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">Contact Form Data</h2>
             {loadingContacts ? (
-              <p>Loading...</p>
+              <p className="text-black">Loading...</p>
             ) : contacts.length > 0 ? (
               <ul className="space-y-2">
                 {contacts.map((c, i) => (
@@ -246,7 +246,7 @@ const DashboardPage = () => {
                   >
                     <span className="w-full sm:w-8 font-bold text-gray-600">{i + 1}.</span>
                     <span className="flex-1 text-sm sm:text-base">
-                      <span className="font-semibold">
+                      <span className="font-semibold text-black">
                         {c.firstName} {c.lastName}
                       </span>{" "}
                       | <span className="text-gray-700">{c.email}</span>
@@ -261,7 +261,7 @@ const DashboardPage = () => {
                 ))}
               </ul>
             ) : (
-              <p>No contacts yet.</p>
+              <p className="text-red-600">No contacts yet.</p>
             )}
           </div>
         )}
@@ -273,14 +273,14 @@ const DashboardPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Details */}
             <div className="space-y-1 text-sm sm:text-base">
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">Test Details</h3>
-              <p><b>Name:</b> {selectedTest.fullName}</p>
-              <p><b>Email:</b> {selectedTest.email}</p>
-              <p><b>Gender:</b> {selectedTest.gender}</p>
-              <p><b>Marital Status:</b> {selectedTest.maritalStatus}</p>
-              <p><b>Phone:</b> {selectedTest.countryCode} {selectedTest.phoneNumber}</p>
-              <p><b>City:</b> {selectedTest.city}, {selectedTest.province}</p>
-              <p><b>Education:</b> {selectedTest.educationType}</p>
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-black">Test Details</h3>
+              <p className="text-black"><b className="text-black">Name:</b> {selectedTest.fullName}</p>
+              <p className="text-black"><b className="text-black">Email:</b> {selectedTest.email}</p>
+              <p className="text-black"><b className="text-black">Gender:</b> {selectedTest.gender}</p>
+              <p className="text-black"><b className="text-black">Marital Status:</b> {selectedTest.maritalStatus}</p>
+              <p className="text-black"><b className="text-black">Phone:</b> {selectedTest.countryCode} {selectedTest.phoneNumber}</p>
+              <p className="text-black"><b className="text-black">City:</b> {selectedTest.city}, {selectedTest.province}</p>
+              <p className="text-black"><b className="text-black">Education:</b> {selectedTest.educationType}</p>
               <p className="text-xs text-gray-500">
                 Submitted {new Date(selectedTest.createdAt).toLocaleString()}
               </p>
@@ -288,7 +288,7 @@ const DashboardPage = () => {
 
             {/* Proof + Approve / Reject */}
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">Payment Proof</h3>
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-black">Payment Proof</h3>
               {selectedTest.screenshotUrl ? (
                 <img
                   src={selectedTest.screenshotUrl}
@@ -296,7 +296,7 @@ const DashboardPage = () => {
                   className="w-full max-h-[350px] sm:h-[450px] object-contain rounded border"
                 />
               ) : selectedTest.tid ? (
-                <p><b>TID:</b> {selectedTest.tid}</p>
+                <p className="text-black"><b className="text-black">TID:</b> {selectedTest.tid}</p>
               ) : (
                 <p className="text-red-600">Not uploaded yet</p>
               )}
@@ -337,13 +337,13 @@ const DashboardPage = () => {
       <Modal isOpen={!!selectedContact} onClose={() => setSelectedContact(null)}>
         {selectedContact && (
           <div className="space-y-1 text-sm sm:text-base">
-            <h3 className="text-lg sm:text-xl font-semibold mb-2">Contact Details</h3>
-            <p><b>Name:</b> {selectedContact.firstName} {selectedContact.lastName}</p>
-            <p><b>Email:</b> {selectedContact.email}</p>
-            <p><b>Phone:</b> {selectedContact.phoneNumber}</p>
-            <p><b>Marital Status:</b> {selectedContact.maritalStatus}</p>
-            <p><b>Subject:</b> {selectedContact.subject}</p>
-            <p><b>Message:</b> {selectedContact.message}</p>
+            <h3 className="text-lg sm:text-xl font-semibold mb-2 text-black">Contact Details</h3>
+            <p className="text-black"><b className="text-black">Name:</b> {selectedContact.firstName} {selectedContact.lastName}</p>
+            <p className="text-black"><b className="text-black">Email:</b> {selectedContact.email}</p>
+            <p className="text-black"><b className="text-black">Phone:</b> {selectedContact.phoneNumber}</p>
+            <p className="text-black"><b className="text-black">Marital Status:</b> {selectedContact.maritalStatus}</p>
+            <p className="text-black"><b className="text-black">Subject:</b> {selectedContact.subject}</p>
+            <p className="text-black"><b className="text-black">Message:</b> {selectedContact.message}</p>
             <p className="text-xs text-gray-500">
               Submitted {new Date(selectedContact.createdAt).toLocaleString()}
             </p>
