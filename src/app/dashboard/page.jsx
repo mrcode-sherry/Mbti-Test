@@ -182,7 +182,7 @@ const DashboardPage = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 sm:p-8 overflow-x-auto">
+      <main className="flex-1 p-4 sm:p-8 overflow-x-auto bg-white">
         {activeTab === "welcome" && (
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Admin Dashboard</h1>
