@@ -21,7 +21,7 @@ const PricingPage = () => {
   const [hasCompletedTest, setHasCompletedTest] = useState(false);
   const [isProofPopupOpen, setIsProofPopupOpen] = useState(false);
   const [isTestPopupOpen, setIsTestPopupOpen] = useState(false);
-  const [proofStatus, setProofStatus] = useState("none"); // ✅ new: track proof status
+  const [proofStatus, setProofStatus] = useState("none");
   const [checkingStatus, setCheckingStatus] = useState(false);
   const router = useRouter();
 

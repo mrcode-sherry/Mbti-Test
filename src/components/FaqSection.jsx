@@ -51,9 +51,10 @@ const FaqSection = () => {
   };
 
   return (
-    <section className="bg-white py-16 md:px-16 px-8 max-w-4xl mx-auto">
+    <section className="bg-white py-16 md:px-16 px-8">
       {/* Heading + Description (unchanged) */}
-      <div className="text-center mb-10">
+      <div className='md:max-w-4xl mx-auto'>
+        <div className="text-center mb-10">
         <h3 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-4">
           Frequently Asked Questions
         </h3>
@@ -95,6 +96,7 @@ const FaqSection = () => {
             </div>
           </div>
         ))}
+      </div>
       </div>
     </section>
   );
