@@ -3,10 +3,12 @@
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import Typed from 'typed.js';
 
 const Hero = () => {
   const router = useRouter();
+  const typedEl = useRef(null);
 
   const handleTryItNow = () => {
     router.push('/pricing');
@@ -42,22 +44,33 @@ const Hero = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Typed.js Effect
+  useEffect(() => {
+    const typed = new Typed(typedEl.current, {
+      strings: ["From Confusion to Direction", "Gen-Z Career Guidance"],
+      typeSpeed: 70,
+      backSpeed: 40,
+      backDelay: 2000,
+      loop: true,
+      smartBackspace: true,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, []);
+
   return (
     <section className="bg-[#14442E] md:py-0 py-16 text-white md:px-16 px-8">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
         
         {/* Left Content */}
         <div className="flex-[1.5] text-left w-full space-y-6">
-          <p className="text-xs sm:text-sm md:text-base tracking-[3px] uppercase text-gray-300">
-            Independent Institution With
-          </p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-extrabold leading-snug md:leading-tight">
-            From Confusion to <br className="hidden sm:block" />
-            <span className="text-gray-200">Direction</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-extrabold leading-snug md:leading-tight md:w-[500px] md:h-32">
+            <span ref={typedEl} className="text-gray-200"></span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-lg">
-            Explore your future with confidence and clarity. Discover the path that leads you 
-            towards success with the best mentors and learning environment.
+            Explore your future with confidence and clarity.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -87,7 +100,7 @@ const Hero = () => {
         </div>
 
         {/* Right Rotating Images with Framer Motion */}
-        <div className="flex-[1.2] w-full flex justify-center md:justify-end relative overflow-hidden h-[340px] sm:h-[380px] md:h-[500px] md:mt-32">
+        <div className="flex-[1.2] w-full flex justify-center md:justify-end relative overflow-hidden h-[340px] sm:h-[380px] md:h-[500px] md:mt-44">
           <AnimatePresence mode="wait">
             <motion.div
               key={index}
@@ -105,7 +118,7 @@ const Hero = () => {
               transition={{ duration: 0.8 }}
               className="flex flex-col items-center w-full"
             >
-              <div className="border-4 border-white rounded-2xl shadow-xl overflow-hidden w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] md:w-[350px] md:h-[350px] flex items-center justify-center bg-gray-100">
+              <div className="border-4 border-white rounded-2xl shadow-xl overflow-hidden w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] md:w-[320px] md:h-[320px] flex items-center justify-center bg-gray-100">
                 <Image
                   src={images[index].src}
                   alt={images[index].name}

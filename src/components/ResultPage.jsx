@@ -13,100 +13,290 @@ const ResultPage = () => {
     const savedResults = JSON.parse(localStorage.getItem('testResults') || '[]');
     if (!savedResults.length) {
       router.push('/'); // redirect if no results
-    } else {
-      const latestResult = savedResults[savedResults.length - 1];
-      const mbtiType =
-        typeof latestResult === 'string' ? latestResult : latestResult.type;
-      setResult(resultsData.find(r => r.type === mbtiType));
+      return;
+    }
 
-      // 🔑 Fetch actual plan from backend
-      const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
-      if (storedUser?.email) {
-        fetch(`/api/getplan?email=${encodeURIComponent(storedUser.email)}`)
-          .then(res => {
-            if (!res.ok) throw new Error(`API error: ${res.status}`);
-            return res.json();
-          })
-          .then(data => {
-            if (data.plan) {
-              setPlan(data.plan);
-            }
-          })
-          .catch(err => console.error('Error fetching plan:', err));
-      }
+    const latestResult = savedResults[savedResults.length - 1];
+    const mbtiType = typeof latestResult === 'string' ? latestResult : latestResult.type;
+    setResult(resultsData.find(r => r.type === mbtiType) || null);
+
+    // Fetch plan from backend
+    const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+    if (storedUser?.email) {
+      fetch(`/api/getplan?email=${encodeURIComponent(storedUser.email)}`)
+        .then(res => {
+          if (!res.ok) throw new Error(`API error: ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          if (data.plan) {
+            setPlan(data.plan);
+          }
+        })
+        .catch(err => console.error('Error fetching plan:', err));
     }
   }, [router]);
 
   if (!result) return null;
 
-  // ✅ Download handler (only standard sections)
-  const handleDownload = () => {
-    const doc = new jsPDF();
-    let y = 10;
+  // PDF helpers
+  const startNewPageIfNeeded = (doc, y) => {
+    if (y > 750) { // near bottom
+      doc.addPage();
+      return 60;
+    }
+    return y;
+  };
 
-    const addText = (title, textArray) => {
-      doc.setFontSize(14);
-      doc.text(title, 10, y);
-      y += 8;
+  const addWrappedText = (doc, text, x, y, maxWidth = 480, lineHeight = 16, fontSize = 12, isBold = false) => {
+    doc.setFont('helvetica', isBold ? 'bold' : 'normal');
+    doc.setFontSize(fontSize);
+
+    const cleanText = (text || '').toString().replace(/[^\x20-\x7E\n]/g, ''); // remove weird chars
+    const lines = doc.splitTextToSize(cleanText, maxWidth);
+
+    lines.forEach(line => {
+      y = startNewPageIfNeeded(doc, y);
+      doc.text(line, x, y);
+      y += lineHeight;
+    });
+    return y;
+  };
+
+  // Download only standard sections
+  const handleDownload = () => {
+    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+    let y = 60;
+    const leftX = 60;
+    const maxWidth = 480;
+
+    // Title
+    doc.setFontSize(22);
+    doc.setFont('helvetica', 'bold');
+    doc.text(result.title || 'Result', leftX, y);
+    y += 30;
+
+    // Welcome message (fixed: clean + wrap correctly)
+    if (result.welcomeMessage) {
+      doc.setFont('helvetica', 'normal');
       doc.setFontSize(12);
-      textArray.forEach(item => {
-        doc.text(`- ${item}`, 12, y);
-        y += 7;
-        if (y > 280) {
-          doc.addPage();
-          y = 10;
-        }
+      y = addWrappedText(doc, result.welcomeMessage, leftX, y, maxWidth, 18, 12, false);
+      y += 15;
+    }
+
+    // Add Section Helper
+    const addSection = (title, items) => {
+      if (!items || !items.length) return y;
+
+      // Section Heading
+      y = startNewPageIfNeeded(doc, y);
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.text(title, leftX, y);
+      y += 18;
+
+      // Section Items
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'normal');
+      items.forEach(it => {
+        const text = typeof it === 'string' ? `• ${it}` : `• ${JSON.stringify(it)}`;
+        y = addWrappedText(doc, text, leftX + 15, y, maxWidth - 20, 16, 12);
       });
-      y += 5;
+      y += 12;
+      return y;
     };
 
-    doc.setFontSize(18);
-    doc.text(result.title, 10, y);
-    y += 10;
+    // Meaning (object to array)
+    const meaningArray = Object.entries(result.meaning || {}).map(([k, v]) => `${k}: ${v}`);
 
-    doc.setFontSize(12);
-    doc.text(result.welcomeMessage, 10, y);
-    y += 10;
+    y = addSection('Meaning', meaningArray);
+    y = addSection('Lifestyle', result.lifestyle || []);
+    y = addSection('Strengths', result.strengths || []);
+    y = addSection('Weaknesses', result.weaknesses || []);
+    y = addSection('Success Meaning', result.successMeaning || []);
+    y = addSection('Strategies', result.strategies || []);
+    y = addSection('Problems', result.problems || []);
+    y = addSection('Rules', result.rules || []);
+    y = addSection('Careers', result.careers || []);
 
-    // Standard sections only
-    addText("Meaning", Object.entries(result.meaning).map(([k,v]) => `${k}: ${v}`));
-    addText("Lifestyle", result.lifestyle);
-    addText("Strengths", result.strengths);
-    addText("Weaknesses", result.weaknesses);
-    addText("Success Meaning", result.successMeaning);
-    addText("Strategies", result.strategies);
-    addText("Problems", result.problems);
-    addText("Rules", result.rules);
-    addText("Careers", result.careers);
+    // Footer
+    y = startNewPageIfNeeded(doc, y + 20);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'italic');
+    doc.text("Generated by APTITUDE COUNSEL Result System", leftX, y);
 
-    doc.save(`${result.title}_Standard_Result.pdf`);
+    // Save
+    const safeTitle = (result.title || 'result').replace(/[^a-z0-9_\-]/gi, '_');
+    doc.save(`${safeTitle}_Standard_Result.pdf`);
   };
 
   return (
     <div className="pt-10 p-8 bg-gray-100 text-black shadow-md">
       <div className="max-w-4xl mx-auto">
+        {/* Title + Welcome */}
         <h2 className="text-3xl font-bold mb-4">{result.title}</h2>
         <p className="text-lg mb-6">{result.welcomeMessage}</p>
 
-        {/* Standard Sections (same as before) */}
-        {/* ... tumhara sara existing code ... */}
+        {/* Standard Sections */}
+        <div className="space-y-6">
+          <section>
+            <h3 className="text-xl font-semibold mb-2">Meaning</h3>
+            <ul className="list-disc list-inside">
+              {Object.entries(result.meaning || {}).map(([k, v], idx) => (
+                <li key={idx}><strong>{k}</strong>: {v}</li>
+              ))}
+            </ul>
+          </section>
 
-        {/* Premium Only Section */}
+          <section>
+            <h3 className="text-xl font-semibold mb-2">Lifestyle</h3>
+            <ul className="list-disc list-inside">
+              {(result.lifestyle || []).map((item, idx) => <li key={idx}>{item}</li>)}
+            </ul>
+          </section>
+
+          <section>
+            <h3 className="text-xl font-semibold mb-2">Strengths</h3>
+            <ul className="list-disc list-inside">
+              {(result.strengths || []).map((item, idx) => <li key={idx}>{item}</li>)}
+            </ul>
+          </section>
+
+          <section>
+            <h3 className="text-xl font-semibold mb-2">Weaknesses</h3>
+            <ul className="list-disc list-inside">
+              {(result.weaknesses || []).map((item, idx) => <li key={idx}>{item}</li>)}
+            </ul>
+          </section>
+
+          <section>
+            <h3 className="text-xl font-semibold mb-2">Success Meaning</h3>
+            <ul className="list-disc list-inside">
+              {(result.successMeaning || []).map((item, idx) => <li key={idx}>{item}</li>)}
+            </ul>
+          </section>
+
+          <section>
+            <h3 className="text-xl font-semibold mb-2">Strategies</h3>
+            <ul className="list-disc list-inside">
+              {(result.strategies || []).map((item, idx) => <li key={idx}>{item}</li>)}
+            </ul>
+          </section>
+
+          <section>
+            <h3 className="text-xl font-semibold mb-2">Problems</h3>
+            <ul className="list-disc list-inside">
+              {(result.problems || []).map((item, idx) => <li key={idx}>{item}</li>)}
+            </ul>
+          </section>
+
+          <section>
+            <h3 className="text-xl font-semibold mb-2">Rules</h3>
+            <ul className="list-disc list-inside">
+              {(result.rules || []).map((item, idx) => <li key={idx}>{item}</li>)}
+            </ul>
+          </section>
+
+          <section>
+            <h3 className="text-xl font-semibold mb-2">Careers</h3>
+            <ul className="list-disc list-inside">
+              {(result.careers || []).map((item, idx) => <li key={idx}>{item}</li>)}
+            </ul>
+          </section>
+
+          {/* Download button */}
+          <div className="mt-8 text-center">
+            <button
+              onClick={handleDownload}
+              className="w-fit bg-green-700 text-white py-2 px-3 rounded-md hover:shadow-lg duration-500 hover:scale-105 cursor-pointer hover:bg-green-800 transition font-medium"
+            >
+              Download Result (PDF)
+            </button>
+          </div>
+        </div>
+
+        {/* Premium-only sections (unchanged) */}
         {plan === 'premium' && (
-          <div className="mt-10 border-t pt-6">
-            {/* ... tumhara existing premium code ... */}
+          <div className="mt-10 border-t pt-6 space-y-6">
+            {/* Scholarships */}
+            {result.scholarships && (
+              <section>
+                <h3 className="text-xl font-semibold mb-3">Scholarships</h3>
+                {/* Fully Funded */}
+                {result.scholarships.fullyFunded?.length > 0 && (
+                  <div className="mb-4">
+                    <h4 className="font-semibold mb-2">Fully Funded</h4>
+                    <ul className="list-disc list-inside">
+                      {result.scholarships.fullyFunded.map((s, i) => (
+                        <li key={i}>
+                          <a href={s.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                            {s.title}
+                          </a>
+                          {s.level ? ` (${s.level})` : ''} {s.coverage ? ` – ${s.coverage}` : ''}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {/* Partially Funded */}
+                {result.scholarships.partiallyFunded?.length > 0 && (
+                  <div className="mb-4">
+                    <h4 className="font-semibold mb-2">Partially Funded</h4>
+                    <ul className="list-disc list-inside">
+                      {result.scholarships.partiallyFunded.map((s, i) => (
+                        <li key={i}>
+                          <a href={s.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                            {s.title}
+                          </a>
+                          {s.level ? ` (${s.level})` : ''} {s.award ? ` – ${s.award}` : ''}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {/* Talent Based */}
+                {result.scholarships.talentBased?.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold mb-2">Talent Based</h4>
+                    <ul className="list-disc list-inside">
+                      {result.scholarships.talentBased.map((s, i) => (
+                        <li key={i}>
+                          <a href={s.link || s.pdf} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                            {s.title}
+                          </a>
+                          {s.category ? ` (${s.category})` : ''} {s.award ? ` – ${s.award}` : ''}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </section>
+            )}
+            {/* Career Road Maps */}
+            {result.careerRoadMaps?.length > 0 && (
+              <section>
+                <h3 className="text-xl font-semibold mb-3">Career Road Maps</h3>
+                {result.careerRoadMaps.map((c, i) => (
+                  <div key={i} className="mb-3">
+                    <h4 className="font-semibold">{c.field}</h4>
+                    <ol className="list-decimal list-inside ml-4">
+                      {(c.steps || []).map((step, j) => <li key={j}>{step}</li>)}
+                    </ol>
+                  </div>
+                ))}
+              </section>
+            )}
+            {/* Premium Insights */}
+            {result.premiumInsights?.length > 0 && (
+              <section>
+                <h3 className="text-xl font-semibold mb-2">Premium Insights</h3>
+                <ul className="list-disc list-inside">
+                  {result.premiumInsights.map((p, idx) => <li key={idx}>{p}</li>)}
+                </ul>
+              </section>
+            )}
           </div>
         )}
-
-        {/* ✅ Download Button */}
-        <div className="mt-8 text-center">
-          <button
-            onClick={handleDownload}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700"
-          >
-            Download Standard Result (PDF)
-          </button>
-        </div>
       </div>
     </div>
   );
