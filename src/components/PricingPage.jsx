@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import PageBanner from './PageBanner';
 import FaqSection from './FaqSection';
-import { CheckCircle, X } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import PaymentProofPopup from './PaymentProofPopup';
 import TestPopupForm from './TestPopupForm';
 import { useRouter } from 'next/navigation';
@@ -23,6 +23,7 @@ const PricingPage = () => {
   const [isTestPopupOpen, setIsTestPopupOpen] = useState(false);
   const [proofStatus, setProofStatus] = useState("none");
   const [checkingStatus, setCheckingStatus] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null); // ✅ to know which plan user clicked
   const router = useRouter();
 
   // ✅ Check if user has submitted popup form
@@ -86,7 +87,7 @@ const PricingPage = () => {
       const proofData = await res.json();
       if (proofData.success && proofData.data) {
         const proof = proofData.data;
-        setProofStatus(proof.status); // ✅ update state
+        setProofStatus(proof.status);
 
         if (proof.status === "approved") {
           refreshTestCompletion(email);
@@ -103,24 +104,32 @@ const PricingPage = () => {
   // ✅ Auto-refresh proof status callback
   const handleProofSubmitted = async () => {
     if (!user?.email) return;
-    setProofStatus("pending"); // immediately show pending
-    // Poll until status changes
+    setProofStatus("pending");
     const interval = setInterval(async () => {
       const status = await checkProofStatus(user.email);
       if (status !== "pending") clearInterval(interval);
     }, 2000);
   };
 
-  // ✅ Handle Send Proof Button Click
-  const handleSendProofClick = async () => {
+  // ✅ Handle Plan Selection
+  const handlePlanClick = async (planType) => {
     if (!user?.email) {
       router.push('/login');
       return;
     }
-    if (checkingStatus) return;
 
     setCheckingStatus(true);
+    setSelectedPlan(planType);
+
     try {
+      // ✅ Save selected plan in DB
+      await fetch('/api/updateplan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: user.email, plan: planType }),
+      });
+
+      // ✅ Then check form & proof flow
       const submitted = await refreshSubmissionStatus(user.email);
       if (!submitted) {
         setIsProofPopupOpen(false);
@@ -195,16 +204,9 @@ const PricingPage = () => {
           {/* Standard Plan */}
           <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[400px] justify-between h-full">
             <div className="flex flex-col flex-grow">
-              {/* Plan Title */}
-              <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">
-                Standard
-              </h3>
-
-              {/* Benefits Section */}
+              <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">Standard</h3>
               <div className="bg-gray-100 rounded-lg p-4 mb-6 h-80">
-                <h4 className="text-lg font-semibold text-[#14442E] mb-4 border-b border-gray-300 pb-2">
-                  Benefits
-                </h4>
+                <h4 className="text-lg font-semibold text-[#14442E] mb-4 border-b border-gray-300 pb-2">Benefits</h4>
                 <ul className="space-y-3 text-gray-700 text-sm leading-relaxed">
                   <FeatureItem text="Report on your Strengths" />
                   <FeatureItem text="Report on your weaknesses " />
@@ -214,23 +216,17 @@ const PricingPage = () => {
                   <FeatureItem text="Rules for succeed" />
                 </ul>
               </div>
-
-              {/* Price */}
               <div className="mt-auto text-center mb-6">
-                <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block">
-                  Rs. 1000
-                </h3>
+                <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block">Rs. 1000</h3>
               </div>
             </div>
-
-            {/* Button */}
             <div className="text-center">
               <button
-                onClick={handleSendProofClick}
+                onClick={() => handlePlanClick("standard")}
                 disabled={checkingStatus}
                 className="bg-[#14442E] hover:bg-[#0f3a26] cursor-pointer hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {checkingStatus ? 'Checking…' : 'Send Screenshot Proof'}
+                {checkingStatus && selectedPlan === "standard" ? 'Checking…' : 'Send Screenshot Proof'}
               </button>
             </div>
           </div>
@@ -238,16 +234,9 @@ const PricingPage = () => {
           {/* Premium Plan */}
           <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[400px] justify-between h-full">
             <div className="flex flex-col flex-grow">
-              {/* Plan Title */}
-              <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">
-                Premium
-              </h3>
-
-              {/* Benefits Section */}
+              <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">Premium</h3>
               <div className="bg-gray-100 rounded-lg p-4 mb-6 h-80">
-                <h4 className="text-lg font-semibold text-[#14442E] mb-4 border-b border-gray-300 pb-2">
-                  Benefits
-                </h4>
+                <h4 className="text-lg font-semibold text-[#14442E] mb-4 border-b border-gray-300 pb-2">Benefits</h4>
                 <ul className="space-y-3 text-gray-700 text-sm leading-relaxed">
                   <FeatureItem text="Report on your Strengths" />
                   <FeatureItem text="Report on your weaknesses " />
@@ -258,45 +247,33 @@ const PricingPage = () => {
                   <FeatureItem text="Careers" />
                 </ul>
               </div>
-
-              {/* Price */}
               <div className="mt-auto text-center mb-6">
-                <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block">
-                  Rs. 1500
-                </h3>
+                <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block">Rs. 1500</h3>
               </div>
             </div>
-
-            {/* Button */}
             <div className="text-center">
               <button
-                onClick={handleSendProofClick}
+                onClick={() => handlePlanClick("premium")}
                 disabled={checkingStatus}
                 className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg cursor-pointer duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {checkingStatus ? 'Checking…' : 'Send Screenshot Proof'}
+                {checkingStatus && selectedPlan === "premium" ? 'Checking…' : 'Send Screenshot Proof'}
               </button>
             </div>
           </div>
 
-
         </div>
 
-        {/* ✅ Status Section Below */}
+        {/* ✅ Status Section */}
         {user && (
           <div className="max-w-3xl mx-auto mt-12 p-6 bg-white shadow rounded-lg text-center">
             {proofStatus === "pending" && (
               <div className="space-y-2">
-                <p className="text-yellow-600 font-medium">
-                  ⏳ Your proof has been submitted. Waiting for admin approval.
-                </p>
-                {/* ✅ Added extra explanation */}
+                <p className="text-yellow-600 font-medium">⏳ Your proof has been submitted. Waiting for admin approval.</p>
                 <p className="text-gray-600 text-sm">
-                  Your proof has been received and is currently under review. This usually takes a
-                  few hours. If your proof is not approved within <strong>24 hours</strong>, please{" "}
-                  <a href="/contact" className="text-blue-600 underline">
-                    contact us here
-                  </a>.
+                  Your proof has been received and is currently under review. This usually takes a few hours. 
+                  If not approved within <strong>24 hours</strong>, please{" "}
+                  <a href="/contact" className="text-blue-600 underline">contact us</a>.
                 </p>
               </div>
             )}
@@ -304,9 +281,7 @@ const PricingPage = () => {
             {proofStatus === "approved" && !hasCompletedTest && (
               <div className="text-center space-y-3">
                 <p className="text-gray-700 text-sm">
-                  ✅ Your payment proof has been approved.
-                  You can now begin your MBTI test and answer all 70 questions.
-                  Take your time and answer honestly for accurate results.
+                  ✅ Your payment proof has been approved. You can now begin your MBTI test.
                 </p>
                 <button
                   onClick={() => router.push('/start_test')}
@@ -319,8 +294,7 @@ const PricingPage = () => {
             {proofStatus === "approved" && hasCompletedTest && (
               <div className="text-center space-y-3">
                 <p className="text-gray-700 text-sm">
-                  🎉 You have successfully completed your MBTI test.
-                  Your personalized results are ready to view now.
+                  🎉 You have successfully completed your MBTI test. Your personalized results are ready.
                 </p>
                 <button
                   onClick={() => router.push('/result')}
@@ -333,7 +307,7 @@ const PricingPage = () => {
 
             {proofStatus === "rejected" && (
               <button
-                onClick={handleSendProofClick}
+                onClick={() => handlePlanClick(selectedPlan)}
                 className="bg-red-600 hover:bg-red-700 cursor-pointer duration-300 text-white px-6 py-2 rounded-lg"
               >
                 Resubmit Proof
@@ -355,7 +329,7 @@ const PricingPage = () => {
         isOpen={isProofPopupOpen}
         onClose={() => setIsProofPopupOpen(false)}
         userEmail={user?.email || ''}
-        onProofSubmitted={handleProofSubmitted} // ✅ auto-refresh after submit
+        onProofSubmitted={handleProofSubmitted}
       />
     </div>
   );

@@ -1,19 +1,31 @@
+// app/api/getPlan/route.js
 import dbConnect from "@/backend/db";
 import User from "@/backend/models/user";
 
-export default async function handler(req, res) {
+export async function GET(req) {
   await dbConnect();
 
-  if (req.method === "POST") {
-    const { email } = req.body;
+  try {
+    // ✅ Extract query params from request
+    const { searchParams } = new URL(req.url);
+    const email = searchParams.get("email");
 
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ plan: "standard" }); // Default plan
+    if (!email) {
+      return Response.json({ error: "Email is required" }, { status: 400 });
     }
 
-    return res.status(200).json({ plan: user.plan });
-  }
+    const user = await User.findOne({ email });
 
-  res.status(405).json({ message: "Method not allowed" });
+    if (!user) {
+      return Response.json({ plan: "standard" }); // default if not found
+    }
+
+    return Response.json({ plan: user.plan });
+  } catch (error) {
+    console.error("getPlan API error:", error);
+    return Response.json(
+      { error: "Server error", details: error.message },
+      { status: 500 }
+    );
+  }
 }
