@@ -2,12 +2,14 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation'; 
 import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [hasSubmitted, setHasSubmitted] = useState(false); // ✅ Track test completion
+  const [status, setStatus] = useState({ paid: false, completed: false, approved: false }); 
+  const pathname = usePathname();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -19,7 +21,6 @@ const Navbar = () => {
           const parsedUser = JSON.parse(storedUser);
           setUser(parsedUser);
 
-          // ✅ Check test submission only if normal user (not admin)
           if (parsedUser?.role !== 'admin' && parsedUser?.email) {
             try {
               const res = await fetch(
@@ -28,31 +29,32 @@ const Navbar = () => {
               );
               if (res.ok) {
                 const data = await res.json();
-                setHasSubmitted(data.completed || false);
+                setStatus({
+                  paid: data.paid || false,
+                  completed: data.completed || false,
+                  approved: data.approved || false
+                });
               }
             } catch (err) {
               console.error("Error checking test submission:", err);
-              setHasSubmitted(false);
+              setStatus({ paid: false, completed: false, approved: false });
             }
           } else {
-            setHasSubmitted(false);
+            setStatus({ paid: false, completed: false, approved: false });
           }
         } catch (err) {
           console.error('Invalid user in localStorage');
           localStorage.removeItem('user');
           setUser(null);
-          setHasSubmitted(false);
+          setStatus({ paid: false, completed: false, approved: false });
         }
       } else {
         setUser(null);
-        setHasSubmitted(false);
+        setStatus({ paid: false, completed: false, approved: false });
       }
     };
 
-    // initial load
     loadUser();
-
-    // listen to "storage" events (for login/logout sync)
     window.addEventListener('storage', loadUser);
     return () => window.removeEventListener('storage', loadUser);
   }, []);
@@ -60,19 +62,15 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('user');
     setUser(null);
-    setHasSubmitted(false);
-
-    // Let other parts know
+    setStatus({ paid: false, completed: false, approved: false });
     window.dispatchEvent(new Event('storage'));
-
     window.location.href = '/login';
   };
 
-  // ✅ Helper function to safely show initials
   const getUserInitial = () => {
     if (user?.name && user.name.length > 0) return user.name.charAt(0).toUpperCase();
     if (user?.email && user.email.length > 0) return user.email.charAt(0).toUpperCase();
-    return "?"; // fallback
+    return "?";
   };
 
   return (
@@ -80,12 +78,11 @@ const Navbar = () => {
       {/* ✅ Navbar */}
       <header className="shadow-sm bg-white sticky top-0 z-50">
         <nav className="flex items-center justify-between md:px-16 px-8 py-4">
-          {/* Logo */}
           <Link href="/" className="flex items-center">
             <img src="/logo/mbtilogo.png" alt="" className='w-12 h-12'/>
             <div className='flex flex-col'>
               <span className="text-[22px] font-bold text-[#00311A] mt-3">APTITUDE</span>
-            <span className="text-[18px] font-bold text-[#175434] -mt-3">COUNSEL</span>
+              <span className="text-[18px] font-bold text-[#175434] -mt-3">COUNSEL</span>
             </div>
           </Link>
 
@@ -100,7 +97,7 @@ const Navbar = () => {
               <li><Link href="/dashboard">Dashboard</Link></li>
             )}
 
-            {user && user?.role !== 'admin' && hasSubmitted && (
+            {user && user?.role !== 'admin' && status.completed && status.approved && (
               <li><Link href="/result">Result</Link></li>
             )}
           </ul>
@@ -109,15 +106,12 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-3">
             {user ? (
               <>
-                {/* Logout Button */}
                 <button
                   onClick={handleLogout}
                   className="bg-[#14442E] text-[18px] text-white px-4 py-1 rounded hover:shadow-lg duration-500 hover:scale-105 hover:bg-[#0c2f1e] cursor-pointer transition"
                 >
                   Logout
                 </button>
-
-                {/* ✅ User Initial Circle */}
                 <div className="w-9 h-9 flex items-center justify-center rounded-full bg-[#14442E] text-white font-bold uppercase ml-1">
                   {getUserInitial()}
                 </div>
@@ -138,7 +132,7 @@ const Navbar = () => {
           </button>
         </nav>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Dropdown */}
         {isOpen && (
           <div className="md:hidden bg-white px-8 pb-4">
             <ul className="flex flex-col gap-4 text-[#14442E] font-medium">
@@ -151,7 +145,7 @@ const Navbar = () => {
                 <li><Link href="/dashboard" onClick={toggleMenu}>Dashboard</Link></li>
               )}
 
-              {user && user?.role !== 'admin' && hasSubmitted && (
+              {user && user?.role !== 'admin' && status.completed && status.approved && (
                 <li><Link href="/result" onClick={toggleMenu}>Result</Link></li>
               )}
 
@@ -167,8 +161,6 @@ const Navbar = () => {
                     >
                       Logout
                     </button>
-                    
-                    {/* ✅ User Initial Circle in Mobile */}
                     <div className="w-9 h-9 flex items-center justify-center rounded-full bg-[#14442E] text-white font-bold uppercase">
                       {getUserInitial()}
                     </div>
@@ -188,17 +180,26 @@ const Navbar = () => {
         )}
       </header>
 
-      {/* ✅ Notification Bar (only if user logged in) */}
-      {user && (
+      {/* ✅ Notification Bar with 4 states */}
+      {user && pathname !== '/result' && pathname !== '/dashboard' && (
         <div className="bg-gray-100 text-green-900 text-center py-2 px-4 text-md font-medium">
-          {!hasSubmitted ? (
+          {!status.paid ? (
             <p>
               You are now logged in. You can start the test after paying the fee.{" "}
               <Link href="/pricing" className="underline text-green-700 hover:text-green-900">Pay Fees</Link>
             </p>
+          ) : !status.completed ? (
+            <p>
+              Your payment is confirmed. You can now{" "}
+              <Link href="/test" className="underline text-green-700 hover:text-green-900">Start Test</Link>
+            </p>
+          ) : status.completed && !status.approved ? (
+            <p>
+              Your test has been submitted. Please wait for admin approval.
+            </p>
           ) : (
             <p>
-              You have passed the test. You can now view your result.{" "}
+              You have passed the test. You can now view your{" "}
               <Link href="/result" className="underline text-green-700 hover:text-green-900">Result</Link>
             </p>
           )}

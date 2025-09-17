@@ -218,12 +218,12 @@ const PricingPage = () => {
               </div>
               <div className="mt-auto text-center mb-6">
                 {/* Discounted Price */}
-                <div className="text-xl sm:text-2xl font-bold text-[#14442E] mb-1">
-                  Rs. 1500 <span className="text-sm text-green-700 font-medium ml-2">25% OFF</span>
+                <div className="text-xl sm:text-2xl flex justify-center items-center text-center font-bold text-[#14442E] mb-1 ">
+                  <h1 className='line-through'>Rs. 2000</h1> <span className="text-sm text-green-700 font-medium ml-2">25% OFF</span>
                 </div>
                 {/* Original Price */}
-                <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block line-through">
-                  Rs. 2000
+                <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block">
+                  Rs. 1500
                 </h3>
               </div>
             </div>
@@ -233,7 +233,7 @@ const PricingPage = () => {
                 disabled={checkingStatus}
                 className="bg-[#14442E] hover:bg-[#0f3a26] cursor-pointer hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {checkingStatus && selectedPlan === "standard" ? 'Checking…' : 'Send Screenshot Proof'}
+                {checkingStatus && selectedPlan === "standard" ? 'Checking…' : 'Pay Now'}
               </button>
             </div>
           </div>
@@ -258,12 +258,12 @@ const PricingPage = () => {
               </div>
               <div className="mt-auto text-center mb-6">
                 {/* Discounted Price */}
-                <div className="text-xl sm:text-2xl font-bold text-[#14442E] mb-1">
-                  Rs. 2500 <span className="text-sm text-green-700 font-medium ml-2">17% OFF</span>
+                <div className="text-xl sm:text-2xl flex justify-center items-center text-center font-bold text-[#14442E] mb-1 ">
+                  <h1 className='line-through'>Rs. 3000</h1> <span className="text-sm text-green-700 font-medium ml-2">17% OFF</span>
                 </div>
                 {/* Original Price */}
-                <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block line-through">
-                  Rs. 3000
+                <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block">
+                  Rs. 2500
                 </h3>
               </div>
             </div>
@@ -273,7 +273,7 @@ const PricingPage = () => {
                 disabled={checkingStatus}
                 className="bg-[#14442E] hover:bg-[#0f3a26] hover:shadow-lg cursor-pointer duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {checkingStatus && selectedPlan === "premium" ? 'Checking…' : 'Send Screenshot Proof'}
+                {checkingStatus && selectedPlan === "premium" ? 'Checking…' : 'Pay Now'}
               </button>
             </div>
           </div>

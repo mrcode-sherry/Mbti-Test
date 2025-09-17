@@ -138,7 +138,8 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
               </h2>
               {/* ✅ Payment Details Section */}
           <div className="mb-6 p-4 border rounded-lg bg-gray-50 text-sm text-gray-700">
-            <h3 className="font-semibold text-gray-800 mb-2">Payment Details</h3>
+            <h2 className="border-b text-[14px] font-semibold pb-2 mb-2 tracking-wide">Through Jazzcash, Easy Paisa and Bank Account</h2>
+            <h3 className="font-semibold text-gray-800 mb-2 tracking-wide">Payment Details</h3>
             <p>
               <span className="font-medium">Bank Name:</span> MCB Bank <br />
               <span className="font-medium">Account Title:</span> APTITUDE COUUNSEL <br />

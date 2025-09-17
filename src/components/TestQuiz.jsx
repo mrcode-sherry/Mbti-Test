@@ -191,6 +191,7 @@ const TestQuiz = () => {
 
       {/* ✅ Checklist block */}
       <div className="grid gap-3 mb-6 bg-gray-100 p-3 sm:p-4 rounded-lg">
+        <h1 className='text-lg pb-2 border-b text-[#14442E] font-medium'>4 Important Points Before Taking the personality Test</h1>
         {checklist.map((item, idx) => (
           <div
             key={idx}

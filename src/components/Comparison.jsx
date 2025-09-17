@@ -29,6 +29,8 @@ const plans = [
       "Problematic areas",
       "Rules for succeed",
       "Careers",
+      "Scholarships",
+      "Careers roadmap"
     ],
   },
 ];
@@ -41,6 +43,8 @@ const allFeatures = [
   "Problematic areas",
   "Rules for succeed",
   "Careers",
+  "Scholarships",
+  "Careers roadmap"
 ];
 
 const Comparison = () => {

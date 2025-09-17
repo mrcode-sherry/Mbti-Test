@@ -89,10 +89,11 @@ const DashboardPage = () => {
                       screenshotUrl: proofData.data?.screenshotUrl || null,
                       tid: proofData.data?.tid || null,
                       status: proofData.data?.status || "pending",
+                      paid: proofData.data?.status === "approved", // ✅ mark paid if approved
                     };
                   }
                 } catch {}
-                return { ...t, screenshotUrl: null, tid: null, status: "pending" };
+                return { ...t, screenshotUrl: null, tid: null, status: "pending", paid: false };
               })
             );
             setTests(enriched);
@@ -115,7 +116,7 @@ const DashboardPage = () => {
         alert("✅ Proof approved. User can now start the test.");
         setTests((prev) =>
           prev.map((t) =>
-            t.email === email ? { ...t, status: "approved" } : t
+            t.email === email ? { ...t, status: "approved", paid: true } : t
           )
         );
         setSelectedTest(null);
@@ -140,7 +141,7 @@ const DashboardPage = () => {
         alert("❌ Proof rejected.");
         setTests((prev) =>
           prev.map((t) =>
-            t.email === email ? { ...t, status: "rejected" } : t
+            t.email === email ? { ...t, status: "rejected", paid: false } : t
           )
         );
         setSelectedTest(null);
@@ -320,12 +321,12 @@ const DashboardPage = () => {
               )}
               {selectedTest.status === "approved" && (
                 <p className="mt-4 text-green-700 font-semibold">
-                  ✅ Already approved
+                  ✅ Approved — User can now start the test
                 </p>
               )}
               {selectedTest.status === "rejected" && (
                 <p className="mt-4 text-red-700 font-semibold">
-                  ❌ Rejected
+                  ❌ Rejected — User cannot take the test
                 </p>
               )}
             </div>

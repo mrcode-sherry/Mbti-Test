@@ -3,9 +3,9 @@
 import {
   UserPlus,
   CreditCard,
-  Languages,
   ListTodo,
-  FileCheck2
+  FileCheck2,
+  ClipboardList
 } from 'lucide-react';
 
 const steps = [
@@ -17,10 +17,10 @@ const steps = [
   {
     icon: <CreditCard  className="text-[#14442E] h-10 w-10" />,
     title: 'Submit Test Fee',
-    description: 'Pay via JazzCash or EasyPaisa and upload a screenshot for confirmation.',
+    description: 'Pay via JazzCash or BankAccount and upload a screenshot for confirmation.',
   },
   {
-    icon: <Languages  className="text-[#14442E] h-10 w-10" />,
+    icon: <ClipboardList  className="text-[#14442E] h-10 w-10" />,
     title: 'Take the Test',
     description: 'Answer simple questions about your preferences and choices. No right or wrong—just about you.',
   },
