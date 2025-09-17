@@ -14,7 +14,6 @@ const Hero = () => {
     router.push('/pricing');
   };
 
-  // Images with names (replace paths later)
   const images = [
     { src: '/hero/Hero-left-image.jpg', name: 'Student One' },
     { src: '/hero/Hero-right-image.jpg', name: 'Student Two' },
@@ -47,12 +46,17 @@ const Hero = () => {
   // Typed.js Effect
   useEffect(() => {
     const typed = new Typed(typedEl.current, {
-      strings: ["From Confusion to Direction", "Gen-Z Career Guidance"],
+      strings: [
+        "From Confusion to Direction",
+        "Gen-Z<br/>Career Guidance" // line break
+      ],
       typeSpeed: 70,
       backSpeed: 40,
       backDelay: 2000,
       loop: true,
       smartBackspace: true,
+      showCursor: true,
+      contentType: 'html', // allows <br/>
     });
 
     return () => {
@@ -80,22 +84,6 @@ const Hero = () => {
             >
               Try It Now
             </button>
-
-            <button
-              className="flex items-center justify-center gap-2 border-2 border-white px-8 md:px-10 py-3 rounded-lg hover:text-[#14442E] shadow-md transition cursor-pointer duration-300 text-base md:text-lg hover:bg-gray-200"
-            >
-              <svg
-                fill="currentColor"
-                height="22"
-                width="22"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                className="flex-shrink-0"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-              Watch Demo Class
-            </button>
           </div>
         </div>
 
@@ -115,7 +103,7 @@ const Hero = () => {
                 x: isMobile ? -100 : 0,
                 y: isMobile ? 0 : -100,
               }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1.5 }} // slowed animation
               className="flex flex-col items-center w-full"
             >
               <div className="border-4 border-white rounded-2xl shadow-xl overflow-hidden w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] md:w-[320px] md:h-[320px] flex items-center justify-center bg-gray-100">

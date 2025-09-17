@@ -8,6 +8,8 @@ import {
   Smile,
   Globe,
   Users,
+  Award, 
+  Map
 } from "lucide-react";
 
 const benefits = [
@@ -33,7 +35,7 @@ const benefits = [
   },
   {
     icon: Clock,
-    title: "Save Time & Effort",
+    title: "Save Time Effort and Finance",
     desc: "Don’t waste years in wrong path. Start right direction early.",
   },
   {
@@ -44,12 +46,22 @@ const benefits = [
   {
     icon: Globe,
     title: "Internationally Trusted Tool",
-    desc: "MBTI is used all over world by schools and companies.",
+    desc: "This is used all over world by schools and companies.",
   },
   {
     icon: Users,
     title: "Better Conversations with Parents",
     desc: 'Easy to show parents: “See, this career fits me.”',
+  },
+  {
+    icon: Award,
+    title: "Scholarships national and international",
+    desc: 'Fully funded, partially funded and talent based scholarships',
+  },
+  {
+    icon: Map,
+    title: "Career Roadmap",
+    desc: 'Get a complete custom career road map”',
   },
 ];
 

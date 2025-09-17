@@ -8,11 +8,12 @@ import resultsData from '../data/results.json';
 
 const TestQuiz = () => {
   const [isClient, setIsClient] = useState(false);
-  const [language, setLanguage] = useState('');
+  const [language, setLanguage] = useState('en'); // default to English
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showDemoPrompt, setShowDemoPrompt] = useState(true); // New: show demo prompt
   const router = useRouter();
 
   useEffect(() => {
@@ -34,12 +35,14 @@ const TestQuiz = () => {
     checkTestCompletion();
   }, [router]);
 
+  /* Commented out Urdu language selection for now
   const handleLanguageSelect = (lang) => {
     setLanguage(lang);
     setCurrentIndex(0);
     setSelectedAnswers([]);
     setSelectedOptionIndex(null);
   };
+  */
 
   const handleOptionSelect = (option, index) => {
     setSelectedOptionIndex(index);
@@ -102,6 +105,31 @@ const TestQuiz = () => {
 
   if (!isClient) return null;
 
+  // New: Show Demo Class prompt
+  if (showDemoPrompt) {
+    return (
+      <div className="max-w-xl mx-auto p-6 text-center bg-white rounded-xl shadow-md mt-10">
+        <h2 className="text-2xl font-bold text-black mb-4">Watch Demo Class</h2>
+        <p className="text-sm text-gray-500 mb-6">Before starting the test, you can watch a demo class or skip it to start the quiz.</p>
+        <div className="flex justify-center gap-4">
+          <button
+            onClick={() => alert("Demo video will be added here later")} // Placeholder for demo video
+            className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-6 py-2 rounded-lg cursor-pointer duration-300"
+          >
+            Watch Demo
+          </button>
+          <button
+            onClick={() => setShowDemoPrompt(false)}
+            className="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg cursor-pointer duration-300"
+          >
+            Skip Demo
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* Commented out language selection UI for now
   if (!language) {
     return (
       <div className="max-w-xl mx-auto p-6 text-center bg-white rounded-xl shadow-md mt-10">
@@ -118,6 +146,7 @@ const TestQuiz = () => {
       </div>
     );
   }
+  */
 
   const questions = getQuestions();
   const currentQuestion = questions[currentIndex];
@@ -136,10 +165,10 @@ const TestQuiz = () => {
 
   const checklist = language === 'en'
     ? [
-        "70 Multiple Choice Questions",
-        "Choose Marital Status & Language",
-        "Result in PDF & Animated Video Format",
-        "Based on 16 MBTI Personality Types"
+        "Be Honest with Yourself",
+        "Think About Your Natural Self",
+        "No Right or Wrong Answers",
+        "Stay Relaxed & Focused"
       ]
     : [
         "70 کثیر الانتخاب سوالات",

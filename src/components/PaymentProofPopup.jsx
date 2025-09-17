@@ -144,12 +144,6 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
               <span className="font-medium">Account Title:</span> APTITUDE COUUNSEL <br />
               <span className="font-medium">Account Number:</span> 1643710941010912
             </p>
-            <div className="mt-3 border-t pt-2">
-              <p>
-                <span className="font-medium">JazzCash Title:</span> APTITUDE COUUNSEL <br />
-                <span className="font-medium">JazzCash Number:</span> 03002116856
-              </p>
-            </div>
           </div>
               <div className="flex flex-col gap-4">
                 <button
