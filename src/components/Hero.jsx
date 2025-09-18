@@ -24,11 +24,11 @@ const Hero = () => {
   const [index, setIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Auto change image every 3s
+  // ✅ Auto change image every 6s (slowed down)
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % images.length);
-    }, 3000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [images.length]);
@@ -43,20 +43,21 @@ const Hero = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Typed.js Effect
+  // ✅ Typed.js Effect (slower + longer delay)
   useEffect(() => {
     const typed = new Typed(typedEl.current, {
       strings: [
+        "Gen-Z<br/>Career Guidance",
         "From Confusion to Direction",
-        "Gen-Z<br/>Career Guidance" // line break
       ],
-      typeSpeed: 70,
-      backSpeed: 40,
-      backDelay: 2000,
+      typeSpeed: 60,       
+      backSpeed: 60,       
+      backDelay: 5000,     
+      startDelay: 500,     
       loop: true,
       smartBackspace: true,
       showCursor: true,
-      contentType: 'html', // allows <br/>
+      contentType: 'html',
     });
 
     return () => {
@@ -103,7 +104,7 @@ const Hero = () => {
                 x: isMobile ? -100 : 0,
                 y: isMobile ? 0 : -100,
               }}
-              transition={{ duration: 1.5 }} // slowed animation
+              transition={{ duration: 2, delay: 0.8 }}
               className="flex flex-col items-center w-full"
             >
               <div className="border-4 border-white rounded-2xl shadow-xl overflow-hidden w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] md:w-[320px] md:h-[320px] flex items-center justify-center bg-gray-100">
