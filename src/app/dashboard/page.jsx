@@ -42,6 +42,14 @@ const DashboardPage = () => {
   const [selectedTest, setSelectedTest] = useState(null);
   const [selectedContact, setSelectedContact] = useState(null);
 
+  // ✅ Manage User states
+  const [users, setUsers] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(false);
+  const [filterField, setFilterField] = useState("fullName");
+  const [filterValue, setFilterValue] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
+
   // Protect admin route
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -81,7 +89,9 @@ const DashboardPage = () => {
             const enriched = await Promise.all(
               data.data.map(async (t) => {
                 try {
-                  const res = await fetch(`/api/screenshotfetch?email=${t.email}`);
+                  const res = await fetch(
+                    `/api/screenshotfetch?email=${t.email}`
+                  );
                   if (res.ok) {
                     const proofData = await res.json();
                     return {
@@ -89,11 +99,17 @@ const DashboardPage = () => {
                       screenshotUrl: proofData.data?.screenshotUrl || null,
                       tid: proofData.data?.tid || null,
                       status: proofData.data?.status || "pending",
-                      paid: proofData.data?.status === "approved", // ✅ mark paid if approved
+                      paid: proofData.data?.status === "approved",
                     };
                   }
                 } catch {}
-                return { ...t, screenshotUrl: null, tid: null, status: "pending", paid: false };
+                return {
+                  ...t,
+                  screenshotUrl: null,
+                  tid: null,
+                  status: "pending",
+                  paid: false,
+                };
               })
             );
             setTests(enriched);
@@ -102,6 +118,64 @@ const DashboardPage = () => {
         .finally(() => setLoadingTests(false));
     }
   }, [activeTab]);
+
+  // ✅ Fetch all users (same data as Test Form) when Manage User tab opens
+  useEffect(() => {
+    if (activeTab === "manage") {
+      setLoadingUsers(true);
+      fetch("/api/showtest")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            setUsers(data.data);
+            setFilteredUsers(data.data);
+          }
+        })
+        .finally(() => setLoadingUsers(false));
+    }
+  }, [activeTab]);
+
+  // ✅ Handle search
+  const handleSearch = () => {
+    if (!filterValue.trim()) {
+      setFilteredUsers(users);
+      setErrorMsg("");
+      return;
+    }
+
+    const results = users.filter((u) => {
+      const fieldVal =
+        filterField === "fullName"
+          ? u.fullName
+          : filterField === "email"
+          ? u.email
+          : filterField === "gender"
+          ? u.gender
+          : filterField === "maritalStatus"
+          ? u.maritalStatus
+          : filterField === "countryCode"
+          ? u.countryCode
+          : filterField === "phoneNumber"
+          ? u.phoneNumber
+          : filterField === "city"
+          ? u.city
+          : filterField === "province"
+          ? u.province
+          : filterField === "educationType"
+          ? u.educationType
+          : "";
+
+      return fieldVal?.toLowerCase().includes(filterValue.toLowerCase());
+    });
+
+    if (results.length > 0) {
+      setFilteredUsers(results);
+      setErrorMsg("");
+    } else {
+      setFilteredUsers([]);
+      setErrorMsg("No users found for this search.");
+    }
+  };
 
   // ✅ Approve proof API call
   const handleApprove = async (email) => {
@@ -157,7 +231,9 @@ const DashboardPage = () => {
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Sidebar */}
       <aside className="w-full md:w-64 bg-[#1B5A3D] text-white p-4 sm:p-6 space-y-2">
-        <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Admin Panel</h2>
+        <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">
+          Admin Panel
+        </h2>
         <button
           className={`block w-full text-left cursor-pointer duration-300 px-3 py-2 rounded ${
             activeTab === "test" ? "bg-gray-600" : "hover:bg-gray-700"
@@ -175,6 +251,14 @@ const DashboardPage = () => {
           Contact Form Data
         </button>
         <button
+          className={`block w-full text-left px-3 py-2 rounded cursor-pointer duration-300 ${
+            activeTab === "manage" ? "bg-gray-600" : "hover:bg-gray-700"
+          }`}
+          onClick={() => setActiveTab("manage")}
+        >
+          Manage User
+        </button>
+        <button
           className="block w-full text-center px-3 py-2 mt-4 rounded bg-red-600 cursor-pointer duration-300 hover:bg-red-700"
           onClick={handleLogout}
         >
@@ -186,7 +270,9 @@ const DashboardPage = () => {
       <main className="flex-1 p-4 sm:p-8 overflow-x-auto bg-white">
         {activeTab === "welcome" && (
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-black">Admin Dashboard</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-black">
+              Admin Dashboard
+            </h1>
             <p className="text-gray-900">Welcome, Admin! 🎉</p>
           </div>
         )}
@@ -194,7 +280,9 @@ const DashboardPage = () => {
         {/* Test Data */}
         {activeTab === "test" && (
           <div>
-            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">Test Form Data</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">
+              Test Form Data
+            </h2>
             {loadingTests ? (
               <p className="text-black">Loading...</p>
             ) : tests.length > 0 ? (
@@ -204,18 +292,14 @@ const DashboardPage = () => {
                     key={t._id}
                     className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 border rounded bg-gray-50 shadow-sm"
                   >
-                    <span className="w-full sm:w-8 font-bold text-gray-600">{i + 1}.</span>
-                    <span className="flex-1 text-sm sm:text-base">
-                      <span className="text-black font-semibold">{t.fullName}</span> |{" "}
-                      <span className="text-gray-700">{t.email}</span> |{" "}
-                      {t.screenshotUrl ? (
-                        <span className="text-green-600 font-medium">Screenshot uploaded</span>
-                      ) : t.tid ? (
-                        <span className="text-blue-600 font-medium">TID: {t.tid}</span>
-                      ) : (
-                        <span className="text-red-600 font-medium">Not uploaded yet</span>
-                      )}{" "}
-                      | <span className="text-gray-900">Status: {t.status}</span>
+                    <span className="w-full sm:w-8 font-bold text-gray-600">
+                      {i + 1}.
+                    </span>
+                    <span className="flex-1 text-sm sm:text-base text-black">
+                      <span className="font-semibold">{t.fullName}</span> |{" "}
+                      {t.email} | {t.gender} | {t.maritalStatus} |{" "}
+                      {t.countryCode} {t.phoneNumber} | {t.city}, {t.province} |{" "}
+                      {t.educationType} | Status: {t.status}
                     </span>
                     <button
                       onClick={() => setSelectedTest(t)}
@@ -235,7 +319,9 @@ const DashboardPage = () => {
         {/* Contact Data */}
         {activeTab === "contact" && (
           <div>
-            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">Contact Form Data</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">
+              Contact Form Data
+            </h2>
             {loadingContacts ? (
               <p className="text-black">Loading...</p>
             ) : contacts.length > 0 ? (
@@ -245,12 +331,14 @@ const DashboardPage = () => {
                     key={c._id}
                     className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 border rounded bg-gray-50 shadow-sm"
                   >
-                    <span className="w-full sm:w-8 font-bold text-gray-600">{i + 1}.</span>
-                    <span className="flex-1 text-sm sm:text-base">
-                      <span className="font-semibold text-black">
+                    <span className="w-full sm:w-8 font-bold text-gray-600">
+                      {i + 1}.
+                    </span>
+                    <span className="flex-1 text-sm sm:text-base text-black">
+                      <span className="font-semibold">
                         {c.firstName} {c.lastName}
                       </span>{" "}
-                      | <span className="text-gray-700">{c.email}</span>
+                      | {c.email}
                     </span>
                     <button
                       onClick={() => setSelectedContact(c)}
@@ -266,6 +354,71 @@ const DashboardPage = () => {
             )}
           </div>
         )}
+
+        {/* ✅ Manage User */}
+        {activeTab === "manage" && (
+          <div>
+            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">
+              Manage Users
+            </h2>
+
+            {/* Filter controls */}
+            <div className="flex flex-col sm:flex-row gap-2 mb-4">
+              <select
+                value={filterField}
+                onChange={(e) => setFilterField(e.target.value)}
+                className="border rounded px-3 py-2 text-black"
+              >
+                <option value="fullName">Name</option>
+                <option value="email">Email</option>
+                <option value="gender">Gender</option>
+                <option value="maritalStatus">Marital Status</option>
+                <option value="countryCode">Country Code</option>
+                <option value="phoneNumber">Phone Number</option>
+                <option value="city">City</option>
+                <option value="province">Province</option>
+                <option value="educationType">Education</option>
+              </select>
+
+              <input
+                type="text"
+                placeholder="Enter value..."
+                value={filterValue}
+                onChange={(e) => setFilterValue(e.target.value)}
+                className="border rounded px-3 py-2 flex-1 text-black"
+              />
+
+              <button
+                onClick={handleSearch}
+                className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-4 py-2 rounded cursor-pointer duration-300"
+              >
+                Search
+              </button>
+            </div>
+
+            {loadingUsers ? (
+              <p className="text-black">Loading...</p>
+            ) : errorMsg ? (
+              <p className="text-red-600">{errorMsg}</p>
+            ) : filteredUsers.length > 0 ? (
+              <ul className="space-y-2">
+                {filteredUsers.map((u, i) => (
+                  <li
+                    key={u._id}
+                    className="p-3 border rounded bg-gray-50 shadow-sm text-black"
+                  >
+                    <span className="font-bold">{i + 1}.</span>{" "}
+                    <span className="font-semibold">{u.fullName}</span> |{" "}
+                    {u.email} | {u.gender} | {u.maritalStatus} | {u.countryCode}{" "}
+                    {u.phoneNumber} | {u.city}, {u.province} | {u.educationType}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-red-600">No users available.</p>
+            )}
+          </div>
+        )}
       </main>
 
       {/* Test Modal */}
@@ -274,14 +427,31 @@ const DashboardPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Details */}
             <div className="space-y-1 text-sm sm:text-base">
-              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-black">Test Details</h3>
-              <p className="text-black"><b className="text-black">Name:</b> {selectedTest.fullName}</p>
-              <p className="text-black"><b className="text-black">Email:</b> {selectedTest.email}</p>
-              <p className="text-black"><b className="text-black">Gender:</b> {selectedTest.gender}</p>
-              <p className="text-black"><b className="text-black">Marital Status:</b> {selectedTest.maritalStatus}</p>
-              <p className="text-black"><b className="text-black">Phone:</b> {selectedTest.countryCode} {selectedTest.phoneNumber}</p>
-              <p className="text-black"><b className="text-black">City:</b> {selectedTest.city}, {selectedTest.province}</p>
-              <p className="text-black"><b className="text-black">Education:</b> {selectedTest.educationType}</p>
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-black">
+                Test Details
+              </h3>
+              <p className="text-black">
+                <b>Name:</b> {selectedTest.fullName}
+              </p>
+              <p className="text-black">
+                <b>Email:</b> {selectedTest.email}
+              </p>
+              <p className="text-black">
+                <b>Gender:</b> {selectedTest.gender}
+              </p>
+              <p className="text-black">
+                <b>Marital Status:</b> {selectedTest.maritalStatus}
+              </p>
+              <p className="text-black">
+                <b>Phone:</b> {selectedTest.countryCode}{" "}
+                {selectedTest.phoneNumber}
+              </p>
+              <p className="text-black">
+                <b>City:</b> {selectedTest.city}, {selectedTest.province}
+              </p>
+              <p className="text-black">
+                <b>Education:</b> {selectedTest.educationType}
+              </p>
               <p className="text-xs text-gray-500">
                 Submitted {new Date(selectedTest.createdAt).toLocaleString()}
               </p>
@@ -289,7 +459,9 @@ const DashboardPage = () => {
 
             {/* Proof + Approve / Reject */}
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-black">Payment Proof</h3>
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-black">
+                Payment Proof
+              </h3>
               {selectedTest.screenshotUrl ? (
                 <img
                   src={selectedTest.screenshotUrl}
@@ -297,7 +469,9 @@ const DashboardPage = () => {
                   className="w-full max-h-[350px] sm:h-[450px] object-contain rounded border"
                 />
               ) : selectedTest.tid ? (
-                <p className="text-black"><b className="text-black">TID:</b> {selectedTest.tid}</p>
+                <p className="text-black">
+                  <b>TID:</b> {selectedTest.tid}
+                </p>
               ) : (
                 <p className="text-red-600">Not uploaded yet</p>
               )}
@@ -338,13 +512,27 @@ const DashboardPage = () => {
       <Modal isOpen={!!selectedContact} onClose={() => setSelectedContact(null)}>
         {selectedContact && (
           <div className="space-y-1 text-sm sm:text-base">
-            <h3 className="text-lg sm:text-xl font-semibold mb-2 text-black">Contact Details</h3>
-            <p className="text-black"><b className="text-black">Name:</b> {selectedContact.firstName} {selectedContact.lastName}</p>
-            <p className="text-black"><b className="text-black">Email:</b> {selectedContact.email}</p>
-            <p className="text-black"><b className="text-black">Phone:</b> {selectedContact.phoneNumber}</p>
-            <p className="text-black"><b className="text-black">Marital Status:</b> {selectedContact.maritalStatus}</p>
-            <p className="text-black"><b className="text-black">Subject:</b> {selectedContact.subject}</p>
-            <p className="text-black"><b className="text-black">Message:</b> {selectedContact.message}</p>
+            <h3 className="text-lg sm:text-xl font-semibold mb-2 text-black">
+              Contact Details
+            </h3>
+            <p className="text-black">
+              <b>Name:</b> {selectedContact.firstName} {selectedContact.lastName}
+            </p>
+            <p className="text-black">
+              <b>Email:</b> {selectedContact.email}
+            </p>
+            <p className="text-black">
+              <b>Phone:</b> {selectedContact.phoneNumber}
+            </p>
+            <p className="text-black">
+              <b>Marital Status:</b> {selectedContact.maritalStatus}
+            </p>
+            <p className="text-black">
+              <b>Subject:</b> {selectedContact.subject}
+            </p>
+            <p className="text-black">
+              <b>Message:</b> {selectedContact.message}
+            </p>
             <p className="text-xs text-gray-500">
               Submitted {new Date(selectedContact.createdAt).toLocaleString()}
             </p>
