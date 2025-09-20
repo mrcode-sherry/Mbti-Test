@@ -95,6 +95,11 @@ const TestQuiz = () => {
           localStorage.setItem('testResult', result);
 
           router.push('/result');
+
+          // ✅ Refresh page after navigating to result
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         }
       } catch (err) {
         console.error('Test submission failed', err);
@@ -168,7 +173,7 @@ const TestQuiz = () => {
         "Be Honest with Yourself",
         "Think About Your Natural Self",
         "No Right or Wrong Answers",
-        "Stay Relaxed & Focused"
+        "Stay Relaxed & Focused"
       ]
     : [
         "70 کثیر الانتخاب سوالات",
@@ -237,7 +242,10 @@ const TestQuiz = () => {
       {/* ✅ Next/Finish button */}
       {selectedOptionIndex !== null && (
         <div className={`flex ${isUrdu ? 'justify-start' : 'justify-end'} mt-6 sm:mt-8`}>
-          <button onClick={handleNext} className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-4 sm:px-6 py-2 rounded-lg text-sm sm:text-base cursor-pointer duration-300">
+          <button
+            onClick={handleNext}
+            className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-4 sm:px-6 py-2 rounded-lg text-sm sm:text-base cursor-pointer duration-300"
+          >
             {currentIndex + 1 < questions.length ? 'Next' : 'Finish'}
           </button>
         </div>

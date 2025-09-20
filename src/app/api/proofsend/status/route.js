@@ -12,10 +12,16 @@ export async function GET(req) {
       return NextResponse.json({ error: "Email required" }, { status: 400 });
     }
 
-    // ✅ Check in Proof collection (not proofSubmission)
     const proof = await Proof.findOne({ email });
 
-    return NextResponse.json({ submitted: !!proof });
+    if (!proof) {
+      return NextResponse.json({ submitted: false, status: "none" });
+    }
+
+    return NextResponse.json({
+      submitted: true,
+      status: proof.status,   // ✅ now frontend will know if it’s approved
+    });
   } catch (err) {
     console.error("Proof status error:", err);
     return NextResponse.json(

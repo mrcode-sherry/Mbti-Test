@@ -9,11 +9,13 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [completed, setCompleted] = useState(false);
+  const [proofSubmitted, setProofSubmitted] = useState(false); // ✅ Screenshot submitted
+  const [approved, setApproved] = useState(false); // ✅ Proof approved
   const pathname = usePathname();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // ✅ Load user + always fetch latest submission
+  // ✅ Load user + fetch proof + fetch approval + fetch test submission
   useEffect(() => {
     const loadUser = async () => {
       const storedUser = localStorage.getItem('user');
@@ -23,6 +25,49 @@ const Navbar = () => {
           setUser(parsedUser);
 
           if (parsedUser?.role !== 'admin' && parsedUser?.email) {
+            // ✅ Check proof submission
+            try {
+              const proofRes = await fetch(
+                `/api/screenshotfetch?email=${encodeURIComponent(parsedUser.email)}`,
+                { cache: 'no-store' }
+              );
+              if (proofRes.ok) {
+                const proofData = await proofRes.json();
+                if (proofData?.success) {
+                  setProofSubmitted(true);
+                } else {
+                  setProofSubmitted(false);
+                }
+              } else {
+                setProofSubmitted(false);
+              }
+            } catch (err) {
+              console.error("Error checking proof:", err);
+              setProofSubmitted(false);
+            }
+
+            // ✅ Check proof approval (status)
+            try {
+              const statusRes = await fetch(
+                `/api/proofsend/status?email=${encodeURIComponent(parsedUser.email)}`,
+                { cache: 'no-store' }
+              );
+              if (statusRes.ok) {
+                const statusData = await statusRes.json();
+                if (statusData?.status === "approved") {
+                  setApproved(true);
+                } else {
+                  setApproved(false);
+                }
+              } else {
+                setApproved(false);
+              }
+            } catch (err) {
+              console.error("Error checking proof status:", err);
+              setApproved(false);
+            }
+
+            // ✅ Check test submission
             try {
               const res = await fetch(
                 `/api/testSubmission/check?email=${encodeURIComponent(parsedUser.email)}`,
@@ -39,16 +84,22 @@ const Navbar = () => {
               setCompleted(false);
             }
           } else {
+            setProofSubmitted(false);
+            setApproved(false);
             setCompleted(false);
           }
         } catch (err) {
           console.error('Invalid user in localStorage');
           localStorage.removeItem('user');
           setUser(null);
+          setProofSubmitted(false);
+          setApproved(false);
           setCompleted(false);
         }
       } else {
         setUser(null);
+        setProofSubmitted(false);
+        setApproved(false);
         setCompleted(false);
       }
     };
@@ -63,6 +114,8 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('user');
     setUser(null);
+    setProofSubmitted(false);
+    setApproved(false);
     setCompleted(false);
     window.dispatchEvent(new Event('storage'));
     window.location.href = '/login';
@@ -181,13 +234,22 @@ const Navbar = () => {
         )}
       </header>
 
-      {/* ✅ Notification Bar (only based on completed flag) */}
+      {/* ✅ Notification Bar */}
       {user && pathname !== '/result' && pathname !== '/dashboard' && (
         <div className="bg-gray-100 text-green-900 text-center py-2 px-4 text-md font-medium">
-          {!completed ? (
+          {!proofSubmitted ? (
             <p>
-              You are now logged in. Please start and complete your test.{" "}
-              <Link href="/test" className="underline text-green-700 hover:text-green-900">Start Test</Link>
+              Please pay your fees to continue.{" "}
+              <Link href="/pricing" className="underline text-green-700 hover:text-green-900">Pay Fees</Link>
+            </p>
+          ) : !approved ? (
+            <p>
+              Your proof has been submitted. Please wait for admin approval. This usually takes a few minutes. If not approved within few hours, please contact us.
+            </p>
+          ) : !completed ? (
+            <p>
+              Your proof has been approved. You can now{" "}
+              <Link href="/start_test" className="underline text-green-700 hover:text-green-900">Start Test</Link>
             </p>
           ) : (
             <p>

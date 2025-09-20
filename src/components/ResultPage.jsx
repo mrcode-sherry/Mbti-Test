@@ -185,13 +185,13 @@ const ResultPage = () => {
           <div className="flex space-x-4 border-b mb-6">
             <button
               onClick={() => setActiveTab('result')}
-              className={`pb-2 ${activeTab === 'result' ? 'border-b-2 border-blue-600 font-semibold' : 'text-gray-600'}`}
+              className={`pb-2 ${activeTab === 'result' ? 'border-b-2 border-[#14442E] font-semibold' : 'text-gray-600'}`}
             >
               Result
             </button>
             <button
               onClick={() => setActiveTab('scholarships')}
-              className={`pb-2 ${activeTab === 'scholarships' ? 'border-b-2 border-blue-600 font-semibold' : 'text-gray-600'}`}
+              className={`pb-2 ${activeTab === 'scholarships' ? 'border-b-2 border-[#14442E] font-semibold' : 'text-gray-600'}`}
             >
               Scholarships
             </button>

@@ -94,12 +94,18 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
       const data = await res.json();
 
       if (res.ok && data?.success) {
-        // ✅ Close form popup and open success popup
+        // ✅ Reset & show success popup
         setStep(1);
         setScreenshotUrl("");
         setTid("");
         onClose();
         setSuccessPopup(true);
+
+        // 🔄 Refresh page after success
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+
         return;
       }
 
@@ -129,7 +135,6 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
             ✕
           </button>
 
-
           {/* STEP 1: Choose method */}
           {step === 1 && (
             <>
@@ -137,15 +142,19 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
                 Select Payment Proof Option
               </h2>
               {/* ✅ Payment Details Section */}
-          <div className="mb-6 p-4 border rounded-lg bg-gray-50 text-sm text-gray-700">
-            <h2 className="border-b text-[14px] font-semibold pb-2 mb-2 tracking-wide">Through Jazzcash, Easy Paisa and Bank Account</h2>
-            <h3 className="font-semibold text-gray-800 mb-2 tracking-wide">Payment Details</h3>
-            <p>
-              <span className="font-medium">Bank Name:</span> MCB Bank <br />
-              <span className="font-medium">Account Title:</span> APTITUDE COUUNSEL <br />
-              <span className="font-medium">Account Number:</span> 1643710941010912
-            </p>
-          </div>
+              <div className="mb-6 p-4 border rounded-lg bg-gray-50 text-sm text-gray-700">
+                <h2 className="border-b text-[14px] font-semibold pb-2 mb-2 tracking-wide">
+                  Through Jazzcash, Easy Paisa and Bank Account
+                </h2>
+                <h3 className="font-semibold text-gray-800 mb-2 tracking-wide">
+                  Payment Details
+                </h3>
+                <p>
+                  <span className="font-medium">Bank Name:</span> MCB Bank <br />
+                  <span className="font-medium">Account Title:</span> APTITUDE COUUNSEL <br />
+                  <span className="font-medium">Account Number:</span> 1643710941010912
+                </p>
+              </div>
               <div className="flex flex-col gap-4">
                 <button
                   onClick={() => setStep(2)}
@@ -255,7 +264,10 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
               </a>.
             </p>
             <button
-              onClick={() => setSuccessPopup(false)}
+              onClick={() => {
+                setSuccessPopup(false);
+                window.location.reload(); // 🔄 also refresh if user closes
+              }}
               className="bg-[#14442E] cursor-pointer duration-300 text-white px-5 py-2 rounded-lg"
             >
               Close
