@@ -180,6 +180,24 @@ const ResultPage = () => {
   return (
     <div className="pt-10 p-8 bg-gray-100 text-black shadow-md">
       <div className="max-w-4xl mx-auto">
+        {/* Premium users: show tabs at the very top */}
+        {plan === 'premium' && (
+          <div className="flex space-x-4 border-b mb-6">
+            <button
+              onClick={() => setActiveTab('result')}
+              className={`pb-2 ${activeTab === 'result' ? 'border-b-2 border-blue-600 font-semibold' : 'text-gray-600'}`}
+            >
+              Result
+            </button>
+            <button
+              onClick={() => setActiveTab('scholarships')}
+              className={`pb-2 ${activeTab === 'scholarships' ? 'border-b-2 border-blue-600 font-semibold' : 'text-gray-600'}`}
+            >
+              Scholarships
+            </button>
+          </div>
+        )}
+
         {/* Title + Welcome */}
         <h2 className="text-3xl font-bold mb-4">{result.title}</h2>
         <p className="text-lg mb-6">{result.welcomeMessage}</p>
@@ -187,29 +205,12 @@ const ResultPage = () => {
         {/* Standard users: show only results */}
         {plan === 'standard' && renderResultContent()}
 
-        {/* Premium users: show tabs */}
+        {/* Premium users: switch between tabs */}
         {plan === 'premium' && (
-          <div>
-            {/* Tabs */}
-            <div className="flex space-x-4 border-b mb-6">
-              <button
-                onClick={() => setActiveTab('result')}
-                className={`pb-2 ${activeTab === 'result' ? 'border-b-2 border-blue-600 font-semibold' : 'text-gray-600'}`}
-              >
-                Result
-              </button>
-              <button
-                onClick={() => setActiveTab('scholarships')}
-                className={`pb-2 ${activeTab === 'scholarships' ? 'border-b-2 border-blue-600 font-semibold' : 'text-gray-600'}`}
-              >
-                Scholarships
-              </button>
-            </div>
-
-            {/* Tab Content */}
+          <>
             {activeTab === 'result' && renderResultContent()}
             {activeTab === 'scholarships' && renderScholarships()}
-          </div>
+          </>
         )}
       </div>
     </div>
