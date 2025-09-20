@@ -8,11 +8,12 @@ import { Menu, X } from 'lucide-react';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [status, setStatus] = useState({ paid: false, completed: false, approved: false }); 
+  const [completed, setCompleted] = useState(false);
   const pathname = usePathname();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  // ✅ Load user + always fetch latest submission
   useEffect(() => {
     const loadUser = async () => {
       const storedUser = localStorage.getItem('user');
@@ -29,32 +30,32 @@ const Navbar = () => {
               );
               if (res.ok) {
                 const data = await res.json();
-                setStatus({
-                  paid: data.paid || false,
-                  completed: data.completed || false,
-                  approved: data.approved || false
-                });
+                setCompleted(data.completed || false);
+              } else {
+                setCompleted(false);
               }
             } catch (err) {
               console.error("Error checking test submission:", err);
-              setStatus({ paid: false, completed: false, approved: false });
+              setCompleted(false);
             }
           } else {
-            setStatus({ paid: false, completed: false, approved: false });
+            setCompleted(false);
           }
         } catch (err) {
           console.error('Invalid user in localStorage');
           localStorage.removeItem('user');
           setUser(null);
-          setStatus({ paid: false, completed: false, approved: false });
+          setCompleted(false);
         }
       } else {
         setUser(null);
-        setStatus({ paid: false, completed: false, approved: false });
+        setCompleted(false);
       }
     };
 
     loadUser();
+
+    // ✅ Listen for login/logout changes across tabs
     window.addEventListener('storage', loadUser);
     return () => window.removeEventListener('storage', loadUser);
   }, []);
@@ -62,7 +63,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('user');
     setUser(null);
-    setStatus({ paid: false, completed: false, approved: false });
+    setCompleted(false);
     window.dispatchEvent(new Event('storage'));
     window.location.href = '/login';
   };
@@ -97,7 +98,7 @@ const Navbar = () => {
               <li><Link href="/dashboard">Dashboard</Link></li>
             )}
 
-            {user && user?.role !== 'admin' && status.completed && status.approved && (
+            {user && user?.role !== 'admin' && completed && (
               <li><Link href="/result">Result</Link></li>
             )}
           </ul>
@@ -145,7 +146,7 @@ const Navbar = () => {
                 <li><Link href="/dashboard" onClick={toggleMenu}>Dashboard</Link></li>
               )}
 
-              {user && user?.role !== 'admin' && status.completed && status.approved && (
+              {user && user?.role !== 'admin' && completed && (
                 <li><Link href="/result" onClick={toggleMenu}>Result</Link></li>
               )}
 
@@ -180,26 +181,17 @@ const Navbar = () => {
         )}
       </header>
 
-      {/* ✅ Notification Bar with 4 states */}
+      {/* ✅ Notification Bar (only based on completed flag) */}
       {user && pathname !== '/result' && pathname !== '/dashboard' && (
         <div className="bg-gray-100 text-green-900 text-center py-2 px-4 text-md font-medium">
-          {!status.paid ? (
+          {!completed ? (
             <p>
-              You are now logged in. You can start the test after paying the fee.{" "}
-              <Link href="/pricing" className="underline text-green-700 hover:text-green-900">Pay Fees</Link>
-            </p>
-          ) : !status.completed ? (
-            <p>
-              Your payment is confirmed. You can now{" "}
+              You are now logged in. Please start and complete your test.{" "}
               <Link href="/test" className="underline text-green-700 hover:text-green-900">Start Test</Link>
-            </p>
-          ) : status.completed && !status.approved ? (
-            <p>
-              Your test has been submitted. Please wait for admin approval.
             </p>
           ) : (
             <p>
-              You have passed the test. You can now view your{" "}
+              You have submitted your test. You can now view your{" "}
               <Link href="/result" className="underline text-green-700 hover:text-green-900">Result</Link>
             </p>
           )}
