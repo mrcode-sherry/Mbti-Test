@@ -235,7 +235,7 @@ const Navbar = () => {
       </header>
 
       {/* ✅ Notification Bar */}
-      {user && pathname !== '/result' && pathname !== '/dashboard' && (
+      {user && pathname !== '/result' && pathname !== '/dashboard' && pathname !== '/admin' && (
         <div className="bg-gray-100 text-green-900 text-center py-2 px-4 text-md font-medium">
           {!proofSubmitted ? (
             <p>

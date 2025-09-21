@@ -15,10 +15,9 @@ const Hero = () => {
   };
 
   const images = [
-    { src: '/hero/Hero-left-image.jpg', name: 'Student One' },
-    { src: '/hero/Hero-right-image.jpg', name: 'Student Two' },
-    { src: '/hero/Hero-left-image.jpg', name: 'Student Three' },
-    { src: '/hero/Hero-right-image.jpg', name: 'Student Four' },
+    { src: '/hero/engineer.png', name: 'Engineer' },
+    { src: '/hero/programmer.jpg', name: 'Programmer' },
+    { src: '/hero/doctor.png', name: 'Doctor' },
   ];
 
   const [index, setIndex] = useState(0);

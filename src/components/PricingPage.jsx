@@ -199,6 +199,58 @@ const PricingPage = () => {
           </p>
         </div>
 
+        {/* ✅ Status Section */}
+        {user && (
+          <div className="max-w-3xl mx-auto mb-12 p-6 bg-white shadow rounded-lg text-center">
+            {proofStatus === "pending" && (
+              <div className="space-y-2">
+                <p className="text-yellow-600 font-medium">⏳ Your proof has been submitted. Waiting for admin approval.</p>
+                <p className="text-gray-600 text-sm">
+                  Your proof has been received and is currently under review. This usually takes a few hours.
+                  If not approved within <strong>24 hours</strong>, please{" "}
+                  <a href="/contact" className="text-blue-600 underline">contact us</a>.
+                </p>
+              </div>
+            )}
+
+            {proofStatus === "approved" && !hasCompletedTest && (
+              <div className="text-center space-y-3">
+                <p className="text-gray-700 text-sm">
+                  ✅ Your payment proof has been approved. You can now begin your MBTI test.
+                </p>
+                <button
+                  onClick={() => router.push('/start_test')}
+                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-6 py-2 rounded-lg hover:bg-[#0c2f1e]"
+                >
+                  Start Test
+                </button>
+              </div>
+            )}
+            {proofStatus === "approved" && hasCompletedTest && (
+              <div className="text-center space-y-3">
+                <p className="text-gray-700 text-sm">
+                  🎉 You have successfully completed your MBTI test. Your personalized results are ready.
+                </p>
+                <button
+                  onClick={() => router.push('/result')}
+                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-6 py-2 rounded-lg hover:bg-[#0c2f1e]"
+                >
+                  View Result
+                </button>
+              </div>
+            )}
+
+            {proofStatus === "rejected" && (
+              <button
+                onClick={() => handlePlanClick(selectedPlan)}
+                className="bg-red-600 hover:bg-red-700 cursor-pointer duration-300 text-white px-6 py-2 rounded-lg"
+              >
+                Resubmit Proof
+              </button>
+            )}
+          </div>
+        )}
+
         <div className="grid grid-cols-1 gap-10 md:flex md:justify-center md:items-center">
 
           {/* Standard Plan */}
@@ -279,58 +331,6 @@ const PricingPage = () => {
           </div>
 
         </div>
-
-        {/* ✅ Status Section */}
-        {user && (
-          <div className="max-w-3xl mx-auto mt-12 p-6 bg-white shadow rounded-lg text-center">
-            {proofStatus === "pending" && (
-              <div className="space-y-2">
-                <p className="text-yellow-600 font-medium">⏳ Your proof has been submitted. Waiting for admin approval.</p>
-                <p className="text-gray-600 text-sm">
-                  Your proof has been received and is currently under review. This usually takes a few hours.
-                  If not approved within <strong>24 hours</strong>, please{" "}
-                  <a href="/contact" className="text-blue-600 underline">contact us</a>.
-                </p>
-              </div>
-            )}
-
-            {proofStatus === "approved" && !hasCompletedTest && (
-              <div className="text-center space-y-3">
-                <p className="text-gray-700 text-sm">
-                  ✅ Your payment proof has been approved. You can now begin your MBTI test.
-                </p>
-                <button
-                  onClick={() => router.push('/start_test')}
-                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-6 py-2 rounded-lg hover:bg-[#0c2f1e]"
-                >
-                  Start Test
-                </button>
-              </div>
-            )}
-            {proofStatus === "approved" && hasCompletedTest && (
-              <div className="text-center space-y-3">
-                <p className="text-gray-700 text-sm">
-                  🎉 You have successfully completed your MBTI test. Your personalized results are ready.
-                </p>
-                <button
-                  onClick={() => router.push('/result')}
-                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-6 py-2 rounded-lg hover:bg-[#0c2f1e]"
-                >
-                  View Result
-                </button>
-              </div>
-            )}
-
-            {proofStatus === "rejected" && (
-              <button
-                onClick={() => handlePlanClick(selectedPlan)}
-                className="bg-red-600 hover:bg-red-700 cursor-pointer duration-300 text-white px-6 py-2 rounded-lg"
-              >
-                Resubmit Proof
-              </button>
-            )}
-          </div>
-        )}
       </section>
 
       <FaqSection />
