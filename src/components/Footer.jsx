@@ -39,7 +39,6 @@ const Footer = () => {
             <li><Link href="/" className="hover:underline">Home</Link></li>
             <li><Link href="/about" className="hover:underline">About</Link></li>
             <li><Link href="/pricing" className="hover:underline">Fees</Link></li>
-            <li><Link href="/contact" className="hover:underline">Contact</Link></li>
           </ul>
         </div>
 
@@ -47,10 +46,9 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4">Explore</h3>
           <ul className="flex flex-col gap-2 text-sm">
-            <li><Link href="/pricing" className="hover:underline">Start Test</Link></li>
+            <li><Link href="/contact" className="hover:underline">Contact</Link></li>
             <li><Link href="/privacy-policy" className="hover:underline">Privacy Policy</Link></li>
-            <li><Link href="/terms" className="hover:underline">Terms & Conditions</Link></li>
-            <li><Link href="/faq" className="hover:underline">FAQs</Link></li>
+            <li><Link href="/pricing" className="hover:underline">Start Test</Link></li>
           </ul>
         </div>
 
