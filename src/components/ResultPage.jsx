@@ -122,6 +122,34 @@ const ResultPage = () => {
   // Scholarships content (premium only)
   const renderScholarships = () => (
     <div className="space-y-6">
+      {/* Added Policy Note at the top */}
+      <div className="bg-yellow-100 border-l-4 border-yellow-500 p-5 rounded-md text-left">
+        <h3 className="text-lg font-semibold mb-2">Our Policy Note for Scholarships</h3>
+        <p className="text-sm text-gray-700 mb-2">
+          Dear Students and Parents,
+        </p>
+        <p className="text-sm text-gray-700 mb-2">
+          At Aptitude Counsel, we deeply care for your future and your trust in us. 
+          We share information about funded, partially funded, and talent-based scholarships 
+          only to guide you toward opportunities that may support your studies.
+        </p>
+        <p className="text-sm text-gray-700 mb-2">
+          Please note that we are not the sponsors or providers of these scholarships. 
+          The final decision, process, and rules always belong to the respective universities 
+          or organizations. We encourage you to carefully read the official details and 
+          confirm every requirement directly from the scholarship source before applying.
+        </p>
+        <p className="text-sm text-gray-700 mb-2">
+          Our purpose is to open doors of awareness and possibility for you, while reminding 
+          you to stay informed and cautious. We want your journey to be safe, successful, 
+          and full of hope.
+        </p>
+        <p className="text-sm text-gray-700 font-semibold">
+          With care and guidance,<br />
+          Team Aptitude Counsel
+        </p>
+      </div>
+
       {result.scholarships && (
         <>
           {/* Fully Funded */}
