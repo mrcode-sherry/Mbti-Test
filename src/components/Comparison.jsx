@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const plans = [
   {
-    name: "Standard",
+    name: "True Self",
     price: "Rs. 2000",
     popular: false,
     features: [
@@ -18,7 +18,7 @@ const plans = [
     ],
   },
   {
-    name: "Premium",
+    name: "Golden Future",
     price: "Rs. 3000",
     popular: true,
     features: [
