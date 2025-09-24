@@ -21,9 +21,7 @@ const Privacy = () => {
 
         <div className="text-gray-600 max-w-3xl text-left mx-auto mb-12 text-sm sm:text-base space-y-4">
           <p>
-            Your confidence is our top priority at Aptitude Counsel. When you use our website and
-            services, we gather, utilize, and safeguard your information as described in this privacy
-            policy. You consent to the practices outlined here by using Aptitude Counsel.
+            Your confidence is our top priority at Aptitude Counsel. When you use our website and services, we gather, utilize, and safeguard your information as described in this privacy policy. You consent to the practices outlined here by using Aptitude Counsel.
           </p>
 
           <h2 className="mb-3 font-semibold text-[18px]">1. Information We Collect</h2>
@@ -40,8 +38,7 @@ const Privacy = () => {
             Your information is used only to: <br />
             • Generate personalized MBTI-based career reports. <br />
             • Share guidance, resources, or updates about your results. <br />
-            • Improve the quality of our services and research trends (always anonymous). <br />
-            We never sell, rent, or misuse your data.
+            • We use your feedback only to make our services better and to study future trends always keeping it anonymous. Your data is safe with us, never sold or misused.
           </p>
 
           <h2 className="mb-3 font-semibold text-[18px]">3. Data Protection</h2>
@@ -53,21 +50,19 @@ const Privacy = () => {
 
           <h2 className="mb-3 font-semibold text-[18px]">4. Consent & Control</h2>
           <p>
-            • By using our services, you consent to data collection and usage as described here. <br />
-            • If you are under 18, parental/guardian consent is required. <br />
-            • You may request your data to be corrected or deleted at any time by contacting us.
+            • When you use our services, it mean you agree we keep your info safe and use it in good way. <br />
+            • If you are under 18, make sure your parents or guardian say yes before you use our services. <br />
+            • Anytime you want, you can ask us to change or delete your info. Just message us, we will help you happy.
           </p>
 
           <h2 className="mb-3 font-semibold text-[18px]">5. Cookies & Tracking</h2>
           <p>
-            Our website may use cookies to improve your browsing experience. These cookies do not
-            store personal details; they only help us understand user preferences.
+            We use cookies to make your visit smoother and more useful. They don’t keep any personal details — they just help us understand what you like, so we can serve you better.
           </p>
 
           <h2 className="mb-3 font-semibold text-[18px]">6. International Compliance</h2>
           <p>
-            Our privacy standards follow not only the laws of Pakistan but also align with global
-            privacy principles (GDPR, COPPA, etc.) to ensure your information is always respected.
+            We respect your personal information with care. We care for your data and keep it safe. Our rules follow Pakistan law and also big world rules like COPPA and GDPR. We respect you and protect your privacy.
           </p>
 
           <h2 className="mb-3 font-semibold text-[18px]">7. Data Retention</h2>
@@ -80,27 +75,23 @@ const Privacy = () => {
           <p>
             We may share data only when: <br />
             • Required by law. <br />
-            • Necessary to protect the safety of students or the public. <br />
-            • With your explicit consent (e.g., when collaborating with career counselors/partners).
+            • Only when it is truly important to keep students or the community safe. <br />
+            • Only if you give us clear permission, like when we connect you with career counselors or trusted partners.
           </p>
 
           <h2 className="mb-3 font-semibold text-[18px]">9. Changes to Privacy Policy</h2>
           <p>
-            Aptitude Counsel may update this policy to reflect improvements in service or legal
-            requirements. Updated policies will always be posted here.
+            Aptitude Counsel may update this policy to reflect improvements in service or legal requirements. Updated policies will always be posted here.
           </p>
 
           <h2 className="mb-3 font-semibold text-[18px]">10. Contact Us</h2>
           <p>
-            For questions or concerns about your privacy, please reach out through our official
-            contact page. We value your trust and will respond with transparency and care.
+            Please use our official page to contact us if you have any questions at all regarding your privacy. We value your trust and pledge to act with integrity and consideration.
           </p>
 
           <h2 className="mb-3 font-semibold text-[18px]">Trust Note for Students & Parents</h2>
           <p>
-            We understand how important your personal information is. At Aptitude Counsel, we
-            protect it as if it were our own. You can focus on building your future while we ensure
-            your privacy remains safe.
+            We know how precious your personal details are. At Aptitude Counsel, we care for your information like it is our own. We keep your privacy safe and secure, so you can stay relaxed and think about your future.
           </p>
         </div>
       </section>

@@ -146,15 +146,17 @@ const Navbar = () => {
             <li><Link href="/about">About</Link></li>
             <li><Link href="/pricing">Fees</Link></li>
             <li><Link href="/contact">Contact</Link></li>
+
+            {user && user?.role !== 'admin' && completed && (
+              <li><Link href="/result">Result</Link></li>
+            )}
+
             <li><Link href="/privacy-policy">Privacy Policy</Link></li>
 
             {user?.role === 'admin' && (
               <li><Link href="/dashboard">Dashboard</Link></li>
             )}
 
-            {user && user?.role !== 'admin' && completed && (
-              <li><Link href="/result">Result</Link></li>
-            )}
           </ul>
 
           {/* Desktop Right Side */}
@@ -195,14 +197,15 @@ const Navbar = () => {
               <li><Link href="/about" onClick={toggleMenu}>About</Link></li>
               <li><Link href="/pricing" onClick={toggleMenu}>Fees</Link></li>
               <li><Link href="/contact" onClick={toggleMenu}>Contact</Link></li>
+
+              {user && user?.role !== 'admin' && completed && (
+                <li><Link href="/result" onClick={toggleMenu}>Result</Link></li>
+              )}
+
               <li><Link href="/privacy-policy" onClick={toggleMenu}>Privacy Policy</Link></li>
 
               {user?.role === 'admin' && (
                 <li><Link href="/dashboard" onClick={toggleMenu}>Dashboard</Link></li>
-              )}
-
-              {user && user?.role !== 'admin' && completed && (
-                <li><Link href="/result" onClick={toggleMenu}>Result</Link></li>
               )}
 
               <li>

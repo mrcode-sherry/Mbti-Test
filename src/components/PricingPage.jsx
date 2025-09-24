@@ -256,7 +256,7 @@ const PricingPage = () => {
           {/* Standard Plan */}
           <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[400px] justify-between h-full">
             <div className="flex flex-col flex-grow">
-              <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">Standard</h3>
+              <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">True Selfs</h3>
               <div className="bg-gray-100 rounded-lg p-4 mb-6 h-[385px]">
                 <h4 className="text-lg font-semibold text-[#14442E] mb-4 border-b border-gray-300 pb-2">Benefits</h4>
                 <ul className="space-y-3 text-gray-700 text-sm leading-relaxed">
@@ -269,13 +269,9 @@ const PricingPage = () => {
                 </ul>
               </div>
               <div className="mt-auto text-center mb-6">
-                {/* Discounted Price */}
-                <div className="text-xl sm:text-2xl flex justify-center items-center text-center font-bold text-[#14442E] mb-1 ">
-                  <h1 className='line-through'>Rs. 2000</h1> <span className="text-sm text-green-700 font-medium ml-2">25% OFF</span>
-                </div>
                 {/* Original Price */}
                 <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block">
-                  Rs. 1500
+                  Rs. 2000
                 </h3>
               </div>
             </div>
@@ -293,7 +289,7 @@ const PricingPage = () => {
           {/* Premium Plan */}
           <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[400px] justify-between h-full">
             <div className="flex flex-col flex-grow">
-              <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">Premium</h3>
+              <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">Golden Future</h3>
               <div className="bg-gray-100 rounded-lg p-4 mb-6 h-[385px]">
                 <h4 className="text-lg font-semibold text-[#14442E] mb-4 border-b border-gray-300 pb-2">Benefits</h4>
                 <ul className="space-y-3 text-gray-700 text-sm leading-relaxed">
@@ -309,13 +305,9 @@ const PricingPage = () => {
                 </ul>
               </div>
               <div className="mt-auto text-center mb-6">
-                {/* Discounted Price */}
-                <div className="text-xl sm:text-2xl flex justify-center items-center text-center font-bold text-[#14442E] mb-1 ">
-                  <h1 className='line-through'>Rs. 3000</h1> <span className="text-sm text-green-700 font-medium ml-2">17% OFF</span>
-                </div>
                 {/* Original Price */}
                 <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block">
-                  Rs. 2500
+                  Rs. 3000
                 </h3>
               </div>
             </div>

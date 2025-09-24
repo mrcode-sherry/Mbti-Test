@@ -129,20 +129,13 @@ const ResultPage = () => {
           Dear Students and Parents,
         </p>
         <p className="text-sm text-gray-700 mb-2">
-          At Aptitude Counsel, we deeply care for your future and your trust in us. 
-          We share information about funded, partially funded, and talent-based scholarships 
-          only to guide you toward opportunities that may support your studies.
+          At Aptitude Counsel, we deeply care for your future and your trust in us. We share information about funded, partially funded, and talent-based scholarships only to guide you toward opportunities that may support your studies.
         </p>
         <p className="text-sm text-gray-700 mb-2">
-          Please note that we are not the sponsors or providers of these scholarships. 
-          The final decision, process, and rules always belong to the respective universities 
-          or organizations. We encourage you to carefully read the official details and 
-          confirm every requirement directly from the scholarship source before applying.
+          Please be aware that these scholarships are not sponsored or provided by us. The final decision, process, and regulations are always under the jurisdiction of the pertinent universities or organizations. We recommend that you carefully read the official details and confirm all requirements with the scholarship giver immediately before submitting an application.
         </p>
         <p className="text-sm text-gray-700 mb-2">
-          Our purpose is to open doors of awareness and possibility for you, while reminding 
-          you to stay informed and cautious. We want your journey to be safe, successful, 
-          and full of hope.
+          We want to give you access to opportunities and awareness while advising you to use caution and knowledge. We hope your journey is prosperous, secure, and full of hope.
         </p>
         <p className="text-sm text-gray-700 font-semibold">
           With care and guidance,<br />

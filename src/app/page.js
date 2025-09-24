@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
 import Slider from "@/components/Slider";
 import Testimonial from "@/components/Testimonial";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export default function Home() {
   return (
@@ -26,6 +27,9 @@ export default function Home() {
     </section>
     <section>
       <HowItWorks/>
+    </section>
+    <section>
+      <WhatsAppButton/>
     </section>
     </div>
     </>
