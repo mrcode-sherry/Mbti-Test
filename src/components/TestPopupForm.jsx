@@ -20,6 +20,14 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
     collegeInstitute: '',
     universitySemester: '',
     universityDegree: '',
+
+    // ✅ New fields
+    favouriteSubjects: [''],
+    weakSubjects: [''],
+    hobbies: [''],
+    fieldsOfInterest: [''],
+    parentalExpectation: '',
+    budgetRange: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -29,6 +37,22 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
 
   const handleChange = (e) => {
     setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
+  };
+
+  const handleArrayChange = (name, index, value) => {
+    const updatedArray = [...formData[name]];
+    updatedArray[index] = value;
+    setFormData((p) => ({ ...p, [name]: updatedArray }));
+  };
+
+  const addArrayField = (name) => {
+    setFormData((p) => ({ ...p, [name]: [...p[name], ''] }));
+  };
+
+  const removeArrayField = (name, index) => {
+    const updatedArray = [...formData[name]];
+    updatedArray.splice(index, 1);
+    setFormData((p) => ({ ...p, [name]: updatedArray }));
   };
 
   const handleSubmit = async (e) => {
@@ -55,6 +79,7 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
         {error && <p className="text-red-600 mb-3">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4 text-gray-800">
+          {/* ---------------- Old Fields ---------------- */}
           <div>
             <label className="block font-medium mb-1">Full Name</label>
             <input
@@ -286,6 +311,135 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
             </>
           )}
 
+          {/* ---------------- New Fields ---------------- */}
+          <div>
+            <label className="block font-medium mb-1">Favourite Subjects (min 3)</label>
+            {formData.favouriteSubjects.map((subj, idx) => (
+              <div key={idx} className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  placeholder={`Subject ${idx + 1}`}
+                  value={subj}
+                  onChange={(e) => handleArrayChange('favouriteSubjects', idx, e.target.value)}
+                  className="border p-2 rounded w-full"
+                  required
+                />
+                {idx > 0 && (
+                  <button type="button" onClick={() => removeArrayField('favouriteSubjects', idx)} className="px-2 bg-red-500 text-white rounded">
+                    X
+                  </button>
+                )}
+              </div>
+            ))}
+            <button type="button" onClick={() => addArrayField('favouriteSubjects')} className="text-sm text-blue-600">
+              + Add Subject
+            </button>
+          </div>
+
+          <div>
+            <label className="block font-medium mb-1">Weak Subjects (min 3)</label>
+            {formData.weakSubjects.map((subj, idx) => (
+              <div key={idx} className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  placeholder={`Subject ${idx + 1}`}
+                  value={subj}
+                  onChange={(e) => handleArrayChange('weakSubjects', idx, e.target.value)}
+                  className="border p-2 rounded w-full"
+                  required
+                />
+                {idx > 0 && (
+                  <button type="button" onClick={() => removeArrayField('weakSubjects', idx)} className="px-2 bg-red-500 text-white rounded">
+                    X
+                  </button>
+                )}
+              </div>
+            ))}
+            <button type="button" onClick={() => addArrayField('weakSubjects')} className="text-sm text-blue-600">
+              + Add Subject
+            </button>
+          </div>
+
+          <div>
+            <label className="block font-medium mb-1">Hobbies (1–3)</label>
+            {formData.hobbies.map((hobby, idx) => (
+              <div key={idx} className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  placeholder={`Hobby ${idx + 1}`}
+                  value={hobby}
+                  onChange={(e) => handleArrayChange('hobbies', idx, e.target.value)}
+                  className="border p-2 rounded w-full"
+                  required
+                />
+                {idx > 0 && (
+                  <button type="button" onClick={() => removeArrayField('hobbies', idx)} className="px-2 bg-red-500 text-white rounded">
+                    X
+                  </button>
+                )}
+              </div>
+            ))}
+            {formData.hobbies.length < 3 && (
+              <button type="button" onClick={() => addArrayField('hobbies')} className="text-sm text-blue-600">
+                + Add Hobby
+              </button>
+            )}
+          </div>
+
+          <div>
+            <label className="block font-medium mb-1">Fields of Interest (1–3)</label>
+            {formData.fieldsOfInterest.map((field, idx) => (
+              <div key={idx} className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  placeholder={`Field ${idx + 1}`}
+                  value={field}
+                  onChange={(e) => handleArrayChange('fieldsOfInterest', idx, e.target.value)}
+                  className="border p-2 rounded w-full"
+                  required
+                />
+                {idx > 0 && (
+                  <button type="button" onClick={() => removeArrayField('fieldsOfInterest', idx)} className="px-2 bg-red-500 text-white rounded">
+                    X
+                  </button>
+                )}
+              </div>
+            ))}
+            {formData.fieldsOfInterest.length < 3 && (
+              <button type="button" onClick={() => addArrayField('fieldsOfInterest')} className="text-sm text-blue-600">
+                + Add Field
+              </button>
+            )}
+          </div>
+
+          <div>
+            <label className="block font-medium mb-1">Parental Expectation</label>
+            <input
+              type="text"
+              name="parentalExpectation"
+              placeholder="Parental Expectation"
+              value={formData.parentalExpectation}
+              onChange={handleChange}
+              className="border p-2 rounded w-full"
+            />
+          </div>
+
+          <div>
+            <label className="block font-medium mb-1">Budget Range</label>
+            <select
+              name="budgetRange"
+              value={formData.budgetRange}
+              onChange={handleChange}
+              className="border p-2 rounded w-full"
+            >
+              <option value="">Select Budget Range</option>
+              <option value="Local education">Local education</option>
+              <option value="Abroad">Abroad</option>
+              <option value="Scholarships">Scholarships</option>
+            </select>
+          </div>
+
+          {/* ---------------- Buttons ---------------- */}
           <div className="flex justify-end gap-3 mt-4">
             <button
               type="button"

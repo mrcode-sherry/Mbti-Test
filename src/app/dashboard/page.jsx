@@ -300,6 +300,21 @@ const DashboardPage = () => {
                       {t.email} | {t.gender} | {t.maritalStatus} |{" "}
                       {t.countryCode} {t.phoneNumber} | {t.city}, {t.province} |{" "}
                       {t.educationType} | Status: {t.status}
+                      {/* ✅ New fields inline */}
+                      {t.favouriteSubjects && (
+                        <> | Favourite Subjects: {t.favouriteSubjects.join(", ")}</>
+                      )}
+                      {t.weakSubjects && (
+                        <> | Weak Subjects: {t.weakSubjects.join(", ")}</>
+                      )}
+                      {t.hobbies && <> | Hobbies: {t.hobbies.join(", ")}</>}
+                      {t.fieldsOfInterest && (
+                        <> | Fields of Interest: {t.fieldsOfInterest.join(", ")}</>
+                      )}
+                      {t.parentalExpectation && (
+                        <> | Parental Expectation: {t.parentalExpectation}</>
+                      )}
+                      {t.budgetRange && <> | Budget: {t.budgetRange}</>}
                     </span>
                     <button
                       onClick={() => setSelectedTest(t)}
@@ -452,6 +467,41 @@ const DashboardPage = () => {
               <p className="text-black">
                 <b>Education:</b> {selectedTest.educationType}
               </p>
+              {/* ✅ New fields */}
+              {selectedTest.favouriteSubjects && (
+                <p className="text-black">
+                  <b>Favourite Subjects:</b>{" "}
+                  {selectedTest.favouriteSubjects.join(", ")}
+                </p>
+              )}
+              {selectedTest.weakSubjects && (
+                <p className="text-black">
+                  <b>Weak Subjects:</b>{" "}
+                  {selectedTest.weakSubjects.join(", ")}
+                </p>
+              )}
+              {selectedTest.hobbies && (
+                <p className="text-black">
+                  <b>Hobbies:</b> {selectedTest.hobbies.join(", ")}
+                </p>
+              )}
+              {selectedTest.fieldsOfInterest && (
+                <p className="text-black">
+                  <b>Fields of Interest:</b>{" "}
+                  {selectedTest.fieldsOfInterest.join(", ")}
+                </p>
+              )}
+              {selectedTest.parentalExpectation && (
+                <p className="text-black">
+                  <b>Parental Expectation:</b>{" "}
+                  {selectedTest.parentalExpectation}
+                </p>
+              )}
+              {selectedTest.budgetRange && (
+                <p className="text-black">
+                  <b>Budget Range:</b> {selectedTest.budgetRange}
+                </p>
+              )}
               <p className="text-xs text-gray-500">
                 Submitted {new Date(selectedTest.createdAt).toLocaleString()}
               </p>

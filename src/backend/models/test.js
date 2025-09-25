@@ -24,6 +24,14 @@ const testSchema = new mongoose.Schema(
     // University
     universitySemester: String,
     universityDegree: String,
+
+    // New fields
+    favouriteSubjects: { type: [String], required: true }, // min 3
+    weakSubjects: { type: [String], required: true },      // min 3
+    hobbies: { type: [String], required: true },           // 1–3
+    fieldsOfInterest: { type: [String], required: true },  // 1–3
+    parentalExpectation: { type: String },
+    budgetRange: { type: String, enum: ["Local education", "Abroad", "Scholarships"] },
   },
   { timestamps: true }
 );
