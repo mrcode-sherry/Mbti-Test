@@ -7,13 +7,13 @@ const testimonials = [
     name: 'Ali Raza',
     role: 'Student',
     image: '/testimonial/student1.jpg',
-    message: 'The MBTI test helped me understand my strengths in learning and communication. Highly recommended for students!',
+    message: 'The Aptitude Counsel test helped me understand my strengths in learning and communication. Highly recommended for students!',
   },
   {
     name: 'Ahmed',
     role: 'Married',
     image: '/testimonial/couple1.jpg',
-    message: 'We took the MBTI test as a couple. It really helped us understand each other better and communicate more effectively.',
+    message: 'We took the Aptitude Counsel test as a couple. It really helped us understand each other better and communicate more effectively.',
   },
   {
     name: 'Hina Khan',
@@ -29,7 +29,7 @@ const Testimonial = () => {
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-4">What People Are Saying</h2>
         <p className="text-gray-600 max-w-xl mx-auto mb-10">
-          Hear from students and married who took the MBTI test and discovered something new about themselves.
+          Hear from students and married who took the Aptitude Counsel test and discovered something new about themselves.
         </p>
 
         <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-3">

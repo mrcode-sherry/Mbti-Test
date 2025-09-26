@@ -18,7 +18,7 @@ const Footer = () => {
             </div>
           </Link>
           <p className="text-gray-300 text-sm leading-relaxed mb-4">
-            Aptitude Counsel helps students discover strengths, overcome weaknesses, and choose the right career with trusted MBTI guidance. Your clarity, confidence, and future start here.
+            Aptitude Counsel helps students discover strengths, overcome weaknesses, and choose the right career with trusted Aptitude Counsel guidance. Your clarity, confidence, and future start here.
           </p>
 
           {/* Social Icons */}

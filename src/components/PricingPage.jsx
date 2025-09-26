@@ -216,7 +216,7 @@ const PricingPage = () => {
             {proofStatus === "approved" && !hasCompletedTest && (
               <div className="text-center space-y-3">
                 <p className="text-gray-700 text-sm">
-                  ✅ Your payment proof has been approved. You can now begin your MBTI test.
+                  ✅ Your payment proof has been approved. You can now begin your test.
                 </p>
                 <button
                   onClick={() => router.push('/start_test')}
@@ -229,7 +229,7 @@ const PricingPage = () => {
             {proofStatus === "approved" && hasCompletedTest && (
               <div className="text-center space-y-3">
                 <p className="text-gray-700 text-sm">
-                  🎉 You have successfully completed your MBTI test. Your personalized results are ready.
+                  🎉 You have successfully completed your test. Your personalized results are ready.
                 </p>
                 <button
                   onClick={() => router.push('/result')}

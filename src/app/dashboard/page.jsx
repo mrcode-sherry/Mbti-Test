@@ -163,6 +163,18 @@ const DashboardPage = () => {
           ? u.province
           : filterField === "educationType"
           ? u.educationType
+          : filterField === "favouriteSubjects"
+          ? u.favouriteSubjects?.join(", ")
+          : filterField === "weakSubjects"
+          ? u.weakSubjects?.join(", ")
+          : filterField === "hobbies"
+          ? u.hobbies?.join(", ")
+          : filterField === "fieldsOfInterest"
+          ? u.fieldsOfInterest?.join(", ")
+          : filterField === "parentalExpectation"
+          ? u.parentalExpectation
+          : filterField === "budgetRange"
+          ? u.budgetRange
           : "";
 
       return fieldVal?.toLowerCase().includes(filterValue.toLowerCase());
@@ -393,6 +405,12 @@ const DashboardPage = () => {
                 <option value="city">City</option>
                 <option value="province">Province</option>
                 <option value="educationType">Education</option>
+                <option value="favouriteSubjects">Favourite Subjects</option>
+                <option value="weakSubjects">Weak Subjects</option>
+                <option value="hobbies">Hobbies</option>
+                <option value="fieldsOfInterest">Fields of Interest</option>
+                <option value="parentalExpectation">Parental Expectation</option>
+                <option value="budgetRange">Budget Range</option>
               </select>
 
               <input
@@ -426,6 +444,20 @@ const DashboardPage = () => {
                     <span className="font-semibold">{u.fullName}</span> |{" "}
                     {u.email} | {u.gender} | {u.maritalStatus} | {u.countryCode}{" "}
                     {u.phoneNumber} | {u.city}, {u.province} | {u.educationType}
+                    {u.favouriteSubjects && (
+                      <> | Favourite: {u.favouriteSubjects.join(", ")}</>
+                    )}
+                    {u.weakSubjects && (
+                      <> | Weak: {u.weakSubjects.join(", ")}</>
+                    )}
+                    {u.hobbies && <> | Hobbies: {u.hobbies.join(", ")}</>}
+                    {u.fieldsOfInterest && (
+                      <> | Interests: {u.fieldsOfInterest.join(", ")}</>
+                    )}
+                    {u.parentalExpectation && (
+                      <> | Expectation: {u.parentalExpectation}</>
+                    )}
+                    {u.budgetRange && <> | Budget: {u.budgetRange}</>}
                   </li>
                 ))}
               </ul>

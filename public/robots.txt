@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /start_test
+Disallow: /result
+
+Sitemap: https://aptitudecounsel.com/sitemap.xml
+Sitemap: https://www.aptitudecounsel.com/sitemap.xml

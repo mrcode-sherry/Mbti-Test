@@ -45,7 +45,7 @@ const AboutPage = () => {
         </h2>
 
         <p className="text-gray-600 max-w-3xl mx-auto mb-12 text-sm sm:text-base">
-          Every student should have clarity about their future, in our opinion at Aptitude Counsel. We assist youth in identifying their inherent strengths, shortcomings, and distinct strategy for success through the use of the globally accepted MBTI® (Myers-Briggs Type Indicator). Our in-depth reports highlight each student's personal definition of success, potential obstacles, and guidelines for personal development. Schools, colleges, and organizations all across the world use the MBTI®, one of the most reliable personality tests available. Students who work with us not only plan their professions but also learn about themselves first.
+          Every student should have clarity about their future, in our opinion at Aptitude Counsel. We assist youth in identifying their inherent strengths, shortcomings, and distinct strategy for success through the use of the globally accepted Aptitude Counsel. Our in-depth reports highlight each student's personal definition of success, potential obstacles, and guidelines for personal development. Schools, colleges, and organizations all across the world use the Aptitude Counsel, one of the most reliable personality tests available. Students who work with us not only plan their professions but also learn about themselves first.
         </p>
 
         {/* Ratings Grid */}
