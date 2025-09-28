@@ -16,7 +16,7 @@ const Hero = () => {
 
   const images = [
     { src: '/hero/engineer.png', name: 'Engineer' },
-    { src: '/hero/programmer1.png', name: 'Programmer' },
+    { src: '/hero/programmer8.png', name: 'Programmer' },
     { src: '/hero/doctor.png', name: 'Doctor' },
   ];
 

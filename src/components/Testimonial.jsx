@@ -4,22 +4,34 @@ import Image from 'next/image';
 
 const testimonials = [
   {
+    name: 'Shahzaib Saddique',
+    role: 'Intermediate Student – Faisalabad',
+    image: '/testimonial/shahzaibimg.jpg',
+    message: 'This program feels like a personal guide. It showed me which subjects match my personality. I feel more confident and less worried about making a wrong choice.',
+  },
+  {
     name: 'Ali Raza',
-    role: 'Student',
-    image: '/testimonial/student1.jpg',
-    message: 'The Aptitude Counsel test helped me understand my strengths in learning and communication. Highly recommended for students!',
+    role: 'Student – Lahore',
+    image: '/testimonial/user.jpg',
+    message: 'Golden Future really opened my eyes. Before, I was confused about what to study after matric. Now I feel clear about my strengths and future career path. Highly recommended!',
   },
   {
-    name: 'Ahmed',
-    role: 'Married',
-    image: '/testimonial/couple1.jpg',
-    message: 'We took the Aptitude Counsel test as a couple. It really helped us understand each other better and communicate more effectively.',
+    name: 'Jane Angel',
+    role: 'Student – Faisalabad',
+    image: '/testimonial/janeangleimg.jpg',
+    message: 'I used to feel lost about my future. Golden Future explained my strengths and careers in such simple words. It feels like a teacher who truly understands students.',
   },
   {
-    name: 'Hina Khan',
-    role: 'Student',
-    image: '/testimonial/student2.jpg',
-    message: 'I loved the results! It was like reading a book about myself. The animated video was fun too!',
+    name: 'Ayesha Khan',
+    role: 'StudentParent – Islamabad',
+    image: '/testimonial/user.jpg',
+    message: 'As a mother, I always worried about my daughter’s future. Golden Future gave her direction with love and care. Now she is motivated and knows what she wants.',
+  },
+  {
+    name: 'Hassam Shahryar',
+    role: 'Intermediate Student – Faisalabad',
+    image: '/testimonial/hassamimg.jpg',
+    message: 'This is not just a test, it’s like a mirror. I discovered my talents and what success really means for me. Golden Future gave me hope and a plan.',
   },
 ];
 

@@ -116,6 +116,16 @@ const ResultPage = () => {
           </ul>
         </section>
       )}
+
+      {/* ✅ Extra Premium Message at the End */}
+      {plan === 'premium' && (
+        <div className="bg-gray-200 border-l-4 border-gray-500 p-5 rounded-md mt-6">
+          <h3 className="text-lg font-semibold mb-2">NOTE:</h3>
+          <p className="text-md text-gray-700 mb-1">
+            For custom roadmap please send your [ RESULT TYPE ] and [ TID number ] on our whatsapp.
+          </p>
+        </div>
+      )}
     </div>
   );
 

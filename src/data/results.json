@@ -3,7 +3,7 @@
         "id": 1,
         "type": "ESTJ",
         "title": "The Confident Organizer",
-        "welcomeMessage": "🎉 You’re an ESTJ – The Confident Organizer! Wow! You are strong, honest, and responsible. People look up to you because you follow rules, get things done, and like to lead others. Let’s explore what makes your personality so powerful!",
+        "welcomeMessage": "You’re an ESTJ – The Confident Organizer! Wow! You are strong, honest, and responsible. People look up to you because you follow rules, get things done, and like to lead others. Let’s explore what makes your personality so powerful!",
         "meaning": {
             "E": "Extraverted (you enjoy being with people)",
             "S": "Sensing (you focus on real facts and details)",
@@ -545,7 +545,7 @@
         "id": 2,
         "type": "ESFP",
         "title": "The Fun-Loving Performer",
-        "welcomeMessage": "🎉 You’re an ESFP – The Fun-Loving Performer! Congratulations! You are someone who brings joy, energy, and excitement wherever you go. People love being around you because you're full of life and fun. Let’s explore your exciting personality!",
+        "welcomeMessage": "You’re an ESFP – The Fun-Loving Performer! Congratulations! You are someone who brings joy, energy, and excitement wherever you go. People love being around you because you're full of life and fun. Let’s explore your exciting personality!",
         "meaning": {
             "E": "Extroverted (you love being around people)",
             "S": "Sensing (you focus on what’s real and happening now)",
@@ -1088,7 +1088,7 @@
         "id": 3,
         "type": "ESFJ",
         "title": "The Caring Helper",
-        "welcomeMessage": "🎉 You’re an ESFJ – The Caring Helper! You are a kind, friendly, and responsible person. People feel safe and happy around you because you always try to make everyone comfortable. You love helping others and making sure everything runs smoothly. Let’s discover how amazing you are!",
+        "welcomeMessage": "You’re an ESFJ – The Caring Helper! You are a kind, friendly, and responsible person. People feel safe and happy around you because you always try to make everyone comfortable. You love helping others and making sure everything runs smoothly. Let’s discover how amazing you are!",
         "meaning": {
             "E": "Extraverted (you like to be around people)",
             "S": "Sensing (you focus on real things and facts)",
@@ -1630,7 +1630,7 @@
         "id": 4,
         "type": "ENTP",
         "title": "The Debater",
-        "welcomeMessage": "🎉 Welcome, ENTP! Congratulations on discovering your personality type — the ENTP: The Debater 🧠⚡ You’re full of ideas, energy, and excitement for trying new things. People like you love to question, explore, and imagine what could be. Let’s dive into what makes you unique — and how to use it for a successful life.",
+        "welcomeMessage": "Welcome, ENTP! Congratulations on discovering your personality type — the ENTP: The Debater You’re full of ideas, energy, and excitement for trying new things. People like you love to question, explore, and imagine what could be. Let’s dive into what makes you unique — and how to use it for a successful life.",
         "meaning": {
             "E": "Extraversion: You enjoy talking, meeting people, and sharing ideas.",
             "N": "Intuition: You focus on big ideas and possibilities.",
@@ -2176,7 +2176,7 @@
         "id": 5,
         "type": "ENTJ",
         "title": "The Confident Leader",
-        "welcomeMessage": "🎉 You’re an ENTJ – The Confident Leader! Congratulations! You are someone who naturally takes charge, sets goals, and inspires others to follow. You love challenges and dream big. Let’s explore your unique personality!",
+        "welcomeMessage": "You’re an ENTJ – The Confident Leader! Congratulations! You are someone who naturally takes charge, sets goals, and inspires others to follow. You love challenges and dream big. Let’s explore your unique personality!",
         "meaning": {
             "E": "Extroverted (you enjoy being around people)",
             "N": "Intuitive (you focus on big ideas and future goals)",
@@ -2720,7 +2720,7 @@
         "id": 6,
         "type": "ENFP",
         "title": "The Campaigner",
-        "welcomeMessage": "🌟 Welcome, ENFP – The Campaigner! Congratulations! Your personality type is ENFP – full of energy, imagination, and heart. You’re someone who dreams big, feels deeply, and believes in spreading happiness. People like you are natural inspirers — always ready to explore new ideas and encourage others.",
+        "welcomeMessage": "Welcome, ENFP – The Campaigner! Congratulations! Your personality type is ENFP – full of energy, imagination, and heart. You’re someone who dreams big, feels deeply, and believes in spreading happiness. People like you are natural inspirers — always ready to explore new ideas and encourage others.",
         "meaning": {
             "E": "Extraversion: You love being around people and sharing ideas.",
             "N": "Intuition: You focus on what’s possible and what could be.",
@@ -3269,7 +3269,7 @@
         "id": 7,
         "type": "ENFJ",
         "title": "The Warm Leader",
-        "welcomeMessage": "🟢 Welcome Message: 🎉 You’re an ENFJ – The Warm Leader! You are a caring, helpful, and inspiring person who loves to guide others and make the world a better place. People look up to you because you support them with love and motivation. Let’s discover the powerful heart and leadership inside you!",
+        "welcomeMessage": "Welcome Message: You’re an ENFJ – The Warm Leader! You are a caring, helpful, and inspiring person who loves to guide others and make the world a better place. People look up to you because you support them with love and motivation. Let’s discover the powerful heart and leadership inside you!",
         "meaning": {
             "E": "Extraverted (you enjoy being around people)",
             "N": "Intuitive (you focus on ideas and the future)",
@@ -3812,7 +3812,7 @@
         "id": 8,
         "type": "ISTP",
         "title": "The Practical Problem-Solver",
-        "welcomeMessage": "🟢 Welcome Message: 🎉 You’re an ISTP – The Practical Problem-Solver! Congratulations! You are someone who is quiet but smart, curious but cool, and independent but helpful. You know how things work and love fixing problems. Let’s discover the amazing strengths of your personality!",
+        "welcomeMessage": "Welcome Message: You’re an ISTP – The Practical Problem-Solver! Congratulations! You are someone who is quiet but smart, curious but cool, and independent but helpful. You know how things work and love fixing problems. Let’s discover the amazing strengths of your personality!",
         "meaning": {
             "I": "Introverted (you enjoy spending time alone)",
             "S": "Sensing (you focus on real facts and present things)",
@@ -4355,13 +4355,13 @@
         "id": 9,
         "type": "ISTJ",
         "title": "The Organizer / The Inspector",
-        "welcomeMessage": "Welcome, ISTJ! 🎉 Your personality type is ISTJ – also called The Organizer or The Inspector. You are a person who values truth, duty, and order. You are dependable, hardworking, and someone people trust with responsibilities. Let’s discover who you are and how you can grow, succeed, and shine in life 🌟",
+        "welcomeMessage": "Welcome, ISTJ! Your personality type is ISTJ – also called The Organizer or The Inspector. You are a person who values truth, duty, and order. You are dependable, hardworking, and someone people trust with responsibilities. Let’s discover who you are and how you can grow, succeed, and shine in life",
         "meaning": {
             "I": "Introverted: You like quiet time and prefer small groups or being alone to recharge.",
             "S": "Sensing: You notice facts and details more than imagination or guesses.",
             "T": "Thinking: You make decisions with logic, not emotions.",
             "J": "Judging: You like planning, organizing, and sticking to rules and routines.",
-            "summary": "You are a responsible, practical, and logical person who prefers to work behind the scenes and gets things done properly ✅"
+            "summary": "You are a responsible, practical, and logical person who prefers to work behind the scenes and gets things done properly"
         },
         "lifestyle": [
             "You like routines and feel comfortable when things go as planned.",
@@ -4901,7 +4901,7 @@
         "id": 10,
         "type": "ISFP",
         "title": "The Gentle Artist",
-        "welcomeMessage": "Welcome, ISFP! 🎉 You are an ISFP – The Gentle Artist! You are kind, caring, and creative. You love peace, beauty, and doing things your own way. You may seem quiet, but inside you have strong feelings and a deep love for life. Let’s explore your personality and how it can help you succeed!",
+        "welcomeMessage": "Welcome, ISFP! You are an ISFP – The Gentle Artist! You are kind, caring, and creative. You love peace, beauty, and doing things your own way. You may seem quiet, but inside you have strong feelings and a deep love for life. Let’s explore your personality and how it can help you succeed!",
         "meaning": {
             "I": "Introverted: You enjoy quiet and alone time.",
             "S": "Sensing: You focus on real facts and details.",
@@ -5447,7 +5447,7 @@
         "id": 11,
         "type": "ISFJ",
         "title": "The Gentle Protector",
-        "welcomeMessage": "Welcome, ISFJ! 🎉 You’re an ISFJ – The Gentle Protector! You are a quiet, kind, and dependable person who always tries to help others in a calm way. You remember small things that make people feel special. You don’t speak much, but your actions show your love and care. Let’s explore your unique personality!",
+        "welcomeMessage": "Welcome, ISFJ! You’re an ISFJ – The Gentle Protector! You are a quiet, kind, and dependable person who always tries to help others in a calm way. You remember small things that make people feel special. You don’t speak much, but your actions show your love and care. Let’s explore your unique personality!",
         "meaning": {
             "I": "Introverted: You enjoy quiet and alone time.",
             "S": "Sensing: You focus on real facts and details.",
@@ -5991,7 +5991,7 @@
         "id": 12,
         "type": "INTP",
         "title": "The Thinker",
-        "welcomeMessage": "🎉 Thank you for taking the Aptitude Counsel Test! Based on your answers, your personality type is INTP. This result will help you understand yourself better and make smart choices in your studies, career, and relationships.",
+        "welcomeMessage": "Thank you for taking the Aptitude Counsel Test! Based on your answers, your personality type is INTP. This result will help you understand yourself better and make smart choices in your studies, career, and relationships.",
         "meaning": {
             "summary": "You are a thinker and problem-solver. You mostly live in your mind, always thinking about 'why' and 'how' things work. You are curious, logical, and love new ideas. You see the world as full of possibilities and want to make things better with your smart ideas."
         },
@@ -6527,7 +6527,7 @@
         "id": 13,
         "type": "INTJ",
         "title": "The Mastermind Thinker",
-        "welcomeMessage": "🎉 You’re an INTJ – The Mastermind Thinker! Wow! You are a person who thinks deeply, plans smartly, and stays focused on goals. You may look quiet, but your mind is full of powerful ideas. Let’s explore your amazing personality!",
+        "welcomeMessage": "You’re an INTJ – The Mastermind Thinker! Wow! You are a person who thinks deeply, plans smartly, and stays focused on goals. You may look quiet, but your mind is full of powerful ideas. Let’s explore your amazing personality!",
         "meaning": {
             "summary": "INTJs are smart planners who are always thinking ahead, finding solutions, and working alone or in small teams."
         },
@@ -7066,7 +7066,7 @@
         "id": 14,
         "type": "INFP",
         "title": "The Idealist / Dreamer",
-        "welcomeMessage": "📝 Welcome! You're an INFP! Thank you for completing the Aptitude Counsel personality test. Your answers show that you are a kind-hearted, imaginative, and deeply thoughtful person. You are likely someone who dreams of making the world a better place and always follows your heart. Let’s explore more about who you really are!",
+        "welcomeMessage": "Welcome! You're an INFP! Thank you for completing the Aptitude Counsel personality test. Your answers show that you are a kind-hearted, imaginative, and deeply thoughtful person. You are likely someone who dreams of making the world a better place and always follows your heart. Let’s explore more about who you really are!",
         "meaning": {
             "summary": "INFPs are the 'Idealists' or 'Dreamers' of the world. You are creative, gentle, and driven by deep values. You care a lot about people and want to do meaningful things in life."
         },
@@ -7609,7 +7609,7 @@
         "id": 15,
         "type": "INFJ",
         "title": "The Quiet Visionary",
-        "welcomeMessage": "🟢 Welcome Message: 🎉 You are an INFJ – The Quiet Visionary! You are deep-thinking, caring, and wise beyond your years. You dream big, feel deeply, and want to make the world a better place. Even though you’re quiet, your mind is full of big ideas and strong values. Let’s explore your unique personality!",
+        "welcomeMessage": "Welcome Message: You are an INFJ – The Quiet Visionary! You are deep-thinking, caring, and wise beyond your years. You dream big, feel deeply, and want to make the world a better place. Even though you’re quiet, your mind is full of big ideas and strong values. Let’s explore your unique personality!",
         "meaning": {
             "summary": "INFJs are wise, kind, and deep people who want to understand life, help others, and bring positive change — often silently."
         },
@@ -8149,7 +8149,7 @@
         "id": 16,
         "type": "ESTP",
         "title": "The Energetic Doer",
-        "welcomeMessage": "🎉 You’re an ESTP – The Energetic Doer! You are full of energy, action, and confidence! You enjoy being around people, solving real problems quickly, and trying new adventures. You are a bold, fun-loving person who learns best by doing. Let’s discover more about your exciting personality!",
+        "welcomeMessage": "You’re an ESTP – The Energetic Doer! You are full of energy, action, and confidence! You enjoy being around people, solving real problems quickly, and trying new adventures. You are a bold, fun-loving person who learns best by doing. Let’s discover more about your exciting personality!",
         "meaning": {
             "summary": "ESTPs are bold action-takers who live in the moment and love solving problems face-to-face."
         },
