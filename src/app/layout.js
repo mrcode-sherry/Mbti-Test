@@ -12,8 +12,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "MBTI Test App",
-  description: "Take your personality test based on MBTI.",
+  title: "Aptitude Councel Test App",
+  description: "Take your personality test based on Aptitude Councel.",
   icons: {
     icon: "/favicon.ico",
   },
