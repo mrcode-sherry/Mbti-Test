@@ -13,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Aptitude Councel Test App",
+  title: "Aptitude Councel",
   description: "Take your personality test based on Aptitude Councel.",
   icons: {
     icon: "/favicon.ico",
