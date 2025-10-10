@@ -16,9 +16,9 @@ const testimonials = [
     message: 'Golden Future really opened my eyes. Before, I was confused about what to study after matric. Now I feel clear about my strengths and future career path. Highly recommended!',
   },
   {
-    name: 'Jane Angel',
+    name: 'Fatima Mariam',
     role: 'Student – Faisalabad',
-    image: '/testimonial/janeangleimg.jpg',
+    image: '/testimonial/user.jpg',
     message: 'I used to feel lost about my future. Golden Future explained my strengths and careers in such simple words. It feels like a teacher who truly understands students.',
   },
   {
