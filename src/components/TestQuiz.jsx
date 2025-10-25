@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 import questionsEn from '../data/questions.en.json';
@@ -14,10 +14,13 @@ const TestQuiz = () => {
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showDemoPrompt, setShowDemoPrompt] = useState(true); // New: show demo prompt
+  const [isSpeaking, setIsSpeaking] = useState(false); // For TTS functionality
+  const speechSynthesisRef = useRef(null);
   const router = useRouter();
 
   useEffect(() => {
     setIsClient(true);
+    speechSynthesisRef.current = window.speechSynthesis;
 
     const checkTestCompletion = async () => {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -34,6 +37,15 @@ const TestQuiz = () => {
 
     checkTestCompletion();
   }, [router]);
+
+  // Clean up speech synthesis on unmount
+  useEffect(() => {
+    return () => {
+      if (speechSynthesisRef.current) {
+        speechSynthesisRef.current.cancel();
+      }
+    };
+  }, []);
 
   /* Commented out Urdu language selection for now
   const handleLanguageSelect = (lang) => {
@@ -68,6 +80,32 @@ const TestQuiz = () => {
       (counts.T >= counts.F ? 'T' : 'F') +
       (counts.J >= counts.P ? 'J' : 'P')
     );
+  };
+
+  // Text-to-Speech function
+  const speakQuestionAndOptions = () => {
+    if (!speechSynthesisRef.current || isSpeaking) return;
+
+    const questions = getQuestions();
+    const currentQuestion = questions[currentIndex];
+    
+    // Create text to speak: question + all options
+    let textToSpeak = currentQuestion.title + '. Options: ';
+    
+    currentQuestion.options.forEach((option, index) => {
+      textToSpeak += `Option ${index + 1}: ${option.text}. `;
+    });
+
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    utterance.lang = language === 'en' ? 'en-US' : 'ur-PK'; // Support for Urdu when added
+    utterance.rate = 1;
+    utterance.pitch = 1;
+    
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    
+    speechSynthesisRef.current.speak(utterance);
   };
 
   const handleNext = async () => {
@@ -210,10 +248,28 @@ const TestQuiz = () => {
         ))}
       </div>
 
-      {/* ✅ Question */}
-      <h3 className={`text-lg sm:text-xl font-semibold mb-6 text-gray-700 ${isUrdu ? 'urdu-font' : ''}`}>
-        {currentQuestion.title}
-      </h3>
+      {/* ✅ Question with Speaker Icon */}
+      <div className="flex items-start gap-2 mb-6">
+        <h3 className={`text-lg sm:text-xl font-semibold text-gray-700 ${isUrdu ? 'urdu-font' : ''}`}>
+          {currentQuestion.title}
+        </h3>
+        <button 
+          onClick={speakQuestionAndOptions}
+          disabled={isSpeaking}
+          className={`self-start mt-1 ${isSpeaking ? 'text-gray-400' : 'text-blue-600 hover:text-blue-800'}`}
+          aria-label="Listen to question"
+        >
+          {isSpeaking ? (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          )}
+        </button>
+      </div>
 
       {/* ✅ Options grid responsive */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
