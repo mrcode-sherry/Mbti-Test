@@ -89,11 +89,12 @@ const TestQuiz = () => {
     const questions = getQuestions();
     const currentQuestion = questions[currentIndex];
     
-    // Create text to speak: question + all options
-    let textToSpeak = currentQuestion.title + '. Options: ';
+    // Create text to speak: question + all options + examples
+    let textToSpeak = `Question: ${currentQuestion.title}. `;
     
     currentQuestion.options.forEach((option, index) => {
-      textToSpeak += `Option ${index + 1}: ${option.text}. `;
+      const exampleText = language === 'en' ? 'Example' : 'مثال';
+      textToSpeak += `Option ${index + 1}: ${option.text}. ${exampleText}: ${option.example}. `;
     });
 
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
@@ -214,7 +215,7 @@ const TestQuiz = () => {
         "Stay Relaxed & Focused"
       ]
     : [
-        "70 کثیر الانتخاب سوالات",
+        "70 کثیر echang سوالات",
         "ازدواجی حیثیت اور زبان منتخب کریں",
         "نتیجہ پی ڈی ایف اور ویڈیو فارمیٹ میں",
         "16 Aptitude Counsel شخصیات کی بنیاد پر نتیجہ"
