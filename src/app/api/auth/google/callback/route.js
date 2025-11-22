@@ -74,8 +74,8 @@ export async function GET(req) {
     }
 
     // 4) Redirect back to frontend with user info
-    const base = process.env.NEXT_PUBLIC_BASE_URL || origin;
-    const url = new URL(`${base}/auth/success`);
+    // ✅ Always use the origin from the request to maintain the same domain
+    const url = new URL(`${origin}/auth/success`);
     url.searchParams.set("name", name);
     url.searchParams.set("email", email);
 

@@ -15,6 +15,7 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
     educationType: '',
     schoolStatus: '',
     schoolInstitute: '',
+    schoolClass: '', // ✅ New field for school class
     collegeYear: '',
     collegeDegree: '',
     collegeInstitute: '',
@@ -221,6 +222,21 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
                   <option value="">Select School Status</option>
                   <option value="completed">Completed</option>
                   <option value="continue">Continue</option>
+                </select>
+              </div>
+              <div>
+                <label className="block font-medium mb-1">Class</label>
+                <select
+                  name="schoolClass"
+                  value={formData.schoolClass}
+                  onChange={handleChange}
+                  className="border p-2 rounded w-full"
+                  required
+                >
+                  <option value="">Select Class</option>
+                  <option value="8">Class 8</option>
+                  <option value="9">Class 9</option>
+                  <option value="10">Class 10</option>
                 </select>
               </div>
               <div>

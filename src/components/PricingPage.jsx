@@ -23,7 +23,8 @@ const PricingPage = () => {
   const [isTestPopupOpen, setIsTestPopupOpen] = useState(false);
   const [proofStatus, setProofStatus] = useState("none");
   const [checkingStatus, setCheckingStatus] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState(null); // ✅ to know which plan user clicked
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [hasUploadedProof, setHasUploadedProof] = useState(false); // ✅ Track if screenshot uploaded
   const router = useRouter();
 
   // ✅ Check if user has submitted popup form
@@ -88,6 +89,7 @@ const PricingPage = () => {
       if (proofData.success && proofData.data) {
         const proof = proofData.data;
         setProofStatus(proof.status);
+        setHasUploadedProof(true); // ✅ Mark as uploaded
 
         if (proof.status === "approved") {
           refreshTestCompletion(email);
@@ -104,14 +106,13 @@ const PricingPage = () => {
   // ✅ Auto-refresh proof status callback
   const handleProofSubmitted = async () => {
     if (!user?.email) return;
-    setProofStatus("pending");
-    const interval = setInterval(async () => {
-      const status = await checkProofStatus(user.email);
-      if (status !== "pending") clearInterval(interval);
-    }, 2000);
+    setHasUploadedProof(true); // ✅ Mark screenshot as uploaded
+    setIsProofPopupOpen(false); // Close proof popup
+    setIsTestPopupOpen(true); // ✅ Open form popup after screenshot upload
+    // ✅ DON'T set proofStatus to "pending" here - only after form submission
   };
 
-  // ✅ Handle Plan Selection
+  // ✅ Handle Plan Selection - NEW FLOW
   const handlePlanClick = async (planType) => {
     if (!user?.email) {
       router.push('/login');
@@ -129,19 +130,26 @@ const PricingPage = () => {
         body: JSON.stringify({ email: user.email, plan: planType }),
       });
 
-      // ✅ Then check form & proof flow
+      // ✅ NEW FLOW: Check if screenshot uploaded first
+      const status = await checkProofStatus(user.email);
+      
+      if (!hasUploadedProof && status === "none") {
+        // ✅ No screenshot uploaded → Show screenshot popup first
+        setIsTestPopupOpen(false);
+        setIsProofPopupOpen(true);
+        return;
+      }
+
+      // ✅ Screenshot uploaded → Check if form submitted
       const submitted = await refreshSubmissionStatus(user.email);
       if (!submitted) {
+        // ✅ Screenshot uploaded but form not submitted → Show form
         setIsProofPopupOpen(false);
         setIsTestPopupOpen(true);
         return;
       }
 
-      const status = await checkProofStatus(user.email);
-      if (status === "none") {
-        setIsTestPopupOpen(false);
-        setIsProofPopupOpen(true);
-      }
+      // ✅ Both done → Nothing to show (status notification will handle)
     } finally {
       setCheckingStatus(false);
     }
@@ -164,7 +172,8 @@ const PricingPage = () => {
           setHasSubmittedTestForm(true);
           localStorage.setItem(`testFormFilled:${user.email}`, 'true');
           setIsTestPopupOpen(false);
-          setIsProofPopupOpen(true);
+          // ✅ Set status to pending NOW (after form submission)
+          setProofStatus("pending");
           return true;
         }
         throw new Error(data?.message || 'Failed to submit form');
@@ -173,7 +182,12 @@ const PricingPage = () => {
       localStorage.setItem(`testFormFilled:${user.email}`, 'true');
       setHasSubmittedTestForm(true);
       setIsTestPopupOpen(false);
-      setIsProofPopupOpen(true);
+      // ✅ Set status to pending NOW (after form submission)
+      setProofStatus("pending");
+      // ✅ After form submission, refresh page to show "waiting for admin approval"
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
       return true;
     } catch (err) {
       alert(err.message || 'Something went wrong.');
@@ -202,7 +216,27 @@ const PricingPage = () => {
         {/* ✅ Status Section */}
         {user && (
           <div className="max-w-3xl mx-auto mb-12 p-6 bg-white shadow rounded-lg text-center">
-            {proofStatus === "pending" && (
+            {/* ✅ Show upload reminder if no proof uploaded yet */}
+            {!hasUploadedProof && proofStatus === "none" && !hasSubmittedTestForm && (
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-md">
+                <p className="text-blue-800 font-medium">📸 Please upload your payment screenshot</p>
+                <p className="text-blue-700 text-sm mt-1">
+                  Click "Pay Now" button below to upload your payment proof and continue.
+                </p>
+              </div>
+            )}
+
+            {/* ✅ Show form reminder if screenshot uploaded but form not submitted */}
+            {hasUploadedProof && !hasSubmittedTestForm && proofStatus !== "pending" && proofStatus !== "approved" && (
+              <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-md">
+                <p className="text-green-800 font-medium">📝 Please complete the form</p>
+                <p className="text-green-700 text-sm mt-1">
+                  Click "Pay Now" button below to fill the form and complete your registration.
+                </p>
+              </div>
+            )}
+
+            {proofStatus === "pending" && hasSubmittedTestForm && (
               <div className="space-y-2">
                 <p className="text-yellow-600 font-medium">⏳ Your proof has been submitted. Waiting for admin approval.</p>
                 <p className="text-gray-600 text-sm">

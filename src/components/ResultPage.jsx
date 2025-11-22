@@ -1,12 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import resultsData from '../data/results.json';
 
 const ResultPage = () => {
-  const [result, setResult] = useState(null);
-  const [plan, setPlan] = useState('standard'); // default
-  const [activeTab, setActiveTab] = useState('result'); // for premium tabs
+  const [mbtiType, setMbtiType] = useState(null);
+  const [videoLink, setVideoLink] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -17,232 +15,74 @@ const ResultPage = () => {
     }
 
     const latestResult = savedResults[savedResults.length - 1];
-    const mbtiType = typeof latestResult === 'string' ? latestResult : latestResult.type;
-    setResult(resultsData.find(r => r.type === mbtiType) || null);
+    const type = typeof latestResult === 'string' ? latestResult : latestResult.type;
+    setMbtiType(type);
 
-    // Fetch plan from backend
-    const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
-    if (storedUser?.email) {
-      fetch(`/api/getplan?email=${encodeURIComponent(storedUser.email)}`)
-        .then(res => {
-          if (!res.ok) throw new Error(`API error: ${res.status}`);
-          return res.json();
-        })
-        .then(data => {
-          if (data.plan) {
-            setPlan(data.plan);
-          }
-        })
-        .catch(err => console.error('Error fetching plan:', err));
-    }
+    // TODO: Set video link based on type when videos are ready
+    // Example: setVideoLink(`https://youtu.be/${type}-video`);
+    setVideoLink(null); // No video yet
   }, [router]);
 
-  if (!result) return null;
-
-  // Standard result content (used in both standard and premium -> result tab)
-  const renderResultContent = () => (
-    <div className="space-y-6">
-      <section>
-        <h3 className="text-xl font-semibold mb-2">Meaning</h3>
-        <ul className="list-disc list-inside">
-          {Object.entries(result.meaning || {}).map(([k, v], idx) => (
-            <li key={idx}><strong>{k}</strong>: {v}</li>
-          ))}
-        </ul>
-      </section>
-
-      <section>
-        <h3 className="text-xl font-semibold mb-2">Lifestyle</h3>
-        <ul className="list-disc list-inside">
-          {(result.lifestyle || []).map((item, idx) => <li key={idx}>{item}</li>)}
-        </ul>
-      </section>
-
-      <section>
-        <h3 className="text-xl font-semibold mb-2">Strengths</h3>
-        <ul className="list-disc list-inside">
-          {(result.strengths || []).map((item, idx) => <li key={idx}>{item}</li>)}
-        </ul>
-      </section>
-
-      <section>
-        <h3 className="text-xl font-semibold mb-2">Weaknesses</h3>
-        <ul className="list-disc list-inside">
-          {(result.weaknesses || []).map((item, idx) => <li key={idx}>{item}</li>)}
-        </ul>
-      </section>
-
-      <section>
-        <h3 className="text-xl font-semibold mb-2">Success Meaning</h3>
-        <ul className="list-disc list-inside">
-          {(result.successMeaning || []).map((item, idx) => <li key={idx}>{item}</li>)}
-        </ul>
-      </section>
-
-      <section>
-        <h3 className="text-xl font-semibold mb-2">Strategies</h3>
-        <ul className="list-disc list-inside">
-          {(result.strategies || []).map((item, idx) => <li key={idx}>{item}</li>)}
-        </ul>
-      </section>
-
-      <section>
-        <h3 className="text-xl font-semibold mb-2">Problems</h3>
-        <ul className="list-disc list-inside">
-          {(result.problems || []).map((item, idx) => <li key={idx}>{item}</li>)}
-        </ul>
-      </section>
-
-      <section>
-        <h3 className="text-xl font-semibold mb-2">Rules</h3>
-        <ul className="list-disc list-inside">
-          {(result.rules || []).map((item, idx) => <li key={idx}>{item}</li>)}
-        </ul>
-      </section>
-
-      <section>
-        <h3 className="text-xl font-semibold mb-2">Careers</h3>
-        <ul className="list-disc list-inside">
-          {(result.careers || []).map((item, idx) => <li key={idx}>{item}</li>)}
-        </ul>
-      </section>
-
-      {/* Premium Insights (still inside result tab for premium users) */}
-      {plan === 'premium' && result.premiumInsights?.length > 0 && (
-        <section>
-          <h3 className="text-xl font-semibold mb-2">Premium Insights</h3>
-          <ul className="list-disc list-inside">
-            {result.premiumInsights.map((p, idx) => <li key={idx}>{p}</li>)}
-          </ul>
-        </section>
-      )}
-
-      {/* ✅ Extra Premium Message at the End */}
-      {plan === 'premium' && (
-        <div className="bg-gray-200 border-l-4 border-gray-500 p-5 rounded-md mt-6">
-          <h3 className="text-lg font-semibold mb-2">NOTE:</h3>
-          <p className="text-md text-gray-700 mb-1">
-            For custom roadmap please send your [ RESULT TYPE ] and [ TID number ] on our whatsapp.
-          </p>
-        </div>
-      )}
-    </div>
-  );
-
-  // Scholarships content (premium only)
-  const renderScholarships = () => (
-    <div className="space-y-6">
-      {/* Added Policy Note at the top */}
-      <div className="bg-yellow-100 border-l-4 border-yellow-500 p-5 rounded-md text-left">
-        <h3 className="text-lg font-semibold mb-2">Our Policy Note for Scholarships</h3>
-        <p className="text-sm text-gray-700 mb-2">
-          Dear Students and Parents,
-        </p>
-        <p className="text-sm text-gray-700 mb-2">
-          At Aptitude Counsel, we deeply care for your future and your trust in us. We share information about funded, partially funded, and talent-based scholarships only to guide you toward opportunities that may support your studies.
-        </p>
-        <p className="text-sm text-gray-700 mb-2">
-          Please be aware that these scholarships are not sponsored or provided by us. The final decision, process, and regulations are always under the jurisdiction of the pertinent universities or organizations. We recommend that you carefully read the official details and confirm all requirements with the scholarship giver immediately before submitting an application.
-        </p>
-        <p className="text-sm text-gray-700 mb-2">
-          We want to give you access to opportunities and awareness while advising you to use caution and knowledge. We hope your journey is prosperous, secure, and full of hope.
-        </p>
-        <p className="text-sm text-gray-700 font-semibold">
-          With care and guidance,<br />
-          Team Aptitude Counsel
-        </p>
-      </div>
-
-      {result.scholarships && (
-        <>
-          {/* Fully Funded */}
-          {result.scholarships.fullyFunded?.length > 0 && (
-            <div className="mb-4">
-              <h4 className="font-semibold mb-2">Fully Funded</h4>
-              <ul className="list-disc list-inside">
-                {result.scholarships.fullyFunded.map((s, i) => (
-                  <li key={i}>
-                    <a href={s.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                      {s.title}
-                    </a>
-                    {s.level ? ` (${s.level})` : ''} {s.coverage ? ` – ${s.coverage}` : ''}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {/* Partially Funded */}
-          {result.scholarships.partiallyFunded?.length > 0 && (
-            <div className="mb-4">
-              <h4 className="font-semibold mb-2">Partially Funded</h4>
-              <ul className="list-disc list-inside">
-                {result.scholarships.partiallyFunded.map((s, i) => (
-                  <li key={i}>
-                    <a href={s.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                      {s.title}
-                    </a>
-                    {s.level ? ` (${s.level})` : ''} {s.award ? ` – ${s.award}` : ''}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {/* Talent Based */}
-          {result.scholarships.talentBased?.length > 0 && (
-            <div>
-              <h4 className="font-semibold mb-2">Talent Based</h4>
-              <ul className="list-disc list-inside">
-                {result.scholarships.talentBased.map((s, i) => (
-                  <li key={i}>
-                    <a href={s.link || s.pdf} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                      {s.title}
-                    </a>
-                    {s.category ? ` (${s.category})` : ''} {s.award ? ` – ${s.award}` : ''}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  );
+  if (!mbtiType) return null;
 
   return (
-    <div className="pt-10 p-8 bg-gray-100 text-black shadow-md">
-      <div className="max-w-4xl mx-auto">
-        {/* Premium users: show tabs at the very top */}
-        {plan === 'premium' && (
-          <div className="flex space-x-4 border-b mb-6">
-            <button
-              onClick={() => setActiveTab('result')}
-              className={`pb-2 ${activeTab === 'result' ? 'border-b-2 border-[#14442E] font-semibold' : 'text-gray-600'}`}
-            >
-              Result
-            </button>
-            <button
-              onClick={() => setActiveTab('scholarships')}
-              className={`pb-2 ${activeTab === 'scholarships' ? 'border-b-2 border-[#14442E] font-semibold' : 'text-gray-600'}`}
-            >
-              Scholarships
-            </button>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-8">
+      <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8 text-center">
+        {/* Congratulations Message */}
+        <div className="mb-6">
+          <h1 className="text-4xl font-bold text-[#14442E] mb-2">
+            🎉 Congratulations!
+          </h1>
+          <p className="text-gray-600 text-lg">
+            You have successfully completed your personality test.
+          </p>
+        </div>
+
+        {/* MBTI Type Display */}
+        <div className="bg-[#14442E] text-white rounded-lg p-8 mb-6">
+          <h2 className="text-2xl font-semibold mb-2">Your Personality Type</h2>
+          <p className="text-6xl font-bold tracking-wider">{mbtiType}</p>
+        </div>
+
+        {/* Video Section (Placeholder) */}
+        {videoLink ? (
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              Watch Your Personality Video
+            </h3>
+            <div className="aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
+              {/* Video player will go here */}
+              <p className="text-gray-500">Video Player</p>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-md mb-6">
+            <h3 className="text-lg font-semibold text-blue-800 mb-2">
+              📹 Video Coming Soon
+            </h3>
+            <p className="text-blue-700 text-sm">
+              Your personalized video explanation will be available shortly.
+            </p>
           </div>
         )}
 
-        {/* Title + Welcome */}
-        <h2 className="text-3xl font-bold mb-4">{result.title}</h2>
-        <p className="text-lg mb-6">{result.welcomeMessage}</p>
+        {/* WhatsApp Message */}
+        <div className="bg-green-50 border-l-4 border-green-500 p-6 rounded-md">
+          <h3 className="text-lg font-semibold text-green-800 mb-2">
+            📱 Full Result on WhatsApp
+          </h3>
+          <p className="text-green-700 text-sm mb-3">
+            Your complete personality report, including detailed insights, strengths, weaknesses, career recommendations, and personalized guidance will be sent to your WhatsApp soon.
+          </p>
+          <p className="text-green-600 text-xs font-medium">
+            Please keep your WhatsApp active to receive your full result.
+          </p>
+        </div>
 
-        {/* Standard users: show only results */}
-        {plan === 'standard' && renderResultContent()}
-
-        {/* Premium users: switch between tabs */}
-        {plan === 'premium' && (
-          <>
-            {activeTab === 'result' && renderResultContent()}
-            {activeTab === 'scholarships' && renderScholarships()}
-          </>
-        )}
+        {/* Additional Info */}
+        <div className="mt-6 text-gray-500 text-sm">
+          <p>Thank you for choosing Aptitude Counsel! 🌟</p>
+        </div>
       </div>
     </div>
   );

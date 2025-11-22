@@ -2,12 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
+const PaymentProofPopup = ({ isOpen, onClose, userEmail, onProofSubmitted }) => {
   const [step, setStep] = useState(1); // 1=choose, 2=screenshot, 3=tid
   const [screenshotUrl, setScreenshotUrl] = useState("");
   const [tid, setTid] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [successPopup, setSuccessPopup] = useState(false); // ✅ separate popup state
   const widgetRef = useRef(null);
 
   // ✅ Load Cloudinary widget
@@ -94,23 +93,22 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
       const data = await res.json();
 
       if (res.ok && data?.success) {
-        // ✅ Reset & show success popup
+        // ✅ Reset state
         setStep(1);
         setScreenshotUrl("");
         setTid("");
-        onClose();
-        setSuccessPopup(true);
-
-        // 🔄 Refresh page after success
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        
+        // ✅ Call parent callback to open form popup
+        if (onProofSubmitted) {
+          onProofSubmitted();
+        }
 
         return;
       }
 
       if (res.status === 409) {
         alert("⏳ Proof already submitted. Please wait for admin approval.");
+        onClose();
         return;
       }
 
@@ -243,38 +241,7 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail }) => {
         </div>
       </div>
 
-      {/* ✅ Success Popup */}
-      {successPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-          <div className="bg-white rounded-xl shadow-lg w-full max-w-sm p-6 text-center relative">
-            <button
-              onClick={() => setSuccessPopup(false)}
-              className="absolute top-3 right-3 text-gray-500 cursor-pointer duration-300 hover:text-gray-800 text-lg"
-            >
-              ✕
-            </button>
-            <h2 className="text-lg font-semibold text-green-700 mb-4">
-              ✅ Proof submitted successfully!
-            </h2>
-            <p className="text-gray-700 text-sm mb-6">
-              Please wait up to 24 hours for admin approval.  
-              If not approved in time, please{" "}
-              <a href="/contact" className="text-blue-600 underline">
-                contact us
-              </a>.
-            </p>
-            <button
-              onClick={() => {
-                setSuccessPopup(false);
-                window.location.reload(); // 🔄 also refresh if user closes
-              }}
-              className="bg-[#14442E] cursor-pointer duration-300 text-white px-5 py-2 rounded-lg"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+
     </>
   );
 };

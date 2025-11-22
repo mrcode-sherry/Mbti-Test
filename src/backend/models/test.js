@@ -14,6 +14,7 @@ const testSchema = new mongoose.Schema(
 
     // School
     schoolStatus: String,
+    schoolClass: String, // ✅ New field: Class 8, 9, or 10
     schoolInstitute: String,
 
     // College

@@ -9,6 +9,9 @@ export async function POST(req) {
     const body = await req.json();
     const { email, ...data } = body;
 
+    // ✅ Debug: Log received data
+    console.log("📝 Received data:", { email, schoolClass: data.schoolClass, educationType: data.educationType });
+
     if (!email) {
       return NextResponse.json({ success: false, message: "Email required" }, { status: 400 });
     }
@@ -20,6 +23,9 @@ export async function POST(req) {
 
     const newRecord = new Test({ email, ...data });
     await newRecord.save();
+
+    // ✅ Debug: Log saved data
+    console.log("✅ Saved to DB:", { email, schoolClass: newRecord.schoolClass });
 
     return NextResponse.json({ success: true, message: "Record saved successfully" });
   } catch (error) {

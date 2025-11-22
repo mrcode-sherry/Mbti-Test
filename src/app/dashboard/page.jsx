@@ -50,6 +50,12 @@ const DashboardPage = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
 
+  // ✅ NEW: States for School, College, University tabs
+  const [schoolUsers, setSchoolUsers] = useState([]);
+  const [collegeUsers, setCollegeUsers] = useState([]);
+  const [universityUsers, setUniversityUsers] = useState([]);
+  const [loadingEducation, setLoadingEducation] = useState(false);
+
   // Protect admin route
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -119,7 +125,7 @@ const DashboardPage = () => {
     }
   }, [activeTab]);
 
-  // ✅ Fetch all users (same data as Test Form) when Manage User tab opens
+  // ✅ Fetch all users when Manage User tab opens
   useEffect(() => {
     if (activeTab === "manage") {
       setLoadingUsers(true);
@@ -132,6 +138,24 @@ const DashboardPage = () => {
           }
         })
         .finally(() => setLoadingUsers(false));
+    }
+  }, [activeTab]);
+
+  // ✅ NEW: Fetch filtered users for School, College, University tabs
+  useEffect(() => {
+    if (activeTab === "school" || activeTab === "college" || activeTab === "university") {
+      setLoadingEducation(true);
+      fetch("/api/showtest")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            const allUsers = data.data;
+            setSchoolUsers(allUsers.filter(u => u.educationType === "school"));
+            setCollegeUsers(allUsers.filter(u => u.educationType === "college"));
+            setUniversityUsers(allUsers.filter(u => u.educationType === "university"));
+          }
+        })
+        .finally(() => setLoadingEducation(false));
     }
   }, [activeTab]);
 
@@ -163,6 +187,8 @@ const DashboardPage = () => {
           ? u.province
           : filterField === "educationType"
           ? u.educationType
+          : filterField === "schoolClass"
+          ? u.schoolClass
           : filterField === "favouriteSubjects"
           ? u.favouriteSubjects?.join(", ")
           : filterField === "weakSubjects"
@@ -239,6 +265,39 @@ const DashboardPage = () => {
     }
   };
 
+  // ✅ Render user list (reusable for School/College/University tabs)
+  const renderUserList = (userList, title) => (
+    <div>
+      <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">
+        {title}
+      </h2>
+      {loadingEducation ? (
+        <p className="text-black">Loading...</p>
+      ) : userList.length > 0 ? (
+        <ul className="space-y-2">
+          {userList.map((u, i) => (
+            <li
+              key={u._id}
+              className="p-3 border rounded bg-gray-50 shadow-sm text-black text-sm"
+            >
+              <span className="font-bold">{i + 1}.</span>{" "}
+              <span className="font-semibold">{u.fullName}</span> | {u.email} | {u.gender} | {u.maritalStatus} | {u.countryCode} {u.phoneNumber} | {u.city}, {u.province}
+              {u.schoolClass && <> | Class: {u.schoolClass}</>}
+              {u.favouriteSubjects && <> | Favourite: {u.favouriteSubjects.join(", ")}</>}
+              {u.weakSubjects && <> | Weak: {u.weakSubjects.join(", ")}</>}
+              {u.hobbies && <> | Hobbies: {u.hobbies.join(", ")}</>}
+              {u.fieldsOfInterest && <> | Interests: {u.fieldsOfInterest.join(", ")}</>}
+              {u.parentalExpectation && <> | Expectation: {u.parentalExpectation}</>}
+              {u.budgetRange && <> | Budget: {u.budgetRange}</>}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-red-600">No {title.toLowerCase()} yet.</p>
+      )}
+    </div>
+  );
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Sidebar */}
@@ -269,6 +328,31 @@ const DashboardPage = () => {
           onClick={() => setActiveTab("manage")}
         >
           Manage User
+        </button>
+        {/* ✅ NEW: School, College, University tabs */}
+        <button
+          className={`block w-full text-left px-3 py-2 rounded cursor-pointer duration-300 ${
+            activeTab === "school" ? "bg-gray-600" : "hover:bg-gray-700"
+          }`}
+          onClick={() => setActiveTab("school")}
+        >
+          School
+        </button>
+        <button
+          className={`block w-full text-left px-3 py-2 rounded cursor-pointer duration-300 ${
+            activeTab === "college" ? "bg-gray-600" : "hover:bg-gray-700"
+          }`}
+          onClick={() => setActiveTab("college")}
+        >
+          College
+        </button>
+        <button
+          className={`block w-full text-left px-3 py-2 rounded cursor-pointer duration-300 ${
+            activeTab === "university" ? "bg-gray-600" : "hover:bg-gray-700"
+          }`}
+          onClick={() => setActiveTab("university")}
+        >
+          University
         </button>
         <button
           className="block w-full text-center px-3 py-2 mt-4 rounded bg-red-600 cursor-pointer duration-300 hover:bg-red-700"
@@ -311,8 +395,10 @@ const DashboardPage = () => {
                       <span className="font-semibold">{t.fullName}</span> |{" "}
                       {t.email} | {t.gender} | {t.maritalStatus} |{" "}
                       {t.countryCode} {t.phoneNumber} | {t.city}, {t.province} |{" "}
-                      {t.educationType} | Status: {t.status}
-                      {/* ✅ New fields inline */}
+                      {t.educationType}
+                      {/* ✅ Show school class inline */}
+                      {t.schoolClass && <> | Class: {t.schoolClass}</>}
+                      {" "}| Status: {t.status}
                       {t.favouriteSubjects && (
                         <> | Favourite Subjects: {t.favouriteSubjects.join(", ")}</>
                       )}
@@ -405,6 +491,7 @@ const DashboardPage = () => {
                 <option value="city">City</option>
                 <option value="province">Province</option>
                 <option value="educationType">Education</option>
+                <option value="schoolClass">School Class</option>
                 <option value="favouriteSubjects">Favourite Subjects</option>
                 <option value="weakSubjects">Weak Subjects</option>
                 <option value="hobbies">Hobbies</option>
@@ -438,12 +525,13 @@ const DashboardPage = () => {
                 {filteredUsers.map((u, i) => (
                   <li
                     key={u._id}
-                    className="p-3 border rounded bg-gray-50 shadow-sm text-black"
+                    className="p-3 border rounded bg-gray-50 shadow-sm text-black text-sm"
                   >
                     <span className="font-bold">{i + 1}.</span>{" "}
                     <span className="font-semibold">{u.fullName}</span> |{" "}
                     {u.email} | {u.gender} | {u.maritalStatus} | {u.countryCode}{" "}
                     {u.phoneNumber} | {u.city}, {u.province} | {u.educationType}
+                    {u.schoolClass && <> | Class: {u.schoolClass}</>}
                     {u.favouriteSubjects && (
                       <> | Favourite: {u.favouriteSubjects.join(", ")}</>
                     )}
@@ -466,6 +554,15 @@ const DashboardPage = () => {
             )}
           </div>
         )}
+
+        {/* ✅ NEW: School Tab */}
+        {activeTab === "school" && renderUserList(schoolUsers, "School Users")}
+
+        {/* ✅ NEW: College Tab */}
+        {activeTab === "college" && renderUserList(collegeUsers, "College Users")}
+
+        {/* ✅ NEW: University Tab */}
+        {activeTab === "university" && renderUserList(universityUsers, "University Users")}
       </main>
 
       {/* Test Modal */}
@@ -499,6 +596,12 @@ const DashboardPage = () => {
               <p className="text-black">
                 <b>Education:</b> {selectedTest.educationType}
               </p>
+              {/* ✅ School Class field */}
+              {selectedTest.schoolClass && (
+                <p className="text-black">
+                  <b>School Class:</b> {selectedTest.schoolClass}
+                </p>
+              )}
               {/* ✅ New fields */}
               {selectedTest.favouriteSubjects && (
                 <p className="text-black">
