@@ -11,6 +11,7 @@ const Navbar = () => {
   const [completed, setCompleted] = useState(false);
   const [proofSubmitted, setProofSubmitted] = useState(false); // ✅ Screenshot submitted
   const [approved, setApproved] = useState(false); // ✅ Proof approved
+  const [userPlan, setUserPlan] = useState('standard'); // ✅ Track user plan
   const pathname = usePathname();
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -83,6 +84,23 @@ const Navbar = () => {
               console.error("Error checking test submission:", err);
               setCompleted(false);
             }
+
+            // ✅ Check user plan
+            try {
+              const planRes = await fetch(
+                `/api/getplan?email=${encodeURIComponent(parsedUser.email)}`,
+                { cache: 'no-store' }
+              );
+              if (planRes.ok) {
+                const planData = await planRes.json();
+                setUserPlan(planData.plan || 'standard');
+              } else {
+                setUserPlan('standard');
+              }
+            } catch (err) {
+              console.error("Error checking user plan:", err);
+              setUserPlan('standard');
+            }
           } else {
             setProofSubmitted(false);
             setApproved(false);
@@ -141,14 +159,22 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <ul className="hidden md:flex items-center gap-6 text-[#14442E] text-[17px] font-medium mx-auto">
+          <ul className="hidden md:flex items-center gap-4 text-[#14442E] text-[15px] font-medium mx-auto">
             <li><Link href="/">Home</Link></li>
             <li><Link href="/about">About</Link></li>
             <li><Link href="/pricing">Fees</Link></li>
             <li><Link href="/contact">Contact</Link></li>
+            <li><Link href="/school-landing">School</Link></li>
+            <li><Link href="/college-landing">College</Link></li>
+            <li><Link href="/university-landing">University</Link></li>
 
             {user && user?.role !== 'admin' && completed && (
               <li><Link href="/result">Result</Link></li>
+            )}
+
+            {/* ✅ Show Scholarships only for Premium users who completed test */}
+            {user && user?.role !== 'admin' && completed && userPlan === 'premium' && (
+              <li><Link href="/scholarships">Scholarships</Link></li>
             )}
 
             <li><Link href="/privacy-policy">Privacy Policy</Link></li>
@@ -197,9 +223,17 @@ const Navbar = () => {
               <li><Link href="/about" onClick={toggleMenu}>About</Link></li>
               <li><Link href="/pricing" onClick={toggleMenu}>Fees</Link></li>
               <li><Link href="/contact" onClick={toggleMenu}>Contact</Link></li>
+              <li><Link href="/school-landing" onClick={toggleMenu}>School</Link></li>
+              <li><Link href="/college-landing" onClick={toggleMenu}>College</Link></li>
+              <li><Link href="/university-landing" onClick={toggleMenu}>University</Link></li>
 
               {user && user?.role !== 'admin' && completed && (
                 <li><Link href="/result" onClick={toggleMenu}>Result</Link></li>
+              )}
+
+              {/* ✅ Show Scholarships only for Premium users who completed test */}
+              {user && user?.role !== 'admin' && completed && userPlan === 'premium' && (
+                <li><Link href="/scholarships" onClick={toggleMenu}>Scholarships</Link></li>
               )}
 
               <li><Link href="/privacy-policy" onClick={toggleMenu}>Privacy Policy</Link></li>
