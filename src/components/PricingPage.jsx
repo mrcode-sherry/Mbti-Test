@@ -6,6 +6,7 @@ import FaqSection from './FaqSection';
 import { CheckCircle } from 'lucide-react';
 import PaymentProofPopup from './PaymentProofPopup';
 import TestPopupForm from './TestPopupForm';
+import WhatsAppNotificationPopup from './WhatsAppNotificationPopup';
 import { useRouter } from 'next/navigation';
 
 const FeatureItem = ({ text }) => (
@@ -25,6 +26,8 @@ const PricingPage = () => {
   const [checkingStatus, setCheckingStatus] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [hasUploadedProof, setHasUploadedProof] = useState(false); // ✅ Track if screenshot uploaded
+  const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false); // ✅ WhatsApp notification popup
+  const [submittedFormData, setSubmittedFormData] = useState(null); // ✅ Store form data for WhatsApp
   const router = useRouter();
 
   // ✅ Check if user has submitted popup form
@@ -174,6 +177,9 @@ const PricingPage = () => {
           setIsTestPopupOpen(false);
           // ✅ Set status to pending NOW (after form submission)
           setProofStatus("pending");
+          // ✅ Show WhatsApp notification popup
+          setSubmittedFormData({ ...formData, email: user.email });
+          setShowWhatsAppPopup(true);
           return true;
         }
         throw new Error(data?.message || 'Failed to submit form');
@@ -184,10 +190,9 @@ const PricingPage = () => {
       setIsTestPopupOpen(false);
       // ✅ Set status to pending NOW (after form submission)
       setProofStatus("pending");
-      // ✅ After form submission, refresh page to show "waiting for admin approval"
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
+      // ✅ Show WhatsApp notification popup
+      setSubmittedFormData({ ...formData, email: user.email });
+      setShowWhatsAppPopup(true);
       return true;
     } catch (err) {
       alert(err.message || 'Something went wrong.');
@@ -373,6 +378,20 @@ const PricingPage = () => {
         userEmail={user?.email || ''}
         onProofSubmitted={handleProofSubmitted}
       />
+      {/* ✅ WhatsApp Notification Popup */}
+      {submittedFormData && (
+        <WhatsAppNotificationPopup
+          isOpen={showWhatsAppPopup}
+          onClose={() => {
+            setShowWhatsAppPopup(false);
+            // Refresh page after closing WhatsApp popup
+            window.location.reload();
+          }}
+          userName={submittedFormData.fullName}
+          userEmail={submittedFormData.email}
+          userPhone={`${submittedFormData.countryCode} ${submittedFormData.phoneNumber}`}
+        />
+      )}
     </div>
   );
 };
