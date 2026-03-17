@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400&display=swap');
+@import "tailwindcss";
+
+/* Default fonts */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-sans: 'Inter', Arial, Helvetica, sans-serif;
+  --font-mono: 'Courier New', monospace;
+}
+
+/* Theme variables */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* Default body */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* ✅ Urdu specific font */
+.urdu-font {
+  font-family: 'Noto Nastaliq Urdu', serif;
+  font-weight: 400; /* Bold */
+  line-height: 2.2;
+}
+
+/* Sliding animation */
+@keyframes slide {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-slide {
+  animation: slide 20s linear infinite;
+}
