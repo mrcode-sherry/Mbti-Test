@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation'; 
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [completed, setCompleted] = useState(false);
   const [proofSubmitted, setProofSubmitted] = useState(false); // ✅ Screenshot submitted
@@ -159,14 +160,42 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <ul className="hidden md:flex items-center gap-4 text-[#14442E] text-[15px] font-medium mx-auto">
+          <ul className="hidden md:flex items-center gap-4 text-[#14442E] text-[17px] font-medium mx-auto">
             <li><Link href="/">Home</Link></li>
             <li><Link href="/about">About</Link></li>
             <li><Link href="/pricing">Fees</Link></li>
             <li><Link href="/contact">Contact</Link></li>
-            <li><Link href="/school-landing">School</Link></li>
-            <li><Link href="/college-landing">College</Link></li>
-            <li><Link href="/university-landing">University</Link></li>
+            
+            {/* Categories Dropdown */}
+            <li 
+              className="relative group"
+              onMouseEnter={() => setCategoriesOpen(true)}
+              onMouseLeave={() => setCategoriesOpen(false)}
+            >
+              <div className="flex items-center gap-1 hover:text-[#0c2f1e] transition cursor-pointer py-2">
+                Categories
+                <ChevronDown size={16} className={`transition-transform ${categoriesOpen ? 'rotate-180' : ''}`} />
+              </div>
+              {categoriesOpen && (
+                <div className="absolute top-full left-0 w-64 bg-white shadow-lg rounded-lg border z-50">
+                  <Link href="/future-fit" className="block px-4 py-3 hover:bg-gray-50 text-sm border-b">
+                    Future Fit (Career Guidance)
+                  </Link>
+                  <Link href="/medical-admissions" className="block px-4 py-3 hover:bg-gray-50 text-sm border-b">
+                    Medical Admissions & Career Guidance
+                  </Link>
+                  <Link href="/it-career" className="block px-4 py-3 hover:bg-gray-50 text-sm border-b">
+                    IT Career Guidance
+                  </Link>
+                  <Link href="/entrepreneurship" className="block px-4 py-3 hover:bg-gray-50 text-sm border-b">
+                    Entrepreneurship / Business Career Guidance
+                  </Link>
+                  <Link href="/ngo-community" className="block px-4 py-3 hover:bg-gray-50 text-sm">
+                    NGO & Community Service Career Guidance
+                  </Link>
+                </div>
+              )}
+            </li>
 
             {user && user?.role !== 'admin' && completed && (
               <li><Link href="/result">Result</Link></li>
@@ -223,9 +252,36 @@ const Navbar = () => {
               <li><Link href="/about" onClick={toggleMenu}>About</Link></li>
               <li><Link href="/pricing" onClick={toggleMenu}>Fees</Link></li>
               <li><Link href="/contact" onClick={toggleMenu}>Contact</Link></li>
-              <li><Link href="/school-landing" onClick={toggleMenu}>School</Link></li>
-              <li><Link href="/college-landing" onClick={toggleMenu}>College</Link></li>
-              <li><Link href="/university-landing" onClick={toggleMenu}>University</Link></li>
+              
+              {/* Mobile Categories */}
+              <li>
+                <button 
+                  onClick={() => setCategoriesOpen(!categoriesOpen)}
+                  className="flex items-center gap-1 w-full text-left"
+                >
+                  Categories
+                  <ChevronDown size={16} className={`transition-transform ${categoriesOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {categoriesOpen && (
+                  <div className="mt-2 ml-4 space-y-2">
+                    <Link href="/future-fit" onClick={toggleMenu} className="block text-sm text-gray-600">
+                      Future Fit (Career Guidance)
+                    </Link>
+                    <Link href="/medical-admissions" onClick={toggleMenu} className="block text-sm text-gray-600">
+                      Medical Admissions & Career Guidance
+                    </Link>
+                    <Link href="/it-career" onClick={toggleMenu} className="block text-sm text-gray-600">
+                      IT Career Guidance
+                    </Link>
+                    <Link href="/entrepreneurship" onClick={toggleMenu} className="block text-sm text-gray-600">
+                      Entrepreneurship / Business Career Guidance
+                    </Link>
+                    <Link href="/ngo-community" onClick={toggleMenu} className="block text-sm text-gray-600">
+                      NGO & Community Service Career Guidance
+                    </Link>
+                  </div>
+                )}
+              </li>
 
               {user && user?.role !== 'admin' && completed && (
                 <li><Link href="/result" onClick={toggleMenu}>Result</Link></li>
