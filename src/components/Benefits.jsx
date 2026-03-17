@@ -67,24 +67,26 @@ const benefits = [
 
 const Benefits = () => {
   return (
-    <section className="py-16 md:px-16 px-8 bg-white">
+    <section className="py-16 md:px-16 px-8 bg-[#F3F2ED]">
       <div className="text-center">
         {/* Title */}
-        <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-12">
+        <h2 className="text-[29px] md:text-4xl font-bold text-[#05503C] mb-12">
           Benefits of Taking the Test
         </h2>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {benefits.map((item, index) => (
             <div
               key={index}
-              className="p-6 rounded-2xl shadow-md hover:shadow-lg transition bg-gray-100"
+              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-[#FDCA00] p-6 text-left"
             >
-              <div className="flex justify-center mb-4">
-                <item.icon className="h-10 w-10 text-[#14442E]" />
+              <div className="flex justify-start mb-4">
+                <div className="w-12 h-12 bg-[#F3F2ED] rounded-full flex items-center justify-center">
+                  <item.icon className="h-6 w-6 text-[#05503C]" />
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-[#14442E] mb-2">
+              <h3 className="text-lg font-semibold text-[#0B0F0E] mb-3">
                 {item.title}
               </h3>
               <p className="text-gray-600 text-sm leading-relaxed">

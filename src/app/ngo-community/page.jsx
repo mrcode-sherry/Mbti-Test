@@ -1,20 +1,14 @@
 import React from 'react'
+import CategoryPage from '@/components/CategoryPage'
 
 const NGOCommunityPage = () => {
-  return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-[#14442E] text-center mb-8">
-          NGO & Community Service Career Guidance
-        </h1>
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <p className="text-gray-600 text-center">
-            Content coming soon...
-          </p>
-        </div>
-      </div>
-    </div>
-  )
+  const ngoData = {
+    title: "Is Social Impact Work Right for You?",
+    subtitle: "Discover your aptitude for a career in Pakistan's NGO and community service sectors.",
+    heroImage: "/hero/doctor.png"
+  };
+
+  return <CategoryPage {...ngoData} />
 }
 
 export default NGOCommunityPage
