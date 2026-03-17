@@ -1,20 +1,14 @@
 import React from 'react'
+import CategoryPage from '@/components/CategoryPage'
 
 const MedicalAdmissionsPage = () => {
-  return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-[#14442E] text-center mb-8">
-          Medical Admissions & Career Guidance
-        </h1>
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <p className="text-gray-600 text-center">
-            Content coming soon...
-          </p>
-        </div>
-      </div>
-    </div>
-  )
+  const medicalData = {
+    title: "Is Medical Career Right for You?",
+    subtitle: "Discover your aptitude for a career in Pakistan's medical and healthcare sectors.",
+    heroImage: "/hero/doctor.png"
+  };
+
+  return <CategoryPage {...medicalData} />
 }
 
 export default MedicalAdmissionsPage

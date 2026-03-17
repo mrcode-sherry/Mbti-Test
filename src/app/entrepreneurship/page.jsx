@@ -1,20 +1,14 @@
 import React from 'react'
+import CategoryPage from '@/components/CategoryPage'
 
 const EntrepreneurshipPage = () => {
-  return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-[#14442E] text-center mb-8">
-          Entrepreneurship / Business Career Guidance
-        </h1>
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <p className="text-gray-600 text-center">
-            Content coming soon...
-          </p>
-        </div>
-      </div>
-    </div>
-  )
+  const entrepreneurshipData = {
+    title: "Is Entrepreneurship Right for You?",
+    subtitle: "Discover your aptitude for a career in Pakistan's business and entrepreneurship sectors.",
+    heroImage: "/hero/engineer.png"
+  };
+
+  return <CategoryPage {...entrepreneurshipData} />
 }
 
 export default EntrepreneurshipPage
