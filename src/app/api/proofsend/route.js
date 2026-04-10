@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import Proof from "@/backend/models/proof";
+import prisma from "@/backend/prisma";
 
 export async function POST(req) {
   try {
-    await dbConnect();
-
     const { email, method, screenshotUrl, tid } = await req.json();
 
     if (!email) {
@@ -36,7 +33,10 @@ export async function POST(req) {
     }
 
     // 🔍 Check if proof already exists
-    const existing = await Proof.findOne({ email });
+    const existing = await prisma.proof.findUnique({
+      where: { email }
+    });
+
     if (existing) {
       return NextResponse.json(
         { success: false, message: "Proof already submitted" },
@@ -44,12 +44,13 @@ export async function POST(req) {
       );
     }
 
-    const doc = new Proof({
-      email,
-      screenshotUrl: method === "screenshot" ? screenshotUrl : "",
-      tid: method === "tid" ? tid : "",
+    const newProof = await prisma.proof.create({
+      data: {
+        email,
+        screenshotUrl: method === "screenshot" ? screenshotUrl : null,
+        tid: method === "tid" ? tid : null,
+      }
     });
-    await doc.save();
 
     return NextResponse.json({ success: true, message: "Proof saved" });
   } catch (err) {

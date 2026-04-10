@@ -1,11 +1,8 @@
-// /app/api/testSubmission/check/route.js
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import TestSubmission from "@/backend/models/testSubmission";
+import prisma from "@/backend/prisma";
 
 export async function GET(req) {
   try {
-    await dbConnect();
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
 
@@ -13,7 +10,9 @@ export async function GET(req) {
       return NextResponse.json({ success: false, exists: false, completed: false, message: "Email required" }, { status: 400 });
     }
 
-    const submission = await TestSubmission.findOne({ email });
+    const submission = await prisma.testSubmission.findUnique({
+      where: { email }
+    });
 
     return NextResponse.json({
       success: true,

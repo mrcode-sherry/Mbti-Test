@@ -201,6 +201,9 @@ const Navbar = () => {
               <li><Link href="/result">Result</Link></li>
             )}
 
+            {/* ✅ Student Dashboard - Show openly for styling */}
+            <li><Link href="/student-dashboard">Dashboard</Link></li>
+
             {/* ✅ Show Scholarships only for Premium users who completed test */}
             {user && user?.role !== 'admin' && completed && userPlan === 'premium' && (
               <li><Link href="/scholarships">Scholarships</Link></li>
@@ -209,7 +212,7 @@ const Navbar = () => {
             <li><Link href="/privacy-policy">Privacy Policy</Link></li>
 
             {user?.role === 'admin' && (
-              <li><Link href="/dashboard">Dashboard</Link></li>
+              <li><Link href="/dashboard">Admin Dashboard</Link></li>
             )}
 
           </ul>
@@ -287,6 +290,9 @@ const Navbar = () => {
                 <li><Link href="/result" onClick={toggleMenu}>Result</Link></li>
               )}
 
+              {/* ✅ Student Dashboard - Show openly for styling */}
+              <li><Link href="/student-dashboard" onClick={toggleMenu}>Dashboard</Link></li>
+
               {/* ✅ Show Scholarships only for Premium users who completed test */}
               {user && user?.role !== 'admin' && completed && userPlan === 'premium' && (
                 <li><Link href="/scholarships" onClick={toggleMenu}>Scholarships</Link></li>
@@ -295,7 +301,7 @@ const Navbar = () => {
               <li><Link href="/privacy-policy" onClick={toggleMenu}>Privacy Policy</Link></li>
 
               {user?.role === 'admin' && (
-                <li><Link href="/dashboard" onClick={toggleMenu}>Dashboard</Link></li>
+                <li><Link href="/dashboard" onClick={toggleMenu}>Admin Dashboard</Link></li>
               )}
 
               <li>
@@ -330,7 +336,7 @@ const Navbar = () => {
       </header>
 
       {/* ✅ Notification Bar */}
-      {user && pathname !== '/result' && pathname !== '/dashboard' && pathname !== '/admin' && (
+      {user && pathname !== '/result' && pathname !== '/dashboard' && pathname !== '/student-dashboard' && pathname !== '/admin' && (
         <div className="bg-gray-100 text-green-900 text-center py-2 px-4 text-md font-medium">
           {!proofSubmitted ? (
             <p>

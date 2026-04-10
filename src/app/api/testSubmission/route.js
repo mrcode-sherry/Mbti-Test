@@ -1,24 +1,25 @@
-// /app/api/testSubmission/route.js
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import TestSubmission from "@/backend/models/testSubmission";
+import prisma from "@/backend/prisma";
 
 export async function POST(req) {
   try {
-    await dbConnect();
     const { email } = await req.json();
 
     if (!email) {
       return NextResponse.json({ success: false, message: "Email required" }, { status: 400 });
     }
 
-    const exists = await TestSubmission.findOne({ email });
+    const exists = await prisma.testSubmission.findUnique({
+      where: { email }
+    });
+
     if (exists) {
       return NextResponse.json({ success: true, message: "Test already submitted" });
     }
 
-    const newSubmission = new TestSubmission({ email, completed: true });
-    await newSubmission.save();
+    const newSubmission = await prisma.testSubmission.create({
+      data: { email, completed: true }
+    });
 
     return NextResponse.json({ success: true, message: "Test submitted successfully" });
   } catch (error) {

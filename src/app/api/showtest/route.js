@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import Test from "@/backend/models/test";
+import prisma from "@/backend/prisma";
 
 export async function GET() {
   try {
-    await dbConnect();
-    const tests = await Test.find().sort({ createdAt: -1 });
+    const tests = await prisma.test.findMany({
+      orderBy: { createdAt: 'desc' }
+    });
 
     return NextResponse.json({ success: true, data: tests });
   } catch (error) {

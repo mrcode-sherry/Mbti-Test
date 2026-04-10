@@ -1,12 +1,11 @@
-import Contact from "@/backend/models/contact";
-import dbConnect from "@/backend/db";
 import { NextResponse } from "next/server";
+import prisma from "@/backend/prisma";
 
 export async function GET() {
   try {
-    await dbConnect();
-
-    const contacts = await Contact.find().sort({ createdAt: -1 }); // latest first
+    const contacts = await prisma.contact.findMany({
+      orderBy: { createdAt: 'desc' } // latest first
+    });
 
     return NextResponse.json({ success: true, data: contacts });
   } catch (error) {

@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import Proof from "@/backend/models/proof";
+import prisma from "@/backend/prisma";
 
 export async function GET(req) {
   try {
-    await dbConnect();
-
     // Extract query param (?email=...)
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
@@ -18,7 +15,9 @@ export async function GET(req) {
     }
 
     // Find proof by email
-    const proof = await Proof.findOne({ email });
+    const proof = await prisma.proof.findUnique({
+      where: { email }
+    });
 
     if (!proof) {
       return NextResponse.json(

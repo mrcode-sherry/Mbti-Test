@@ -1,12 +1,8 @@
-// /app/api/question/route.js
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import Test from "@/backend/models/test";
+import prisma from "@/backend/prisma";
 
 export async function GET(req) {
   try {
-    await dbConnect();
-
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
 
@@ -17,7 +13,9 @@ export async function GET(req) {
       );
     }
 
-    const test = await Test.findOne({ email });
+    const test = await prisma.test.findUnique({
+      where: { email }
+    });
 
     return NextResponse.json({
       success: true,

@@ -1,11 +1,8 @@
-// /app/api/question/route.js
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import Test from "@/backend/models/test";
+import prisma from "@/backend/prisma";
 
 export async function POST(req) {
   try {
-    await dbConnect();
     const body = await req.json();
     const { email, ...data } = body;
 
@@ -16,13 +13,17 @@ export async function POST(req) {
       return NextResponse.json({ success: false, message: "Email required" }, { status: 400 });
     }
 
-    const exists = await Test.findOne({ email });
+    const exists = await prisma.test.findUnique({
+      where: { email }
+    });
+
     if (exists) {
       return NextResponse.json({ success: false, message: "Record already exists" }, { status: 409 });
     }
 
-    const newRecord = new Test({ email, ...data });
-    await newRecord.save();
+    const newRecord = await prisma.test.create({
+      data: { email, ...data }
+    });
 
     // ✅ Debug: Log saved data
     console.log("✅ Saved to DB:", { email, schoolClass: newRecord.schoolClass });

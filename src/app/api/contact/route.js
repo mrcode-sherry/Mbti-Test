@@ -1,11 +1,8 @@
-import Contact from "@/backend/models/contact";
-import dbConnect from "@/backend/db";
 import { NextResponse } from "next/server";
+import prisma from "@/backend/prisma";
 
 export async function POST(req) {
   try {
-    await dbConnect();
-
     const {
       firstName,
       lastName,
@@ -18,19 +15,15 @@ export async function POST(req) {
 
     // Trim values
     const data = {
-      firstName: firstName?.trim(),
-      lastName: lastName?.trim(),
+      name: `${firstName?.trim()} ${lastName?.trim()}`.trim(), // Combine first and last name
       email: email?.trim(),
-      phoneNumber: phoneNumber?.trim(),
-      subject: subject?.trim(),
-      maritalStatus: maritalStatus?.trim(),
-      message: message?.trim()
+      message: `Subject: ${subject?.trim()}\nPhone: ${phoneNumber?.trim()}\nMarital Status: ${maritalStatus?.trim()}\n\nMessage: ${message?.trim()}`
     };
 
-    // Validate all fields are present
-    if (Object.values(data).some(v => !v)) {
+    // Validate required fields
+    if (!data.name || !data.email || !data.message) {
       return NextResponse.json(
-        { success: false, message: "All fields are required" },
+        { success: false, message: "Name, email, and message are required" },
         { status: 400 }
       );
     }
@@ -47,20 +40,24 @@ export async function POST(req) {
       );
     }
 
-    // Phone format
-    const phoneRegex = /^[0-9]{10,15}$/;
-    if (!phoneRegex.test(data.phoneNumber)) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid phone number. Only digits allowed (10–15 characters)."
-        },
-        { status: 400 }
-      );
+    // Phone format validation
+    if (phoneNumber) {
+      const phoneRegex = /^[0-9]{10,15}$/;
+      if (!phoneRegex.test(phoneNumber.trim())) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Invalid phone number. Only digits allowed (10–15 characters)."
+          },
+          { status: 400 }
+        );
+      }
     }
 
     // Save to DB
-    const newContact = await Contact.create(data);
+    const newContact = await prisma.contact.create({
+      data
+    });
 
     return NextResponse.json(
       {
