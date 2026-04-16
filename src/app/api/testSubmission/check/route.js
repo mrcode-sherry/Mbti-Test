@@ -18,6 +18,9 @@ export async function GET(req) {
       success: true,
       exists: !!submission,
       completed: submission?.completed || false,
+      result: submission?.result || null,
+      answers: submission?.answers || [],
+      languages: submission?.languages || []
     });
   } catch (error) {
     console.error("Check Submission Error:", error);

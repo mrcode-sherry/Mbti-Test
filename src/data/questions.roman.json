@@ -1,0 +1,482 @@
+[
+  {
+    "title": "Jab mujhe farigh waqt milta hai to main zyada tar:",
+    "options": [
+      {
+        "text": "Doston ya family ke sath waqt guzarna pasand karta/karti hun",
+        "example": "Parties mein jana, logon se milna, ya groups ke sath waqt guzarna",
+        "dimension": "E"
+      },
+      {
+        "text": "Akelay ya chand qareebi logon ke sath waqt guzarna pasand karta/karti hun",
+        "example": "Parhna, movies dekhna, ya qareebi doston ke sath gehri baat cheet karna",
+        "dimension": "I"
+      }
+    ]
+  },
+  {
+    "title": "Group activities mein main aam tor par:",
+    "options": [
+      {
+        "text": "Khul kar baat karta/karti hun aur apne ideas share karta/karti hun",
+        "example": "Main dusron ke samne apne khayal bayan karne mein aram mehsoos karta/karti hun",
+        "dimension": "E"
+      },
+      {
+        "text": "Pehle dusron ko sunta/sunti hun phir baat karta/karti hun",
+        "example": "Main apni rai share karne se pehle dusron ke khayal samajhna pasand karta/karti hun",
+        "dimension": "I"
+      }
+    ]
+  },
+  {
+    "title": "Masroof din ke baad mujhe fresh mehsoos hota hai jab:",
+    "options": [
+      {
+        "text": "Main logon se milta hun aur baat karta hun",
+        "example": "Samaji mel jol mujhe dobara tawanai aur tazgi deta hai",
+        "dimension": "E"
+      },
+      {
+        "text": "Mujhe kuch waqt sukoon aur tanhai mein milta hai",
+        "example": "Mujhe din ko samajhne aur apni tawanai bahaal karne ke liye tanhai ki zaroorat hoti hai",
+        "dimension": "I"
+      }
+    ]
+  },
+  {
+    "title": "Class discussion mein main aam tor par:",
+    "options": [
+      {
+        "text": "Active taur par hissa leta/leti hun",
+        "example": "Main bahas mein hissa lene aur apne khayal share karne se lutf andoz hota/hoti hun",
+        "dimension": "E"
+      },
+      {
+        "text": "Pehle observe karta/karti hun phir baat karta/karti hun",
+        "example": "Main hissa lene se pehle sunna aur sochna pasand karta/karti hun",
+        "dimension": "I"
+      }
+    ]
+  },
+  {
+    "title": "Naye logon se milte waqt main:",
+    "options": [
+      {
+        "text": "Asani se baat shuru kar leta/leti hun",
+        "example": "Main ajnabiyon ke sath baat cheet shuru karne mein aram mehsoos karta/karti hun",
+        "dimension": "E"
+      },
+      {
+        "text": "Intezaar karta/karti hun ke doosra shaks baat shuru kare",
+        "example": "Main pasand karta/karti hun ke dusre log baat cheet mein pehal karein",
+        "dimension": "I"
+      }
+    ]
+  },
+  {
+    "title": "Jab mujhe koi masla hal karna hota hai to main:",
+    "options": [
+      {
+        "text": "Dusron se baat kar ke hal dhoondhna pasand karta/karti hun",
+        "example": "Bahas karna mujhe hal ke bare mein behtar sochne mein madad karta hai",
+        "dimension": "E"
+      },
+      {
+        "text": "Akelay soch kar hal nikalna pasand karta/karti hun",
+        "example": "Main behtereen kaam us waqt karta/karti hun jab khud se masail ke bare mein soch sakun",
+        "dimension": "I"
+      }
+    ]
+  },
+  {
+    "title": "Group mein kaam karna mere liye:",
+    "options": [
+      {
+        "text": "Khushgawar aur hosla barhane wala hota hai",
+        "example": "Main dusron ke sath kaam karne se tawanai aur ilham pata/pati hun",
+        "dimension": "E"
+      },
+      {
+        "text": "Thoda thakane wala lekin theek hota hai",
+        "example": "Main group mein kaam kar sakta/sakti hun lekin ye meri tawanai khatam kar deta hai",
+        "dimension": "I"
+      }
+    ]
+  },
+  {
+    "title": "Apne ideas batate waqt main:",
+    "options": [
+      {
+        "text": "Seedha bol kar batana pasand karta/karti hun",
+        "example": "Main apne khayal zabani aur fori tor par bayan karna pasand karta/karti hun",
+        "dimension": "E"
+      },
+      {
+        "text": "Pehle sochna ya likhna pasand karta/karti hun",
+        "example": "Main apne khayal share karne se pehle unhen munazzam karna pasand karta/karti hun",
+        "dimension": "I"
+      }
+    ]
+  },
+  {
+    "title": "Jab main koi nayi cheez seekhta/seekhti hun to main:",
+    "options": [
+      {
+        "text": "Haqiqi misaalein aur practical maloomat pasand karta/karti hun",
+        "example": "Main thos misalon aur amli tajurbe ke sath behtereen seekhta/seekhti hun",
+        "dimension": "S"
+      },
+      {
+        "text": "Ideas aur future possibilities ke bare mein sochna pasand karta/karti hun",
+        "example": "Main tasawurat aur nazriati imkanat ko dariyaft karne se lutf andoz hota/hoti hun",
+        "dimension": "N"
+      }
+    ]
+  },
+  {
+    "title": "Parhai mein mujhe woh subjects zyada pasand hain jo:",
+    "options": [
+      {
+        "text": "Haqeeqat aur systems ko wazeh tor par samjhate hain",
+        "example": "Science, tareekh, ya wazeh haqaiq wale mazmoon",
+        "dimension": "S"
+      },
+      {
+        "text": "Theories aur naye ideas ko explore karte hain",
+        "example": "Falsafa, adab, ya imkanat ko dariyaft karne wale mazmoon",
+        "dimension": "N"
+      }
+    ]
+  },
+  {
+    "title": "Jab main koi masla hal karta/karti hun to main:",
+    "options": [
+      {
+        "text": "Pehle se azmaye hue tareeqe use karta/karti hun",
+        "example": "Main qaim shuda tareeqon aur azmaye hue halon par bharosa karta/karti hun",
+        "dimension": "S"
+      },
+      {
+        "text": "Naye aur creative tareeqe try karta/karti hun",
+        "example": "Main jadeed halon ke sath tajurba karna pasand karta/karti hun",
+        "dimension": "N"
+      }
+    ]
+  },
+  {
+    "title": "Main aam tor par zyada tawajju deta/deti hun:",
+    "options": [
+      {
+        "text": "Mojooda details aur facts par",
+        "example": "Ab kya ho raha hai aur thos maloomat",
+        "dimension": "S"
+      },
+      {
+        "text": "Future possibilities par",
+        "example": "Kya ho sakta hai aur mumkina mawaqe",
+        "dimension": "N"
+      }
+    ]
+  },
+  {
+    "title": "Jab main maloomat parhta/parhti hun to mujhe:",
+    "options": [
+      {
+        "text": "Wazeh aur practical explanation pasand hoti hai",
+        "example": "Qadam ba qadam hidayat aur thos tafseel",
+        "dimension": "S"
+      },
+      {
+        "text": "Baray ideas aur concepts pasand hote hain",
+        "example": "Nazriati frame work aur tajreed tasawurat",
+        "dimension": "N"
+      }
+    ]
+  },
+  {
+    "title": "Projects mein main aam tor par:",
+    "options": [
+      {
+        "text": "Wazeh instructions follow karta/karti hun",
+        "example": "Main tafsili rahnumai aur wazahat ke sath behtereen kaam karta/karti hun",
+        "dimension": "S"
+      },
+      {
+        "text": "Mukhtalif possibilities explore karta/karti hun",
+        "example": "Main tajurba karna aur mukhtalif tareeqe azmana pasand karta/karti hun",
+        "dimension": "N"
+      }
+    ]
+  },
+  {
+    "title": "Mujhe aisi cheezen seekhna pasand hai jo:",
+    "options": [
+      {
+        "text": "Foran practical life mein kaam aayen",
+        "example": "Amli maharat jo main fori tor par istemaal kar sakun",
+        "dimension": "S"
+      },
+      {
+        "text": "Baray ideas samajhne mein madad dein",
+        "example": "Nazriati ilm jo meri samajh ko wase kare",
+        "dimension": "N"
+      }
+    ]
+  },
+  {
+    "title": "Study karte waqt main:",
+    "options": [
+      {
+        "text": "Step by step instructions pasand karta/karti hun",
+        "example": "Tafsili rahnumai ke sath wazeh, tartibi seekhna",
+        "dimension": "S"
+      },
+      {
+        "text": "Pehle poora idea samajhna pasand karta/karti hun",
+        "example": "Tafseel mein jane se pehle bari tasveer ko samajhna",
+        "dimension": "N"
+      }
+    ]
+  },
+  {
+    "title": "Decision karte waqt main zyada tar:",
+    "options": [
+      {
+        "text": "Logic aur facts par bharosa karta/karti hun",
+        "example": "Main data ka tajzia karta/karti hun aur aqli soch istemaal karta/karti hun",
+        "dimension": "T"
+      },
+      {
+        "text": "Apne feelings aur values ko bhi ahmiyat deta/deti hun",
+        "example": "Main sochta/sochti hun ke kya sahi lagta hai aur meri qadron se mel khata hai",
+        "dimension": "F"
+      }
+    ]
+  },
+  {
+    "title": "Agar do logon mein disagreement ho jaye to main:",
+    "options": [
+      {
+        "text": "Sab se logical solution par focus karta/karti hun",
+        "example": "Main behtereen mazrooi jawab talash karta/karti hun",
+        "dimension": "T"
+      },
+      {
+        "text": "Dono ke jazbaat ko bhi madde nazar rakhta/rakhti hun",
+        "example": "Main dono nuqta nazar aur jazbaat ko samajhne ki koshish karta/karti hun",
+        "dimension": "F"
+      }
+    ]
+  },
+  {
+    "title": "Jab main kisi ko feedback deta/deti hun to main:",
+    "options": [
+      {
+        "text": "Seedhi aur saaf baat karna pasand karta/karti hun",
+        "example": "Main seedhi, haqaiq par mabni rai deta/deti hun",
+        "dimension": "T"
+      },
+      {
+        "text": "Narmi aur hosla dene wale andaz mein baat karta/karti hun",
+        "example": "Main hosla afzai aur ehtiyat par tawajju deta/deti hun",
+        "dimension": "F"
+      }
+    ]
+  },
+  {
+    "title": "Conflict solve karte waqt main zyada focus karta/karti hun:",
+    "options": [
+      {
+        "text": "Insaf aur logical result par",
+        "example": "Sab se zyada aqli aur munsifana hal talash karna",
+        "dimension": "T"
+      },
+      {
+        "text": "Rishton ko behtar banaye rakhne par",
+        "example": "Rishton ko musbat aur puraman rakhna",
+        "dimension": "F"
+      }
+    ]
+  },
+  {
+    "title": "Discussion mein main zyada ahmiyat deta/deti hun:",
+    "options": [
+      {
+        "text": "Mazboot logic aur daleel ko",
+        "example": "Achi tarah se tawun yafta mantaqi nukat aur saboot",
+        "dimension": "T"
+      },
+      {
+        "text": "Logon ke point of view ko samajhne ko",
+        "example": "Hamdardi aur mukhtalif nuqta nazar ko madde nazar rakhna",
+        "dimension": "F"
+      }
+    ]
+  },
+  {
+    "title": "Jab main kisi idea ka jaiza leta/leti hun to main:",
+    "options": [
+      {
+        "text": "Neutral analysis karta/karti hun",
+        "example": "Haqaiq aur mantaqi merit ko dekhna",
+        "dimension": "T"
+      },
+      {
+        "text": "Logon par uske asraat bhi dekhta/dekhti hun",
+        "example": "Ye sochna ke ye afrad aur rishton ko kaise mutasir karta hai",
+        "dimension": "F"
+      }
+    ]
+  },
+  {
+    "title": "Jab koi rule break karta hai to main zyada sochta/sochti hun:",
+    "options": [
+      {
+        "text": "Kya sahi aur insaf par mabni hai",
+        "example": "Usulon ko mustaqil aur munsifana tareeqe se lagu karna",
+        "dimension": "T"
+      },
+      {
+        "text": "Us shaks ne aisa kyun kiya",
+        "example": "Halat aur muharikat ko samajhna",
+        "dimension": "F"
+      }
+    ]
+  },
+  {
+    "title": "Do options mein se decision karte waqt main:",
+    "options": [
+      {
+        "text": "Logical faidon ka muqabla karta/karti hun",
+        "example": "Main fawaid aur nuqsanat ka mazrooi jaiza leta/leti hun",
+        "dimension": "T"
+      },
+      {
+        "text": "Emotional impact bhi dekhta/dekhti hun",
+        "example": "Main sochta/sochti hun ke har intikhab mujhe aur dusron ko kaisa mehsoos karae ga",
+        "dimension": "F"
+      }
+    ]
+  },
+  {
+    "title": "Jab main koi kaam shuru karta/karti hun to main:",
+    "options": [
+      {
+        "text": "Pehle poora plan banana pasand karta/karti hun",
+        "example": "Main shuru karne se pehle tafsili mansuba banana pasand karta/karti hun",
+        "dimension": "J"
+      },
+      {
+        "text": "Kaam shuru kar ke baad mein adjust karna pasand karta/karti hun",
+        "example": "Main lachakdar rehna aur chalte chalte dhalna pasand karta/karti hun",
+        "dimension": "P"
+      }
+    ]
+  },
+  {
+    "title": "Mujhe zyada sukoon hota hai jab:",
+    "options": [
+      {
+        "text": "Mera schedule organized hota hai",
+        "example": "Main dhancha rakhna aur ye janna pasand karta/karti hun ke kya tawaqo karna hai",
+        "dimension": "J"
+      },
+      {
+        "text": "Mera schedule flexible hota hai",
+        "example": "Main apne ikhtiyarat khule rakhna aur be sakhta hona pasand karta/karti hun",
+        "dimension": "P"
+      }
+    ]
+  },
+  {
+    "title": "Kaam complete karte waqt main aam tor par:",
+    "options": [
+      {
+        "text": "Deadline se pehle khatam karne ki koshish karta/karti hun",
+        "example": "Main akhri tareekh se kafi pehle kaam mukammal karna pasand karta/karti hun",
+        "dimension": "J"
+      },
+      {
+        "text": "Aksar deadline ke qareeb kaam karta/karti hun",
+        "example": "Main aksar waqt ke dabao mein behtereen kaam karta/karti hun",
+        "dimension": "P"
+      }
+    ]
+  },
+  {
+    "title": "Rozmarra zindagi mein main:",
+    "options": [
+      {
+        "text": "Clear plans pasand karta/karti hun",
+        "example": "Main ye janna pasand karta/karti hun ke main kya kar raha/rahi hun aur kab",
+        "dimension": "J"
+      },
+      {
+        "text": "Baad mein decision lene ki azadi pasand karta/karti hun",
+        "example": "Main apne ikhtiyarat khule rakhna aur be sakhta faisla karna pasand karta/karti hun",
+        "dimension": "P"
+      }
+    ]
+  },
+  {
+    "title": "Mera parhne ka style aam tor par:",
+    "options": [
+      {
+        "text": "Organized aur schedule ke mutabiq hota hai",
+        "example": "Main baqaida mutalia ki routine aur time table ki pairwi karta/karti hun",
+        "dimension": "J"
+      },
+      {
+        "text": "Mood aur situation ke mutabiq hota hai",
+        "example": "Main us waqt parhta/parhti hun jab main muharik ya mutasir mehsoos karta/karti hun",
+        "dimension": "P"
+      }
+    ]
+  },
+  {
+    "title": "Safar karte waqt main:",
+    "options": [
+      {
+        "text": "Pehle se poora plan banana pasand karta/karti hun",
+        "example": "Main pehle se tahqeeq karna aur sargarmiyon ki mansuba bandi karna pasand karta/karti hun",
+        "dimension": "J"
+      },
+      {
+        "text": "Baghair strict plan ke explore karna pasand karta/karti hun",
+        "example": "Main be sakhta cheezon ko dariyaft karne se lutf andoz hota/hoti hun",
+        "dimension": "P"
+      }
+    ]
+  },
+  {
+    "title": "Mujhe zyada behtari mehsoos hoti hai jab:",
+    "options": [
+      {
+        "text": "Cheezen decide ho kar organized ho jayein",
+        "example": "Main ikhtitam aur mamlat ka tay hona pasand karta/karti hun",
+        "dimension": "J"
+      },
+      {
+        "text": "Mukhtalif options khulay rahen",
+        "example": "Main imkanat ko dastiyab rakhna pasand karta/karti hun",
+        "dimension": "P"
+      }
+    ]
+  },
+  {
+    "title": "Assignments karte waqt main:",
+    "options": [
+      {
+        "text": "Step by step complete karna pasand karta/karti hun",
+        "example": "Main har hisse ke zariye munazzam tareeqe se kaam karta/karti hun",
+        "dimension": "J"
+      },
+      {
+        "text": "Jab idea aaye tab tezi se kaam karna pasand karta/karti hun",
+        "example": "Main muharik mehsoos karne par shiddat se kaam karta/karti hun",
+        "dimension": "P"
+      }
+    ]
+  }
+]

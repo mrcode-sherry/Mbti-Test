@@ -68,6 +68,19 @@ model Test {
   parentalExpectation  String?
   budgetRange          String?  // "Local education", "Abroad", "Scholarships"
   
+  // New fields for enhanced form
+  fatherName           String?
+  currentEducationLevel String?
+  boardInstitution     String?
+  mediumOfInstruction  String?
+  expectedResult       String?
+  extraCurricularActivities String[] // Array of strings
+  fatherOccupation     String?
+  motherOccupation     String?
+  socioeconomicBracket String?
+  careerPreferences    String?
+  testCategory         String?  // Default "Future Fit"
+  
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 
@@ -79,6 +92,9 @@ model TestSubmission {
   id        String   @id @default(cuid())
   email     String   @unique
   completed Boolean  @default(false)
+  result    String?  // MBTI result (e.g., "ENFP")
+  answers   Json?    // JSON array of answers
+  languages Json?    // JSON array of selected languages
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

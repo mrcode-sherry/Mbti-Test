@@ -44,7 +44,10 @@ const CategoryPage = ({
   ],
   ctaTitle = "Ready to discover your career path?",
   ctaSubtitle = "Take the first step towards your future with our comprehensive career assessment",
-  ctaButtonText = "Start NGO Test"
+  ctaButtonText = "Start NGO Test",
+  pricingSection = null, // New prop for pricing section
+  statusSection = null, // New prop for status section
+  onStartTestClick = null // New prop for handling start test button clicks
 }) => {
   // Set default values only if not explicitly passed
   const finalAssessmentChecks = assessmentChecks !== undefined ? assessmentChecks : [
@@ -121,11 +124,11 @@ const CategoryPage = ({
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-gradient-to-r from-[#05503C] to-[#044029] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl">
+                <button 
+                  onClick={onStartTestClick}
+                  className="bg-gradient-to-r from-[#05503C] to-[#044029] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl"
+                >
                   Start Future Fit Test
-                </button>
-                <button className="border-2 border-[#05503C] text-[#05503C] px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#05503C] hover:text-white transition-all duration-300 bg-white/50 backdrop-blur-sm shadow-lg hover:shadow-xl">
-                  View Sample Report
                 </button>
               </div>
             </div>
@@ -146,6 +149,12 @@ const CategoryPage = ({
           </div>
         </div>
       </section>
+
+      {/* Pricing Section - Inserted after hero */}
+      {pricingSection}
+
+      {/* Status Section - Inserted after pricing */}
+      {statusSection}
 
       {/* Who This Is For Section */}
       <section className="py-20 px-4 md:px-16 relative">
@@ -325,15 +334,6 @@ const CategoryPage = ({
                   </div>
                 </div>
               ))}
-
-              <div className="pt-6">
-                <button className="bg-gradient-to-r from-[#05503C] to-[#044029] text-white px-10 py-5 rounded-2xl hover:shadow-2xl transition-all duration-300 flex items-center gap-4 font-bold shadow-xl hover:scale-105">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  Download Sample Report
-                </button>
-              </div>
             </div>
 
             {/* Report Preview */}
@@ -588,7 +588,10 @@ const CategoryPage = ({
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <button className="bg-gradient-to-r from-[#FDCA00] to-[#f0c000] text-[#0B0F0E] px-12 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl">
+            <button 
+              onClick={onStartTestClick}
+              className="bg-gradient-to-r from-[#FDCA00] to-[#f0c000] text-[#0B0F0E] px-12 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl"
+            >
               {ctaButtonText}
             </button>
             <button className="border-2 border-white text-white px-12 py-5 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#05503C] transition-all duration-300 bg-white/10 backdrop-blur-sm shadow-lg hover:shadow-xl">

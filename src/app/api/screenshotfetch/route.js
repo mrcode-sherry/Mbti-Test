@@ -7,6 +7,8 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
 
+    console.log("🔍 Checking proof submission for email:", email);
+
     if (!email) {
       return NextResponse.json(
         { success: false, message: "Email required" },
@@ -17,6 +19,13 @@ export async function GET(req) {
     // Find proof by email
     const proof = await prisma.proof.findUnique({
       where: { email }
+    });
+
+    console.log("📸 Proof submission check result:", {
+      email,
+      found: !!proof,
+      status: proof?.status || null,
+      proofId: proof?.id || null
     });
 
     if (!proof) {
@@ -31,7 +40,7 @@ export async function GET(req) {
       data: proof,
     });
   } catch (err) {
-    console.error("Proof GET error:", err);
+    console.error("❌ Proof GET error:", err);
     return NextResponse.json(
       { success: false, message: err.message || "Server error" },
       { status: 500 }

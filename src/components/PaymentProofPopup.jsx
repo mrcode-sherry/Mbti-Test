@@ -3,62 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 
 const PaymentProofPopup = ({ isOpen, onClose, userEmail, onProofSubmitted }) => {
-  const [step, setStep] = useState(1); // 1=choose, 2=screenshot, 3=tid
-  const [screenshotUrl, setScreenshotUrl] = useState("");
   const [tid, setTid] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const widgetRef = useRef(null);
-
-  // ✅ Load Cloudinary widget
-  useEffect(() => {
-    if (!isOpen) return;
-    const existing = document.getElementById("cloudinary-widget-js");
-    if (existing) return;
-
-    const script = document.createElement("script");
-    script.id = "cloudinary-widget-js";
-    script.src = "https://widget.cloudinary.com/v2.0/global/all.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, [isOpen]);
-
-  const openCloudinaryWidget = () => {
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
-
-    if (!window.cloudinary) {
-      alert("Upload widget not ready yet. Please try again in a moment.");
-      return;
-    }
-    if (!cloudName || !uploadPreset) {
-      alert("Cloudinary env vars are missing.");
-      return;
-    }
-
-    if (!widgetRef.current) {
-      widgetRef.current = window.cloudinary.createUploadWidget(
-        {
-          cloudName,
-          uploadPreset,
-          multiple: false,
-          maxFiles: 1,
-          sources: ["local", "camera", "url", "google_drive", "dropbox"],
-          folder: "proofs",
-          theme: "minimal",
-        },
-        (error, result) => {
-          if (!error && result && result.event === "success") {
-            setScreenshotUrl(result.info.secure_url || "");
-          }
-        }
-      );
-    }
-    widgetRef.current && widgetRef.current.open();
-  };
 
   if (!isOpen) return null;
 
-  // ✅ Submit proof
+  // ✅ Submit TID proof
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userEmail) {
@@ -66,11 +16,7 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail, onProofSubmitted }) => 
       return;
     }
 
-    if (step === 2 && !screenshotUrl) {
-      alert("Please upload a screenshot.");
-      return;
-    }
-    if (step === 3 && !tid.trim()) {
+    if (!tid.trim()) {
       alert("Please enter a TID number.");
       return;
     }
@@ -78,15 +24,13 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail, onProofSubmitted }) => 
     setSubmitting(true);
 
     try {
-      const method = step === 2 ? "screenshot" : "tid";
       const res = await fetch("/api/proofsend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: userEmail,
-          method,
-          screenshotUrl: method === "screenshot" ? screenshotUrl : undefined,
-          tid: method === "tid" ? tid.trim() : undefined,
+          method: "tid",
+          tid: tid.trim(),
         }),
       });
 
@@ -94,8 +38,6 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail, onProofSubmitted }) => 
 
       if (res.ok && data?.success) {
         // ✅ Reset state
-        setStep(1);
-        setScreenshotUrl("");
         setTid("");
         
         // ✅ Call parent callback to open form popup
@@ -133,115 +75,48 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail, onProofSubmitted }) => 
             ✕
           </button>
 
-          {/* STEP 1: Choose method */}
-          {step === 1 && (
-            <>
-              <h2 className="text-xl font-bold text-[#14442E] mb-6 text-center">
-                Select Payment Proof Option
+          {/* TID Entry Form */}
+          <form onSubmit={handleSubmit} className="text-gray-800 space-y-4">
+            <h2 className="text-xl font-bold text-[#14442E] mb-4 text-center">
+              Enter TID Number
+            </h2>
+            
+            {/* ✅ Payment Details Section */}
+            <div className="mb-6 p-4 border rounded-lg bg-gray-50 text-sm text-gray-700">
+              <h2 className="border-b text-[14px] font-semibold pb-2 mb-2 tracking-wide">
+                Through Jazzcash, Easy Paisa and Bank Account
               </h2>
-              {/* ✅ Payment Details Section */}
-              <div className="mb-6 p-4 border rounded-lg bg-gray-50 text-sm text-gray-700">
-                <h2 className="border-b text-[14px] font-semibold pb-2 mb-2 tracking-wide">
-                  Through Jazzcash, Easy Paisa and Bank Account
-                </h2>
-                <h3 className="font-semibold text-gray-800 mb-2 tracking-wide">
-                  Payment Details
-                </h3>
-                <p>
-                  <span className="font-medium">Bank Name:</span> MCB Bank <br />
-                  <span className="font-medium">Account Title:</span> APTITUDE COUUNSEL <br />
-                  <span className="font-medium">Account Number:</span> 1643710941010912
-                </p>
-              </div>
-              <div className="flex flex-col gap-4">
-                <button
-                  onClick={() => setStep(2)}
-                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-5 py-3 rounded-lg"
-                >
-                  Upload Screenshot
-                </button>
-                <button
-                  onClick={() => setStep(3)}
-                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-5 py-3 rounded-lg"
-                >
-                  Enter TID Number
-                </button>
-              </div>
-            </>
-          )}
+              <h3 className="font-semibold text-gray-800 mb-2 tracking-wide">
+                Payment Details
+              </h3>
+              <p>
+                <span className="font-medium">Bank Name:</span> MCB Bank <br />
+                <span className="font-medium">Account Title:</span> APTITUDE COUUNSEL <br />
+                <span className="font-medium">Account Number:</span> 1643710941010912
+              </p>
+            </div>
 
-          {/* STEP 2: Screenshot */}
-          {step === 2 && (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <h2 className="text-xl font-bold text-[#14442E] mb-4 text-center">
-                Upload Screenshot
-              </h2>
+            <input
+              type="text"
+              value={tid}
+              onChange={(e) => setTid(e.target.value)}
+              placeholder="Enter TID number"
+              className="w-full border rounded-lg p-3 text-gray-800 focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+              required
+            />
+            
+            <div className="flex justify-end mt-6">
               <button
-                type="button"
-                onClick={openCloudinaryWidget}
-                className="bg-[#14442E] cursor-pointer duration-300 text-white px-4 py-2 rounded-lg"
+                type="submit"
+                disabled={submitting}
+                className="bg-[#14442E] cursor-pointer duration-300 text-white px-6 py-3 rounded-lg hover:bg-[#0f3a26] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Select From Gallery
+                {submitting ? "Submitting…" : "Submit Proof"}
               </button>
-              {screenshotUrl && (
-                <div className="text-xs text-green-700 break-all">
-                  Selected: {screenshotUrl}
-                </div>
-              )}
-              <div className="flex justify-between mt-6">
-                <button
-                  type="button"
-                  onClick={() => setStep(1)}
-                  className="text-gray-600 cursor-pointer duration-300 hover:underline text-sm"
-                >
-                  ← Back
-                </button>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-5 py-2 rounded-lg"
-                >
-                  {submitting ? "Submitting…" : "Submit Proof"}
-                </button>
-              </div>
-            </form>
-          )}
-
-          {/* STEP 3: TID */}
-          {step === 3 && (
-            <form onSubmit={handleSubmit} className="text-gray-800 space-y-4">
-              <h2 className="text-xl font-bold text-[#14442E] mb-4 text-center">
-                Enter TID Number
-              </h2>
-              <input
-                type="text"
-                value={tid}
-                onChange={(e) => setTid(e.target.value)}
-                placeholder="Enter TID number"
-                className="w-full border rounded-lg p-2 text-gray-800"
-              />
-              <div className="flex justify-between mt-6">
-                <button
-                  type="button"
-                  onClick={() => setStep(1)}
-                  className="text-gray-600 cursor-pointer duration-300 hover:underline text-sm"
-                >
-                  ← Back
-                </button>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="bg-[#14442E] cursor-pointer duration-300 text-white px-5 py-2 rounded-lg"
-                >
-                  {submitting ? "Submitting…" : "Submit Proof"}
-                </button>
-              </div>
-            </form>
-          )}
+            </div>
+          </form>
         </div>
       </div>
-
-
     </>
   );
 };

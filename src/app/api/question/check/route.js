@@ -6,6 +6,8 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
 
+    console.log("🔍 Checking form submission for email:", email);
+
     if (!email) {
       return NextResponse.json(
         { success: false, exists: false, message: "Email required" },
@@ -17,13 +19,19 @@ export async function GET(req) {
       where: { email }
     });
 
+    console.log("📋 Form submission check result:", {
+      email,
+      exists: !!test,
+      testId: test?.id || null
+    });
+
     return NextResponse.json({
       success: true,
-      exists: !!test, // True if a document exists for this email
-      message: test ? "Record found" : "No record found",
+      exists: !!test,
+      message: test ? "Form submitted" : "Form not submitted",
     });
   } catch (error) {
-    console.error("Check Error:", error);
+    console.error("❌ Form check error:", error);
     return NextResponse.json(
       { success: false, exists: false, message: error.message },
       { status: 500 }
