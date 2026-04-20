@@ -2,6 +2,12 @@ import { NextResponse } from "next/server";
 
 export async function GET(req) {
   try {
+    console.log("🔍 Google OAuth Callback - Environment Check:");
+    console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID ? "✅ Present" : "❌ Missing");
+    console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET ? "✅ Present" : "❌ Missing");
+    console.log("GOOGLE_OAUTH_REDIRECT_URI:", process.env.GOOGLE_OAUTH_REDIRECT_URI);
+    console.log("DATABASE_URL:", process.env.DATABASE_URL ? "✅ Present" : "❌ Missing");
+    
     // Check for required environment variables
     if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET || !process.env.GOOGLE_OAUTH_REDIRECT_URI) {
       console.error("Missing Google OAuth environment variables");
@@ -51,8 +57,11 @@ export async function GET(req) {
 
     // 3) Try to use Prisma, but handle gracefully if not available
     let user = null;
+    console.log("💾 Attempting database save for user:", profile.email);
+    
     try {
       const { default: prisma } = await import("@/backend/prisma");
+      console.log("✅ Prisma client loaded successfully");
       
       const email = profile.email.toLowerCase().trim();
       const name =
@@ -61,11 +70,13 @@ export async function GET(req) {
         email.split("@")[0] ||
         "User";
 
+      console.log("🔍 Looking for existing user with email:", email);
       user = await prisma.register.findUnique({
         where: { email }
       });
 
       if (!user) {
+        console.log("👤 Creating new user in database");
         user = await prisma.register.create({
           data: {
             name,
@@ -74,7 +85,9 @@ export async function GET(req) {
             googleId: profile.sub || null,
           }
         });
+        console.log("✅ User created successfully:", user.id);
       } else {
+        console.log("🔄 Updating existing user");
         // Update existing user with Google info
         user = await prisma.register.update({
           where: { email },
@@ -83,9 +96,12 @@ export async function GET(req) {
             googleId: profile.sub || user.googleId,
           }
         });
+        console.log("✅ User updated successfully:", user.id);
       }
     } catch (dbError) {
-      console.error("Database error:", dbError);
+      console.error("❌ Database error:", dbError);
+      console.error("Error details:", dbError.message);
+      console.error("Error stack:", dbError.stack);
       // Continue without database operations
     }
 
