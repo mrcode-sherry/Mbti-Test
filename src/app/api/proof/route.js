@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import prisma from "@/backend/prisma";
 
 export async function POST(req) {
   try {
@@ -8,6 +7,19 @@ export async function POST(req) {
 
     if (!email || !proofUrl) {
       return NextResponse.json({ success: false, message: "Email and proof required" }, { status: 400 });
+    }
+
+    // Dynamic import for Prisma
+    let prisma;
+    try {
+      const { default: prismaClient } = await import("@/backend/prisma");
+      prisma = prismaClient;
+    } catch (dbError) {
+      console.error("Database connection error:", dbError);
+      return NextResponse.json(
+        { success: false, message: "Database connection failed" },
+        { status: 500 }
+      );
     }
 
     const test = await prisma.test.findUnique({
@@ -36,6 +48,19 @@ export async function POST(req) {
 // GET method to fetch all proofs for admin
 export async function GET() {
   try {
+    // Dynamic import for Prisma
+    let prisma;
+    try {
+      const { default: prismaClient } = await import("@/backend/prisma");
+      prisma = prismaClient;
+    } catch (dbError) {
+      console.error("Database connection error:", dbError);
+      return NextResponse.json(
+        { success: false, message: "Database connection failed" },
+        { status: 500 }
+      );
+    }
+
     const proofs = await prisma.proof.findMany({
       orderBy: { createdAt: 'desc' }
     });

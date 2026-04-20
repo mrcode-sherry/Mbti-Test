@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import prisma from "@/backend/prisma";
 
 export async function GET(req) {
   try {
@@ -8,6 +7,16 @@ export async function GET(req) {
 
     if (!email) {
       return NextResponse.json({ error: "Email required" }, { status: 400 });
+    }
+
+    // Dynamic import for Prisma
+    let prisma;
+    try {
+      const { default: prismaClient } = await import("@/backend/prisma");
+      prisma = prismaClient;
+    } catch (dbError) {
+      console.error("Database connection error:", dbError);
+      return NextResponse.json({ submitted: false, status: "none" });
     }
 
     const proof = await prisma.proof.findUnique({

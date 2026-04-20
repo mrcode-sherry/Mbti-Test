@@ -71,4 +71,5 @@ class AtlasAPI {
   }
 }
 
-export default new AtlasAPI();
+const atlasAPI = new AtlasAPI();
+export default atlasAPI;

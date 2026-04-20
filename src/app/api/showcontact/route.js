@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
-import prisma from "@/backend/prisma";
 
 export async function GET() {
   try {
+    // Dynamic import for Prisma
+    const { default: prismaClient } = await import("@/backend/prisma");
+    const prisma = prismaClient;
+
     const contacts = await prisma.contact.findMany({
       orderBy: { createdAt: 'desc' } // latest first
     });
