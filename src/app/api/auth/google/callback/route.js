@@ -3,6 +3,13 @@ import prisma from "@/backend/prisma";
 
 export async function GET(req) {
   try {
+    // Check for required environment variables
+    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET || !process.env.GOOGLE_OAUTH_REDIRECT_URI) {
+      console.error("Missing Google OAuth environment variables");
+      const { origin } = new URL(req.url);
+      return NextResponse.redirect(`${origin}/login?error=config_missing`);
+    }
+
     const { searchParams, origin } = new URL(req.url);
     const code = searchParams.get("code");
 
