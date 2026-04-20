@@ -2,34 +2,49 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
+    console.log("🔍 Proof submission started");
+    
     const body = await req.json();
     const { email, proofUrl } = body;
+
+    console.log("📧 Email:", email);
+    console.log("🖼️ Proof URL:", proofUrl ? "Present" : "Missing");
 
     if (!email || !proofUrl) {
       return NextResponse.json({ success: false, message: "Email and proof required" }, { status: 400 });
     }
 
+    // Check environment variables
+    console.log("🔧 DATABASE_URL:", process.env.DATABASE_URL ? "Present" : "Missing");
+
     // Dynamic import for Prisma
     let prisma;
     try {
+      console.log("📦 Importing Prisma client...");
       const { default: prismaClient } = await import("@/backend/prisma");
       prisma = prismaClient;
+      console.log("✅ Prisma client imported successfully");
     } catch (dbError) {
-      console.error("Database connection error:", dbError);
+      console.error("❌ Database connection error:", dbError);
+      console.error("Error message:", dbError.message);
+      console.error("Error stack:", dbError.stack);
       return NextResponse.json(
         { success: false, message: "Database connection failed" },
         { status: 500 }
       );
     }
 
+    console.log("🔍 Looking for test with email:", email);
     const test = await prisma.test.findUnique({
       where: { email }
     });
 
     if (!test) {
+      console.log("❌ No test found for email:", email);
       return NextResponse.json({ success: false, message: "Submit test first" }, { status: 403 });
     }
 
+    console.log("✅ Test found, upserting proof...");
     // Update test with proof URL (if your schema supports it)
     // Or create/update proof record
     await prisma.proof.upsert({
@@ -38,9 +53,12 @@ export async function POST(req) {
       create: { email, screenshotUrl: proofUrl }
     });
 
+    console.log("✅ Proof submitted successfully");
     return NextResponse.json({ success: true, message: "Proof submitted successfully" });
   } catch (error) {
-    console.error("Proof Submit Error:", error);
+    console.error("❌ Proof Submit Error:", error);
+    console.error("Error message:", error.message);
+    console.error("Error stack:", error.stack);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }

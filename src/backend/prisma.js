@@ -1,34 +1,33 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaPg } from '@prisma/adapter-pg'
-import { Pool } from 'pg'
 
 const globalForPrisma = globalThis
 
-// Create Prisma client
+// Create Prisma client with better error handling
 let prisma
 
-if (process.env.DATABASE_URL) {
-  // Create connection pool
-  const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-  })
+try {
+  if (process.env.DATABASE_URL) {
+    prisma = globalForPrisma.prisma || new PrismaClient({
+      datasources: {
+        db: {
+          url: process.env.DATABASE_URL,
+        },
+      },
+      log: process.env.NODE_ENV === 'development' ? ['query', 'info', 'warn', 'error'] : ['error'],
+    })
+  } else {
+    console.error("DATABASE_URL environment variable is not set");
+    // Fallback Prisma client for build time
+    prisma = globalForPrisma.prisma || new PrismaClient({
+      log: process.env.NODE_ENV === 'development' ? ['query', 'info', 'warn', 'error'] : ['error'],
+    })
+  }
 
-  // Create adapter
-  const adapter = new PrismaPg(pool)
-
-  // Create Prisma client with adapter
-  prisma = globalForPrisma.prisma || new PrismaClient({
-    adapter,
-    log: process.env.NODE_ENV === 'development' ? ['query', 'info', 'warn', 'error'] : ['error'],
-  })
-} else {
-  // Fallback Prisma client without adapter for build time
-  prisma = globalForPrisma.prisma || new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['query', 'info', 'warn', 'error'] : ['error'],
-  })
+  if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+} catch (error) {
+  console.error("Failed to initialize Prisma client:", error);
+  throw error;
 }
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 
 export { prisma }
 export default prisma

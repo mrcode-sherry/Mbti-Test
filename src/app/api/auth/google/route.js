@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
+  console.log("🚀 Google OAuth Route - Starting authentication");
+  console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID ? "✅ Present" : "❌ Missing");
+  console.log("GOOGLE_OAUTH_REDIRECT_URI:", process.env.GOOGLE_OAUTH_REDIRECT_URI);
+  
   // Check for required environment variables
   if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_OAUTH_REDIRECT_URI) {
     console.error("Missing Google OAuth environment variables");
