@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import prisma from "@/backend/prisma";
 
 export async function POST(req) {
   try {
@@ -8,6 +7,19 @@ export async function POST(req) {
 
     if (!email) {
       return NextResponse.json({ success: false, message: "Email is required" }, { status: 400 });
+    }
+
+    // Dynamic import for Prisma
+    let prisma;
+    try {
+      const { default: prismaClient } = await import("@/backend/prisma");
+      prisma = prismaClient;
+    } catch (dbError) {
+      console.error("Database connection error:", dbError);
+      return NextResponse.json(
+        { success: false, message: "Database connection failed" },
+        { status: 500 }
+      );
     }
 
     // Check if test already exists for this email
