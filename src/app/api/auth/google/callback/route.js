@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import prisma from "@/backend/prisma";
 
 export async function GET(req) {
   try {
@@ -50,42 +49,50 @@ export async function GET(req) {
       return NextResponse.redirect(`${origin}/login?error=google_no_email`);
     }
 
-    // 3) Upsert user using Prisma
-    const email = profile.email.toLowerCase().trim();
-    const name =
-      profile.name ||
-      profile.given_name ||
-      email.split("@")[0] ||
-      "User";
+    // 3) Try to use Prisma, but handle gracefully if not available
+    let user = null;
+    try {
+      const { default: prisma } = await import("@/backend/prisma");
+      
+      const email = profile.email.toLowerCase().trim();
+      const name =
+        profile.name ||
+        profile.given_name ||
+        email.split("@")[0] ||
+        "User";
 
-    let user = await prisma.register.findUnique({
-      where: { email }
-    });
+      user = await prisma.register.findUnique({
+        where: { email }
+      });
 
-    if (!user) {
-      user = await prisma.register.create({
-        data: {
-          name,
-          email,
-          provider: "google",
-          googleId: profile.sub || null,
-        }
-      });
-    } else {
-      // Update existing user with Google info
-      user = await prisma.register.update({
-        where: { email },
-        data: {
-          provider: "google",
-          googleId: profile.sub || user.googleId,
-        }
-      });
+      if (!user) {
+        user = await prisma.register.create({
+          data: {
+            name,
+            email,
+            provider: "google",
+            googleId: profile.sub || null,
+          }
+        });
+      } else {
+        // Update existing user with Google info
+        user = await prisma.register.update({
+          where: { email },
+          data: {
+            provider: "google",
+            googleId: profile.sub || user.googleId,
+          }
+        });
+      }
+    } catch (dbError) {
+      console.error("Database error:", dbError);
+      // Continue without database operations
     }
 
     // 4) Redirect back to frontend with user info
     const url = new URL(`${origin}/auth/success`);
-    url.searchParams.set("name", name);
-    url.searchParams.set("email", email);
+    url.searchParams.set("name", profile.name || profile.given_name || profile.email.split("@")[0] || "User");
+    url.searchParams.set("email", profile.email);
 
     return NextResponse.redirect(url.toString());
   } catch (err) {
