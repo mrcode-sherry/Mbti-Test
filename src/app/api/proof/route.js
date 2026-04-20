@@ -17,15 +17,24 @@ export async function POST(req) {
     // Check environment variables
     console.log("🔧 DATABASE_URL:", process.env.DATABASE_URL ? "Present" : "Missing");
 
-    // Dynamic import for Prisma
+    // Try multiple approaches to connect to database
     let prisma;
     try {
       console.log("📦 Importing Prisma client...");
-      const { default: prismaClient } = await import("@/backend/prisma");
-      prisma = prismaClient;
-      console.log("✅ Prisma client imported successfully");
+      
+      // Try direct import first
+      try {
+        const { PrismaClient } = await import("@prisma/client");
+        prisma = new PrismaClient();
+        console.log("✅ Direct Prisma client created successfully");
+      } catch (directError) {
+        console.log("⚠️ Direct import failed, trying backend import...");
+        const { default: prismaClient } = await import("@/backend/prisma");
+        prisma = prismaClient;
+        console.log("✅ Backend Prisma client imported successfully");
+      }
     } catch (dbError) {
-      console.error("❌ Database connection error:", dbError);
+      console.error("❌ All database connection attempts failed:", dbError);
       console.error("Error message:", dbError.message);
       console.error("Error stack:", dbError.stack);
       return NextResponse.json(
@@ -34,27 +43,48 @@ export async function POST(req) {
       );
     }
 
-    console.log("🔍 Looking for test with email:", email);
-    const test = await prisma.test.findUnique({
-      where: { email }
-    });
+    try {
+      console.log("🔍 Looking for test with email:", email);
+      const test = await prisma.test.findUnique({
+        where: { email }
+      });
 
-    if (!test) {
-      console.log("❌ No test found for email:", email);
-      return NextResponse.json({ success: false, message: "Submit test first" }, { status: 403 });
+      if (!test) {
+        console.log("❌ No test found for email:", email);
+        return NextResponse.json({ success: false, message: "Submit test first" }, { status: 403 });
+      }
+
+      console.log("✅ Test found, upserting proof...");
+      // Update test with proof URL (if your schema supports it)
+      // Or create/update proof record
+      const proof = await prisma.proof.upsert({
+        where: { email },
+        update: { 
+          screenshotUrl: proofUrl,
+          status: "pending",
+          updatedAt: new Date()
+        },
+        create: { 
+          email, 
+          screenshotUrl: proofUrl,
+          status: "pending"
+        }
+      });
+
+      console.log("✅ Proof submitted successfully:", proof.id);
+      return NextResponse.json({ success: true, message: "Proof submitted successfully" });
+    } catch (queryError) {
+      console.error("❌ Database query error:", queryError);
+      console.error("Query error message:", queryError.message);
+      throw queryError;
+    } finally {
+      // Disconnect Prisma client
+      try {
+        await prisma.$disconnect();
+      } catch (disconnectError) {
+        console.error("Warning: Failed to disconnect Prisma client:", disconnectError);
+      }
     }
-
-    console.log("✅ Test found, upserting proof...");
-    // Update test with proof URL (if your schema supports it)
-    // Or create/update proof record
-    await prisma.proof.upsert({
-      where: { email },
-      update: { screenshotUrl: proofUrl },
-      create: { email, screenshotUrl: proofUrl }
-    });
-
-    console.log("✅ Proof submitted successfully");
-    return NextResponse.json({ success: true, message: "Proof submitted successfully" });
   } catch (error) {
     console.error("❌ Proof Submit Error:", error);
     console.error("Error message:", error.message);

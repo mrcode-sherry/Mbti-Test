@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { CheckCircle, Users, Target, BookOpen, Award, TrendingUp, GraduationCap, Heart, UsersRound, HandHeart, Search, Megaphone, MessageCircle, Settings, Building2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { CheckCircle, Users, Target, BookOpen, Award, TrendingUp, GraduationCap, Heart, UsersRound, HandHeart, Search, Megaphone, MessageCircle, Settings, Building2, ChevronDown, ChevronUp } from 'lucide-react';
 
 const CategoryPage = ({ 
   title = "Career Guidance Program",
@@ -50,6 +50,38 @@ const CategoryPage = ({
   onStartTestClick = null, // New prop for handling start test button clicks
   hasCompletedTest = false // New prop for test completion status
 }) => {
+  const [openFAQIndex, setOpenFAQIndex] = useState(null);
+
+  const faqs = [
+    {
+      question: "Is this for Matric/O-Levels?",
+      answer: "Yes, Future Fit is suitable for Matric and O‑Levels students, and it also works well for Inter/A‑Levels and university students."
+    },
+    {
+      question: "Will it recommend one career only?",
+      answer: "No, your report shows a shortlist of best‑fit fields/options so you can explore and choose with confidence."
+    },
+    {
+      question: "Does it guarantee admission/job?",
+      answer: "No, this is a guidance and planning tool, not a guarantee; outcomes depend on marks, skills, entry tests, and opportunities."
+    },
+    {
+      question: "Can parents view the report?",
+      answer: "Yes, the report is parent‑friendly and easy to share so families can discuss choices calmly."
+    },
+    {
+      question: "How long does it take?",
+      answer: "The assessment typically takes 10–12 minutes, and your report is available right after completion (or after review, if applicable)."
+    },
+    {
+      question: "Is my data private?",
+      answer: "Yes, your information is kept confidential and used only to generate your report and improve the service."
+    }
+  ];
+
+  const toggleFAQ = (index) => {
+    setOpenFAQIndex(openFAQIndex === index ? null : index);
+  };
   // Set default values only if not explicitly passed
   const finalAssessmentChecks = assessmentChecks !== undefined ? assessmentChecks : [
     { icon: Heart, title: "Empathy", color: "text-[#05503C]" },
@@ -78,8 +110,22 @@ const CategoryPage = ({
         
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Left Content */}
-            <div>
+            {/* Right Image - First on mobile, second on desktop */}
+            <div className="flex justify-center order-1 lg:order-2">
+              <div className="relative">
+                <img 
+                  src={heroImage} 
+                  alt={title}
+                  className="w-full max-w-xl md:max-w-2xl lg:max-w-4xl h-auto"
+                />
+                {/* Floating decorative elements */}
+                <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-full shadow-lg animate-bounce"></div>
+                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full shadow-lg"></div>
+              </div>
+            </div>
+
+            {/* Left Content - Second on mobile, first on desktop */}
+            <div className="order-2 lg:order-1">
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FDCA00]/20 to-[#FDCA00]/10 rounded-full px-4 py-2 mb-6">
                 <div className="w-2 h-2 bg-[#FDCA00] rounded-full animate-pulse"></div>
                 <span className="text-sm font-medium text-[#05503C]">Career Assessment</span>
@@ -131,20 +177,6 @@ const CategoryPage = ({
                 >
                   {hasCompletedTest ? "View Dashboard" : "Start Future Fit Test"}
                 </button>
-              </div>
-            </div>
-
-            {/* Right Image */}
-            <div className="flex justify-center">
-              <div className="relative">
-                <img 
-                  src={heroImage} 
-                  alt={title}
-                  className="w-full max-w-xl md:max-w-2xl lg:max-w-4xl h-auto"
-                />
-                {/* Floating decorative elements */}
-                <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-full shadow-lg animate-bounce"></div>
-                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full shadow-lg"></div>
               </div>
             </div>
           </div>
@@ -406,21 +438,39 @@ const CategoryPage = ({
             </h2>
           </div>
           
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-10 shadow-2xl border border-[#FDCA00]/20">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-4 md:p-10 shadow-2xl border border-[#FDCA00]/20">
             {/* Reality Check Points */}
-            <ul className="space-y-6 mb-16">
+            <ul className="space-y-4 md:space-y-6 mb-8 md:mb-16">
               {realityCheck.map((point, index) => (
-                <li key={index} className="flex items-start gap-4 p-4 rounded-2xl hover:bg-[#F3F2ED]/50 transition-all duration-300">
-                  <div className="w-3 h-3 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full mt-3 flex-shrink-0 shadow-sm"></div>
-                  <span className="text-[#0B0F0E] text-xl font-medium">{point}</span>
+                <li key={index} className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-2xl hover:bg-[#F3F2ED]/50 transition-all duration-300">
+                  <div className="w-3 h-3 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full mt-2 md:mt-3 flex-shrink-0 shadow-sm"></div>
+                  <span className="text-[#0B0F0E] text-base md:text-xl font-medium">{point}</span>
                 </li>
               ))}
             </ul>
 
             {/* Career Progression Timeline */}
-            <div className="bg-gradient-to-r from-[#F3F2ED] to-[#FDCA00]/10 rounded-2xl p-8 shadow-lg">
-              <h3 className="text-2xl font-bold text-[#05503C] text-center mb-8">Career Progression Path</h3>
-              <div className="flex items-center justify-center max-w-5xl mx-auto">
+            <div className="bg-gradient-to-r from-[#F3F2ED] to-[#FDCA00]/10 rounded-2xl p-4 md:p-8 shadow-lg">
+              <h3 className="text-xl md:text-2xl font-bold text-[#05503C] text-center mb-6 md:mb-8">Career Progression Path</h3>
+              
+              {/* Mobile Timeline - Vertical */}
+              <div className="block md:hidden space-y-4">
+                {[
+                  { label: "Test" },
+                  { label: "Report" },
+                  { label: "Shortlist 3" },
+                  { label: "Explore" },
+                  { label: "Decide" }
+                ].map((step, index) => (
+                  <div key={index} className="flex items-center">
+                    <div className="w-4 h-4 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-full shadow-lg"></div>
+                    <span className="ml-3 font-bold text-[#0B0F0E] text-sm">{step.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Desktop Timeline - Horizontal */}
+              <div className="hidden md:flex items-center justify-center max-w-5xl mx-auto overflow-x-auto">
                 {/* Test */}
                 <div className="flex items-center min-w-max">
                   <div className="w-5 h-5 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-full shadow-lg"></div>
@@ -528,12 +578,12 @@ const CategoryPage = ({
       </section>
 
       {/* FAQs Section */}
-      <section className="py-20 px-4 md:px-16 relative">
+      <section className="py-12 px-4 md:px-16 relative">
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#F3F2ED]/20 to-transparent"></div>
         
         <div className="max-w-4xl mx-auto relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FDCA00]/20 to-[#FDCA00]/10 rounded-full px-6 py-3 mb-6">
               <div className="w-2 h-2 bg-[#FDCA00] rounded-full"></div>
               <span className="text-sm font-semibold text-[#05503C]">Common Questions</span>
@@ -547,19 +597,43 @@ const CategoryPage = ({
           </div>
           
           <div className="space-y-4">
-            {[
-              "Is this for Matric/O-Levels?",
-              "Will it recommend one career only?",
-              "Does it guarantee admission/job?",
-              "Can parents view the report?",
-              "How long does it take?",
-              "Is my data private?"
-            ].map((question, index) => (
-              <div key={index} className="group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-[#FDCA00]/20 hover:border-[#FDCA00]/40">
-                <div className="flex justify-between items-center">
-                  <h3 className="font-bold text-[#0B0F0E] text-lg group-hover:text-[#05503C] transition-colors duration-300">{question}</h3>
-                  <div className="w-10 h-10 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    +
+            {faqs.map((faq, index) => (
+              <div 
+                key={index} 
+                className="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-[#FDCA00]/20 hover:border-[#FDCA00]/40 overflow-hidden"
+              >
+                <button
+                  onClick={() => toggleFAQ(index)}
+                  className="w-full p-6 text-left focus:outline-none rounded-2xl transition-all duration-300"
+                >
+                  <div className="flex justify-between items-center">
+                    <h3 className="font-bold text-[#0B0F0E] text-lg group-hover:text-[#05503C] transition-colors duration-300 pr-4">
+                      {faq.question}
+                    </h3>
+                    <div className="w-10 h-10 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+                      {openFAQIndex === index ? (
+                        <ChevronUp size={20} className="transition-transform duration-300" />
+                      ) : (
+                        <ChevronDown size={20} className="transition-transform duration-300" />
+                      )}
+                    </div>
+                  </div>
+                </button>
+                
+                {/* Answer section with smooth animation */}
+                <div 
+                  className={`overflow-hidden transition-all duration-700 ease-in-out ${
+                    openFAQIndex === index 
+                      ? 'max-h-96 opacity-100' 
+                      : 'max-h-0 opacity-0'
+                  }`}
+                >
+                  <div className="px-6 pb-6">
+                    <div className="pt-2">
+                      <p className="text-gray-700 text-base leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
