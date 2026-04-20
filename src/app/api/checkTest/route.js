@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import Test from "@/backend/models/test";
+import prisma from "@/backend/prisma";
 
 export async function POST(req) {
   try {
-    await dbConnect();
     const body = await req.json();
     const { email } = body;
 
@@ -13,7 +11,9 @@ export async function POST(req) {
     }
 
     // Check if test already exists for this email
-    const existingTest = await Test.findOne({ email });
+    const existingTest = await prisma.test.findUnique({
+      where: { email }
+    });
 
     if (existingTest) {
       return NextResponse.json({ success: true, exists: true, data: existingTest }, { status: 200 });

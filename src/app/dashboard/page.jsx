@@ -34,7 +34,7 @@ const Modal = ({ isOpen, onClose, children }) => {
 
 const DashboardPage = () => {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("welcome");
+  const [activeTab, setActiveTab] = useState("test"); // ✅ Default to "test" instead of "welcome"
   const [contacts, setContacts] = useState([]);
   const [loadingContacts, setLoadingContacts] = useState(false);
   const [tests, setTests] = useState([]);
@@ -50,11 +50,32 @@ const DashboardPage = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
 
-  // ✅ NEW: States for School, College, University tabs
-  const [schoolUsers, setSchoolUsers] = useState([]);
-  const [collegeUsers, setCollegeUsers] = useState([]);
-  const [universityUsers, setUniversityUsers] = useState([]);
-  const [loadingEducation, setLoadingEducation] = useState(false);
+  // ✅ NEW: States for Category tabs
+  const [futureFitUsers, setFutureFitUsers] = useState([]);
+  const [medicalUsers, setMedicalUsers] = useState([]);
+  const [itCareerUsers, setItCareerUsers] = useState([]);
+  const [entrepreneurshipUsers, setEntrepreneurshipUsers] = useState([]);
+  const [ngoUsers, setNgoUsers] = useState([]);
+  const [loadingCategories, setLoadingCategories] = useState(false);
+  // ✅ Handle tab persistence with URL
+  useEffect(() => {
+    // Get tab from URL hash or default to "test"
+    const hash = window.location.hash.replace('#', '');
+    const validTabs = ['test', 'contact', 'manage', 'future-fit', 'medical', 'it-career', 'entrepreneurship', 'ngo-community'];
+    
+    if (hash && validTabs.includes(hash)) {
+      setActiveTab(hash);
+    } else {
+      setActiveTab('test'); // Default to test tab
+      window.location.hash = 'test';
+    }
+  }, []);
+
+  // ✅ Update URL when tab changes
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    window.location.hash = tab;
+  };
 
   // Protect admin route
   useEffect(() => {
@@ -72,93 +93,136 @@ const DashboardPage = () => {
     window.dispatchEvent(new Event("storage"));
     router.push("/admin");
   };
-
-  // Fetch contacts
+  // Fetch contacts - CONNECTED TO REAL API
   useEffect(() => {
     if (activeTab === "contact") {
       setLoadingContacts(true);
-      fetch("/api/showcontact")
-        .then((res) => res.json())
-        .then((data) => data.success && setContacts(data.data))
-        .finally(() => setLoadingContacts(false));
+      fetch('/api/showcontact')
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            setContacts(data.data);
+          } else {
+            console.error('Failed to fetch contacts:', data.message);
+            setContacts([]);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching contacts:', error);
+          setContacts([]);
+        })
+        .finally(() => {
+          setLoadingContacts(false);
+        });
     }
   }, [activeTab]);
 
-  // Fetch tests + proof
+  // Fetch tests + proof - CONNECTED TO REAL API
   useEffect(() => {
     if (activeTab === "test") {
       setLoadingTests(true);
-      fetch("/api/showtest")
-        .then((res) => res.json())
-        .then(async (data) => {
-          if (data.success) {
-            const enriched = await Promise.all(
-              data.data.map(async (t) => {
-                try {
-                  const res = await fetch(
-                    `/api/screenshotfetch?email=${t.email}`
-                  );
-                  if (res.ok) {
-                    const proofData = await res.json();
-                    return {
-                      ...t,
-                      screenshotUrl: proofData.data?.screenshotUrl || null,
-                      tid: proofData.data?.tid || null,
-                      status: proofData.data?.status || "pending",
-                      paid: proofData.data?.status === "approved",
-                    };
-                  }
-                } catch {}
-                return {
-                  ...t,
-                  screenshotUrl: null,
-                  tid: null,
-                  status: "pending",
-                  paid: false,
-                };
-              })
-            );
-            setTests(enriched);
+      
+      // Fetch both tests and proofs data
+      Promise.all([
+        fetch('/api/showtest').then(res => res.json()),
+        fetch('/api/proof').then(res => res.json()).catch(() => ({ success: false, data: [] }))
+      ])
+        .then(([testsResponse, proofsResponse]) => {
+          if (testsResponse.success) {
+            const testsData = testsResponse.data;
+            const proofsData = proofsResponse.success ? proofsResponse.data : [];
+            
+            // Merge test data with proof data
+            const mergedData = testsData.map(test => {
+              const proof = proofsData.find(p => p.email === test.email);
+              return {
+                ...test,
+                _id: test.id, // Map id to _id for compatibility
+                screenshotUrl: proof?.screenshotUrl || null,
+                tid: proof?.tid || null,
+                status: proof?.status || "pending",
+                paid: proof?.status === "approved"
+              };
+            });
+            
+            setTests(mergedData);
+          } else {
+            console.error('Failed to fetch tests:', testsResponse.message);
+            setTests([]);
           }
         })
-        .finally(() => setLoadingTests(false));
+        .catch(error => {
+          console.error('Error fetching test data:', error);
+          setTests([]);
+        })
+        .finally(() => {
+          setLoadingTests(false);
+        });
     }
   }, [activeTab]);
-
-  // ✅ Fetch all users when Manage User tab opens
+  // ✅ Fetch all users when Manage User tab opens - CONNECTED TO REAL API
   useEffect(() => {
     if (activeTab === "manage") {
       setLoadingUsers(true);
-      fetch("/api/showtest")
-        .then((res) => res.json())
-        .then((data) => {
+      fetch('/api/showtest')
+        .then(res => res.json())
+        .then(data => {
           if (data.success) {
             setUsers(data.data);
             setFilteredUsers(data.data);
+          } else {
+            console.error('Failed to fetch users:', data.message);
+            setUsers([]);
+            setFilteredUsers([]);
           }
         })
-        .finally(() => setLoadingUsers(false));
+        .catch(error => {
+          console.error('Error fetching users:', error);
+          setUsers([]);
+          setFilteredUsers([]);
+        })
+        .finally(() => {
+          setLoadingUsers(false);
+        });
     }
   }, [activeTab]);
 
-  // ✅ NEW: Fetch filtered users for School, College, University tabs
+  // ✅ NEW: Fetch filtered users for Category tabs - CONNECTED TO REAL API
   useEffect(() => {
-    if (activeTab === "school" || activeTab === "college" || activeTab === "university") {
-      setLoadingEducation(true);
-      fetch("/api/showtest")
-        .then((res) => res.json())
-        .then((data) => {
+    if (activeTab === "future-fit" || activeTab === "medical" || activeTab === "it-career" || activeTab === "entrepreneurship" || activeTab === "ngo-community") {
+      setLoadingCategories(true);
+      fetch('/api/showtest')
+        .then(res => res.json())
+        .then(data => {
           if (data.success) {
             const allUsers = data.data;
-            setSchoolUsers(allUsers.filter(u => u.educationType === "school"));
-            setCollegeUsers(allUsers.filter(u => u.educationType === "college"));
-            setUniversityUsers(allUsers.filter(u => u.educationType === "university"));
+            setFutureFitUsers(allUsers.filter(u => u.fieldsOfInterest?.includes("Career Guidance") || u.fieldsOfInterest?.includes("Future")));
+            setMedicalUsers(allUsers.filter(u => u.fieldsOfInterest?.includes("Medicine") || u.fieldsOfInterest?.includes("Healthcare")));
+            setItCareerUsers(allUsers.filter(u => u.fieldsOfInterest?.includes("Technology") || u.fieldsOfInterest?.includes("Software Development") || u.fieldsOfInterest?.includes("AI")));
+            setEntrepreneurshipUsers(allUsers.filter(u => u.fieldsOfInterest?.includes("Business") || u.fieldsOfInterest?.includes("Engineering")));
+            setNgoUsers(allUsers.filter(u => u.fieldsOfInterest?.includes("Community") || u.fieldsOfInterest?.includes("Social")));
+          } else {
+            console.error('Failed to fetch category users:', data.message);
+            setFutureFitUsers([]);
+            setMedicalUsers([]);
+            setItCareerUsers([]);
+            setEntrepreneurshipUsers([]);
+            setNgoUsers([]);
           }
         })
-        .finally(() => setLoadingEducation(false));
+        .catch(error => {
+          console.error('Error fetching category users:', error);
+          setFutureFitUsers([]);
+          setMedicalUsers([]);
+          setItCareerUsers([]);
+          setEntrepreneurshipUsers([]);
+          setNgoUsers([]);
+        })
+        .finally(() => {
+          setLoadingCategories(false);
+        });
     }
   }, [activeTab]);
-
   // ✅ Handle search
   const handleSearch = () => {
     if (!filterValue.trim()) {
@@ -214,18 +278,22 @@ const DashboardPage = () => {
       setErrorMsg("No users found for this search.");
     }
   };
-
-  // ✅ Approve proof API call
+  // ✅ Approve proof - CONNECTED TO REAL API
   const handleApprove = async (email) => {
     try {
-      const res = await fetch("/api/proofsend/approve", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/proofsend/approve', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ email }),
       });
-      const data = await res.json();
-      if (res.ok) {
+
+      const data = await response.json();
+      
+      if (data.success) {
         alert("✅ Proof approved. User can now start the test.");
+        // Update local state
         setTests((prev) =>
           prev.map((t) =>
             t.email === email ? { ...t, status: "approved", paid: true } : t
@@ -233,24 +301,30 @@ const DashboardPage = () => {
         );
         setSelectedTest(null);
       } else {
-        alert(data.message || "Failed to approve proof.");
+        alert("❌ Failed to approve proof: " + data.message);
       }
-    } catch (err) {
-      alert("Error approving proof: " + err.message);
+    } catch (error) {
+      console.error('Error approving proof:', error);
+      alert("❌ Error approving proof. Please try again.");
     }
   };
 
-  // ❌ Reject proof API call
+  // ❌ Reject proof - CONNECTED TO REAL API
   const handleReject = async (email) => {
     try {
-      const res = await fetch("/api/proofsend/reject", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/proofsend/reject', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ email }),
       });
-      const data = await res.json();
-      if (res.ok) {
+
+      const data = await response.json();
+      
+      if (data.success) {
         alert("❌ Proof rejected.");
+        // Update local state
         setTests((prev) =>
           prev.map((t) =>
             t.email === email ? { ...t, status: "rejected", paid: false } : t
@@ -258,313 +332,576 @@ const DashboardPage = () => {
         );
         setSelectedTest(null);
       } else {
-        alert(data.message || "Failed to reject proof.");
+        alert("❌ Failed to reject proof: " + data.message);
       }
-    } catch (err) {
-      alert("Error rejecting proof: " + err.message);
+    } catch (error) {
+      console.error('Error rejecting proof:', error);
+      alert("❌ Error rejecting proof. Please try again.");
     }
   };
-
-  // ✅ Render user list (reusable for School/College/University tabs)
-  const renderUserList = (userList, title) => (
+  // ✅ Render user list (reusable for Category tabs)
+  const renderCategoryList = (userList, title, categoryColor) => (
     <div>
-      <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">
-        {title}
+      {/* ✅ Category Statistics */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className={`bg-white p-4 rounded-lg shadow-md border-l-4 ${categoryColor}`}>
+          <h3 className="text-sm font-medium text-gray-500">Total {title}</h3>
+          <p className="text-2xl font-bold text-gray-900">{userList.length}</p>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+          <h3 className="text-sm font-medium text-gray-500">Male Students</h3>
+          <p className="text-2xl font-bold text-green-600">{userList.filter(u => u.gender === "Male").length}</p>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-pink-500">
+          <h3 className="text-sm font-medium text-gray-500">Female Students</h3>
+          <p className="text-2xl font-bold text-pink-600">{userList.filter(u => u.gender === "Female").length}</p>
+        </div>
+      </div>
+
+      <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-black">
+        {title} Users
       </h2>
-      {loadingEducation ? (
-        <p className="text-black">Loading...</p>
+      
+      {loadingCategories ? (
+        <div className="flex justify-center items-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+          <span className="ml-2 text-gray-600">Loading...</span>
+        </div>
       ) : userList.length > 0 ? (
-        <ul className="space-y-2">
-          {userList.map((u, i) => (
-            <li
-              key={u._id}
-              className="p-3 border rounded bg-gray-50 shadow-sm text-black text-sm"
-            >
-              <span className="font-bold">{i + 1}.</span>{" "}
-              <span className="font-semibold">{u.fullName}</span> | {u.email} | {u.gender} | {u.maritalStatus} | {u.countryCode} {u.phoneNumber} | {u.city}, {u.province}
-              {u.schoolClass && <> | Class: {u.schoolClass}</>}
-              {u.favouriteSubjects && <> | Favourite: {u.favouriteSubjects.join(", ")}</>}
-              {u.weakSubjects && <> | Weak: {u.weakSubjects.join(", ")}</>}
-              {u.hobbies && <> | Hobbies: {u.hobbies.join(", ")}</>}
-              {u.fieldsOfInterest && <> | Interests: {u.fieldsOfInterest.join(", ")}</>}
-              {u.parentalExpectation && <> | Expectation: {u.parentalExpectation}</>}
-              {u.budgetRange && <> | Budget: {u.budgetRange}</>}
-            </li>
-          ))}
-        </ul>
+        <div className="overflow-x-auto bg-white rounded-lg shadow-sm border">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student ID</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Education</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Favourite Subjects</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Interests</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expectation</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {userList.map((u, i) => (
+                <tr key={u.id || u._id} className="hover:bg-gray-50">
+                  <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    #{title.charAt(0).toUpperCase()}-{2000 + i}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {u.fullName}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {u.email}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {u.countryCode} {u.phoneNumber}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {u.city}, {u.province}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {u.educationType} {u.schoolClass || u.collegeYear || u.universitySemester || ""}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap">
+                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                      u.gender === "Male" ? "bg-blue-100 text-blue-800" : "bg-pink-100 text-pink-800"
+                    }`}>
+                      {u.gender}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {u.maritalStatus}
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-900 max-w-xs">
+                    <div className="truncate">
+                      {u.favouriteSubjects ? u.favouriteSubjects.join(", ") : "Not specified"}
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-900 max-w-xs">
+                    <div className="truncate">
+                      {u.fieldsOfInterest ? u.fieldsOfInterest.join(", ") : "Not specified"}
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-900 max-w-xs">
+                    <div className="truncate">
+                      {u.parentalExpectation || "Not specified"}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
-        <p className="text-red-600">No {title.toLowerCase()} yet.</p>
+        <div className="text-center py-8 bg-gray-50 rounded-lg">
+          <p className="text-gray-500">No {title.toLowerCase()} users yet.</p>
+        </div>
       )}
     </div>
   );
-
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-[#1B5A3D] text-white p-4 sm:p-6 space-y-2">
-        <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">
-          Admin Panel
-        </h2>
-        <button
-          className={`block w-full text-left cursor-pointer duration-300 px-3 py-2 rounded ${
-            activeTab === "test" ? "bg-gray-600" : "hover:bg-gray-700"
-          }`}
-          onClick={() => setActiveTab("test")}
-        >
-          Test Form Data
-        </button>
-        <button
-          className={`block w-full text-left px-3 py-2 rounded cursor-pointer duration-300 ${
-            activeTab === "contact" ? "bg-gray-600" : "hover:bg-gray-700"
-          }`}
-          onClick={() => setActiveTab("contact")}
-        >
-          Contact Form Data
-        </button>
-        <button
-          className={`block w-full text-left px-3 py-2 rounded cursor-pointer duration-300 ${
-            activeTab === "manage" ? "bg-gray-600" : "hover:bg-gray-700"
-          }`}
-          onClick={() => setActiveTab("manage")}
-        >
-          Manage User
-        </button>
-        {/* ✅ NEW: School, College, University tabs */}
-        <button
-          className={`block w-full text-left px-3 py-2 rounded cursor-pointer duration-300 ${
-            activeTab === "school" ? "bg-gray-600" : "hover:bg-gray-700"
-          }`}
-          onClick={() => setActiveTab("school")}
-        >
-          School
-        </button>
-        <button
-          className={`block w-full text-left px-3 py-2 rounded cursor-pointer duration-300 ${
-            activeTab === "college" ? "bg-gray-600" : "hover:bg-gray-700"
-          }`}
-          onClick={() => setActiveTab("college")}
-        >
-          College
-        </button>
-        <button
-          className={`block w-full text-left px-3 py-2 rounded cursor-pointer duration-300 ${
-            activeTab === "university" ? "bg-gray-600" : "hover:bg-gray-700"
-          }`}
-          onClick={() => setActiveTab("university")}
-        >
-          University
-        </button>
-        <button
-          className="block w-full text-center px-3 py-2 mt-4 rounded bg-red-600 cursor-pointer duration-300 hover:bg-red-700"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
-      </aside>
+      <aside className="w-full md:w-72 bg-gradient-to-b from-[#1B5A3D] to-[#0f3a26] text-white shadow-2xl">
+        <div className="p-6">
+          {/* Header */}
+          <div className="mb-8 text-center">
+            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3">
+              <span className="text-[#1B5A3D] font-bold text-xl">A</span>
+            </div>
+            <h2 className="text-xl font-bold text-white">Admin Panel</h2>
+            <div className="w-16 h-0.5 bg-white/30 mx-auto mt-2"></div>
+          </div>
 
+          {/* Navigation Menu */}
+          <nav className="space-y-2">
+            {/* Data Management Section */}
+            <div className="mb-6">
+              <p className="text-xs font-semibold text-white/60 uppercase tracking-wider mb-3 px-3">
+                Data Management
+              </p>
+              <button
+                className={`w-full flex items-center px-4 py-3 rounded-xl text-left transition-all duration-300 group ${
+                  activeTab === "test" 
+                    ? "bg-white/20 text-white shadow-lg transform scale-105" 
+                    : "hover:bg-white/10 hover:translate-x-1"
+                }`}
+                onClick={() => handleTabChange("test")}
+              >
+                <span className="w-2 h-2 bg-blue-400 rounded-full mr-3 group-hover:bg-blue-300"></span>
+                <span className="font-medium">Test Form Data</span>
+              </button>
+              
+              <button
+                className={`w-full flex items-center px-4 py-3 rounded-xl text-left transition-all duration-300 group ${
+                  activeTab === "contact" 
+                    ? "bg-white/20 text-white shadow-lg transform scale-105" 
+                    : "hover:bg-white/10 hover:translate-x-1"
+                }`}
+                onClick={() => handleTabChange("contact")}
+              >
+                <span className="w-2 h-2 bg-green-400 rounded-full mr-3 group-hover:bg-green-300"></span>
+                <span className="font-medium">Contact Form Data</span>
+              </button>
+              
+              <button
+                className={`w-full flex items-center px-4 py-3 rounded-xl text-left transition-all duration-300 group ${
+                  activeTab === "manage" 
+                    ? "bg-white/20 text-white shadow-lg transform scale-105" 
+                    : "hover:bg-white/10 hover:translate-x-1"
+                }`}
+                onClick={() => handleTabChange("manage")}
+              >
+                <span className="w-2 h-2 bg-purple-400 rounded-full mr-3 group-hover:bg-purple-300"></span>
+                <span className="font-medium">Manage Users</span>
+              </button>
+            </div>
+            {/* Categories Section */}
+            <div className="mb-6">
+              <p className="text-xs font-semibold text-white/60 uppercase tracking-wider mb-3 px-3">
+                Categories
+              </p>
+              <button
+                className={`w-full flex items-center px-4 py-3 rounded-xl text-left transition-all duration-300 group ${
+                  activeTab === "future-fit" 
+                    ? "bg-white/20 text-white shadow-lg transform scale-105" 
+                    : "hover:bg-white/10 hover:translate-x-1"
+                }`}
+                onClick={() => handleTabChange("future-fit")}
+              >
+                <span className="w-2 h-2 bg-emerald-400 rounded-full mr-3 group-hover:bg-emerald-300"></span>
+                <span className="font-medium">Future Fit</span>
+              </button>
+              
+              <button
+                className={`w-full flex items-center px-4 py-3 rounded-xl text-left transition-all duration-300 group ${
+                  activeTab === "medical" 
+                    ? "bg-white/20 text-white shadow-lg transform scale-105" 
+                    : "hover:bg-white/10 hover:translate-x-1"
+                }`}
+                onClick={() => handleTabChange("medical")}
+              >
+                <span className="w-2 h-2 bg-red-400 rounded-full mr-3 group-hover:bg-red-300"></span>
+                <span className="font-medium">Medical Admissions</span>
+              </button>
+              
+              <button
+                className={`w-full flex items-center px-4 py-3 rounded-xl text-left transition-all duration-300 group ${
+                  activeTab === "it-career" 
+                    ? "bg-white/20 text-white shadow-lg transform scale-105" 
+                    : "hover:bg-white/10 hover:translate-x-1"
+                }`}
+                onClick={() => handleTabChange("it-career")}
+              >
+                <span className="w-2 h-2 bg-cyan-400 rounded-full mr-3 group-hover:bg-cyan-300"></span>
+                <span className="font-medium">IT Career</span>
+              </button>
+              
+              <button
+                className={`w-full flex items-center px-4 py-3 rounded-xl text-left transition-all duration-300 group ${
+                  activeTab === "entrepreneurship" 
+                    ? "bg-white/20 text-white shadow-lg transform scale-105" 
+                    : "hover:bg-white/10 hover:translate-x-1"
+                }`}
+                onClick={() => handleTabChange("entrepreneurship")}
+              >
+                <span className="w-2 h-2 bg-indigo-400 rounded-full mr-3 group-hover:bg-indigo-300"></span>
+                <span className="font-medium">Entrepreneurship</span>
+              </button>
+              
+              <button
+                className={`w-full flex items-center px-4 py-3 rounded-xl text-left transition-all duration-300 group ${
+                  activeTab === "ngo-community" 
+                    ? "bg-white/20 text-white shadow-lg transform scale-105" 
+                    : "hover:bg-white/10 hover:translate-x-1"
+                }`}
+                onClick={() => handleTabChange("ngo-community")}
+              >
+                <span className="w-2 h-2 bg-orange-400 rounded-full mr-3 group-hover:bg-orange-300"></span>
+                <span className="font-medium">NGO Community</span>
+              </button>
+            </div>
+          </nav>
+        </div>
+
+        {/* Logout Button */}
+        <div className="p-6 mt-auto">
+          <button
+            className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group"
+            onClick={handleLogout}
+          >
+            <span className="mr-2 group-hover:rotate-12 transition-transform duration-300">🚪</span>
+            Logout
+          </button>
+        </div>
+      </aside>
       {/* Main Content */}
       <main className="flex-1 p-4 sm:p-8 overflow-x-auto bg-white">
-        {activeTab === "welcome" && (
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-black">
-              Admin Dashboard
-            </h1>
-            <p className="text-gray-900">Welcome, Admin! 🎉</p>
-          </div>
-        )}
-
         {/* Test Data */}
         {activeTab === "test" && (
           <div>
-            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">
-              Test Form Data
+            {/* ✅ Statistics Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-500">
+                <h3 className="text-sm font-medium text-gray-500">Total Students</h3>
+                <p className="text-2xl font-bold text-gray-900">{tests.length}</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+                <h3 className="text-sm font-medium text-gray-500">Approved Today</h3>
+                <p className="text-2xl font-bold text-green-600">{tests.filter(t => t.status === "approved").length}</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-red-500">
+                <h3 className="text-sm font-medium text-gray-500">Rejected Users</h3>
+                <p className="text-2xl font-bold text-red-600">{tests.filter(t => t.status === "rejected").length}</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-yellow-500">
+                <h3 className="text-sm font-medium text-gray-500">Pending Review</h3>
+                <p className="text-2xl font-bold text-yellow-600">{tests.filter(t => t.status === "pending").length}</p>
+              </div>
+            </div>
+
+            {/* ✅ Additional Info Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className="bg-white p-4 rounded-lg shadow-md">
+                <h3 className="text-sm font-medium text-gray-500">Top Category</h3>
+                <p className="text-xl font-bold text-blue-600">Medical Admissions</p>
+                <p className="text-xs text-gray-400">Most popular choice</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow-md">
+                <h3 className="text-sm font-medium text-gray-500">School Students</h3>
+                <p className="text-xl font-bold text-purple-600">{tests.filter(t => t.educationType === "school").length}</p>
+                <p className="text-xs text-gray-400">Classes 8-10</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow-md">
+                <h3 className="text-sm font-medium text-gray-500">University Students</h3>
+                <p className="text-xl font-bold text-indigo-600">{tests.filter(t => t.educationType === "university").length}</p>
+                <p className="text-xs text-gray-400">Higher education</p>
+              </div>
+            </div>
+
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-black">
+              Test Form Submissions
             </h2>
+            
             {loadingTests ? (
-              <p className="text-black">Loading...</p>
+              <div className="flex justify-center items-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+                <span className="ml-2 text-gray-600">Loading...</span>
+              </div>
             ) : tests.length > 0 ? (
-              <ul className="space-y-2">
-                {tests.map((t, i) => (
-                  <li
-                    key={t._id}
-                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 border rounded bg-gray-50 shadow-sm"
-                  >
-                    <span className="w-full sm:w-8 font-bold text-gray-600">
-                      {i + 1}.
-                    </span>
-                    <span className="flex-1 text-sm sm:text-base text-black">
-                      <span className="font-semibold">{t.fullName}</span> |{" "}
-                      {t.email} | {t.gender} | {t.maritalStatus} |{" "}
-                      {t.countryCode} {t.phoneNumber} | {t.city}, {t.province} |{" "}
-                      {t.educationType}
-                      {/* ✅ Show school class inline */}
-                      {t.schoolClass && <> | Class: {t.schoolClass}</>}
-                      {" "}| Status: {t.status}
-                      {t.favouriteSubjects && (
-                        <> | Favourite Subjects: {t.favouriteSubjects.join(", ")}</>
-                      )}
-                      {t.weakSubjects && (
-                        <> | Weak Subjects: {t.weakSubjects.join(", ")}</>
-                      )}
-                      {t.hobbies && <> | Hobbies: {t.hobbies.join(", ")}</>}
-                      {t.fieldsOfInterest && (
-                        <> | Fields of Interest: {t.fieldsOfInterest.join(", ")}</>
-                      )}
-                      {t.parentalExpectation && (
-                        <> | Parental Expectation: {t.parentalExpectation}</>
-                      )}
-                      {t.budgetRange && <> | Budget: {t.budgetRange}</>}
-                    </span>
-                    <button
-                      onClick={() => setSelectedTest(t)}
-                      className="text-sm text-blue-600 hover:underline cursor-pointer duration-300"
-                    >
-                      See More Details
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              <div className="overflow-x-auto bg-white rounded-lg shadow-sm border">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Education</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Proof</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {tests.map((t, i) => (
+                      <tr key={t.id || t._id} className="hover:bg-gray-50">
+                        <td className="px-4 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">{t.fullName}</div>
+                          <div className="text-sm text-gray-500">{t.email}</div>
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {t.educationType}
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap">
+                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                            t.status === "approved" ? "bg-green-100 text-green-800" :
+                            t.status === "rejected" ? "bg-red-100 text-red-800" :
+                            "bg-yellow-100 text-yellow-800"
+                          }`}>
+                            {t.status === "approved" ? "Approved" : 
+                             t.status === "rejected" ? "Rejected" : "Needs review"}
+                          </span>
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {t.screenshotUrl ? (
+                            <span className="text-green-600">📷 Screenshot</span>
+                          ) : t.tid ? (
+                            <span className="text-blue-600">🧾 TID: {t.tid}</span>
+                          ) : (
+                            <span className="text-gray-400">❌ No proof</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-sm font-medium">
+                          <div className="flex space-x-2">
+                            <button
+                              onClick={() => setSelectedTest(t)}
+                              className="text-indigo-600 hover:text-indigo-900 cursor-pointer duration-300"
+                              title="View Details"
+                            >
+                              👁️
+                            </button>
+                            {t.status === "pending" && (
+                              <>
+                                <button
+                                  onClick={() => handleApprove(t.email)}
+                                  className="text-green-600 hover:text-green-900 cursor-pointer duration-300"
+                                  title="Approve"
+                                >
+                                  ✅
+                                </button>
+                                <button
+                                  onClick={() => handleReject(t.email)}
+                                  className="text-red-600 hover:text-red-900 cursor-pointer duration-300"
+                                  title="Reject"
+                                >
+                                  ❌
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
-              <p className="text-red-600">No test form data yet.</p>
+              <div className="text-center py-8 bg-gray-50 rounded-lg">
+                <p className="text-gray-500">No test submissions yet.</p>
+              </div>
             )}
           </div>
         )}
-
         {/* Contact Data */}
         {activeTab === "contact" && (
           <div>
-            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">
-              Contact Form Data
+            {/* ✅ Contact Statistics Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-500">
+                <h3 className="text-sm font-medium text-gray-500">Total Contacts</h3>
+                <p className="text-2xl font-bold text-gray-900">{contacts.length}</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+                <h3 className="text-sm font-medium text-gray-500">This Month</h3>
+                <p className="text-2xl font-bold text-green-600">{contacts.filter(c => {
+                  const contactDate = new Date(c.createdAt);
+                  const currentDate = new Date();
+                  return contactDate.getMonth() === currentDate.getMonth() && contactDate.getFullYear() === currentDate.getFullYear();
+                }).length}</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-purple-500">
+                <h3 className="text-sm font-medium text-gray-500">Recent (7 days)</h3>
+                <p className="text-2xl font-bold text-purple-600">{contacts.filter(c => {
+                  const contactDate = new Date(c.createdAt);
+                  const weekAgo = new Date();
+                  weekAgo.setDate(weekAgo.getDate() - 7);
+                  return contactDate >= weekAgo;
+                }).length}</p>
+              </div>
+            </div>
+
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-black">
+              Contact Form Submissions
             </h2>
+            
             {loadingContacts ? (
-              <p className="text-black">Loading...</p>
+              <div className="flex justify-center items-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+                <span className="ml-2 text-gray-600">Loading...</span>
+              </div>
             ) : contacts.length > 0 ? (
-              <ul className="space-y-2">
-                {contacts.map((c, i) => (
-                  <li
-                    key={c._id}
-                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 border rounded bg-gray-50 shadow-sm"
-                  >
-                    <span className="w-full sm:w-8 font-bold text-gray-600">
-                      {i + 1}.
-                    </span>
-                    <span className="flex-1 text-sm sm:text-base text-black">
-                      <span className="font-semibold">
-                        {c.firstName} {c.lastName}
-                      </span>{" "}
-                      | {c.email}
-                    </span>
-                    <button
-                      onClick={() => setSelectedContact(c)}
-                      className="text-sm text-blue-600 hover:underline cursor-pointer duration-300"
-                    >
-                      See More Details
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              <div className="overflow-x-auto bg-white rounded-lg shadow-sm border">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {contacts.map((c, i) => (
+                      <tr key={c.id} className="hover:bg-gray-50">
+                        <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {c.name}
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {c.email}
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {new Date(c.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-900 max-w-xs">
+                          <div className="truncate" title={c.message}>
+                            {c.message}
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-sm font-medium">
+                          <button
+                            onClick={() => setSelectedContact(c)}
+                            className="text-indigo-600 hover:text-indigo-900 cursor-pointer duration-300"
+                            title="View Full Message"
+                          >
+                            👁️
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
-              <p className="text-red-600">No contacts yet.</p>
+              <div className="text-center py-8 bg-gray-50 rounded-lg">
+                <p className="text-gray-500">No contact submissions yet.</p>
+              </div>
             )}
           </div>
         )}
-
         {/* ✅ Manage User */}
         {activeTab === "manage" && (
           <div>
-            <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-black">
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-black">
               Manage Users
             </h2>
 
             {/* Filter controls */}
-            <div className="flex flex-col sm:flex-row gap-2 mb-4">
-              <select
-                value={filterField}
-                onChange={(e) => setFilterField(e.target.value)}
-                className="border rounded px-3 py-2 text-black"
-              >
-                <option value="fullName">Name</option>
-                <option value="email">Email</option>
-                <option value="gender">Gender</option>
-                <option value="maritalStatus">Marital Status</option>
-                <option value="countryCode">Country Code</option>
-                <option value="phoneNumber">Phone Number</option>
-                <option value="city">City</option>
-                <option value="province">Province</option>
-                <option value="educationType">Education</option>
-                <option value="schoolClass">School Class</option>
-                <option value="favouriteSubjects">Favourite Subjects</option>
-                <option value="weakSubjects">Weak Subjects</option>
-                <option value="hobbies">Hobbies</option>
-                <option value="fieldsOfInterest">Fields of Interest</option>
-                <option value="parentalExpectation">Parental Expectation</option>
-                <option value="budgetRange">Budget Range</option>
-              </select>
+            <div className="bg-white p-4 rounded-lg shadow-sm border mb-4">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <select
+                  value={filterField}
+                  onChange={(e) => setFilterField(e.target.value)}
+                  className="border rounded-lg px-3 py-2 text-black focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                >
+                  <option value="fullName">Name</option>
+                  <option value="email">Email</option>
+                  <option value="city">City</option>
+                  <option value="educationType">Education</option>
+                </select>
 
-              <input
-                type="text"
-                placeholder="Enter value..."
-                value={filterValue}
-                onChange={(e) => setFilterValue(e.target.value)}
-                className="border rounded px-3 py-2 flex-1 text-black"
-              />
+                <input
+                  type="text"
+                  placeholder="Enter search value..."
+                  value={filterValue}
+                  onChange={(e) => setFilterValue(e.target.value)}
+                  className="border rounded-lg px-3 py-2 flex-1 text-black focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                />
 
-              <button
-                onClick={handleSearch}
-                className="bg-[#14442E] hover:bg-[#0f3a26] text-white px-4 py-2 rounded cursor-pointer duration-300"
-              >
-                Search
-              </button>
+                <button
+                  onClick={handleSearch}
+                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition-colors cursor-pointer duration-300"
+                >
+                  Search
+                </button>
+              </div>
             </div>
 
             {loadingUsers ? (
-              <p className="text-black">Loading...</p>
+              <div className="flex justify-center items-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+                <span className="ml-2 text-gray-600">Loading...</span>
+              </div>
             ) : errorMsg ? (
-              <p className="text-red-600">{errorMsg}</p>
+              <div className="text-center py-8 bg-red-50 rounded-lg border border-red-200">
+                <p className="text-red-600">{errorMsg}</p>
+              </div>
             ) : filteredUsers.length > 0 ? (
-              <ul className="space-y-2">
-                {filteredUsers.map((u, i) => (
-                  <li
-                    key={u._id}
-                    className="p-3 border rounded bg-gray-50 shadow-sm text-black text-sm"
-                  >
-                    <span className="font-bold">{i + 1}.</span>{" "}
-                    <span className="font-semibold">{u.fullName}</span> |{" "}
-                    {u.email} | {u.gender} | {u.maritalStatus} | {u.countryCode}{" "}
-                    {u.phoneNumber} | {u.city}, {u.province} | {u.educationType}
-                    {u.schoolClass && <> | Class: {u.schoolClass}</>}
-                    {u.favouriteSubjects && (
-                      <> | Favourite: {u.favouriteSubjects.join(", ")}</>
-                    )}
-                    {u.weakSubjects && (
-                      <> | Weak: {u.weakSubjects.join(", ")}</>
-                    )}
-                    {u.hobbies && <> | Hobbies: {u.hobbies.join(", ")}</>}
-                    {u.fieldsOfInterest && (
-                      <> | Interests: {u.fieldsOfInterest.join(", ")}</>
-                    )}
-                    {u.parentalExpectation && (
-                      <> | Expectation: {u.parentalExpectation}</>
-                    )}
-                    {u.budgetRange && <> | Budget: {u.budgetRange}</>}
-                  </li>
-                ))}
-              </ul>
+              <div className="overflow-x-auto bg-white rounded-lg shadow-sm border">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Education</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Interests</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {filteredUsers.map((u, i) => (
+                      <tr key={u.id || u._id} className="hover:bg-gray-50">
+                        <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {u.fullName}
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {u.email}
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {u.city}, {u.province}
+                        </td>
+                        <td className="px-4 py-4 whitespace-nowrap">
+                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                            {u.educationType}
+                          </span>
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-900 max-w-xs">
+                          <div className="truncate">
+                            {u.fieldsOfInterest ? u.fieldsOfInterest.join(", ") : "Not specified"}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
-              <p className="text-red-600">No users available.</p>
+              <div className="text-center py-8 bg-gray-50 rounded-lg">
+                <p className="text-gray-500">No users found.</p>
+              </div>
             )}
           </div>
         )}
 
-        {/* ✅ NEW: School Tab */}
-        {activeTab === "school" && renderUserList(schoolUsers, "School Users")}
-
-        {/* ✅ NEW: College Tab */}
-        {activeTab === "college" && renderUserList(collegeUsers, "College Users")}
-
-        {/* ✅ NEW: University Tab */}
-        {activeTab === "university" && renderUserList(universityUsers, "University Users")}
+        {/* ✅ NEW: Category Tabs */}
+        {activeTab === "future-fit" && renderCategoryList(futureFitUsers, "Future Fit", "border-green-500")}
+        {activeTab === "medical" && renderCategoryList(medicalUsers, "Medical", "border-red-500")}
+        {activeTab === "it-career" && renderCategoryList(itCareerUsers, "IT Career", "border-blue-500")}
+        {activeTab === "entrepreneurship" && renderCategoryList(entrepreneurshipUsers, "Entrepreneurship", "border-purple-500")}
+        {activeTab === "ngo-community" && renderCategoryList(ngoUsers, "NGO Community", "border-orange-500")}
       </main>
-
       {/* Test Modal */}
       <Modal isOpen={!!selectedTest} onClose={() => setSelectedTest(null)}>
         {selectedTest && (
@@ -587,49 +924,52 @@ const DashboardPage = () => {
                 <b>Marital Status:</b> {selectedTest.maritalStatus}
               </p>
               <p className="text-black">
-                <b>Phone:</b> {selectedTest.countryCode}{" "}
-                {selectedTest.phoneNumber}
+                <b>Phone:</b> {selectedTest.countryCode} {selectedTest.phoneNumber}
               </p>
               <p className="text-black">
-                <b>City:</b> {selectedTest.city}, {selectedTest.province}
+                <b>Location:</b> {selectedTest.city}, {selectedTest.province}
               </p>
               <p className="text-black">
                 <b>Education:</b> {selectedTest.educationType}
               </p>
-              {/* ✅ School Class field */}
               {selectedTest.schoolClass && (
                 <p className="text-black">
                   <b>School Class:</b> {selectedTest.schoolClass}
                 </p>
               )}
-              {/* ✅ New fields */}
-              {selectedTest.favouriteSubjects && (
+              {selectedTest.collegeYear && (
                 <p className="text-black">
-                  <b>Favourite Subjects:</b>{" "}
-                  {selectedTest.favouriteSubjects.join(", ")}
+                  <b>College Year:</b> {selectedTest.collegeYear}
                 </p>
               )}
-              {selectedTest.weakSubjects && (
+              {selectedTest.universitySemester && (
                 <p className="text-black">
-                  <b>Weak Subjects:</b>{" "}
-                  {selectedTest.weakSubjects.join(", ")}
+                  <b>University Semester:</b> {selectedTest.universitySemester}
                 </p>
               )}
-              {selectedTest.hobbies && (
+              {selectedTest.favouriteSubjects && selectedTest.favouriteSubjects.length > 0 && (
+                <p className="text-black">
+                  <b>Favourite Subjects:</b> {selectedTest.favouriteSubjects.join(", ")}
+                </p>
+              )}
+              {selectedTest.weakSubjects && selectedTest.weakSubjects.length > 0 && (
+                <p className="text-black">
+                  <b>Weak Subjects:</b> {selectedTest.weakSubjects.join(", ")}
+                </p>
+              )}
+              {selectedTest.hobbies && selectedTest.hobbies.length > 0 && (
                 <p className="text-black">
                   <b>Hobbies:</b> {selectedTest.hobbies.join(", ")}
                 </p>
               )}
-              {selectedTest.fieldsOfInterest && (
+              {selectedTest.fieldsOfInterest && selectedTest.fieldsOfInterest.length > 0 && (
                 <p className="text-black">
-                  <b>Fields of Interest:</b>{" "}
-                  {selectedTest.fieldsOfInterest.join(", ")}
+                  <b>Interests:</b> {selectedTest.fieldsOfInterest.join(", ")}
                 </p>
               )}
               {selectedTest.parentalExpectation && (
                 <p className="text-black">
-                  <b>Parental Expectation:</b>{" "}
-                  {selectedTest.parentalExpectation}
+                  <b>Parental Expectation:</b> {selectedTest.parentalExpectation}
                 </p>
               )}
               {selectedTest.budgetRange && (
@@ -642,7 +982,7 @@ const DashboardPage = () => {
               </p>
             </div>
 
-            {/* Proof + Approve / Reject */}
+            {/* Payment Proof */}
             <div>
               <h3 className="text-lg sm:text-xl font-semibold mb-2 text-black">
                 Payment Proof
@@ -650,44 +990,42 @@ const DashboardPage = () => {
               {selectedTest.screenshotUrl ? (
                 <img
                   src={selectedTest.screenshotUrl}
-                  alt="Proof"
-                  className="w-full max-h-[350px] sm:h-[450px] object-contain rounded border"
+                  alt="Payment Proof"
+                  className="w-full max-h-[350px] object-contain rounded border"
                 />
               ) : selectedTest.tid ? (
-                <p className="text-black">
-                  <b>TID:</b> {selectedTest.tid}
-                </p>
+                <div className="bg-gray-50 p-4 rounded-lg border">
+                  <p className="text-black">
+                    <b>Transaction ID:</b> {selectedTest.tid}
+                  </p>
+                </div>
               ) : (
-                <p className="text-red-600">Not uploaded yet</p>
-              )}
-
-              {/* ✅ Approve/Reject buttons */}
-              {selectedTest.status === "pending" && (
-                <div className="mt-4 flex flex-col sm:flex-row gap-2 sm:space-x-3">
-                  <button
-                    onClick={() => handleApprove(selectedTest.email)}
-                    className="bg-green-600 text-white px-4 py-2 cursor-pointer duration-300 rounded-lg hover:bg-green-700"
-                  >
-                    Approve & Start Test
-                  </button>
-                  <button
-                    onClick={() => handleReject(selectedTest.email)}
-                    className="bg-red-600 text-white px-4 py-2 rounded-lg cursor-pointer duration-300 hover:bg-red-700"
-                  >
-                    Reject
-                  </button>
+                <div className="bg-gray-50 p-4 rounded-lg border">
+                  <p className="text-gray-500">No payment proof submitted</p>
                 </div>
               )}
-              {selectedTest.status === "approved" && (
-                <p className="mt-4 text-green-700 font-semibold">
-                  ✅ Approved — User can now start the test
+
+              {/* Status Display Only */}
+              <div className="mt-4">
+                <p className="text-black mb-2">
+                  <b>Current Status:</b>
                 </p>
-              )}
-              {selectedTest.status === "rejected" && (
-                <p className="mt-4 text-red-700 font-semibold">
-                  ❌ Rejected — User cannot take the test
-                </p>
-              )}
+                {selectedTest.status === "approved" && (
+                  <p className="text-green-700 font-semibold">
+                    ✅ Approved — User can now start the test
+                  </p>
+                )}
+                {selectedTest.status === "rejected" && (
+                  <p className="text-red-700 font-semibold">
+                    ❌ Rejected — User cannot take the test
+                  </p>
+                )}
+                {selectedTest.status === "pending" && (
+                  <p className="text-yellow-700 font-semibold">
+                    ⏳ Pending Review — Awaiting admin approval
+                  </p>
+                )}
+              </div>
             </div>
           </div>
         )}
@@ -701,19 +1039,10 @@ const DashboardPage = () => {
               Contact Details
             </h3>
             <p className="text-black">
-              <b>Name:</b> {selectedContact.firstName} {selectedContact.lastName}
+              <b>Name:</b> {selectedContact.name}
             </p>
             <p className="text-black">
               <b>Email:</b> {selectedContact.email}
-            </p>
-            <p className="text-black">
-              <b>Phone:</b> {selectedContact.phoneNumber}
-            </p>
-            <p className="text-black">
-              <b>Marital Status:</b> {selectedContact.maritalStatus}
-            </p>
-            <p className="text-black">
-              <b>Subject:</b> {selectedContact.subject}
             </p>
             <p className="text-black">
               <b>Message:</b> {selectedContact.message}

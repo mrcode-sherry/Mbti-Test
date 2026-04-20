@@ -9,14 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.7.0",
+    "@prisma/client": "^7.7.0",
     "axios": "^1.11.0",
     "bcryptjs": "^3.0.2",
+    "dotenv": "^17.4.1",
     "framer-motion": "^12.23.12",
     "gtts": "^0.2.1",
     "jspdf": "^3.0.2",
     "lucide-react": "^0.536.0",
     "mongoose": "^8.17.1",
     "next": "15.4.10",
+    "pg": "^8.20.0",
+    "prisma": "^7.7.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "typed.js": "^2.1.0"

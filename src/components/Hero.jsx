@@ -1,9 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Typed from 'typed.js';
 
 const Hero = () => {
@@ -14,35 +12,7 @@ const Hero = () => {
     router.push('/pricing');
   };
 
-  const images = [
-    { src: '/hero/engineer.png', name: 'Engineer' },
-    { src: '/hero/programmer8.png', name: 'Programmer' },
-    { src: '/hero/doctor.png', name: 'Doctor' },
-  ];
-
-  const [index, setIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // ✅ Auto change image every 6s (slowed down)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 6000);
-
-    return () => clearInterval(interval);
-  }, [images.length]);
-
-  // Detect screen size
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // ✅ Typed.js Effect (slower + longer delay)
+  // ✅ Typed.js Effect
   useEffect(() => {
     const typed = new Typed(typedEl.current, {
       strings: [
@@ -65,61 +35,46 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="bg-[#14442E] md:py-0 py-16 text-white md:px-16 px-8">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
-        
-        {/* Left Content */}
-        <div className="flex-[1.5] text-left w-full space-y-6">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-extrabold leading-snug md:leading-tight md:w-[500px] md:h-32">
-            <span ref={typedEl} className="text-gray-200"></span>
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-lg">
-            Explore your future with confidence and clarity.
-          </p>
+    <section 
+      className="relative min-h-screen bg-cover bg-center bg-no-repeat text-white overflow-hidden"
+      style={{
+        backgroundImage: "url('/hero/home-hero.png')",
+      }}
+    >
+      {/* Light black overlay covering the entire hero */}
+      <div className="absolute inset-0 bg-black/60"></div>
+      
+      <div className="relative z-10 min-h-screen flex items-center px-4 sm:px-8 md:px-16 lg:px-24">
+        <div className="max-w-7xl mx-auto w-full">
+          
+          {/* Left Content - Your Original Content */}
+          <div className="max-w-2xl text-left space-y-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
+              <span 
+                ref={typedEl} 
+                className="bg-gradient-to-r from-white via-emerald-100 to-emerald-200 bg-clip-text text-transparent drop-shadow-2xl"
+              ></span>
+            </h1>
+            
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-100 leading-relaxed font-light">
+              Explore your future with confidence and clarity.
+            </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <button
-              onClick={handleTryItNow}
-              className="bg-gray-100 text-[#14442E] font-semibold cursor-pointer px-8 md:px-10 py-3 rounded-lg shadow-md hover:bg-gray-200 hover:shadow-lg transition duration-300 text-base md:text-lg"
-            >
-              Try It Now
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <button
+                onClick={handleTryItNow}
+                className="group relative bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold px-8 md:px-12 py-4 rounded-xl shadow-2xl hover:shadow-emerald-500/25 hover:scale-105 transition-all duration-300 text-lg overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Try It Now
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </button>
+            </div>
           </div>
-        </div>
-
-        {/* Right Rotating Images with Framer Motion */}
-        <div className="flex-[1.2] w-full flex justify-center md:justify-end relative overflow-hidden h-[340px] sm:h-[380px] md:h-[500px] md:mt-44">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={index}
-              initial={{
-                opacity: 0,
-                x: isMobile ? 100 : 0,
-                y: isMobile ? 0 : 100,
-              }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              exit={{
-                opacity: 0,
-                x: isMobile ? -100 : 0,
-                y: isMobile ? 0 : -100,
-              }}
-              transition={{ duration: 2, delay: 0.8 }}
-              className="flex flex-col items-center w-full"
-            >
-              <div className="border-4 border-white rounded-2xl shadow-xl overflow-hidden w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] md:w-[320px] md:h-[320px] flex items-center justify-center bg-gray-100">
-                <Image
-                  src={images[index].src}
-                  alt={images[index].name}
-                  width={300}
-                  height={300}
-                  className="object-cover"
-                />
-              </div>
-              <p className="mt-4 text-center font-semibold text-white bg-white/20 backdrop-blur-md px-6 py-2 rounded-full text-sm sm:text-base md:text-lg">
-                {images[index].name}
-              </p>
-            </motion.div>
-          </AnimatePresence>
         </div>
       </div>
     </section>

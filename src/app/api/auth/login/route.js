@@ -1,12 +1,9 @@
-import Register from "@/backend/models/register";
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
+import prisma from "@/backend/prisma";
 import bcrypt from "bcryptjs";
 
 export async function POST(req) {
   try {
-    await dbConnect();
-
     const { email, password } = await req.json();
 
     if (!email || !password) {
@@ -16,7 +13,10 @@ export async function POST(req) {
       );
     }
 
-    const user = await Register.findOne({ email: email.toLowerCase().trim() });
+    const user = await prisma.register.findUnique({
+      where: { email: email.toLowerCase().trim() }
+    });
+
     if (!user) {
       return NextResponse.json(
         { success: false, message: "Invalid email or password." },
@@ -32,8 +32,8 @@ export async function POST(req) {
       );
     }
 
-    const safeUser = user.toObject();
-    delete safeUser.password;
+    // Remove password from response
+    const { password: _, ...safeUser } = user;
 
     return NextResponse.json(
       { success: true, message: "Login successful", user: safeUser },

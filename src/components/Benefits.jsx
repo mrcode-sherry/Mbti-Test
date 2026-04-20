@@ -1,67 +1,43 @@
 import React from "react";
 import {
-  Sparkles,
-  AlertCircle,
-  Briefcase,
-  BookOpenCheck,
-  Clock,
-  Smile,
-  Globe,
-  Users,
-  Award, 
-  Map
+  Target,
+  Share2,
+  ClipboardList,
+  BookOpen,
+  ShieldCheck,
+  Users
 } from "lucide-react";
 
 const benefits = [
   {
-    icon: Sparkles,
-    title: "Discover Your Strengths",
-    desc: "You find out what you do best and what feels natural for you.",
+    icon: Target,
+    title: "Choose the Right Stream",
+    desc: "Get clarity for FSC (Pre Med/Pre Engl/ICS/I.Com) or A Levels based on your natural strengths.",
   },
   {
-    icon: AlertCircle,
-    title: "Understand Your Weaknesses",
-    desc: "You know where you get stuck, so you can work better.",
+    icon: Share2,
+    title: "Top Career Matches",
+    desc: "See which fields fit you most (Medical, IT, Business, Engineering, Design and more).",
   },
   {
-    icon: Briefcase,
-    title: "Clarity About Career Choices",
-    desc: "No more guessing. Test shows which career fit you.",
+    icon: ClipboardList,
+    title: "Entry Test Direction",
+    desc: "Know whether you should focus on MDCAT, ECAT, CS tests, business admissions—or alternative paths.",
   },
   {
-    icon: BookOpenCheck,
-    title: "Personal Success Rules",
-    desc: "Simple rules for you, how you can do best in study and life.",
+    icon: BookOpen,
+    title: "Study Plan That Suits You",
+    desc: "Simple study tips that match how you learn—so marks improve without burnout.",
   },
   {
-    icon: Clock,
-    title: "Save Time Effort and Finance",
-    desc: "Don’t waste years in wrong path. Start right direction early.",
-  },
-  {
-    icon: Smile,
-    title: "Boost Your Confidence",
-    desc: "You feel sure, not confused, about your future.",
-  },
-  {
-    icon: Globe,
-    title: "Internationally Trusted Tool",
-    desc: "This is used all over world by schools and companies.",
+    icon: ShieldCheck,
+    title: "Avoid Wrong Admissions",
+    desc: "Reduce the risk of wasting years and fee money by choosing the right path earlier.",
   },
   {
     icon: Users,
-    title: "Better Conversations with Parents",
-    desc: 'Easy to show parents: “See, this career fits me.”',
-  },
-  {
-    icon: Award,
-    title: "Scholarships national and international",
-    desc: 'Fully funded, partially funded and talent based scholarships',
-  },
-  {
-    icon: Map,
-    title: "Career Roadmap",
-    desc: 'Get a complete custom career road map”',
+    title: "Explainable Results for Parents",
+    desc: "A clear report you can show at home to discuss career choices without conflict.",
   },
 ];
 
@@ -70,9 +46,14 @@ const Benefits = () => {
     <section className="py-16 md:px-16 px-8 bg-[#F3F2ED]">
       <div className="text-center">
         {/* Title */}
-        <h2 className="text-[29px] md:text-4xl font-bold text-[#05503C] mb-12">
-          Benefits of Taking the Test
+        <h2 className="text-[29px] md:text-4xl font-bold text-[#05503C] mb-4">
+          Career Direction in 10 Minutes
         </h2>
+        
+        {/* Subtitle */}
+        <p className="text-lg text-gray-600 mb-12 max-w-3xl mx-auto">
+          Get a clear report that helps you choose the right subjects, field, and next step—based on your strengths, interests, and study style.
+        </p>
 
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

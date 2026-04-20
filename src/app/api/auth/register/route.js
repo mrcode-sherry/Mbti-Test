@@ -1,6 +1,5 @@
-import Register from "@/backend/models/register";
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
+import prisma from "@/backend/prisma";
 import bcrypt from "bcryptjs";
 
 // Allow only Gmail, Yahoo, Hotmail
@@ -10,8 +9,6 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{8,}$/;
 
 export async function POST(req) {
   try {
-    await dbConnect();
-
     const { name, email, password } = await req.json();
 
     // 1️⃣ Validate presence
@@ -43,7 +40,10 @@ export async function POST(req) {
     }
 
     // 4️⃣ Check if email already exists
-    const existing = await Register.findOne({ email: email.toLowerCase().trim() });
+    const existing = await prisma.register.findUnique({
+      where: { email: email.toLowerCase().trim() }
+    });
+
     if (existing) {
       return NextResponse.json(
         { success: false, message: "Email is already registered. Please login." },
@@ -55,14 +55,16 @@ export async function POST(req) {
     const hashed = await bcrypt.hash(password, 10);
 
     // 6️⃣ Create new user
-    const user = await Register.create({
-      name: name.trim(),
-      email: email.toLowerCase().trim(),
-      password: hashed
+    const user = await prisma.register.create({
+      data: {
+        name: name.trim(),
+        email: email.toLowerCase().trim(),
+        password: hashed
+      }
     });
 
     return NextResponse.json(
-      { success: true, message: "User registered successfully", userId: user._id },
+      { success: true, message: "User registered successfully", userId: user.id },
       { status: 201 }
     );
   } catch (err) {

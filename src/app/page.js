@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
 import Slider from "@/components/Slider";
 import Testimonial from "@/components/Testimonial";
+import TrustedWorldwide from "@/components/TrustedWorldwide";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 export default function Home() {
@@ -12,6 +13,9 @@ export default function Home() {
     <div className="overflow-hidden">
       <section>
       <Hero/>
+    </section>
+    <section>
+      <TrustedWorldwide/>
     </section>
     <section>
       <Benefits/>

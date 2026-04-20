@@ -1,11 +1,8 @@
-// File: app/api/proof/approve/route.js
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import Proof from "@/backend/models/proof";
+import prisma from "@/backend/prisma";
 
 export async function PATCH(req) {
   try {
-    await dbConnect();
     const { email } = await req.json();
 
     if (!email) {
@@ -15,11 +12,10 @@ export async function PATCH(req) {
       );
     }
 
-    const proof = await Proof.findOneAndUpdate(
-      { email },
-      { status: "approved" },
-      { new: true }
-    );
+    const proof = await prisma.proof.update({
+      where: { email },
+      data: { status: "approved" }
+    });
 
     if (!proof) {
       return NextResponse.json(

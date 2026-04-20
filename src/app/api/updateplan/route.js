@@ -1,15 +1,29 @@
-import dbConnect from "@/backend/db";
-import User from "@/backend/models/user";
+import { NextResponse } from "next/server";
+import prisma from "@/backend/prisma";
 
 export async function POST(req) {
-  await dbConnect();
-  const { email, plan } = await req.json();
+  try {
+    const { email, plan } = await req.json();
 
-  const user = await User.findOneAndUpdate(
-    { email },
-    { plan },
-    { new: true, upsert: true }
-  );
+    if (!email || !plan) {
+      return NextResponse.json(
+        { success: false, message: "Email and plan are required" },
+        { status: 400 }
+      );
+    }
 
-  return Response.json({ success: true, plan: user.plan });
+    const user = await prisma.user.upsert({
+      where: { email },
+      update: { plan },
+      create: { email, plan }
+    });
+
+    return NextResponse.json({ success: true, plan: user.plan });
+  } catch (error) {
+    console.error("Update plan error:", error);
+    return NextResponse.json(
+      { success: false, message: error.message },
+      { status: 500 }
+    );
+  }
 }

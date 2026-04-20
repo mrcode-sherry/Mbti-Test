@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import Proof from "@/backend/models/proof";
+import prisma from "@/backend/prisma";
 
 export async function GET(req) {
   try {
-    await dbConnect();
-
     // Extract query param (?email=...)
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
+
+    console.log("🔍 Checking proof submission for email:", email);
 
     if (!email) {
       return NextResponse.json(
@@ -18,7 +17,16 @@ export async function GET(req) {
     }
 
     // Find proof by email
-    const proof = await Proof.findOne({ email });
+    const proof = await prisma.proof.findUnique({
+      where: { email }
+    });
+
+    console.log("📸 Proof submission check result:", {
+      email,
+      found: !!proof,
+      status: proof?.status || null,
+      proofId: proof?.id || null
+    });
 
     if (!proof) {
       return NextResponse.json(
@@ -32,7 +40,7 @@ export async function GET(req) {
       data: proof,
     });
   } catch (err) {
-    console.error("Proof GET error:", err);
+    console.error("❌ Proof GET error:", err);
     return NextResponse.json(
       { success: false, message: err.message || "Server error" },
       { status: 500 }

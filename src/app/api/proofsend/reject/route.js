@@ -1,33 +1,39 @@
-import dbConnect from "@/backend/db";
-import Proof from "@/backend/models/proof"; 
+import { NextResponse } from "next/server";
+import prisma from "@/backend/prisma";
 
-export default async function handler(req, res) {
-  await dbConnect();
+export async function PATCH(req) {
+  try {
+    const { email } = await req.json();
 
-  if (req.method === "POST") {
-    try {
-      const { proofId } = req.body;
-
-      if (!proofId) {
-        return res.status(400).json({ success: false, message: "Proof ID is required" });
-      }
-
-      // Update proof status to "rejected"
-      const updatedProof = await Proof.findByIdAndUpdate(
-        proofId,
-        { status: "rejected" },
-        { new: true }
+    if (!email) {
+      return NextResponse.json(
+        { success: false, message: "Email is required" },
+        { status: 400 }
       );
-
-      if (!updatedProof) {
-        return res.status(404).json({ success: false, message: "Proof not found" });
-      }
-
-      return res.status(200).json({ success: true, message: "Proof rejected successfully", proof: updatedProof });
-    } catch (error) {
-      return res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
-  } else {
-    return res.status(405).json({ success: false, message: "Method not allowed" });
+
+    const proof = await prisma.proof.update({
+      where: { email },
+      data: { status: "rejected" }
+    });
+
+    if (!proof) {
+      return NextResponse.json(
+        { success: false, message: "Proof not found for this email" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "Proof rejected successfully",
+      data: proof,
+    });
+  } catch (err) {
+    console.error("Error rejecting proof:", err);
+    return NextResponse.json(
+      { success: false, message: "Server error: " + err.message },
+      { status: 500 }
+    );
   }
 }

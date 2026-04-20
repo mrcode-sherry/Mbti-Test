@@ -1,0 +1,127 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// User Registration Model
+model Register {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String?  // Optional for OAuth users
+  provider  String   @default("credentials") // "credentials" or "google"
+  googleId  String?  // For Google OAuth
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("registers")
+}
+
+// User Plan Model
+model User {
+  id    String @id @default(cuid())
+  email String @unique
+  plan  String @default("standard") // "standard" or "premium"
+
+  @@map("users")
+}
+
+// Test Submission Model
+model Test {
+  id                   String   @id @default(cuid())
+  fullName             String
+  email                String   @unique
+  gender               String
+  maritalStatus        String
+  countryCode          String
+  phoneNumber          String
+  city                 String
+  province             String
+  age                  String?  // Added age field
+  educationType        String
+  
+  // School fields
+  schoolStatus         String?
+  schoolClass          String?
+  schoolInstitute      String?
+  
+  // College fields
+  collegeYear          String?
+  collegeDegree        String?
+  collegeInstitute     String?
+  
+  // University fields
+  universitySemester   String?
+  universityDegree     String?
+  
+  // Additional fields
+  favouriteSubjects    String[] // Array of strings
+  weakSubjects         String[] // Array of strings
+  hobbies              String[] // Array of strings
+  fieldsOfInterest     String[] // Array of strings
+  parentalExpectation  String?
+  budgetRange          String?  // "Local education", "Abroad", "Scholarships"
+  
+  // New fields for enhanced form
+  fatherName           String?
+  currentEducationLevel String?
+  boardInstitution     String?
+  mediumOfInstruction  String?
+  expectedResult       String?
+  extraCurricularActivities String[] // Array of strings
+  fatherOccupation     String?
+  motherOccupation     String?
+  socioeconomicBracket String?
+  careerPreferences    String?
+  testCategory         String?  // Default "Future Fit"
+  
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@map("tests")
+}
+
+// Test Submission Status Model
+model TestSubmission {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  completed Boolean  @default(false)
+  result    String?  // MBTI result (e.g., "ENFP")
+  answers   Json?    // JSON array of answers
+  languages Json?    // JSON array of selected languages
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("test_submissions")
+}
+
+// Payment Proof Model
+model Proof {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  screenshotUrl String?
+  tid           String?
+  status        String   @default("pending") // "pending", "approved", "rejected"
+  expiryTime    DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("proofs")
+}
+
+// Contact Form Model
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+
+  @@map("contacts")
+}

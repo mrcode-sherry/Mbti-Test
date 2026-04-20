@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import Proof from "@/backend/models/proof";
+import prisma from "@/backend/prisma";
 
 export async function GET(req) {
   try {
-    await dbConnect();
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
 
@@ -12,7 +10,9 @@ export async function GET(req) {
       return NextResponse.json({ error: "Email required" }, { status: 400 });
     }
 
-    const proof = await Proof.findOne({ email });
+    const proof = await prisma.proof.findUnique({
+      where: { email }
+    });
 
     if (!proof) {
       return NextResponse.json({ submitted: false, status: "none" });
@@ -20,7 +20,7 @@ export async function GET(req) {
 
     return NextResponse.json({
       submitted: true,
-      status: proof.status,   // ✅ now frontend will know if it’s approved
+      status: proof.status,   // ✅ now frontend will know if it's approved
     });
   } catch (err) {
     console.error("Proof status error:", err);

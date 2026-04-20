@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/backend/db";
-import Register from "@/backend/models/register";
+import prisma from "@/backend/prisma";
 
 export async function GET(req) {
   try {
@@ -44,9 +43,7 @@ export async function GET(req) {
       return NextResponse.redirect(`${origin}/login?error=google_no_email`);
     }
 
-    // 3) Upsert user
-    await dbConnect();
-
+    // 3) Upsert user using Prisma
     const email = profile.email.toLowerCase().trim();
     const name =
       profile.name ||
@@ -54,27 +51,31 @@ export async function GET(req) {
       email.split("@")[0] ||
       "User";
 
-    let user = await Register.findOne({ email });
+    let user = await prisma.register.findUnique({
+      where: { email }
+    });
 
     if (!user) {
-      user = await Register.create({
-        name,
-        email,
-        provider: "google",
-        googleId: profile.sub || null,
+      user = await prisma.register.create({
+        data: {
+          name,
+          email,
+          provider: "google",
+          googleId: profile.sub || null,
+        }
       });
     } else {
-      if (!user.provider || user.provider === "credentials") {
-        user.provider = "google";
-      }
-      if (!user.googleId && profile.sub) {
-        user.googleId = profile.sub;
-      }
-      await user.save();
+      // Update existing user with Google info
+      user = await prisma.register.update({
+        where: { email },
+        data: {
+          provider: "google",
+          googleId: profile.sub || user.googleId,
+        }
+      });
     }
 
     // 4) Redirect back to frontend with user info
-    // ✅ Always use the origin from the request to maintain the same domain
     const url = new URL(`${origin}/auth/success`);
     url.searchParams.set("name", name);
     url.searchParams.set("email", email);

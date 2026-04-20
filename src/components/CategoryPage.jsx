@@ -8,25 +8,24 @@ const CategoryPage = ({
   subtitle = "Discover your aptitude for a career in this field",
   heroImage = "/hero/programmer8.png",
   targetAudience = [
-    { icon: Users, title: "Students", subtitle: "Matric/O-Levels" },
-    { icon: BookOpen, title: "Young Adult", subtitle: "Inter/A-Levels/University" },
-    { icon: Award, title: "Parents", subtitle: "" }
+    { 
+      icon: Users, 
+      title: "Matric / O-Levels students", 
+      subtitle: "Helping you choose the right stream and subjects for your next big step." 
+    },
+    { 
+      icon: BookOpen, 
+      title: "Inter / A-Levels students", 
+      subtitle: "Guiding your university and career choices with clarity and confidence." 
+    },
+    { 
+      icon: Award, 
+      title: "Parents", 
+      subtitle: "Giving you insights to support your child's future with data-driven advice." 
+    }
   ],
-  assessmentChecks = [
-    { icon: Heart, title: "Empathy", color: "text-[#05503C]" },
-    { icon: MessageCircle, title: "Communication", color: "text-[#05503C]" },
-    { icon: Settings, title: "Resilience", color: "text-[#05503C]" },
-    { icon: Users, title: "Teamwork", color: "text-[#05503C]" },
-    { icon: Building2, title: "Field-Office", color: "text-[#05503C]" }
-  ],
-  pathways = [
-    { icon: GraduationCap, title: "Education Programs", status: "Hot demand", color: "bg-[#FDCA00]" },
-    { icon: Heart, title: "Health Outreach", status: "Fast-based", color: "bg-[#FDCA00]" },
-    { icon: UsersRound, title: "Community Development", status: "Fast-based | Office-based", color: "bg-[#FDCA00]" },
-    { icon: HandHeart, title: "Child Welfare", status: "Hot demand", color: "bg-[#FDCA00]" },
-    { icon: Search, title: "Research/M&E", status: "Office-based", color: "bg-[#FDCA00]" },
-    { icon: Megaphone, title: "Fundraising & Comms", status: "Office-based", color: "bg-[#FDCA00]" }
-  ],
+  assessmentChecks,
+  pathways,
   reportFeatures = [
     "Personalized Aptitude Profile",
     "Recommended Roles",
@@ -43,13 +42,32 @@ const CategoryPage = ({
     { icon: BookOpen, title: "Get report", subtitle: "Receive detailed analysis" },
     { icon: TrendingUp, title: "Follow roadmap", subtitle: "Implement recommendations" }
   ],
-  finalPathways = [
-    { title: "Education Programs", color: "bg-[#FDCA00]" },
-    { title: "Health Outreach", color: "bg-[#FDCA00]" },
-    { title: "Community Development", color: "bg-[#FDCA00]" },
-    { title: "Publishing & Content", color: "bg-[#FDCA00]" }
-  ]
+  ctaTitle = "Ready to discover your career path?",
+  ctaSubtitle = "Take the first step towards your future with our comprehensive career assessment",
+  ctaButtonText = "Start NGO Test",
+  pricingSection = null, // New prop for pricing section
+  statusSection = null, // New prop for status section
+  onStartTestClick = null, // New prop for handling start test button clicks
+  hasCompletedTest = false // New prop for test completion status
 }) => {
+  // Set default values only if not explicitly passed
+  const finalAssessmentChecks = assessmentChecks !== undefined ? assessmentChecks : [
+    { icon: Heart, title: "Empathy", color: "text-[#05503C]" },
+    { icon: MessageCircle, title: "Communication", color: "text-[#05503C]" },
+    { icon: Settings, title: "Resilience", color: "text-[#05503C]" },
+    { icon: Users, title: "Teamwork", color: "text-[#05503C]" },
+    { icon: Building2, title: "Field-Office", color: "text-[#05503C]" }
+  ];
+
+  const finalPathways = pathways !== undefined ? pathways : [
+    { icon: GraduationCap, title: "Education Programs", status: "Hot demand", color: "bg-[#FDCA00]" },
+    { icon: Heart, title: "Health Outreach", status: "Fast-based", color: "bg-[#FDCA00]" },
+    { icon: UsersRound, title: "Community Development", status: "Fast-based | Office-based", color: "bg-[#FDCA00]" },
+    { icon: HandHeart, title: "Child Welfare", status: "Hot demand", color: "bg-[#FDCA00]" },
+    { icon: Search, title: "Research/M&E", status: "Office-based", color: "bg-[#FDCA00]" },
+    { icon: Megaphone, title: "Fundraising & Comms", status: "Office-based", color: "bg-[#FDCA00]" }
+  ];
+
   return (
     <div className="min-h-screen bg-[#F3F2ED]">
       {/* Hero Section */}
@@ -94,24 +112,24 @@ const CategoryPage = ({
                   <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#FDCA00] to-[#f0c000] flex items-center justify-center shadow-sm">
                     <div className="w-2 h-2 bg-white rounded-full"></div>
                   </div>
-                  <span className="text-sm text-gray-700 font-semibold">Parent-friendly</span>
+                  <span className="text-sm text-gray-700 font-semibold">All fields covered</span>
                 </div>
                 
                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-4 flex items-center gap-3 shadow-lg border border-[#FDCA00]/20 hover:shadow-xl transition-all duration-300">
                   <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#FDCA00] to-[#f0c000] flex items-center justify-center shadow-sm">
                     <div className="w-2 h-2 bg-white rounded-full"></div>
                   </div>
-                  <span className="text-sm text-gray-700 font-semibold">Private</span>
+                  <span className="text-sm text-gray-700 font-semibold">Parent-friendly</span>
                 </div>
               </div>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-gradient-to-r from-[#05503C] to-[#044029] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl">
-                  Start NGO Test
-                </button>
-                <button className="border-2 border-[#05503C] text-[#05503C] px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#05503C] hover:text-white transition-all duration-300 bg-white/50 backdrop-blur-sm shadow-lg hover:shadow-xl">
-                  View Sample Report
+                <button 
+                  onClick={hasCompletedTest ? () => window.location.href = '/student-dashboard' : onStartTestClick}
+                  className="bg-gradient-to-r from-[#05503C] to-[#044029] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl"
+                >
+                  {hasCompletedTest ? "View Dashboard" : "Start Future Fit Test"}
                 </button>
               </div>
             </div>
@@ -119,13 +137,11 @@ const CategoryPage = ({
             {/* Right Image */}
             <div className="flex justify-center">
               <div className="relative">
-                <div className="bg-gradient-to-br from-[#F3F2ED] via-white to-[#F3F2ED] rounded-3xl p-10 max-w-md shadow-2xl border border-[#FDCA00]/20">
-                  <img 
-                    src={heroImage} 
-                    alt={title}
-                    className="w-full h-auto rounded-2xl shadow-lg"
-                  />
-                </div>
+                <img 
+                  src={heroImage} 
+                  alt={title}
+                  className="w-full max-w-xl md:max-w-2xl lg:max-w-4xl h-auto"
+                />
                 {/* Floating decorative elements */}
                 <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-full shadow-lg animate-bounce"></div>
                 <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full shadow-lg"></div>
@@ -134,6 +150,12 @@ const CategoryPage = ({
           </div>
         </div>
       </section>
+
+      {/* Pricing Section - Inserted after hero */}
+      {pricingSection}
+
+      {/* Status Section - Inserted after pricing */}
+      {statusSection}
 
       {/* Who This Is For Section */}
       <section className="py-20 px-4 md:px-16 relative">
@@ -178,7 +200,8 @@ const CategoryPage = ({
       </section>
 
       {/* Assessment Checks Section */}
-      <section className="py-20 px-4 md:px-16 bg-gradient-to-br from-white via-[#fefefe] to-[#f9f9f9] relative overflow-hidden">
+      {finalAssessmentChecks && finalAssessmentChecks.length > 0 && (
+        <section className="py-20 px-4 md:px-16 bg-gradient-to-br from-white via-[#fefefe] to-[#f9f9f9] relative overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-[#05503C]/5 to-transparent rounded-full blur-3xl"></div>
         <div className="absolute bottom-10 right-20 w-32 h-32 bg-gradient-to-br from-[#FDCA00]/10 to-transparent rounded-full blur-2xl"></div>
@@ -200,7 +223,7 @@ const CategoryPage = ({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left Side - Assessment Cards */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {assessmentChecks.map((check, index) => {
+              {finalAssessmentChecks.map((check, index) => {
                 const IconComponent = check.icon;
                 return (
                   <div key={index} className="group bg-white/80 backdrop-blur-sm border border-[#FDCA00]/20 rounded-2xl p-6 text-center shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
@@ -233,9 +256,11 @@ const CategoryPage = ({
           </div>
         </div>
       </section>
+      )}
 
       {/* Pathways Section */}
-      <section className="py-20 px-4 md:px-16 relative">
+      {finalPathways && finalPathways.length > 0 && (
+        <section className="py-20 px-4 md:px-16 relative">
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#F3F2ED]/20 to-transparent"></div>
         
@@ -254,7 +279,7 @@ const CategoryPage = ({
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {pathways.map((pathway, index) => {
+            {finalPathways.map((pathway, index) => {
               const IconComponent = pathway.icon;
               return (
                 <div key={index} className="group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl text-center border border-[#FDCA00]/20 hover:shadow-2xl hover:scale-105 transition-all duration-300">
@@ -273,6 +298,7 @@ const CategoryPage = ({
           </div>
         </div>
       </section>
+      )}
 
       {/* What You Get Section */}
       <section className="py-20 px-4 md:px-16 bg-gradient-to-br from-white via-[#fefefe] to-[#f9f9f9] relative overflow-hidden">
@@ -298,33 +324,21 @@ const CategoryPage = ({
             {/* Report Features */}
             <div className="space-y-6">
               {reportFeatures.map((feature, index) => (
-                <div key={index} className="group flex items-start gap-6 p-6 bg-white/80 backdrop-blur-sm rounded-2xl hover:shadow-2xl transition-all duration-300 hover:bg-white border border-[#FDCA00]/20 hover:border-[#FDCA00]/40 hover:scale-105">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <CheckCircle size={24} className="text-white" />
+                <div key={index} className="group flex items-center gap-4 p-4 bg-white/80 backdrop-blur-sm rounded-xl hover:shadow-xl transition-all duration-300 hover:bg-white border border-[#FDCA00]/20 hover:border-[#FDCA00]/40 hover:scale-105">
+                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <CheckCircle size={20} className="text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#0B0F0E] text-xl mb-2">
+                    <h3 className="font-bold text-[#0B0F0E] text-lg">
                       {feature}
                     </h3>
-                    <p className="text-gray-600">
-                      Detailed analysis and recommendations tailored to your personality type
-                    </p>
                   </div>
                 </div>
               ))}
-
-              <div className="pt-6">
-                <button className="bg-gradient-to-r from-[#05503C] to-[#044029] text-white px-10 py-5 rounded-2xl hover:shadow-2xl transition-all duration-300 flex items-center gap-4 font-bold shadow-xl hover:scale-105">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  Download Sample Report
-                </button>
-              </div>
             </div>
 
             {/* Report Preview */}
-            <div className="relative">
+            <div className="relative flex items-center justify-center min-h-full">
               <div className="bg-gradient-to-br from-[#F3F2ED] via-white to-[#FDCA00]/10 rounded-3xl p-10 shadow-2xl border border-[#FDCA00]/30">
                 {/* Header Card */}
                 <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 mb-8 shadow-xl border-l-4 border-[#05503C]">
@@ -370,10 +384,6 @@ const CategoryPage = ({
                     </div>
                   </div>
                 </div>
-
-                {/* Floating Elements */}
-                <div className="absolute -top-6 -right-6 w-12 h-12 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-2xl shadow-xl animate-bounce"></div>
-                <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-2xl shadow-xl"></div>
               </div>
             </div>
           </div>
@@ -392,7 +402,7 @@ const CategoryPage = ({
               <span className="text-sm font-semibold text-[#05503C]">Important Considerations</span>
             </div>
             <h2 className="text-4xl font-bold text-[#05503C] mb-6">
-              Reality check
+              Before you choose, know this
             </h2>
           </div>
           
@@ -410,47 +420,59 @@ const CategoryPage = ({
             {/* Career Progression Timeline */}
             <div className="bg-gradient-to-r from-[#F3F2ED] to-[#FDCA00]/10 rounded-2xl p-8 shadow-lg">
               <h3 className="text-2xl font-bold text-[#05503C] text-center mb-8">Career Progression Path</h3>
-              <div className="flex items-center justify-center max-w-5xl mx-auto overflow-x-auto">
-                {/* Volunteer */}
+              <div className="flex items-center justify-center max-w-5xl mx-auto">
+                {/* Test */}
                 <div className="flex items-center min-w-max">
                   <div className="w-5 h-5 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-full shadow-lg"></div>
-                  <span className="ml-3 font-bold text-[#0B0F0E] text-lg whitespace-nowrap">Volunteer</span>
+                  <span className="ml-2 font-bold text-[#0B0F0E] text-base whitespace-nowrap">Test</span>
                 </div>
                 
                 {/* Arrow 1 */}
-                <div className="flex items-center mx-8">
-                  <div className="w-20 h-1 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full shadow-sm"></div>
-                  <div className="w-0 h-0 border-l-[8px] border-l-[#05503C] border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent"></div>
+                <div className="flex items-center mx-4">
+                  <div className="w-12 h-1 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full shadow-sm"></div>
+                  <div className="w-0 h-0 border-l-[6px] border-l-[#05503C] border-t-[3px] border-t-transparent border-b-[3px] border-b-transparent"></div>
                 </div>
                 
-                {/* Internship */}
+                {/* Report */}
                 <div className="flex items-center min-w-max">
                   <div className="w-5 h-5 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-full shadow-lg"></div>
-                  <span className="ml-3 font-bold text-[#0B0F0E] text-lg whitespace-nowrap">Internship</span>
+                  <span className="ml-2 font-bold text-[#0B0F0E] text-base whitespace-nowrap">Report</span>
                 </div>
                 
                 {/* Arrow 2 */}
-                <div className="flex items-center mx-8">
-                  <div className="w-20 h-1 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full shadow-sm"></div>
-                  <div className="w-0 h-0 border-l-[8px] border-l-[#05503C] border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent"></div>
+                <div className="flex items-center mx-4">
+                  <div className="w-12 h-1 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full shadow-sm"></div>
+                  <div className="w-0 h-0 border-l-[6px] border-l-[#05503C] border-t-[3px] border-t-transparent border-b-[3px] border-b-transparent"></div>
                 </div>
                 
-                {/* Program Role */}
+                {/* Shortlist 3 */}
                 <div className="flex items-center min-w-max">
                   <div className="w-5 h-5 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-full shadow-lg"></div>
-                  <span className="ml-3 font-bold text-[#0B0F0E] text-lg whitespace-nowrap">Program Role</span>
+                  <span className="ml-2 font-bold text-[#0B0F0E] text-base whitespace-nowrap">Shortlist 3</span>
                 </div>
                 
                 {/* Arrow 3 */}
-                <div className="flex items-center mx-8">
-                  <div className="w-20 h-1 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full shadow-sm"></div>
-                  <div className="w-0 h-0 border-l-[8px] border-l-[#05503C] border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent"></div>
+                <div className="flex items-center mx-4">
+                  <div className="w-12 h-1 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full shadow-sm"></div>
+                  <div className="w-0 h-0 border-l-[6px] border-l-[#05503C] border-t-[3px] border-t-transparent border-b-[3px] border-b-transparent"></div>
                 </div>
                 
-                {/* Team Lead */}
+                {/* Explore */}
                 <div className="flex items-center min-w-max">
                   <div className="w-5 h-5 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-full shadow-lg"></div>
-                  <span className="ml-3 font-bold text-[#0B0F0E] text-lg whitespace-nowrap">Team Lead</span>
+                  <span className="ml-2 font-bold text-[#0B0F0E] text-base whitespace-nowrap">Explore</span>
+                </div>
+                
+                {/* Arrow 4 */}
+                <div className="flex items-center mx-4">
+                  <div className="w-12 h-1 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full shadow-sm"></div>
+                  <div className="w-0 h-0 border-l-[6px] border-l-[#05503C] border-t-[3px] border-t-transparent border-b-[3px] border-b-transparent"></div>
+                </div>
+                
+                {/* Decide */}
+                <div className="flex items-center min-w-max">
+                  <div className="w-5 h-5 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-full shadow-lg"></div>
+                  <span className="ml-2 font-bold text-[#0B0F0E] text-base whitespace-nowrap">Decide</span>
                 </div>
               </div>
             </div>
@@ -526,12 +548,12 @@ const CategoryPage = ({
           
           <div className="space-y-4">
             {[
-              "Is this test free?",
-              "Can parents take it for their children?",
-              "How long does the report take?",
-              "Is this test accurate?",
-              "Can I retake the test?",
-              "Do you offer career counseling?"
+              "Is this for Matric/O-Levels?",
+              "Will it recommend one career only?",
+              "Does it guarantee admission/job?",
+              "Can parents view the report?",
+              "How long does it take?",
+              "Is my data private?"
             ].map((question, index) => (
               <div key={index} className="group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-[#FDCA00]/20 hover:border-[#FDCA00]/40">
                 <div className="flex justify-between items-center">
@@ -559,16 +581,19 @@ const CategoryPage = ({
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight">
-            Ready to discover your career path?
+            {ctaTitle}
           </h2>
           
           <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
-            Take the first step towards your future with our comprehensive career assessment
+            {ctaSubtitle}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <button className="bg-gradient-to-r from-[#FDCA00] to-[#f0c000] text-[#0B0F0E] px-12 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl">
-              Start NGO Test
+            <button 
+              onClick={hasCompletedTest ? () => window.location.href = '/student-dashboard' : onStartTestClick}
+              className="bg-gradient-to-r from-[#FDCA00] to-[#f0c000] text-[#0B0F0E] px-12 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl"
+            >
+              {hasCompletedTest ? "View Dashboard" : ctaButtonText}
             </button>
             <button className="border-2 border-white text-white px-12 py-5 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#05503C] transition-all duration-300 bg-white/10 backdrop-blur-sm shadow-lg hover:shadow-xl">
               WhatsApp for help
