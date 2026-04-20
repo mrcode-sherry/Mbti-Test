@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import prisma from "@/backend/prisma";
 import bcrypt from "bcryptjs";
 
 // Allow only Gmail, Yahoo, Hotmail
@@ -36,6 +35,19 @@ export async function POST(req) {
             "Password must be at least 8 characters long and include at least one letter, one number and one special character."
         },
         { status: 400 }
+      );
+    }
+
+    // Dynamic import for Prisma
+    let prisma;
+    try {
+      const { default: prismaClient } = await import("@/backend/prisma");
+      prisma = prismaClient;
+    } catch (dbError) {
+      console.error("Database connection error:", dbError);
+      return NextResponse.json(
+        { success: false, message: "Database connection failed" },
+        { status: 500 }
       );
     }
 
