@@ -16,17 +16,12 @@ const TestQuiz = () => {
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showLanguageSelection, setShowLanguageSelection] = useState(true); // Show language selection first
-  const [isSpeaking, setIsSpeaking] = useState(false); // For TTS functionality
-  const speechSynthesisRef = useRef(null);
   const router = useRouter();
 
   useEffect(() => {
     setIsClient(true);
     
-    // Initialize speech synthesis
-    if (typeof window !== 'undefined') {
-      speechSynthesisRef.current = window.speechSynthesis;
-    }
+    // TTS functionality removed
 
     const checkTestCompletion = async () => {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -49,9 +44,7 @@ const TestQuiz = () => {
 
   useEffect(() => {
     return () => {
-      if (speechSynthesisRef.current) {
-        speechSynthesisRef.current.cancel();
-      }
+      // TTS cleanup removed
     };
   }, []);
 
@@ -105,34 +98,7 @@ const TestQuiz = () => {
     );
   };
 
-  // Text-to-Speech function (English only now)
-  const speakQuestionAndOptions = () => {
-    // Only works for English now
-    if (language !== 'en') return;
-    
-    if (!speechSynthesisRef.current || isSpeaking) return;
-
-    const questions = getQuestions();
-    const currentQuestion = questions[currentIndex];
-    
-    // Create text to speak: question + all options + examples
-    let textToSpeak = `Question: ${currentQuestion.title}. `;
-    
-    currentQuestion.options.forEach((option, index) => {
-      textToSpeak += `Option ${index + 1}: ${option.text}. Example: ${option.example}. `;
-    });
-
-    const utterance = new SpeechSynthesisUtterance(textToSpeak);
-    utterance.lang = 'en-US';
-    utterance.rate = 1;
-    utterance.pitch = 1;
-    
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
-    
-    speechSynthesisRef.current.speak(utterance);
-  };
+  // TTS function removed
 
   const handleNext = async () => {
     const questions = getQuestions();
@@ -146,38 +112,43 @@ const TestQuiz = () => {
         if (user?.email) {
           const result = calculateResult();
 
-          // Save to database with result, answers, and selected languages
-          const response = await fetch('/api/testSubmission', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              email: user.email, 
-              answers: selectedAnswers, 
-              result: result,
-              languages: selectedLanguages // Save all selected languages
-            }),
-          });
+          // Save to localStorage first as backup
+          const prevResults = JSON.parse(localStorage.getItem('testResults') || '[]');
+          prevResults.push(result);
+          localStorage.setItem('testResults', JSON.stringify(prevResults));
+          localStorage.setItem('testResult', result);
 
-          const data = await response.json();
-          
-          if (data.success) {
-            // Also save to localStorage as backup
-            const prevResults = JSON.parse(localStorage.getItem('testResults') || '[]');
-            prevResults.push(result);
-            localStorage.setItem('testResults', JSON.stringify(prevResults));
-            localStorage.setItem('testResult', result);
+          // Try to save to database
+          try {
+            const response = await fetch('/api/testSubmission', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ 
+                email: user.email, 
+                answers: selectedAnswers, 
+                result: result,
+                languages: selectedLanguages
+              }),
+            });
 
-            router.push('/student-dashboard');
-            setTimeout(() => {
-              window.location.reload();
-            }, 500);
-          } else {
-            throw new Error(data.message || 'Failed to save test result');
+            const data = await response.json();
+            
+            if (!data.success && !data.message?.includes('already submitted')) {
+              console.warn('Database save failed, but continuing with localStorage result:', data.message);
+            }
+          } catch (dbError) {
+            console.warn('Database save failed, but continuing with localStorage result:', dbError);
           }
+
+          // Always navigate to dashboard since we have localStorage backup
+          router.push('/student-dashboard');
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         }
       } catch (err) {
-        console.error('Test submission failed', err);
-        alert('Failed to save test result. Please try again.');
+        console.error('Test completion failed', err);
+        // Don't show alert, just log the error and try to continue
         setLoading(false);
       }
     }
@@ -279,12 +250,33 @@ const TestQuiz = () => {
   const isUrdu = language === 'ur';
   const directionClass = isUrdu ? 'text-right' : 'text-left';
 
-  const checklist = [
-    'Be Honest with Yourself',
-    'Think About Your Natural Self', 
-    'No Right or Wrong Answers',
-    'Stay Relaxed & Focused',
-  ];
+  const getChecklist = () => {
+    switch (language) {
+      case 'ur':
+        return [
+          'اپنے ساتھ ایمانداری سے پیش آئیں',
+          'اپنی فطری ذات کے بارے میں سوچیں',
+          'کوئی صحیح یا غلط جواب نہیں',
+          'پرسکون اور توجہ مرکوز رکھیں'
+        ];
+      case 'roman':
+        return [
+          'Apne saath imaandari se pesh aayein',
+          'Apni fitri zaat ke baare mein sochein',
+          'Koi sahi ya ghalat jawab nahi',
+          'Pursukoon aur tawajjuh markaz rakhein'
+        ];
+      default:
+        return [
+          'Be Honest with Yourself',
+          'Think About Your Natural Self', 
+          'No Right or Wrong Answers',
+          'Stay Relaxed & Focused'
+        ];
+    }
+  };
+
+  const checklist = getChecklist();
 
   return (
     <div className={`max-w-4xl mx-auto bg-white mt-6 p-4 sm:p-6 md:p-8 rounded-xl shadow-md ${directionClass}`}>
@@ -328,8 +320,13 @@ const TestQuiz = () => {
       </div>
 
       <div className="grid gap-3 mb-6 bg-gray-100 p-3 sm:p-4 rounded-lg">
-        <h1 className="text-lg pb-2 border-b text-[#14442E] font-medium">
-          4 Important Points Before Taking the personality Test
+        <h1 className={`text-lg pb-2 border-b text-[#14442E] font-medium ${isUrdu ? 'text-right font-bold text-xl' : ''}`}>
+          {language === 'ur' 
+            ? 'شخصیت کا ٹیسٹ لینے سے پہلے 4 اہم نکات'
+            : language === 'roman' 
+            ? '4 Ahem Nukaat Shakhsiyat ka Test lene se pehle'
+            : '4 Important Points Before Taking the personality Test'
+          }
         </h1>
         {checklist.map((item, idx) => (
           <div
@@ -347,29 +344,9 @@ const TestQuiz = () => {
       </div>
 
       <div className={`flex items-start gap-2 mb-6 ${isUrdu ? 'flex-row-reverse' : ''}`}>
-        <h3 className={`text-lg sm:text-xl font-semibold text-gray-700 ${isUrdu ? 'text-right' : ''}`}>
+        <h3 className={`text-lg sm:text-xl font-semibold text-gray-700 ${isUrdu ? 'text-right font-bold text-xl sm:text-2xl' : ''}`}>
           {currentQuestion.title}
         </h3>
-        {language === 'en' && (
-          <button
-            onClick={speakQuestionAndOptions}
-            disabled={isSpeaking}
-            className={`self-start mt-1 ${
-              isSpeaking ? 'text-gray-400' : 'text-blue-600 hover:text-blue-800'
-            }`}
-            aria-label="Listen to question"
-          >
-            {isSpeaking ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd" />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            )}
-          </button>
-        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
@@ -389,15 +366,15 @@ const TestQuiz = () => {
                   <div className="w-2 h-2 rounded-full bg-green-700" />
                 )}
               </div>
-              <p className={`font-medium text-sm sm:text-base text-gray-700 ${isUrdu ? 'text-right' : ''}`}>
+              <p className={`font-medium text-sm sm:text-base text-gray-700 ${isUrdu ? 'text-right font-bold text-base sm:text-lg' : ''}`}>
                 {option.text}
               </p>
             </div>
             <div className={`bg-gray-100 p-3 sm:p-5 rounded-lg text-xs sm:text-sm text-gray-600 ${isUrdu ? 'text-right' : ''}`}>
-              <p className="font-semibold mb-1">
+              <p className={`font-semibold mb-1 ${isUrdu ? 'font-bold' : ''}`}>
                 {language === 'ur' ? 'مثال:' : language === 'roman' ? 'Misal:' : 'Example:'}
               </p>
-              <p>{option.example}</p>
+              <p className={isUrdu ? 'font-semibold text-sm sm:text-base' : ''}>{option.example}</p>
             </div>
           </div>
         ))}

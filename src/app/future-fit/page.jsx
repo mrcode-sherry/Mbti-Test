@@ -314,6 +314,7 @@ const FutureFitPage = () => {
       <CategoryPage 
         {...futureFitData} 
         onStartTestClick={handleStartTestClick}
+        hasCompletedTest={hasCompletedTest}
         pricingSection={showPricingCard && (
           <section className="bg-gray-100 py-16 md:px-16 px-8" data-pricing-section>
             {/* Status Message - Above pricing card */}

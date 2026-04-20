@@ -47,7 +47,8 @@ const CategoryPage = ({
   ctaButtonText = "Start NGO Test",
   pricingSection = null, // New prop for pricing section
   statusSection = null, // New prop for status section
-  onStartTestClick = null // New prop for handling start test button clicks
+  onStartTestClick = null, // New prop for handling start test button clicks
+  hasCompletedTest = false // New prop for test completion status
 }) => {
   // Set default values only if not explicitly passed
   const finalAssessmentChecks = assessmentChecks !== undefined ? assessmentChecks : [
@@ -125,10 +126,10 @@ const CategoryPage = ({
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <button 
-                  onClick={onStartTestClick}
+                  onClick={hasCompletedTest ? () => window.location.href = '/student-dashboard' : onStartTestClick}
                   className="bg-gradient-to-r from-[#05503C] to-[#044029] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl"
                 >
-                  Start Future Fit Test
+                  {hasCompletedTest ? "View Dashboard" : "Start Future Fit Test"}
                 </button>
               </div>
             </div>
@@ -589,10 +590,10 @@ const CategoryPage = ({
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <button 
-              onClick={onStartTestClick}
+              onClick={hasCompletedTest ? () => window.location.href = '/student-dashboard' : onStartTestClick}
               className="bg-gradient-to-r from-[#FDCA00] to-[#f0c000] text-[#0B0F0E] px-12 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl"
             >
-              {ctaButtonText}
+              {hasCompletedTest ? "View Dashboard" : ctaButtonText}
             </button>
             <button className="border-2 border-white text-white px-12 py-5 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#05503C] transition-all duration-300 bg-white/10 backdrop-blur-sm shadow-lg hover:shadow-xl">
               WhatsApp for help
