@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import prisma from "@/backend/prisma";
 
 export async function POST(req) {
   try {
@@ -11,6 +10,10 @@ export async function POST(req) {
         { status: 400 }
       );
     }
+
+    // Dynamic import for Prisma
+    const { default: prismaClient } = await import("@/backend/prisma");
+    const prisma = prismaClient;
 
     const user = await prisma.user.upsert({
       where: { email },

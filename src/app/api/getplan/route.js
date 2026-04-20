@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import prisma from "@/backend/prisma";
 
 export async function GET(req) {
   try {
@@ -10,6 +9,10 @@ export async function GET(req) {
     if (!email) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
+
+    // Dynamic import for Prisma
+    const { default: prismaClient } = await import("@/backend/prisma");
+    const prisma = prismaClient;
 
     const user = await prisma.user.findUnique({
       where: { email }

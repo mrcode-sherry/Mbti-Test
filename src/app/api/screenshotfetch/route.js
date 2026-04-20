@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import prisma from "@/backend/prisma";
 
 export async function GET(req) {
   try {
@@ -15,6 +14,10 @@ export async function GET(req) {
         { status: 400 }
       );
     }
+
+    // Dynamic import for Prisma
+    const { default: prismaClient } = await import("@/backend/prisma");
+    const prisma = prismaClient;
 
     // Find proof by email
     const proof = await prisma.proof.findUnique({
