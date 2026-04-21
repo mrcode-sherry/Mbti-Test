@@ -27,12 +27,6 @@ const testimonials = [
     image: '/testimonial/user.jpg',
     message: 'As a mother, I always worried about my daughter’s future. Golden Future gave her direction with love and care. Now she is motivated and knows what she wants.',
   },
-  {
-    name: 'Hassam Shahryar',
-    role: 'Intermediate Student – Faisalabad',
-    image: '/testimonial/hassamimg.jpg',
-    message: 'This is not just a test, it’s like a mirror. I discovered my talents and what success really means for me. Golden Future gave me hope and a plan.',
-  },
 ];
 
 const Testimonial = () => {
