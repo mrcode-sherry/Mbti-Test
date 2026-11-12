@@ -8,30 +8,42 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [raahOpen, setRaahOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [completed, setCompleted] = useState(false);
-  const [proofSubmitted, setProofSubmitted] = useState(false); // ✅ Screenshot submitted
-  const [formSubmitted, setFormSubmitted] = useState(false); // ✅ Form submitted
-  const [approved, setApproved] = useState(false); // ✅ Proof approved
+  const [proofSubmitted, setProofSubmitted] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [approved, setApproved] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const dropdownRef = useRef(null);
+  const raahRef = useRef(null);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Close dropdown when clicking outside
+  // Active link helper
+  const navLink = (href) => {
+    const isActive = pathname === href;
+    return `relative px-3 py-1.5 rounded-lg transition-all duration-200 group
+      ${isActive
+        ? 'text-white bg-[#14442E] font-semibold'
+        : 'text-[#14442E] hover:text-white hover:bg-[#14442E]'
+      }`;
+  };
+
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setUserDropdownOpen(false);
       }
+      if (raahRef.current && !raahRef.current.contains(event.target)) {
+        setRaahOpen(false);
+      }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   // ✅ Load user + fetch proof + fetch approval + fetch test submission
@@ -244,27 +256,78 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <ul className="hidden md:flex items-center gap-4 text-[#14442E] text-[17px] font-medium mx-auto">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/about">About</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
-            
-            {/* Only show RAAH category */}
-            <li><Link href="/future-fit">RAAH</Link></li>
-            <li><Link href="/raah-for-schools">RAAH for Schools</Link></li>
+          <ul className="hidden md:flex items-center gap-1 text-[17px] font-medium mx-auto">
+            <li><Link href="/" className={navLink('/')}>Home</Link></li>
+            <li><Link href="/about" className={navLink('/about')}>About</Link></li>
 
-            {/* Show Student Dashboard only for logged in users who completed test */}
+            {/* RAAH Dropdown */}
+            <li className="relative" ref={raahRef}>
+              <button
+                onClick={() => setRaahOpen(prev => !prev)}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-lg transition-all duration-200
+                  ${pathname === '/future-fit' || pathname === '/raah-for-schools'
+                    ? 'text-white bg-[#14442E] font-semibold'
+                    : 'text-[#14442E] hover:text-white hover:bg-[#14442E]'
+                  }`}
+              >
+                RAAH
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${raahOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Dropdown panel */}
+              {raahOpen && (
+                <div className="absolute top-full left-0 mt-2 w-52 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50"
+                  style={{ animation: 'fadeSlideDown 0.18s ease forwards' }}
+                >
+                  <Link
+                    href="/future-fit"
+                    onClick={() => setRaahOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 text-sm font-medium transition-colors duration-150
+                      ${pathname === '/future-fit'
+                        ? 'bg-[#14442E] text-white'
+                        : 'text-[#14442E] hover:bg-[#F3F2ED]'
+                      }`}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-[#FDCA00] flex-shrink-0" />
+                    RAAH for Students
+                  </Link>
+                  <div className="h-px bg-gray-100" />
+                  <Link
+                    href="/raah-for-schools"
+                    onClick={() => setRaahOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 text-sm font-medium transition-colors duration-150
+                      ${pathname === '/raah-for-schools'
+                        ? 'bg-[#14442E] text-white'
+                        : 'text-[#14442E] hover:bg-[#F3F2ED]'
+                      }`}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-[#FDCA00] flex-shrink-0" />
+                    RAAH for Schools
+                  </Link>
+                </div>
+              )}
+            </li>
+
+            {/* Student Dashboard */}
             {user && user?.role !== 'admin' && completed && (
-              <li><Link href="/student-dashboard">Dashboard</Link></li>
+              <li><Link href="/student-dashboard" className={navLink('/student-dashboard')}>Dashboard</Link></li>
             )}
 
-            <li><Link href="/privacy-policy">Privacy Policy</Link></li>
-
+            {/* Admin Dashboard */}
             {user?.role === 'admin' && (
-              <li><Link href="/dashboard">Admin Dashboard</Link></li>
+              <li><Link href="/dashboard" className={navLink('/dashboard')}>Admin Dashboard</Link></li>
             )}
 
+            <li><Link href="/privacy-policy" className={navLink('/privacy-policy')}>Privacy Policy</Link></li>
+            <li><Link href="/contact" className={navLink('/contact')}>Contact</Link></li>
           </ul>
+
+          <style jsx global>{`
+            @keyframes fadeSlideDown {
+              from { opacity: 0; transform: translateY(-8px); }
+              to   { opacity: 1; transform: translateY(0); }
+            }
+          `}</style>
 
           {/* Desktop Right Side */}
           <div className="hidden md:flex items-center gap-3">
@@ -375,25 +438,64 @@ const Navbar = () => {
         {/* Mobile Dropdown */}
         {isOpen && (
           <div className="md:hidden bg-white px-8 pb-4">
-            <ul className="flex flex-col gap-4 text-[#14442E] font-medium">
-              <li><Link href="/" onClick={toggleMenu}>Home</Link></li>
-              <li><Link href="/about" onClick={toggleMenu}>About</Link></li>
-              <li><Link href="/contact" onClick={toggleMenu}>Contact</Link></li>
-              
-              {/* Only show RAAH category */}
-              <li><Link href="/future-fit" onClick={toggleMenu}>RAAH</Link></li>
-              <li><Link href="/raah-for-schools" onClick={toggleMenu}>RAAH for Schools</Link></li>
+            <ul className="flex flex-col gap-2 font-medium">
+              {/* Home */}
+              <li>
+                <Link href="/" onClick={toggleMenu} className={`block px-3 py-2 rounded-lg transition-all duration-200 ${pathname === '/' ? 'bg-[#14442E] text-white font-semibold' : 'text-[#14442E] hover:bg-[#14442E] hover:text-white'}`}>Home</Link>
+              </li>
+              {/* About */}
+              <li>
+                <Link href="/about" onClick={toggleMenu} className={`block px-3 py-2 rounded-lg transition-all duration-200 ${pathname === '/about' ? 'bg-[#14442E] text-white font-semibold' : 'text-[#14442E] hover:bg-[#14442E] hover:text-white'}`}>About</Link>
+              </li>
 
-              {/* Show Student Dashboard only for logged in users who completed test */}
+              {/* RAAH Dropdown Mobile */}
+              <li>
+                <button
+                  onClick={() => setRaahOpen(prev => !prev)}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-200
+                    ${pathname === '/future-fit' || pathname === '/raah-for-schools'
+                      ? 'bg-[#14442E] text-white font-semibold'
+                      : 'text-[#14442E] hover:bg-[#14442E] hover:text-white'
+                    }`}
+                >
+                  RAAH
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${raahOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {raahOpen && (
+                  <div className="mt-1 ml-4 flex flex-col gap-1">
+                    <Link href="/future-fit" onClick={() => { toggleMenu(); setRaahOpen(false); }} className={`block px-3 py-2 rounded-lg text-sm transition-all duration-200 ${pathname === '/future-fit' ? 'bg-[#14442E] text-white' : 'text-[#14442E] hover:bg-[#F3F2ED]'}`}>
+                      → RAAH for Students
+                    </Link>
+                    <Link href="/raah-for-schools" onClick={() => { toggleMenu(); setRaahOpen(false); }} className={`block px-3 py-2 rounded-lg text-sm transition-all duration-200 ${pathname === '/raah-for-schools' ? 'bg-[#14442E] text-white' : 'text-[#14442E] hover:bg-[#F3F2ED]'}`}>
+                      → RAAH for Schools
+                    </Link>
+                  </div>
+                )}
+              </li>
+
+              {/* Student Dashboard */}
               {user && user?.role !== 'admin' && completed && (
-                <li><Link href="/student-dashboard" onClick={toggleMenu}>Dashboard</Link></li>
+                <li>
+                  <Link href="/student-dashboard" onClick={toggleMenu} className={`block px-3 py-2 rounded-lg transition-all duration-200 ${pathname === '/student-dashboard' ? 'bg-[#14442E] text-white font-semibold' : 'text-[#14442E] hover:bg-[#14442E] hover:text-white'}`}>Dashboard</Link>
+                </li>
               )}
 
-              <li><Link href="/privacy-policy" onClick={toggleMenu}>Privacy Policy</Link></li>
-
+              {/* Admin Dashboard */}
               {user?.role === 'admin' && (
-                <li><Link href="/dashboard" onClick={toggleMenu}>Admin Dashboard</Link></li>
+                <li>
+                  <Link href="/dashboard" onClick={toggleMenu} className={`block px-3 py-2 rounded-lg transition-all duration-200 ${pathname === '/dashboard' ? 'bg-[#14442E] text-white font-semibold' : 'text-[#14442E] hover:bg-[#14442E] hover:text-white'}`}>Admin Dashboard</Link>
+                </li>
               )}
+
+              {/* Privacy Policy */}
+              <li>
+                <Link href="/privacy-policy" onClick={toggleMenu} className={`block px-3 py-2 rounded-lg transition-all duration-200 ${pathname === '/privacy-policy' ? 'bg-[#14442E] text-white font-semibold' : 'text-[#14442E] hover:bg-[#14442E] hover:text-white'}`}>Privacy Policy</Link>
+              </li>
+
+              {/* Contact */}
+              <li>
+                <Link href="/contact" onClick={toggleMenu} className={`block px-3 py-2 rounded-lg transition-all duration-200 ${pathname === '/contact' ? 'bg-[#14442E] text-white font-semibold' : 'text-[#14442E] hover:bg-[#14442E] hover:text-white'}`}>Contact</Link>
+              </li>
 
               <li>
                 {user ? (

@@ -1,39 +1,18 @@
 'use client';
 
 import React from "react";
-import { Check, Minus } from "lucide-react";
+import { Check } from "lucide-react";
 import Link from "next/link";
 
-
-const plans = [
-  {
-    name: "Golden Future",
-    price: "Rs. 3000",
-    popular: true,
-    features: [
-      "Report on your Strengths",
-      "Report on your weaknesses",
-      "What is success means to you",
-      "Strategies for your success",
-      "Problematic areas",
-      "Rules for succeed",
-      "Careers",
-      "Scholarships",
-      "Careers roadmap"
-    ],
-  },
-];
-
-const allFeatures = [
-  "Report on your Strengths",
-  "Report on your weaknesses",
-  "What is success means to you",
-  "Strategies for your success",
-  "Problematic areas",
-  "Rules for succeed",
-  "Careers",
-  "Scholarships",
-  "Careers roadmap"
+const advanceFeatures = [
+  "NSR (Natural Strength Report)",
+  "NWR (Natural Weakness Report)",
+  "SMU (Success Means To You)",
+  "PAR (Problematic Areas Report)",
+  "EPR (Educational Pathway Report)",
+  "PCS (Potential Careers and Skills)",
+  "National Scholarships",
+  "International Scholarships",
 ];
 
 const Comparison = () => {
@@ -58,45 +37,41 @@ const Comparison = () => {
           </p>
         </div>
 
-        {/* Plans header */}
+        {/* Plan card */}
         <div className="flex justify-center max-w-4xl mx-auto mb-16">
-          {plans.map((plan, index) => (
-            <div
-              key={index}
-              className="group relative bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 text-center border transition-all duration-300 hover:scale-105 hover:shadow-3xl border-[#FDCA00]/40 bg-gradient-to-br from-white to-[#FDCA00]/5 max-w-md"
-            >
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                <span className="bg-gradient-to-r from-[#FDCA00] to-[#f0c000] text-[#14442E] text-sm font-bold px-6 py-2 rounded-full shadow-lg animate-pulse">
-                  POPULAR
-                </span>
-              </div>
-              <div className="mt-2">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                  {plan.name}
-                </h3>
-                <div className="mb-8">
-                  <p className="text-[#14442E] font-bold text-3xl">
-                    {plan.price}
-                  </p>
-                  <p className="text-gray-500 text-sm mt-1">One-time payment</p>
-                </div>
-                <button 
-                  onClick={() => {
-                    window.location.href = '/future-fit';
-                    setTimeout(() => {
-                      const pricingSection = document.querySelector('[data-pricing-section]');
-                      if (pricingSection) {
-                        pricingSection.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }, 100);
-                  }}
-                  className="inline-block py-4 px-10 cursor-pointer duration-300 rounded-2xl font-bold text-white bg-gradient-to-r from-[#14442E] to-[#0c2f1e] hover:shadow-2xl hover:scale-105 transition-all shadow-xl"
-                >
-                  Get started
-                </button>
-              </div>
+          <div className="group relative bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 text-center border transition-all duration-300 hover:scale-105 hover:shadow-3xl border-[#FDCA00]/40 bg-gradient-to-br from-white to-[#FDCA00]/5 max-w-md w-full">
+            {/* POPULAR badge */}
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+              <span className="bg-gradient-to-r from-[#FDCA00] to-[#f0c000] text-[#14442E] text-sm font-bold px-6 py-2 rounded-full shadow-lg animate-pulse">
+                POPULAR
+              </span>
             </div>
-          ))}
+
+            <div className="mt-2">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Advance</h3>
+
+              {/* Price with sale */}
+              <div className="mb-2">
+                <span className="line-through text-gray-400 text-lg mr-2">Rs. 3000</span>
+                <span className="bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded-full">33% OFF</span>
+              </div>
+              <p className="text-[#14442E] font-bold text-4xl mb-1">Rs. 2000</p>
+              <p className="text-gray-500 text-sm mb-8">One-time payment</p>
+
+              <button
+                onClick={() => {
+                  window.location.href = '/future-fit';
+                  setTimeout(() => {
+                    const pricingSection = document.querySelector('[data-pricing-section]');
+                    if (pricingSection) pricingSection.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="inline-block py-4 px-10 cursor-pointer duration-300 rounded-2xl font-bold text-white bg-gradient-to-r from-[#14442E] to-[#0c2f1e] hover:shadow-2xl hover:scale-105 transition-all shadow-xl"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Features table */}
@@ -106,25 +81,19 @@ const Comparison = () => {
               <table className="w-full text-sm md:text-base">
                 <thead>
                   <tr className="bg-gradient-to-r from-[#14442E] to-[#0c2f1e]">
-                    <th className="text-left py-6 px-8 font-bold text-white text-lg">
-                      Benefits
-                    </th>
-                    <th className="py-6 px-8 font-bold text-white text-center text-lg">
-                      Golden Future
-                    </th>
+                    <th className="text-left py-6 px-8 font-bold text-white text-lg">Benefits</th>
+                    <th className="py-6 px-8 font-bold text-white text-center text-lg">Advance</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {allFeatures.map((feature, i) => (
-                    <tr 
-                      key={i} 
+                  {advanceFeatures.map((feature, i) => (
+                    <tr
+                      key={i}
                       className={`border-b border-gray-100 hover:bg-gradient-to-r hover:from-[#FDCA00]/5 hover:to-transparent transition-all duration-300 ${
                         i % 2 === 0 ? 'bg-gray-50/50' : 'bg-white'
                       }`}
                     >
-                      <td className="py-5 px-8 text-gray-700 font-medium">
-                        {feature}
-                      </td>
+                      <td className="py-5 px-8 text-gray-700 font-medium">{feature}</td>
                       <td className="py-5 px-8 text-center">
                         <div className="flex justify-center">
                           <div className="w-8 h-8 bg-gradient-to-r from-[#14442E] to-[#0c2f1e] rounded-full flex items-center justify-center shadow-lg">
@@ -138,14 +107,12 @@ const Comparison = () => {
               </table>
             </div>
           </div>
-          
-          {/* Call to action */}
+
+          {/* CTA */}
           <div className="text-center mt-12">
-            <p className="text-gray-600 mb-6 text-lg">
-              Still have questions? We're here to help!
-            </p>
-            <Link 
-              href="/contact" 
+            <p className="text-gray-600 mb-6 text-lg">Still have questions? We're here to help!</p>
+            <Link
+              href="/contact"
               className="inline-flex items-center gap-3 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] text-[#14442E] px-8 py-4 rounded-2xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
