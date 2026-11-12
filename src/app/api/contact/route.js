@@ -12,11 +12,14 @@ export async function POST(req) {
       message
     } = await req.json();
 
-    // Trim values
+    // Trim values and save all fields separately
     const data = {
-      name: `${firstName?.trim()} ${lastName?.trim()}`.trim(), // Combine first and last name
+      name: `${firstName?.trim()} ${lastName?.trim()}`.trim(),
       email: email?.trim(),
-      message: `Subject: ${subject?.trim()}\nPhone: ${phoneNumber?.trim()}\nMarital Status: ${maritalStatus?.trim()}\n\nMessage: ${message?.trim()}`
+      phoneNumber: phoneNumber?.trim() || null,
+      subject: subject?.trim() || null,
+      maritalStatus: maritalStatus?.trim() || null,
+      message: message?.trim(),
     };
 
     // Validate required fields
@@ -39,14 +42,23 @@ export async function POST(req) {
       );
     }
 
-    // Phone format validation
+    // Phone format validation - strip +, spaces, dashes before checking
     if (phoneNumber) {
-      const phoneRegex = /^[0-9]{10,15}$/;
-      if (!phoneRegex.test(phoneNumber.trim())) {
+      // Remove +, spaces, dashes, parentheses
+      let cleanPhone = phoneNumber.trim().replace(/[\s\-\+\(\)]/g, '');
+      
+      // If starts with 92 (country code), remove it → leaves 10 or 11 digit local number
+      if (cleanPhone.startsWith('92') && cleanPhone.length > 11) {
+        cleanPhone = cleanPhone.slice(2);
+      }
+      
+      // Now accept: 3002116854 (10 digits) or 03002116854 (11 digits starting with 0)
+      const phoneRegex = /^(0?3[0-9]{9})$/;
+      if (!phoneRegex.test(cleanPhone)) {
         return NextResponse.json(
           {
             success: false,
-            message: "Invalid phone number. Only digits allowed (10–15 characters)."
+            message: "Invalid phone number. Please enter a valid Pakistani mobile number (e.g. +92 3001234567)."
           },
           { status: 400 }
         );

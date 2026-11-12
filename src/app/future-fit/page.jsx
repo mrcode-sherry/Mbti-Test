@@ -263,7 +263,7 @@ const FutureFitPage = () => {
   };
 
   const futureFitData = {
-    title: "Find Your Best Career Fit",
+    title: "Find Your Best RAAH",
     subtitle: "A short assessment that helps you choose the right stream, subjects, and career direction after Matric, Inter, or A-Levels.",
     heroImage: "/future/hero.webp",
     targetAudience: [
@@ -303,9 +303,9 @@ const FutureFitPage = () => {
       { icon: BookOpen, title: "Get your report", subtitle: "Receive a comprehensive, instant career report." },
       { icon: TrendingUp, title: "Follow your roadmap", subtitle: "Use the actionable steps to plan your future." }
     ],
-    ctaTitle: "Ready to discover your Future Fit?",
+    ctaTitle: "Ready to discover your RAAH?",
     ctaSubtitle: "Take the first step towards your future with our comprehensive career assessment",
-    ctaButtonText: "Start Future Fit Test"
+    ctaButtonText: "Start RAAH Test"
   };
 
   return (
@@ -333,7 +333,7 @@ const FutureFitPage = () => {
               <div className="flex items-center justify-center gap-4 mb-4">
                 <div className="w-12 h-px bg-[#14442E] opacity-40" />
                 <p className="uppercase text-sm tracking-widest text-[#14442E] font-medium">
-                  Future Fit Plan
+                  RAAH Plan
                 </p>
                 <div className="w-12 h-px bg-[#14442E] opacity-40" />
               </div>
@@ -346,7 +346,7 @@ const FutureFitPage = () => {
             <div className="flex justify-center">
               <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[400px] justify-between h-full">
                 <div className="flex flex-col flex-grow">
-                  <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">Future Fit Premium</h3>
+                  <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">RAAH Premium</h3>
                   <div className="bg-gray-100 rounded-lg p-4 mb-6 h-[430px] md:h-[385px]">
                     <h4 className="text-lg font-semibold text-[#14442E] mb-4 border-b border-gray-300 pb-2">Benefits</h4>
                     <ul className="space-y-3 text-gray-700 text-sm leading-relaxed">

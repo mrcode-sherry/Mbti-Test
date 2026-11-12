@@ -9,7 +9,7 @@ const ContactForm = () => {
     firstName: "",
     lastName: "",
     email: "",
-    phoneNumber: "",
+    phoneNumber: "+92 ",
     subject: "Other",
     maritalStatus: "Single",
     message: "",
@@ -21,6 +21,17 @@ const ContactForm = () => {
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "phoneNumber") {
+      // Always keep +92 prefix — don't let user delete it
+      if (!value.startsWith("+92 ")) {
+        setFormData((prev) => ({ ...prev, phoneNumber: "+92 " }));
+        return;
+      }
+      setFormData((prev) => ({ ...prev, phoneNumber: value }));
+      return;
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -44,7 +55,7 @@ const ContactForm = () => {
           firstName: "",
           lastName: "",
           email: "",
-          phoneNumber: "",
+          phoneNumber: "+92 ",
           subject: "Other",
           maritalStatus: "Single",
           message: "",

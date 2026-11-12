@@ -42,6 +42,11 @@ const DashboardPage = () => {
   const [selectedTest, setSelectedTest] = useState(null);
   const [selectedContact, setSelectedContact] = useState(null);
 
+  // School Inquiries state
+  const [schoolInquiries, setSchoolInquiries] = useState([]);
+  const [loadingSchoolInquiries, setLoadingSchoolInquiries] = useState(false);
+  const [selectedInquiry, setSelectedInquiry] = useState(null);
+
   // ✅ Manage User states
   const [users, setUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(false);
@@ -61,7 +66,7 @@ const DashboardPage = () => {
   useEffect(() => {
     // Get tab from URL hash or default to "test"
     const hash = window.location.hash.replace('#', '');
-    const validTabs = ['test', 'contact', 'manage', 'future-fit', 'medical', 'it-career', 'entrepreneurship', 'ngo-community'];
+    const validTabs = ['test', 'contact', 'manage', 'future-fit', 'medical', 'it-career', 'entrepreneurship', 'ngo-community', 'school-inquiries'];
     
     if (hash && validTabs.includes(hash)) {
       setActiveTab(hash);
@@ -117,31 +122,51 @@ const DashboardPage = () => {
     }
   }, [activeTab]);
 
+  // Fetch school inquiries
+  useEffect(() => {
+    if (activeTab === "school-inquiries") {
+      setLoadingSchoolInquiries(true);
+      fetch('/api/school-inquiry')
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) setSchoolInquiries(data.data);
+          else setSchoolInquiries([]);
+        })
+        .catch(() => setSchoolInquiries([]))
+        .finally(() => setLoadingSchoolInquiries(false));
+    }
+  }, [activeTab]);
+
   // Fetch tests + proof - CONNECTED TO REAL API
   useEffect(() => {
     if (activeTab === "test") {
       setLoadingTests(true);
       
-      // Fetch both tests and proofs data
+      // Fetch tests, proofs and test submissions
       Promise.all([
         fetch('/api/showtest').then(res => res.json()),
-        fetch('/api/proof').then(res => res.json()).catch(() => ({ success: false, data: [] }))
+        fetch('/api/proof').then(res => res.json()).catch(() => ({ success: false, data: [] })),
+        fetch('/api/showsubmissions').then(res => res.json()).catch(() => ({ success: false, data: [] }))
       ])
-        .then(([testsResponse, proofsResponse]) => {
+        .then(([testsResponse, proofsResponse, submissionsResponse]) => {
           if (testsResponse.success) {
             const testsData = testsResponse.data;
             const proofsData = proofsResponse.success ? proofsResponse.data : [];
+            const submissionsData = submissionsResponse.success ? submissionsResponse.data : [];
             
-            // Merge test data with proof data
+            // Merge test data with proof and submission data
             const mergedData = testsData.map(test => {
               const proof = proofsData.find(p => p.email === test.email);
+              const submission = submissionsData.find(s => s.email === test.email);
               return {
                 ...test,
-                _id: test.id, // Map id to _id for compatibility
+                _id: test.id,
                 screenshotUrl: proof?.screenshotUrl || null,
                 tid: proof?.tid || null,
                 status: proof?.status || "pending",
-                paid: proof?.status === "approved"
+                paid: proof?.status === "approved",
+                mbtiResult: submission?.result || null,
+                mbtiPercentages: submission?.percentages || null,
               };
             });
             
@@ -514,7 +539,7 @@ const DashboardPage = () => {
                 onClick={() => handleTabChange("future-fit")}
               >
                 <span className="w-2 h-2 bg-emerald-400 rounded-full mr-3 group-hover:bg-emerald-300"></span>
-                <span className="font-medium">Future Fit</span>
+                <span className="font-medium">RAAH</span>
               </button>
               
               <button
@@ -563,6 +588,18 @@ const DashboardPage = () => {
               >
                 <span className="w-2 h-2 bg-orange-400 rounded-full mr-3 group-hover:bg-orange-300"></span>
                 <span className="font-medium">NGO Community</span>
+              </button>
+
+              <button
+                className={`w-full flex items-center px-4 py-3 rounded-xl text-left transition-all duration-300 group ${
+                  activeTab === "school-inquiries" 
+                    ? "bg-white/20 text-white shadow-lg transform scale-105" 
+                    : "hover:bg-white/10 hover:translate-x-1"
+                }`}
+                onClick={() => handleTabChange("school-inquiries")}
+              >
+                <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3 group-hover:bg-yellow-300"></span>
+                <span className="font-medium">School Inquiries</span>
               </button>
             </div>
           </nav>
@@ -896,11 +933,72 @@ const DashboardPage = () => {
         )}
 
         {/* ✅ NEW: Category Tabs */}
-        {activeTab === "future-fit" && renderCategoryList(futureFitUsers, "Future Fit", "border-green-500")}
+        {activeTab === "future-fit" && renderCategoryList(futureFitUsers, "RAAH", "border-green-500")}
         {activeTab === "medical" && renderCategoryList(medicalUsers, "Medical", "border-red-500")}
         {activeTab === "it-career" && renderCategoryList(itCareerUsers, "IT Career", "border-blue-500")}
         {activeTab === "entrepreneurship" && renderCategoryList(entrepreneurshipUsers, "Entrepreneurship", "border-purple-500")}
         {activeTab === "ngo-community" && renderCategoryList(ngoUsers, "NGO Community", "border-orange-500")}
+
+        {/* School Inquiries Tab */}
+        {activeTab === "school-inquiries" && (
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-yellow-500">
+                <h3 className="text-sm font-medium text-gray-500">Total Inquiries</h3>
+                <p className="text-2xl font-bold text-gray-900">{schoolInquiries.length}</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-green-500">
+                <h3 className="text-sm font-medium text-gray-500">Latest Inquiry</h3>
+                <p className="text-lg font-bold text-green-600">
+                  {schoolInquiries[0]?.schoolName || '—'}
+                </p>
+              </div>
+            </div>
+
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-black">School Inquiries</h2>
+
+            {loadingSchoolInquiries ? (
+              <div className="flex justify-center items-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+                <span className="ml-2 text-gray-600">Loading...</span>
+              </div>
+            ) : schoolInquiries.length > 0 ? (
+              <div className="overflow-x-auto bg-white rounded-lg shadow-sm border">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      {['School Name', 'City', 'Applicant', 'Email', 'Contact No', 'Preferred Contact', 'Message', 'Date'].map(h => (
+                        <th key={h} className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {schoolInquiries.map((inq) => (
+                      <tr key={inq.id} className="hover:bg-gray-50">
+                        <td className="px-4 py-3 text-sm font-medium text-gray-900 whitespace-nowrap">{inq.schoolName}</td>
+                        <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">{inq.city}</td>
+                        <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">{inq.applicantName}</td>
+                        <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">{inq.email}</td>
+                        <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">{inq.contactNo}</td>
+                        <td className="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">{inq.preferredContact}</td>
+                        <td className="px-4 py-3 text-sm text-gray-500 max-w-xs">
+                          <div className="truncate">{inq.message || '—'}</div>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">
+                          {new Date(inq.createdAt).toLocaleDateString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-center py-8 bg-gray-50 rounded-lg">
+                <p className="text-gray-500">No school inquiries yet.</p>
+              </div>
+            )}
+          </div>
+        )}
       </main>
       {/* Test Modal */}
       <Modal isOpen={!!selectedTest} onClose={() => setSelectedTest(null)}>
@@ -980,6 +1078,34 @@ const DashboardPage = () => {
               <p className="text-xs text-gray-500">
                 Submitted {new Date(selectedTest.createdAt).toLocaleString()}
               </p>
+
+              {/* MBTI Result & Percentages */}
+              {selectedTest.mbtiResult && (
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <p className="font-semibold text-[#14442E] mb-3">🧠 MBTI Result: <span className="text-2xl font-bold">{selectedTest.mbtiResult}</span></p>
+                  {selectedTest.mbtiPercentages && (
+                    <div className="space-y-2">
+                      {[
+                        { a: 'E', b: 'I', labelA: 'Extrovert', labelB: 'Introvert' },
+                        { a: 'S', b: 'N', labelA: 'Sensing', labelB: 'Intuition' },
+                        { a: 'T', b: 'F', labelA: 'Thinking', labelB: 'Feeling' },
+                        { a: 'J', b: 'P', labelA: 'Judging', labelB: 'Perceiving' },
+                      ].map(({ a, b, labelA, labelB }) => (
+                        <div key={a}>
+                          <div className="flex rounded overflow-hidden h-8 text-xs font-bold">
+                            <div className="bg-[#14442E] text-white flex items-center px-2" style={{ width: `${selectedTest.mbtiPercentages[a]}%` }}>
+                              {labelA} {selectedTest.mbtiPercentages[a]}%
+                            </div>
+                            <div className="bg-gray-200 text-gray-700 flex items-center justify-end px-2" style={{ width: `${selectedTest.mbtiPercentages[b]}%` }}>
+                              {selectedTest.mbtiPercentages[b]}% {labelB}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Payment Proof */}

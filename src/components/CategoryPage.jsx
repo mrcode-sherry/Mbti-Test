@@ -55,7 +55,7 @@ const CategoryPage = ({
   const faqs = [
     {
       question: "Is this for Matric/O-Levels?",
-      answer: "Yes, Future Fit is suitable for Matric and O‑Levels students, and it also works well for Inter/A‑Levels and university students."
+      answer: "Yes, RAAH is suitable for Matric and O‑Levels students, and it also works well for Inter/A‑Levels and university students."
     },
     {
       question: "Will it recommend one career only?",
@@ -175,7 +175,7 @@ const CategoryPage = ({
                   onClick={hasCompletedTest ? () => window.location.href = '/student-dashboard' : onStartTestClick}
                   className="bg-gradient-to-r from-[#05503C] to-[#044029] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl"
                 >
-                  {hasCompletedTest ? "View Dashboard" : "Start Future Fit Test"}
+                  {hasCompletedTest ? "View Dashboard" : "Start RAAH Test"}
                 </button>
               </div>
             </div>

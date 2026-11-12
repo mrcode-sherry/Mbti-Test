@@ -1,482 +1,386 @@
 [
   {
-    "title": "Jab mujhe farigh waqt milta hai to main zyada tar:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 1. Jab mujhe farigh waqt mile, main prefer karta/karti hun:",
     "options": [
-      {
-        "text": "Doston ya family ke sath waqt guzarna pasand karta/karti hun",
-        "example": "Parties mein jana, logon se milna, ya groups ke sath waqt guzarna",
-        "dimension": "E"
-      },
-      {
-        "text": "Akelay ya chand qareebi logon ke sath waqt guzarna pasand karta/karti hun",
-        "example": "Parhna, movies dekhna, ya qareebi doston ke sath gehri baat cheet karna",
-        "dimension": "I"
-      }
+      { "text": "A) Doston ya family ke sath waqt guzarna", "example": "Bahar jana, logon se milna, group mein waqt guzarna", "dimension": "E" },
+      { "text": "B) Akele ya 1-2 qareebi logon ke sath", "example": "Parhna, sukoon se araam karna ya qareebi dost se baat karna", "dimension": "I" }
     ]
   },
   {
-    "title": "Group activities mein main aam tor par:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 2. Group kaam mein, main aam tor par:",
     "options": [
-      {
-        "text": "Khul kar baat karta/karti hun aur apne ideas share karta/karti hun",
-        "example": "Main dusron ke samne apne khayal bayan karne mein aram mehsoos karta/karti hun",
-        "dimension": "E"
-      },
-      {
-        "text": "Pehle dusron ko sunta/sunti hun phir baat karta/karti hun",
-        "example": "Main apni rai share karne se pehle dusron ke khayal samajhna pasand karta/karti hun",
-        "dimension": "I"
-      }
+      { "text": "A) Pehle baat karta/karti aur ideas share karta/karti hun", "example": "Group mein foran hissa leta/leti hun", "dimension": "E" },
+      { "text": "B) Pehle sunta/sunti hun phir bolta/bolti hun", "example": "Doosron ki baat sun kar apni rai deta/deti hun", "dimension": "I" }
     ]
   },
   {
-    "title": "Masroof din ke baad mujhe fresh mehsoos hota hai jab:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 3. Masroof din ke baad main behtar mahsoos karta/karti hun:",
     "options": [
-      {
-        "text": "Main logon se milta hun aur baat karta hun",
-        "example": "Samaji mel jol mujhe dobara tawanai aur tazgi deta hai",
-        "dimension": "E"
-      },
-      {
-        "text": "Mujhe kuch waqt sukoon aur tanhai mein milta hai",
-        "example": "Mujhe din ko samajhne aur apni tawanai bahaal karne ke liye tanhai ki zaroorat hoti hai",
-        "dimension": "I"
-      }
+      { "text": "A) Logon se mil kar ya baatein kar ke", "example": "Dost ko phone karna ya bahar jana", "dimension": "E" },
+      { "text": "B) Khamoshi aur araam se", "example": "Ghar par akele sukoon se waqt guzarna", "dimension": "I" }
     ]
   },
   {
-    "title": "Class discussion mein main aam tor par:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 4. Class mein behas ke doran main aam tor par:",
     "options": [
-      {
-        "text": "Active taur par hissa leta/leti hun",
-        "example": "Main bahas mein hissa lene aur apne khayal share karne se lutf andoz hota/hoti hun",
-        "dimension": "E"
-      },
-      {
-        "text": "Pehle observe karta/karti hun phir baat karta/karti hun",
-        "example": "Main hissa lene se pehle sunna aur sochna pasand karta/karti hun",
-        "dimension": "I"
-      }
+      { "text": "A) Fa'aal tor par hissa leta/leti hun", "example": "Haath uthata/uthati aur rai deta/deti hun", "dimension": "E" },
+      { "text": "B) Soch kar phir bolta/bolti hun", "example": "Ghoor se sunta/sunti hun aur yaqeen ho to bolta/bolti hun", "dimension": "I" }
     ]
   },
   {
-    "title": "Naye logon se milte waqt main:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 5. Naye logon se milte waqt, main aam tor par:",
     "options": [
-      {
-        "text": "Asani se baat shuru kar leta/leti hun",
-        "example": "Main ajnabiyon ke sath baat cheet shuru karne mein aram mehsoos karta/karti hun",
-        "dimension": "E"
-      },
-      {
-        "text": "Intezaar karta/karti hun ke doosra shaks baat shuru kare",
-        "example": "Main pasand karta/karti hun ke dusre log baat cheet mein pehal karein",
-        "dimension": "I"
-      }
+      { "text": "A) Aasani se baat shuru kar deta/deti hun", "example": "Foran apna taaruf karata/karati aur baat karta/karti hun", "dimension": "E" },
+      { "text": "B) Jab comfortable mahsoos karun tab baat karta/karti hun", "example": "Waqt leta/leti hun aur aahista aahista khulta/khulti hun", "dimension": "I" }
     ]
   },
   {
-    "title": "Jab mujhe koi masla hal karna hota hai to main:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 6. Jab koi masla ho, main prefer karta/karti hun:",
     "options": [
-      {
-        "text": "Dusron se baat kar ke hal dhoondhna pasand karta/karti hun",
-        "example": "Bahas karna mujhe hal ke bare mein behtar sochne mein madad karta hai",
-        "dimension": "E"
-      },
-      {
-        "text": "Akelay soch kar hal nikalna pasand karta/karti hun",
-        "example": "Main behtereen kaam us waqt karta/karti hun jab khud se masail ke bare mein soch sakun",
-        "dimension": "I"
-      }
+      { "text": "A) Kisi se baat kar ke hal karna", "example": "Dost ya ghar walon se mashwara karna", "dimension": "E" },
+      { "text": "B) Akele soch kar hal nikalna", "example": "Khamoshi mein soch kar khud faisla karna", "dimension": "I" }
     ]
   },
   {
-    "title": "Group mein kaam karna mere liye:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 7. Nayi class ya taqreeb mein, main aam tor par:",
     "options": [
-      {
-        "text": "Khushgawar aur hosla barhane wala hota hai",
-        "example": "Main dusron ke sath kaam karne se tawanai aur ilham pata/pati hun",
-        "dimension": "E"
-      },
-      {
-        "text": "Thoda thakane wala lekin theek hota hai",
-        "example": "Main group mein kaam kar sakta/sakti hun lekin ye meri tawanai khatam kar deta hai",
-        "dimension": "I"
-      }
+      { "text": "A) Jaldi naye dost bana leta/leti hun", "example": "Shuru se logon se aasani se jur jata/jati hun", "dimension": "E" },
+      { "text": "B) Waqt le kar dhalata/dhalt hun", "example": "Pehle dekhta/dekhti hun, phir aahista aahista ghulta/ghulti hun", "dimension": "I" }
     ]
   },
   {
-    "title": "Apne ideas batate waqt main:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 8. Agar koi khayal aaye to main prefer karta/karti hun:",
     "options": [
-      {
-        "text": "Seedha bol kar batana pasand karta/karti hun",
-        "example": "Main apne khayal zabani aur fori tor par bayan karna pasand karta/karti hun",
-        "dimension": "E"
-      },
-      {
-        "text": "Pehle sochna ya likhna pasand karta/karti hun",
-        "example": "Main apne khayal share karne se pehle unhen munazzam karna pasand karta/karti hun",
-        "dimension": "I"
-      }
+      { "text": "A) Foran zabani batana", "example": "Logon ko foran bata deta/deti hun", "dimension": "E" },
+      { "text": "B) Pehle likh lena", "example": "Kaghaz par tarteeb de kar phir share karna", "dimension": "I" }
     ]
   },
   {
-    "title": "Jab main koi nayi cheez seekhta/seekhti hun to main:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 9. Parhai ke waqt main prefer karta/karti hun:",
     "options": [
-      {
-        "text": "Haqiqi misaalein aur practical maloomat pasand karta/karti hun",
-        "example": "Main thos misalon aur amli tajurbe ke sath behtereen seekhta/seekhti hun",
-        "dimension": "S"
-      },
-      {
-        "text": "Ideas aur future possibilities ke bare mein sochna pasand karta/karti hun",
-        "example": "Main tasawurat aur nazriati imkanat ko dariyaft karne se lutf andoz hota/hoti hun",
-        "dimension": "N"
-      }
+      { "text": "A) Kabhi kabhi dost ya group ke sath", "example": "Group study ya mil kar mauzu par baat karna", "dimension": "E" },
+      { "text": "B) Zyada tar akele parhna", "example": "Khamosh jagah mein poori tawajjuh se parhna", "dimension": "I" }
     ]
   },
   {
-    "title": "Parhai mein mujhe woh subjects zyada pasand hain jo:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 10. Log aksar mujhe kehte hain:",
     "options": [
-      {
-        "text": "Haqeeqat aur systems ko wazeh tor par samjhate hain",
-        "example": "Science, tareekh, ya wazeh haqaiq wale mazmoon",
-        "dimension": "S"
-      },
-      {
-        "text": "Theories aur naye ideas ko explore karte hain",
-        "example": "Falsafa, adab, ya imkanat ko dariyaft karne wale mazmoon",
-        "dimension": "N"
-      }
+      { "text": "A) Khula aur milansaar", "example": "Baatuni, samaji aur aasani se milne wala", "dimension": "E" },
+      { "text": "B) Pursukoon aur niji", "example": "Khamosh, muhtaat aur sochne wala", "dimension": "I" }
     ]
   },
   {
-    "title": "Jab main koi masla hal karta/karti hun to main:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 11. Jab main khush hota/hoti hun to aam tor par:",
     "options": [
-      {
-        "text": "Pehle se azmaye hue tareeqe use karta/karti hun",
-        "example": "Main qaim shuda tareeqon aur azmaye hue halon par bharosa karta/karti hun",
-        "dimension": "S"
-      },
-      {
-        "text": "Naye aur creative tareeqe try karta/karti hun",
-        "example": "Main jadeed halon ke sath tajurba karna pasand karta/karti hun",
-        "dimension": "N"
-      }
+      { "text": "A) Foran doosron ko batata/batati hun", "example": "Doston ya ghar walon ko foran khabar deta/deti hun", "dimension": "E" },
+      { "text": "B) Pehle khud mahsoos karta/karti hun", "example": "Khamoshi se khushi mahsoos karta/karti hun phir batata/batati hun", "dimension": "I" }
     ]
   },
   {
-    "title": "Main aam tor par zyada tawajju deta/deti hun:",
+    "category": "1) Samaji Taaqat (E vs I) — Sawal 1 ta 12",
+    "title": "Sawal 12. Team work mein mujhe zyada suhoolt hoti hai jab:",
     "options": [
-      {
-        "text": "Mojooda details aur facts par",
-        "example": "Ab kya ho raha hai aur thos maloomat",
-        "dimension": "S"
-      },
-      {
-        "text": "Future possibilities par",
-        "example": "Kya ho sakta hai aur mumkina mawaqe",
-        "dimension": "N"
-      }
+      { "text": "A) Hum khoob baat karein aur mil kar kaam karein", "example": "Khuli group behas aur ideas share karna", "dimension": "E" },
+      { "text": "B) Har ek apne hisse par khamoshi se kaam kare", "example": "Alag alag kaam kam guftagu ke sath", "dimension": "I" }
     ]
   },
   {
-    "title": "Jab main maloomat parhta/parhti hun to mujhe:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 13. Kuch naya seekhte waqt main prefer karta/karti hun:",
     "options": [
-      {
-        "text": "Wazeh aur practical explanation pasand hoti hai",
-        "example": "Qadam ba qadam hidayat aur thos tafseel",
-        "dimension": "S"
-      },
-      {
-        "text": "Baray ideas aur concepts pasand hote hain",
-        "example": "Nazriati frame work aur tajreed tasawurat",
-        "dimension": "N"
-      }
+      { "text": "A) Asli misaalein aur haqaiq", "example": "Qadam ba qadam hidaayaat aur amali misaalein", "dimension": "S" },
+      { "text": "B) Khayalaat aur mustaqbil ke imkaan", "example": "Tasawwuraat, nazariyaat aur mustaqbil ke baare mein sochna", "dimension": "N" }
     ]
   },
   {
-    "title": "Projects mein main aam tor par:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 14. Main koi mauzu behtar samajhta/samajhti hun jab:",
     "options": [
-      {
-        "text": "Wazeh instructions follow karta/karti hun",
-        "example": "Main tafsili rahnumai aur wazahat ke sath behtereen kaam karta/karti hun",
-        "dimension": "S"
-      },
-      {
-        "text": "Mukhtalif possibilities explore karta/karti hun",
-        "example": "Main tajurba karna aur mukhtalif tareeqe azmana pasand karta/karti hun",
-        "dimension": "N"
-      }
+      { "text": "A) Qadam ba qadam samjhaya jaye", "example": "Wazeh, mantiqi aur tarteeb se wazahat", "dimension": "S" },
+      { "text": "B) Pehle markazi khayal samjhun", "example": "Pehle bari tasveer phir tafseel", "dimension": "N" }
     ]
   },
   {
-    "title": "Mujhe aisi cheezen seekhna pasand hai jo:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 15. Mujhe maloomat par zyada yaqeen hota hai jab woh:",
     "options": [
-      {
-        "text": "Foran practical life mein kaam aayen",
-        "example": "Amli maharat jo main fori tor par istemaal kar sakun",
-        "dimension": "S"
-      },
-      {
-        "text": "Baray ideas samajhne mein madad dein",
-        "example": "Nazriati ilm jo meri samajh ko wase kare",
-        "dimension": "N"
-      }
+      { "text": "A) Amali aur saabit shuda ho", "example": "Haqaiq, data aur tajrube par mabni", "dimension": "S" },
+      { "text": "B) Takhleqi aur imkaanaat se bharpur ho", "example": "Naye khayalaat aur nazariyaat chahe abhi saabit na hon", "dimension": "N" }
     ]
   },
   {
-    "title": "Study karte waqt main:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 16. School mein main aam tor par zyada tawajjuh deta/deti hun:",
     "options": [
-      {
-        "text": "Step by step instructions pasand karta/karti hun",
-        "example": "Tafsili rahnumai ke sath wazeh, tartibi seekhna",
-        "dimension": "S"
-      },
-      {
-        "text": "Pehle poora idea samajhna pasand karta/karti hun",
-        "example": "Tafseel mein jane se pehle bari tasveer ko samajhna",
-        "dimension": "N"
-      }
+      { "text": "A) Tafseel aur durusti par", "example": "Har baar durust jawab haasil karna", "dimension": "S" },
+      { "text": "B) Bari tasveer aur ma'ana par", "example": "Yeh samajhna ke yeh kyun ahem hai", "dimension": "N" }
     ]
   },
   {
-    "title": "Decision karte waqt main zyada tar:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 17. Parhte waqt mujhe zyada acha lagta hai:",
     "options": [
-      {
-        "text": "Logic aur facts par bharosa karta/karti hun",
-        "example": "Main data ka tajzia karta/karti hun aur aqli soch istemaal karta/karti hun",
-        "dimension": "T"
-      },
-      {
-        "text": "Apne feelings aur values ko bhi ahmiyat deta/deti hun",
-        "example": "Main sochta/sochti hun ke kya sahi lagta hai aur meri qadron se mel khata hai",
-        "dimension": "F"
-      }
+      { "text": "A) Wazeh maloomat aur misaalon wali tehreer", "example": "Kitabein, guides, haqaiq par mabni mazameen", "dimension": "S" },
+      { "text": "B) Tasawwuraat aur naye khayalaat wali tehreer", "example": "Sochne par majboor karne wale mazameen ya novel", "dimension": "N" }
     ]
   },
   {
-    "title": "Agar do logon mein disagreement ho jaye to main:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 18. Masla hal karte waqt main prefer karta/karti hun:",
     "options": [
-      {
-        "text": "Sab se logical solution par focus karta/karti hun",
-        "example": "Main behtereen mazrooi jawab talash karta/karti hun",
-        "dimension": "T"
-      },
-      {
-        "text": "Dono ke jazbaat ko bhi madde nazar rakhta/rakhti hun",
-        "example": "Main dono nuqta nazar aur jazbaat ko samajhne ki koshish karta/karti hun",
-        "dimension": "F"
-      }
+      { "text": "A) Woh tareeqa jo pehle se kamyaab ho", "example": "Saabit shuda formula ya tareeqa istimaal karna", "dimension": "S" },
+      { "text": "B) Naya tareeqa aazmaana", "example": "Mukhtalif tariqon se tajruba karna", "dimension": "N" }
     ]
   },
   {
-    "title": "Jab main kisi ko feedback deta/deti hun to main:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 19. Mujhe woh cheezein seekhna pasand hai jo:",
     "options": [
-      {
-        "text": "Seedhi aur saaf baat karna pasand karta/karti hun",
-        "example": "Main seedhi, haqaiq par mabni rai deta/deti hun",
-        "dimension": "T"
-      },
-      {
-        "text": "Narmi aur hosla dene wale andaz mein baat karta/karti hun",
-        "example": "Main hosla afzai aur ehtiyat par tawajju deta/deti hun",
-        "dimension": "F"
-      }
+      { "text": "A) Roz marra zindagi mein jaldi kaam aayein", "example": "Woh mahaaraten jo foran istimaal ho sakein", "dimension": "S" },
+      { "text": "B) Naye andaaz se sochna sikhaayein", "example": "Mera nuqta nazar aur takhayyal wasi karein", "dimension": "N" }
     ]
   },
   {
-    "title": "Conflict solve karte waqt main zyada focus karta/karti hun:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 20. Projects mein main aam tor par:",
     "options": [
-      {
-        "text": "Insaf aur logical result par",
-        "example": "Sab se zyada aqli aur munsifana hal talash karna",
-        "dimension": "T"
-      },
-      {
-        "text": "Rishton ko behtar banaye rakhne par",
-        "example": "Rishton ko musbat aur puraman rakhna",
-        "dimension": "F"
-      }
+      { "text": "A) Hidaayaat ko ehtiyaat se follow karta/karti hun", "example": "Di gayi guidelines par amal karna", "dimension": "S" },
+      { "text": "B) Mukhtalif imkaan talaash karta/karti hun", "example": "Hidaayaat se aage naye khayalaat aazmana", "dimension": "N" }
     ]
   },
   {
-    "title": "Discussion mein main zyada ahmiyat deta/deti hun:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 21. Main zyada notice karta/karti hun:",
     "options": [
-      {
-        "text": "Mazboot logic aur daleel ko",
-        "example": "Achi tarah se tawun yafta mantaqi nukat aur saboot",
-        "dimension": "T"
-      },
-      {
-        "text": "Logon ke point of view ko samajhne ko",
-        "example": "Hamdardi aur mukhtalif nuqta nazar ko madde nazar rakhna",
-        "dimension": "F"
-      }
+      { "text": "A) Abhi kya ho raha hai", "example": "Maujuda haqaiq, maujuda tafseelaaat, jo dikh raha hai", "dimension": "S" },
+      { "text": "B) Aage kya ho sakta hai", "example": "Mustaqbil ke namoone, imkaan aur rujhaanaat", "dimension": "N" }
     ]
   },
   {
-    "title": "Jab main kisi idea ka jaiza leta/leti hun to main:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 22. Main woh ustaad pasand karta/karti hun jo:",
     "options": [
-      {
-        "text": "Neutral analysis karta/karti hun",
-        "example": "Haqaiq aur mantaqi merit ko dekhna",
-        "dimension": "T"
-      },
-      {
-        "text": "Logon par uske asraat bhi dekhta/dekhti hun",
-        "example": "Ye sochna ke ye afrad aur rishton ko kaise mutasir karta hai",
-        "dimension": "F"
-      }
+      { "text": "A) Wazeh haqaiq aur mashq se parhaayein", "example": "Munazzam sabaq misaalon aur mashq ke sath", "dimension": "S" },
+      { "text": "B) Khayalaat aur behas se parhaayein", "example": "Khuli guftagu aur takhleqi soch", "dimension": "N" }
     ]
   },
   {
-    "title": "Jab koi rule break karta hai to main zyada sochta/sochti hun:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 23. Mujhe woh kaam ache lagte hain jo:",
     "options": [
-      {
-        "text": "Kya sahi aur insaf par mabni hai",
-        "example": "Usulon ko mustaqil aur munsifana tareeqe se lagu karna",
-        "dimension": "T"
-      },
-      {
-        "text": "Us shaks ne aisa kyun kiya",
-        "example": "Halat aur muharikat ko samajhna",
-        "dimension": "F"
-      }
+      { "text": "A) Wazeh aur durust jawabon wale hon", "example": "Riyazi ke sawal, mutayyun kaam ek durust jawab ke sath", "dimension": "S" },
+      { "text": "B) Mukhtalif jawabon aur takhleqiyat ki gunjaish dein", "example": "Mazameen, art, khule sawal", "dimension": "N" }
     ]
   },
   {
-    "title": "Do options mein se decision karte waqt main:",
+    "category": "2) Seekhne ka Andaz (S vs N) — Sawal 13 ta 24",
+    "title": "Sawal 24. Apna mustaqbil sochte waqt main zyada sochta/sochti hun:",
     "options": [
-      {
-        "text": "Logical faidon ka muqabla karta/karti hun",
-        "example": "Main fawaid aur nuqsanat ka mazrooi jaiza leta/leti hun",
-        "dimension": "T"
-      },
-      {
-        "text": "Emotional impact bhi dekhta/dekhti hun",
-        "example": "Main sochta/sochti hun ke har intikhab mujhe aur dusron ko kaisa mehsoos karae ga",
-        "dimension": "F"
-      }
+      { "text": "A) Amali qadam aur abhi kya mumkin hai", "example": "Maujuda haalaaat mein kya kar sakta/sakti hun", "dimension": "S" },
+      { "text": "B) Bare khwab aur mustaqbil ke mawaqi", "example": "Das se bees saal baad kahan hona chahta/chahti hun", "dimension": "N" }
     ]
   },
   {
-    "title": "Jab main koi kaam shuru karta/karti hun to main:",
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 25. Faisla karte waqt main zyada istimaal karta/karti hun:",
     "options": [
-      {
-        "text": "Pehle poora plan banana pasand karta/karti hun",
-        "example": "Main shuru karne se pehle tafsili mansuba banana pasand karta/karti hun",
-        "dimension": "J"
-      },
-      {
-        "text": "Kaam shuru kar ke baad mein adjust karna pasand karta/karti hun",
-        "example": "Main lachakdar rehna aur chalte chalte dhalna pasand karta/karti hun",
-        "dimension": "P"
-      }
+      { "text": "A) Mantiq aur haqaiq", "example": "Faayde aur nuqsaan ka data ki bunyaad par jaiza", "dimension": "T" },
+      { "text": "B) Ehsasaat aur zaati aqdar", "example": "Jo meri aqdar aur jazbaat ke mutabiq ho", "dimension": "F" }
     ]
   },
   {
-    "title": "Mujhe zyada sukoon hota hai jab:",
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 26. Koi sorat-e-haal parkh-te waqt main zyada tawajjuh deta/deti hun:",
     "options": [
-      {
-        "text": "Mera schedule organized hota hai",
-        "example": "Main dhancha rakhna aur ye janna pasand karta/karti hun ke kya tawaqo karna hai",
-        "dimension": "J"
-      },
-      {
-        "text": "Mera schedule flexible hota hai",
-        "example": "Main apne ikhtiyarat khule rakhna aur be sakhta hona pasand karta/karti hun",
-        "dimension": "P"
-      }
+      { "text": "A) Kya sahih aur munsifana hai", "example": "Jazbaat se qat-e-nazar mauzooi sachai", "dimension": "T" },
+      { "text": "B) Log kaisa mahsoos karein ge", "example": "Sab par jazbati asar", "dimension": "F" }
     ]
   },
   {
-    "title": "Kaam complete karte waqt main aam tor par:",
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 27. Rai dete waqt main prefer karta/karti hun:",
     "options": [
-      {
-        "text": "Deadline se pehle khatam karne ki koshish karta/karti hun",
-        "example": "Main akhri tareekh se kafi pehle kaam mukammal karna pasand karta/karti hun",
-        "dimension": "J"
-      },
-      {
-        "text": "Aksar deadline ke qareeb kaam karta/karti hun",
-        "example": "Main aksar waqt ke dabao mein behtereen kaam karta/karti hun",
-        "dimension": "P"
-      }
+      { "text": "A) Sidha aur wazeh baat", "example": "Baghair narmi ke batana kya behtar ho sakta hai", "dimension": "T" },
+      { "text": "B) Narmi aur hosla afzai se baat", "example": "Tanqeed ko muthbat alfaaz mein lipetna", "dimension": "F" }
     ]
   },
   {
-    "title": "Rozmarra zindagi mein main:",
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 28. Behas mein mujhe zyada parwa hoti hai:",
     "options": [
-      {
-        "text": "Clear plans pasand karta/karti hun",
-        "example": "Main ye janna pasand karta/karti hun ke main kya kar raha/rahi hun aur kab",
-        "dimension": "J"
-      },
-      {
-        "text": "Baad mein decision lene ki azadi pasand karta/karti hun",
-        "example": "Main apne ikhtiyarat khule rakhna aur be sakhta faisla karna pasand karta/karti hun",
-        "dimension": "P"
-      }
+      { "text": "A) Mazboot daleel ki", "example": "Mantiqi aur mudallal istedlaal", "dimension": "T" },
+      { "text": "B) Ek doosre ko samajhne ki", "example": "Jazbati ham ahangi talaash karna", "dimension": "F" }
     ]
   },
   {
-    "title": "Mera parhne ka style aam tor par:",
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 29. Jab koi pareshan ho to main aam tor par:",
     "options": [
-      {
-        "text": "Organized aur schedule ke mutabiq hota hai",
-        "example": "Main baqaida mutalia ki routine aur time table ki pairwi karta/karti hun",
-        "dimension": "J"
-      },
-      {
-        "text": "Mood aur situation ke mutabiq hota hai",
-        "example": "Main us waqt parhta/parhti hun jab main muharik ya mutasir mehsoos karta/karti hun",
-        "dimension": "P"
-      }
+      { "text": "A) Masla hal karne ki koshish karta/karti hun", "example": "Sorat-e-haal theek karne ke amali hal pesh karna", "dimension": "T" },
+      { "text": "B) Pehle use tasalli deta/deti hun", "example": "Mashwara dene se pehle sunna aur hamdardi dikhana", "dimension": "F" }
     ]
   },
   {
-    "title": "Safar karte waqt main:",
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 30. Agar qawaid torein jaayein to main aam tor par sochta/sochti hun:",
     "options": [
-      {
-        "text": "Pehle se poora plan banana pasand karta/karti hun",
-        "example": "Main pehle se tahqeeq karna aur sargarmiyon ki mansuba bandi karna pasand karta/karti hun",
-        "dimension": "J"
-      },
-      {
-        "text": "Baghair strict plan ke explore karna pasand karta/karti hun",
-        "example": "Main be sakhta cheezon ko dariyaft karne se lutf andoz hota/hoti hun",
-        "dimension": "P"
-      }
+      { "text": "A) Qawaid ahem hain aur un par amal hona chahiye", "example": "Qawaid ki wajah hai aur unhein maana jana chahiye", "dimension": "T" },
+      { "text": "B) Wajah bhi ahem hai, log ghaltiyan karte hain", "example": "Siyaq o sabaaq aur niyat qaanoon se zyada ahem hai", "dimension": "F" }
     ]
   },
   {
-    "title": "Mujhe zyada behtari mehsoos hoti hai jab:",
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 31. Ikhtiyaraat mein se intikhab karte waqt main moazna karta/karti hun:",
     "options": [
-      {
-        "text": "Cheezen decide ho kar organized ho jayein",
-        "example": "Main ikhtitam aur mamlat ka tay hona pasand karta/karti hun",
-        "dimension": "J"
-      },
-      {
-        "text": "Mukhtalif options khulay rahen",
-        "example": "Main imkanat ko dastiyab rakhna pasand karta/karti hun",
-        "dimension": "P"
-      }
+      { "text": "A) Faayde aur nuqsanaat", "example": "Fawaaid o nuqsanaat ki mantiqi fehrist", "dimension": "T" },
+      { "text": "B) Mujhe kya sahih lagta hai", "example": "Mera dil kya kehta hai aur meri aqdar", "dimension": "F" }
     ]
   },
   {
-    "title": "Assignments karte waqt main:",
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 32. Team mein mujhe zyada ahmiyat hai:",
     "options": [
-      {
-        "text": "Step by step complete karna pasand karta/karti hun",
-        "example": "Main har hisse ke zariye munazzam tareeqe se kaam karta/karti hun",
-        "dimension": "J"
-      },
-      {
-        "text": "Jab idea aaye tab tezi se kaam karna pasand karta/karti hun",
-        "example": "Main muharik mehsoos karne par shiddat se kaam karta/karti hun",
-        "dimension": "P"
-      }
+      { "text": "A) Karkardagi aur nataij ki", "example": "Kaam waqt par aur ache tareeqe se mukammal karna", "dimension": "T" },
+      { "text": "B) Ham ahangi aur ta'awun ki", "example": "Sab shaamil aur suna mahsoos karein", "dimension": "F" }
+    ]
+  },
+  {
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 33. Jab main kisi se ikhtilaf karun to aam tor par:",
+    "options": [
+      { "text": "A) Wazeh tor par kehta/kehti hun", "example": "Apna ikhtilaf sidha aur khul kar bayan karna", "dimension": "T" },
+      { "text": "B) Alfaaz soch kar istimaal karta/karti hun", "example": "Muhtaat rehna taake koi naraaz na ho", "dimension": "F" }
+    ]
+  },
+  {
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 34. Jab faisla logon par asar daale to main zyada sochta/sochti hun:",
+    "options": [
+      { "text": "A) Sab se behtar mantiqi natija", "example": "Majmui tor par sab se aqalmandana baat kya hai", "dimension": "T" },
+      { "text": "B) Logon par asar", "example": "Yeh logon ke jazbaat aur falah par kya asar daale ga", "dimension": "F" }
+    ]
+  },
+  {
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 35. Mujhe zyada araam aata hai jab faislay:",
+    "options": [
+      { "text": "A) Wazeh qawaid par mabni hon", "example": "Ek mutayyun policy ya mi'yaar ho", "dimension": "T" },
+      { "text": "B) Zaati haalaaat ke mutabiq hon", "example": "Har mamla us ke apne haalaaat ke mutabiq dekhna", "dimension": "F" }
+    ]
+  },
+  {
+    "category": "3) Faisla Karne ka Andaz (T vs F) — Sawal 25 ta 36",
+    "title": "Sawal 36. Muqaablon mein meri tawajjuh zyada hoti hai:",
+    "options": [
+      { "text": "A) Karkardagi aur munsifana jeet par", "example": "Maharat aur mehnat se behtareen natija haasil karna", "dimension": "T" },
+      { "text": "B) Ta'alluqaat aur ache jazbe par", "example": "Amal se lutf uthana aur achi kheladi bhaawna rakhna", "dimension": "F" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 37. Kaam shuru karte waqt main prefer karta/karti hun:",
+    "options": [
+      { "text": "A) Pehle mansooba banana", "example": "Shuru karne se pehle fehrist ya khaaka banana", "dimension": "J" },
+      { "text": "B) Shuru kar ke baad mein dhalna", "example": "Kood parna aur chalte chalte seekhna", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 38. Main behtar mahsoos karta/karti hun jab mera din:",
+    "options": [
+      { "text": "A) Munazzam aur tarteeb dar ho", "example": "Mansoobaband sargarmion ke sath wazeh time table", "dimension": "J" },
+      { "text": "B) Lacheela aur khula ho", "example": "Behte behte chalna aur waqt ke sath faisla karna", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 39. Imtihanaat se pehle main aam tor par:",
+    "options": [
+      { "text": "A) Jaldi shuru karta/karti aur baqaidagi se dohraaata/dohraaati hun", "example": "Imtihaan se hafte pehle mutaale ka mansooba", "dimension": "J" },
+      { "text": "B) Imtihaan qareeb aane par zyada dohraaata/dohraaati hun", "example": "Aakhri waqt mein gehra kaam", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 40. Assignment karte waqt mujhe pasand hai:",
+    "options": [
+      { "text": "A) Wazeh qadam aur tarteeb", "example": "Shuru se aakhir tak munazzam tareeqa", "dimension": "J" },
+      { "text": "B) Apne andaaz se karne ki azaadi", "example": "Kamon ko mukammal karne mein lachak aur takhleqiyat", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 41. Main woh ustaad pasand karta/karti hun jo:",
+    "options": [
+      { "text": "A) Wazeh deadline aur hidaayaat dein", "example": "Munazzam class wazeh tawaqqa'aat ke sath", "dimension": "J" },
+      { "text": "B) Kaam karne mein lachak dein", "example": "Assignment mukammal karne ka tareeqa khud chunne ki azaadi", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 42. Jab mansooby achanak badal jaayein to main aam tor par:",
+    "options": [
+      { "text": "A) Takleef mahsoos karta/karti hun", "example": "Asli mansoobe par rehna pasand karta/karti hun", "dimension": "J" },
+      { "text": "B) Aasani se dhal jaata/jaati hun", "example": "Baghair zyada tanaao ke jaldi dhal jaana", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 43. Main apna kamra ya mutaale ki jagah aam tor par rakhta/rakhti hun:",
+    "options": [
+      { "text": "A) Zyada tar munazzam", "example": "Har cheez apni jagah par aur saaf suthra", "dimension": "J" },
+      { "text": "B) Bilkul durust nahi lekin kaam chalta hai", "example": "Thora bikhara hua lekin jaanta/jaanti hun sab kahan hai", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 44. Jab bahut se kaam hon to main prefer karta/karti hun:",
+    "options": [
+      { "text": "A) Check list banana", "example": "Saare kaam likhna aur ek ek tick karna", "dimension": "J" },
+      { "text": "B) Jo kaam zaroori lage woh karna", "example": "Jo tawajjuh maange use us waqt karna", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 45. Main woh weekend pasand karta/karti hun jo:",
+    "options": [
+      { "text": "A) Thora bahut mansoobaband ho", "example": "Kya karun ga us ka halka phulka khaaka", "dimension": "J" },
+      { "text": "B) Khula ho baghair kisi mansoobe ke", "example": "Din barhne ke sath faisla karna", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 46. Mujhe faislay pasand hain jo:",
+    "options": [
+      { "text": "A) Aakhri aur tay shuda hon", "example": "Ek baar tay ho jaye to baghair shak aage badhun", "dimension": "J" },
+      { "text": "B) Aakhri lamhe tak khule rahein", "example": "Jab tak mumkin ho ikhtiyaraat khule rakhna", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 47. Main sab se acha kaam karta/karti hun:",
+    "options": [
+      { "text": "A) Mustaqil ma'amool mein", "example": "Baqaida aur mustaqil kaam ke awqaat", "dimension": "J" },
+      { "text": "B) Lacheele waqfon mein", "example": "Jab josh ho ya hosla ho tab tezi se kaam karna", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Kaam aur Mansooba Bandi (J vs P) — Sawal 37 ta 48",
+    "title": "Sawal 48. Group projects mein main aam tor par:",
+    "options": [
+      { "text": "A) Wazeh kirdar aur deadline pasand karta/karti hun", "example": "Sab ko pata ho kya karna hai aur kab tak", "dimension": "J" },
+      { "text": "B) Mazeed jaanne tak ikhtiyaraat khule rakhna pasand karta/karti hun", "example": "Project aage barhne ke sath kirdar badalne ki lachak", "dimension": "P" }
     ]
   }
 ]

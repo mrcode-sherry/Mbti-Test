@@ -87,7 +87,8 @@ const Footer = () => {
           <ul className="flex flex-col gap-2 text-sm">
             <li><Link href="/" className="hover:underline">Home</Link></li>
             <li><Link href="/about" className="hover:underline">About</Link></li>
-            <li><Link href="/future-fit" className="hover:underline">Future Fit</Link></li>
+            <li><Link href="/future-fit" className="hover:underline">RAAH</Link></li>
+            <li><Link href="/raah-for-schools" className="hover:underline">RAAH for Schools</Link></li>
           </ul>
         </div>
 
@@ -98,6 +99,15 @@ const Footer = () => {
             <li><Link href="/contact" className="hover:underline">Contact</Link></li>
             <li><Link href="/privacy-policy" className="hover:underline">Privacy Policy</Link></li>
           </ul>
+          {/* Company Address */}
+          <div className="mt-6">
+            <h3 className="text-lg font-semibold mb-2">Our Address</h3>
+            <p className="text-gray-300 text-sm leading-relaxed">
+              Barkat Pura, Block C,<br />
+              Street No. 2, Halal Road,<br />
+              Lahore, Pakistan
+            </p>
+          </div>
         </div>
 
         {/* Column 4: Newsletter */}

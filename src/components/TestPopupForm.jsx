@@ -33,7 +33,7 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
     careerPreferences: '',
 
     // Section 7: Test Category Selection
-    testCategory: 'Future Fit', // Default selected
+    testCategory: 'RAAH', // Default selected
 
     // Keep existing fields for backward compatibility
     countryCode: '+92',
@@ -615,13 +615,13 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
                     type="radio"
                     id="future-fit"
                     name="testCategory"
-                    value="Future Fit"
-                    checked={formData.testCategory === 'Future Fit'}
+                    value="RAAH"
+                    checked={formData.testCategory === 'RAAH'}
                     onChange={handleChange}
                     className="w-5 h-5 text-[#14442E] border-gray-300 focus:ring-[#14442E]"
                   />
                   <label htmlFor="future-fit" className="ml-4 text-gray-700 font-medium text-lg">
-                    ☑️ Future Fit (Career Guidance — All Fields)
+                    ☑️ RAAH (Roadmap, Aspirations, Ambitions, and Horizons)
                   </label>
                 </div>
                 <p className="text-sm text-gray-500 mt-3 ml-9">
