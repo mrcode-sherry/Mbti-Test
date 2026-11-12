@@ -32,7 +32,8 @@ export async function POST(req) {
     return NextResponse.json({
       success: true,
       completed: !!submission,
-      result: submission?.result || null
+      result: submission?.result || null,
+      percentages: submission?.percentages || null
     });
 
   } catch (error) {

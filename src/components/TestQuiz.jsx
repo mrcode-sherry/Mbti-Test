@@ -98,6 +98,34 @@ const TestQuiz = () => {
     );
   };
 
+  const calculatePercentages = () => {
+    const counts = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+    selectedAnswers.forEach(ans => {
+      if (ans.dimension && counts.hasOwnProperty(ans.dimension)) {
+        counts[ans.dimension]++;
+      }
+    });
+    // Each pair is out of 12 questions
+    const toPercent = (a, b) => {
+      const total = a + b;
+      if (total === 0) return { a: 50, b: 50 };
+      return {
+        a: Math.round((a / total) * 100),
+        b: Math.round((b / total) * 100)
+      };
+    };
+    const ei = toPercent(counts.E, counts.I);
+    const sn = toPercent(counts.S, counts.N);
+    const tf = toPercent(counts.T, counts.F);
+    const jp = toPercent(counts.J, counts.P);
+    return {
+      E: ei.a, I: ei.b,
+      S: sn.a, N: sn.b,
+      T: tf.a, F: tf.b,
+      J: jp.a, P: jp.b
+    };
+  };
+
   // TTS function removed
 
   const handleNext = async () => {
@@ -105,18 +133,19 @@ const TestQuiz = () => {
     if (currentIndex + 1 < questions.length) {
       setCurrentIndex(currentIndex + 1);
       setSelectedOptionIndex(null);
-    } else {
-      setLoading(true);
+    } else {      setLoading(true);
       try {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user?.email) {
           const result = calculateResult();
+          const percentages = calculatePercentages();
 
           // Save to localStorage first as backup
           const prevResults = JSON.parse(localStorage.getItem('testResults') || '[]');
           prevResults.push(result);
           localStorage.setItem('testResults', JSON.stringify(prevResults));
           localStorage.setItem('testResult', result);
+          localStorage.setItem('testPercentages', JSON.stringify(percentages));
 
           // Try to save to database
           try {
@@ -127,6 +156,7 @@ const TestQuiz = () => {
                 email: user.email, 
                 answers: selectedAnswers, 
                 result: result,
+                percentages: percentages,
                 languages: selectedLanguages
               }),
             });
@@ -238,6 +268,10 @@ const TestQuiz = () => {
   const questions = getQuestions();
   const currentQuestion = questions[currentIndex];
 
+  // Check if this question starts a new category
+  const isNewCategory = currentIndex === 0 || 
+    questions[currentIndex].category !== questions[currentIndex - 1].category;
+
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center h-[400px] gap-4">
@@ -343,12 +377,20 @@ const TestQuiz = () => {
         ))}
       </div>
 
+      {/* Category Header - show when new category starts */}
+      {isNewCategory && currentQuestion.category && (
+        <div className={`mb-4 px-4 py-3 bg-[#14442E] text-white rounded-lg ${isUrdu ? 'text-right' : 'text-left'}`}>
+          <p className={`font-bold text-sm sm:text-base tracking-wide ${isUrdu ? 'font-bold' : ''}`}>
+            {currentQuestion.category}
+          </p>
+        </div>
+      )}
+
       <div className={`flex items-start gap-2 mb-6 ${isUrdu ? 'flex-row-reverse' : ''}`}>
         <h3 className={`text-lg sm:text-xl font-semibold text-gray-700 ${isUrdu ? 'text-right font-bold text-xl sm:text-2xl' : ''}`}>
           {currentQuestion.title}
         </h3>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
         {currentQuestion.options.map((option, index) => (
           <div

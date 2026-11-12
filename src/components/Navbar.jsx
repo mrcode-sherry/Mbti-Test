@@ -249,8 +249,9 @@ const Navbar = () => {
             <li><Link href="/about">About</Link></li>
             <li><Link href="/contact">Contact</Link></li>
             
-            {/* Only show Future Fit category */}
-            <li><Link href="/future-fit">Future Fit</Link></li>
+            {/* Only show RAAH category */}
+            <li><Link href="/future-fit">RAAH</Link></li>
+            <li><Link href="/raah-for-schools">RAAH for Schools</Link></li>
 
             {/* Show Student Dashboard only for logged in users who completed test */}
             {user && user?.role !== 'admin' && completed && (
@@ -379,8 +380,9 @@ const Navbar = () => {
               <li><Link href="/about" onClick={toggleMenu}>About</Link></li>
               <li><Link href="/contact" onClick={toggleMenu}>Contact</Link></li>
               
-              {/* Only show Future Fit category */}
-              <li><Link href="/future-fit" onClick={toggleMenu}>Future Fit</Link></li>
+              {/* Only show RAAH category */}
+              <li><Link href="/future-fit" onClick={toggleMenu}>RAAH</Link></li>
+              <li><Link href="/raah-for-schools" onClick={toggleMenu}>RAAH for Schools</Link></li>
 
               {/* Show Student Dashboard only for logged in users who completed test */}
               {user && user?.role !== 'admin' && completed && (

@@ -1,482 +1,386 @@
 [
   {
-    "title": "When I have free time I prefer to:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q1. When I have free time, I prefer to:",
     "options": [
-      {
-        "text": "Spend time with friends or family",
-        "example": "Going to parties, meeting people, or hanging out with groups",
-        "dimension": "E"
-      },
-      {
-        "text": "Spend time alone or with a few close people",
-        "example": "Reading, watching movies, or having deep conversations with close friends",
-        "dimension": "I"
-      }
+      { "text": "A) spend time with friends/family", "example": "Going out, meeting people, socializing in groups", "dimension": "E" },
+      { "text": "B) spend time alone or with 1–2 close people", "example": "Reading, relaxing, or quiet one-on-one conversations", "dimension": "I" }
     ]
   },
   {
-    "title": "In group activities I usually:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q2. In group work, I usually:",
     "options": [
-      {
-        "text": "Speak and share ideas openly",
-        "example": "I'm comfortable expressing my thoughts in front of others",
-        "dimension": "E"
-      },
-      {
-        "text": "Listen first before speaking",
-        "example": "I prefer to understand what others think before sharing my opinion",
-        "dimension": "I"
-      }
+      { "text": "A) talk first and share ideas", "example": "I speak up and contribute quickly in a group", "dimension": "E" },
+      { "text": "B) listen first and then speak", "example": "I prefer to hear others before sharing my thoughts", "dimension": "I" }
     ]
   },
   {
-    "title": "After a busy day I feel more refreshed by:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q3. After a busy day, I feel better by:",
     "options": [
-      {
-        "text": "Meeting people and talking",
-        "example": "Socializing helps me recharge and feel energized",
-        "dimension": "E"
-      },
-      {
-        "text": "Having quiet time for myself",
-        "example": "I need solitude to process the day and restore my energy",
-        "dimension": "I"
-      }
+      { "text": "A) meeting people or chatting", "example": "Calling a friend or going out to recharge", "dimension": "E" },
+      { "text": "B) being quiet and resting", "example": "Staying home alone to relax and recover", "dimension": "I" }
     ]
   },
   {
-    "title": "In class discussions I usually:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q4. In class discussions, I mostly:",
     "options": [
-      {
-        "text": "Participate actively",
-        "example": "I enjoy contributing to discussions and sharing my thoughts",
-        "dimension": "E"
-      },
-      {
-        "text": "Observe and think before speaking",
-        "example": "I prefer to listen and reflect before contributing",
-        "dimension": "I"
-      }
+      { "text": "A) participate actively", "example": "I raise my hand and share my opinion often", "dimension": "E" },
+      { "text": "B) observe and think before speaking", "example": "I listen carefully and speak only when I'm sure", "dimension": "I" }
     ]
   },
   {
-    "title": "When meeting new people I usually:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q5. When meeting new people, I usually:",
     "options": [
-      {
-        "text": "Start conversation easily",
-        "example": "I'm comfortable initiating conversations with strangers",
-        "dimension": "E"
-      },
-      {
-        "text": "Wait for others to start talking",
-        "example": "I prefer when others make the first move in conversations",
-        "dimension": "I"
-      }
+      { "text": "A) start talking easily", "example": "I introduce myself and start conversations quickly", "dimension": "E" },
+      { "text": "B) wait until I feel comfortable", "example": "I take time to warm up before opening up", "dimension": "I" }
     ]
   },
   {
-    "title": "When solving a problem I prefer:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q6. When I have a problem, I prefer:",
     "options": [
-      {
-        "text": "Talking it through with others",
-        "example": "Discussing helps me think through solutions better",
-        "dimension": "E"
-      },
-      {
-        "text": "Thinking about it alone",
-        "example": "I work best when I can think through problems independently",
-        "dimension": "I"
-      }
+      { "text": "A) talking it out with someone", "example": "Discussing it with a friend or family member", "dimension": "E" },
+      { "text": "B) thinking it through alone", "example": "Spending quiet time to figure things out myself", "dimension": "I" }
     ]
   },
   {
-    "title": "Group work for me is usually:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q7. In a new class/event, I usually:",
     "options": [
-      {
-        "text": "Enjoyable and motivating",
-        "example": "I find energy and inspiration working with others",
-        "dimension": "E"
-      },
-      {
-        "text": "Tiring but manageable",
-        "example": "I can work in groups but it drains my energy",
-        "dimension": "I"
-      }
+      { "text": "A) make new friends quickly", "example": "I connect with people easily from the start", "dimension": "E" },
+      { "text": "B) take time to settle in", "example": "I observe first and slowly get comfortable", "dimension": "I" }
     ]
   },
   {
-    "title": "When sharing ideas I prefer:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q8. If I have an idea, I prefer to share it by:",
     "options": [
-      {
-        "text": "Speaking directly",
-        "example": "I like to express my thoughts verbally and immediately",
-        "dimension": "E"
-      },
-      {
-        "text": "Writing or thinking before speaking",
-        "example": "I prefer to organize my thoughts before sharing them",
-        "dimension": "I"
-      }
+      { "text": "A) speaking it out loud", "example": "Telling people about it right away verbally", "dimension": "E" },
+      { "text": "B) writing it down first", "example": "Organizing my thoughts on paper before sharing", "dimension": "I" }
     ]
   },
   {
-    "title": "When learning something new I prefer:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q9. When I study, I prefer:",
     "options": [
-      {
-        "text": "Real examples and practical facts",
-        "example": "I learn best with concrete examples and hands-on experience",
-        "dimension": "S"
-      },
-      {
-        "text": "Ideas and future possibilities",
-        "example": "I enjoy exploring concepts and theoretical possibilities",
-        "dimension": "N"
-      }
+      { "text": "A) studying with a friend/group sometimes", "example": "Group study sessions or discussing topics together", "dimension": "E" },
+      { "text": "B) studying alone most of the time", "example": "A quiet room where I can focus completely", "dimension": "I" }
     ]
   },
   {
-    "title": "In studies I enjoy subjects that:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q10. People often describe me as:",
     "options": [
-      {
-        "text": "Explain real systems and facts",
-        "example": "Science, history, or subjects with clear factual content",
-        "dimension": "S"
-      },
-      {
-        "text": "Explore theories and new ideas",
-        "example": "Philosophy, literature, or subjects that explore possibilities",
-        "dimension": "N"
-      }
+      { "text": "A) open and outgoing", "example": "Talkative, social, and easy to approach", "dimension": "E" },
+      { "text": "B) calm and private", "example": "Quiet, reserved, and thoughtful", "dimension": "I" }
     ]
   },
   {
-    "title": "When solving a problem I prefer:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q11. When I'm excited, I usually:",
     "options": [
-      {
-        "text": "Proven methods that already work",
-        "example": "I trust established procedures and tested solutions",
-        "dimension": "S"
-      },
-      {
-        "text": "Trying new or creative approaches",
-        "example": "I like to experiment with innovative solutions",
-        "dimension": "N"
-      }
+      { "text": "A) share it with others immediately", "example": "Telling friends or family about it right away", "dimension": "E" },
+      { "text": "B) keep it to myself first", "example": "I enjoy the feeling quietly before sharing", "dimension": "I" }
     ]
   },
   {
-    "title": "I usually focus more on:",
+    "category": "1) Social Energy Style (E vs I) — Q1–Q12",
+    "title": "Q12. In teamwork, I feel more comfortable when:",
     "options": [
-      {
-        "text": "Present details and facts",
-        "example": "What is happening now and concrete information",
-        "dimension": "S"
-      },
-      {
-        "text": "Future possibilities",
-        "example": "What could happen and potential opportunities",
-        "dimension": "N"
-      }
+      { "text": "A) we discuss things a lot", "example": "Open group discussions and brainstorming sessions", "dimension": "E" },
+      { "text": "B) everyone works quietly on their part", "example": "Individual tasks with minimal group talking", "dimension": "I" }
     ]
   },
   {
-    "title": "When reading information I prefer:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q13. When learning something new, I prefer:",
     "options": [
-      {
-        "text": "Clear and practical explanations",
-        "example": "Step-by-step instructions and concrete details",
-        "dimension": "S"
-      },
-      {
-        "text": "Big ideas and concepts",
-        "example": "Theoretical frameworks and abstract concepts",
-        "dimension": "N"
-      }
+      { "text": "A) real examples and facts", "example": "Step-by-step instructions with clear practical examples", "dimension": "S" },
+      { "text": "B) ideas and 'what it could become'", "example": "Concepts, theories, and imagining future possibilities", "dimension": "N" }
     ]
   },
   {
-    "title": "In projects I usually:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q14. I understand a topic better when:",
     "options": [
-      {
-        "text": "Follow clear instructions",
-        "example": "I work best with detailed guidelines and specifications",
-        "dimension": "S"
-      },
-      {
-        "text": "Explore different possibilities",
-        "example": "I like to experiment and try various approaches",
-        "dimension": "N"
-      }
+      { "text": "A) it is explained step-by-step", "example": "Clear, logical, sequential explanations", "dimension": "S" },
+      { "text": "B) I understand the main idea first", "example": "The big picture before going into details", "dimension": "N" }
     ]
   },
   {
-    "title": "I enjoy learning things that:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q15. I trust information more when it is:",
     "options": [
-      {
-        "text": "Are useful in real life immediately",
-        "example": "Practical skills I can apply right away",
-        "dimension": "S"
-      },
-      {
-        "text": "Help understand bigger concepts",
-        "example": "Theoretical knowledge that expands my understanding",
-        "dimension": "N"
-      }
+      { "text": "A) practical and proven", "example": "Based on facts, data, and real experience", "dimension": "S" },
+      { "text": "B) creative and full of possibilities", "example": "New ideas and theories even if not yet tested", "dimension": "N" }
     ]
   },
   {
-    "title": "When studying I prefer:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q16. In school, I usually focus more on:",
     "options": [
-      {
-        "text": "Step-by-step instructions",
-        "example": "Clear, sequential learning with detailed guidance",
-        "dimension": "S"
-      },
-      {
-        "text": "Understanding the overall idea first",
-        "example": "Grasping the big picture before diving into details",
-        "dimension": "N"
-      }
+      { "text": "A) details and accuracy", "example": "Getting the exact answer right every time", "dimension": "S" },
+      { "text": "B) big picture and meaning", "example": "Understanding why something matters overall", "dimension": "N" }
     ]
   },
   {
-    "title": "When making decisions I usually rely on:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q17. When reading, I enjoy more:",
     "options": [
-      {
-        "text": "Logic and facts",
-        "example": "I analyze data and use rational thinking",
-        "dimension": "T"
-      },
-      {
-        "text": "Personal values and feelings",
-        "example": "I consider what feels right and aligns with my values",
-        "dimension": "F"
-      }
+      { "text": "A) clear information with examples", "example": "Textbooks, how-to guides, factual articles", "dimension": "S" },
+      { "text": "B) concepts and new ideas", "example": "Thought-provoking essays, novels, or creative writing", "dimension": "N" }
     ]
   },
   {
-    "title": "If two people disagree I usually:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q18. When solving problems, I prefer:",
     "options": [
-      {
-        "text": "Focus on the most logical solution",
-        "example": "I look for the objectively best answer",
-        "dimension": "T"
-      },
-      {
-        "text": "Consider how each person feels",
-        "example": "I try to understand both perspectives and emotions",
-        "dimension": "F"
-      }
+      { "text": "A) using a method that already works", "example": "Following a proven formula or approach", "dimension": "S" },
+      { "text": "B) trying a new method", "example": "Experimenting with different approaches", "dimension": "N" }
     ]
   },
   {
-    "title": "When giving feedback I prefer:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q19. I like learning things that:",
     "options": [
-      {
-        "text": "Being direct and honest",
-        "example": "I give straightforward, factual feedback",
-        "dimension": "T"
-      },
-      {
-        "text": "Being gentle and supportive",
-        "example": "I focus on being encouraging and considerate",
-        "dimension": "F"
-      }
+      { "text": "A) help in real life quickly", "example": "Practical skills I can use immediately", "dimension": "S" },
+      { "text": "B) help me think in new ways", "example": "Expanding my perspective and imagination", "dimension": "N" }
     ]
   },
   {
-    "title": "When solving conflicts I focus more on:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q20. In projects, I usually:",
     "options": [
-      {
-        "text": "Fair and logical outcomes",
-        "example": "Finding the most rational and just solution",
-        "dimension": "T"
-      },
-      {
-        "text": "Maintaining harmony",
-        "example": "Keeping relationships positive and peaceful",
-        "dimension": "F"
-      }
+      { "text": "A) follow instructions carefully", "example": "Sticking to the given guidelines and requirements", "dimension": "S" },
+      { "text": "B) explore different possibilities", "example": "Going beyond the instructions to try new ideas", "dimension": "N" }
     ]
   },
   {
-    "title": "In discussions I value:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q21. I notice more:",
     "options": [
-      {
-        "text": "Strong arguments and reasoning",
-        "example": "Well-supported logical points and evidence",
-        "dimension": "T"
-      },
-      {
-        "text": "Understanding people's perspectives",
-        "example": "Empathy and considering different viewpoints",
-        "dimension": "F"
-      }
+      { "text": "A) what is happening now", "example": "Current facts, present details, what I can see", "dimension": "S" },
+      { "text": "B) what might happen next", "example": "Future patterns, possibilities, and trends", "dimension": "N" }
     ]
   },
   {
-    "title": "When evaluating ideas I prefer:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q22. I prefer teachers who:",
     "options": [
-      {
-        "text": "Objective analysis",
-        "example": "Looking at facts and logical merit",
-        "dimension": "T"
-      },
-      {
-        "text": "Considering impact on people",
-        "example": "Thinking about how it affects individuals and relationships",
-        "dimension": "F"
-      }
+      { "text": "A) teach with clear facts and practice", "example": "Structured lessons with examples and exercises", "dimension": "S" },
+      { "text": "B) teach with ideas and discussions", "example": "Open-ended conversations and creative thinking", "dimension": "N" }
     ]
   },
   {
-    "title": "When rules are broken I usually focus on:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q23. I enjoy tasks that:",
     "options": [
-      {
-        "text": "What is fair and correct",
-        "example": "Applying rules consistently and justly",
-        "dimension": "T"
-      },
-      {
-        "text": "Why the person behaved that way",
-        "example": "Understanding the circumstances and motivations",
-        "dimension": "F"
-      }
+      { "text": "A) are clear with correct answers", "example": "Math problems, defined tasks with one right answer", "dimension": "S" },
+      { "text": "B) allow different answers and creativity", "example": "Essays, art, open-ended questions", "dimension": "N" }
     ]
   },
   {
-    "title": "When choosing between options I usually:",
+    "category": "2) Learning & Thinking Style (S vs N) — Q13–Q24",
+    "title": "Q24. When I plan my future, I think more about:",
     "options": [
-      {
-        "text": "Compare logical advantages",
-        "example": "I weigh pros and cons objectively",
-        "dimension": "T"
-      },
-      {
-        "text": "Consider emotional impact",
-        "example": "I think about how each choice will make me and others feel",
-        "dimension": "F"
-      }
+      { "text": "A) realistic steps and what is possible now", "example": "What I can do given my current situation", "dimension": "S" },
+      { "text": "B) big goals and future opportunities", "example": "Where I want to be in 10–20 years", "dimension": "N" }
     ]
   },
   {
-    "title": "When starting a project I prefer:",
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q25. When I make decisions, I mostly use:",
     "options": [
-      {
-        "text": "Planning everything in advance",
-        "example": "I like to have a detailed plan before beginning",
-        "dimension": "J"
-      },
-      {
-        "text": "Starting and adjusting along the way",
-        "example": "I prefer to be flexible and adapt as I go",
-        "dimension": "P"
-      }
+      { "text": "A) logic and facts", "example": "Weighing pros and cons based on data", "dimension": "T" },
+      { "text": "B) feelings and personal values", "example": "What feels right based on my values and emotions", "dimension": "F" }
     ]
   },
   {
-    "title": "I feel more comfortable when:",
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q26. When judging a situation, I focus more on:",
     "options": [
-      {
-        "text": "My schedule is organized",
-        "example": "I like having structure and knowing what to expect",
-        "dimension": "J"
-      },
-      {
-        "text": "My schedule is flexible",
-        "example": "I prefer keeping my options open and being spontaneous",
-        "dimension": "P"
-      }
+      { "text": "A) what is fair and correct", "example": "The objective truth regardless of feelings", "dimension": "T" },
+      { "text": "B) how people will feel", "example": "The emotional impact on everyone involved", "dimension": "F" }
     ]
   },
   {
-    "title": "When completing tasks I usually:",
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q27. When giving feedback, I prefer:",
     "options": [
-      {
-        "text": "Finish them early",
-        "example": "I like to complete work well before deadlines",
-        "dimension": "J"
-      },
-      {
-        "text": "Work closer to the deadline",
-        "example": "I often do my best work under time pressure",
-        "dimension": "P"
-      }
+      { "text": "A) being direct and clear", "example": "Saying exactly what needs improvement without softening it", "dimension": "T" },
+      { "text": "B) being gentle and encouraging", "example": "Wrapping criticism in positive words", "dimension": "F" }
     ]
   },
   {
-    "title": "In daily life I prefer:",
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q28. In arguments, I care more about:",
     "options": [
-      {
-        "text": "Clear plans",
-        "example": "I like to know what I'm doing and when",
-        "dimension": "J"
-      },
-      {
-        "text": "Freedom to decide later",
-        "example": "I prefer to keep my options open and decide spontaneously",
-        "dimension": "P"
-      }
+      { "text": "A) strong reasoning", "example": "Making a logical, well-supported argument", "dimension": "T" },
+      { "text": "B) understanding each other", "example": "Finding emotional common ground", "dimension": "F" }
     ]
   },
   {
-    "title": "My study style is usually:",
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q29. When someone is upset, I usually:",
     "options": [
-      {
-        "text": "Structured and scheduled",
-        "example": "I follow a regular study routine and timetable",
-        "dimension": "J"
-      },
-      {
-        "text": "Flexible depending on mood",
-        "example": "I study when I feel motivated or inspired",
-        "dimension": "P"
-      }
+      { "text": "A) try to solve the problem", "example": "Offering practical solutions to fix the situation", "dimension": "T" },
+      { "text": "B) try to comfort the person first", "example": "Listening and showing empathy before advising", "dimension": "F" }
     ]
   },
   {
-    "title": "When traveling I prefer:",
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q30. If rules are broken, I usually think:",
     "options": [
-      {
-        "text": "Planning the itinerary in advance",
-        "example": "I like to research and plan activities beforehand",
-        "dimension": "J"
-      },
-      {
-        "text": "Exploring without strict plans",
-        "example": "I enjoy discovering things spontaneously",
-        "dimension": "P"
-      }
+      { "text": "A) rules are important and should be followed", "example": "Rules exist for a reason and must be respected", "dimension": "T" },
+      { "text": "B) the reason matters; people make mistakes", "example": "Context and intention matter more than the rule", "dimension": "F" }
     ]
   },
   {
-    "title": "I usually feel better when:",
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q31. When choosing between options, I compare:",
     "options": [
-      {
-        "text": "Things are decided and organized",
-        "example": "I like closure and having matters settled",
-        "dimension": "J"
-      },
-      {
-        "text": "Options are still open",
-        "example": "I prefer keeping possibilities available",
-        "dimension": "P"
-      }
+      { "text": "A) pros and cons", "example": "A logical list of advantages and disadvantages", "dimension": "T" },
+      { "text": "B) what feels right to me", "example": "My gut feeling and personal values", "dimension": "F" }
     ]
   },
   {
-    "title": "When working on assignments I prefer:",
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q32. In a team, I value more:",
     "options": [
-      {
-        "text": "Completing them step by step",
-        "example": "I work systematically through each part",
-        "dimension": "J"
-      },
-      {
-        "text": "Working in bursts of inspiration",
-        "example": "I work intensively when I feel motivated",
-        "dimension": "P"
-      }
+      { "text": "A) efficiency and results", "example": "Getting the task done well and on time", "dimension": "T" },
+      { "text": "B) harmony and cooperation", "example": "Making sure everyone feels included and heard", "dimension": "F" }
+    ]
+  },
+  {
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q33. When I disagree with someone, I usually:",
+    "options": [
+      { "text": "A) say it clearly", "example": "State my disagreement directly and openly", "dimension": "T" },
+      { "text": "B) choose words carefully to avoid hurting", "example": "Being tactful so no one gets offended", "dimension": "F" }
+    ]
+  },
+  {
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q34. When a decision affects people, I mostly consider:",
+    "options": [
+      { "text": "A) the best logical outcome", "example": "What makes the most rational sense overall", "dimension": "T" },
+      { "text": "B) the human impact", "example": "How it will affect people's feelings and wellbeing", "dimension": "F" }
+    ]
+  },
+  {
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q35. I feel more comfortable when decisions are:",
+    "options": [
+      { "text": "A) based on clear rules", "example": "A defined policy or standard to follow", "dimension": "T" },
+      { "text": "B) based on personal situations", "example": "Judging each case individually by its circumstances", "dimension": "F" }
+    ]
+  },
+  {
+    "category": "3) Decision Style (T vs F) — Q25–Q36",
+    "title": "Q36. In competitions, I focus more on:",
+    "options": [
+      { "text": "A) performance and winning fairly", "example": "Achieving the best result through skill and effort", "dimension": "T" },
+      { "text": "B) relationships and good spirit", "example": "Enjoying the process and keeping good sportsmanship", "dimension": "F" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q37. When starting a task, I prefer:",
+    "options": [
+      { "text": "A) planning first", "example": "Making a to-do list or outline before starting", "dimension": "J" },
+      { "text": "B) starting and adjusting later", "example": "Jumping in and figuring things out as I go", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q38. I feel better when my day is:",
+    "options": [
+      { "text": "A) scheduled and organized", "example": "A clear timetable with planned activities", "dimension": "J" },
+      { "text": "B) flexible and open", "example": "Going with the flow and deciding as I go", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q39. Before exams, I usually:",
+    "options": [
+      { "text": "A) start early and revise regularly", "example": "A study plan weeks before the exam", "dimension": "J" },
+      { "text": "B) revise more when the exam is near", "example": "Intensive last-minute revision closer to the date", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q40. When doing assignments, I like:",
+    "options": [
+      { "text": "A) clear steps and order", "example": "A structured approach from start to finish", "dimension": "J" },
+      { "text": "B) freedom to do it my own way", "example": "Being flexible and creative in how I complete tasks", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q41. I prefer teachers who:",
+    "options": [
+      { "text": "A) give clear deadlines and instructions", "example": "Structured class with defined expectations", "dimension": "J" },
+      { "text": "B) allow flexibility in how we work", "example": "Freedom to choose how to complete assignments", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q42. When plans change suddenly, I usually:",
+    "options": [
+      { "text": "A) feel uncomfortable", "example": "I prefer sticking to the original plan", "dimension": "J" },
+      { "text": "B) adjust easily", "example": "I adapt quickly without much stress", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q43. I usually keep my room/study space:",
+    "options": [
+      { "text": "A) organized most of the time", "example": "Everything in its place and tidy", "dimension": "J" },
+      { "text": "B) not perfect, but I can manage", "example": "A bit messy but I know where everything is", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q44. When I have many tasks, I prefer:",
+    "options": [
+      { "text": "A) making a checklist", "example": "Writing down all tasks and ticking them off", "dimension": "J" },
+      { "text": "B) doing whichever task feels urgent", "example": "Handling whatever needs attention at the moment", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q45. I prefer weekends that are:",
+    "options": [
+      { "text": "A) planned (even lightly)", "example": "Having a rough idea of what I will do", "dimension": "J" },
+      { "text": "B) open with no fixed plan", "example": "Deciding what to do as the day goes on", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q46. I like decisions to be:",
+    "options": [
+      { "text": "A) final and settled", "example": "Once decided, I move forward without second-guessing", "dimension": "J" },
+      { "text": "B) open until the last moment", "example": "Keeping options available as long as possible", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q47. When I work best, it is usually:",
+    "options": [
+      { "text": "A) in a steady routine", "example": "Regular consistent work sessions", "dimension": "J" },
+      { "text": "B) in flexible bursts", "example": "Working intensely when inspired or motivated", "dimension": "P" }
+    ]
+  },
+  {
+    "category": "4) Work & Planning Style (J vs P) — Q37–Q48",
+    "title": "Q48. In group projects, I usually:",
+    "options": [
+      { "text": "A) like clear roles and deadlines", "example": "Everyone knows their job and when it is due", "dimension": "J" },
+      { "text": "B) like keeping options open until we learn more", "example": "Flexibility to adjust roles as the project develops", "dimension": "P" }
     ]
   }
 ]

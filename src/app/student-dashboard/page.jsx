@@ -9,6 +9,7 @@ const StudentDashboard = () => {
   const [user, setUser] = useState(null);
   const [testResult, setTestResult] = useState(null);
   const [mbtiType, setMbtiType] = useState(null);
+  const [percentages, setPercentages] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,6 +47,14 @@ const StudentDashboard = () => {
       if (data.success && data.completed && data.result) {
         setMbtiType(data.result);
         setTestResult(data.result);
+        if (data.percentages) {
+          setPercentages(data.percentages);
+          localStorage.setItem('testPercentages', JSON.stringify(data.percentages));
+        } else {
+          // fallback to localStorage
+          const saved = localStorage.getItem('testPercentages');
+          if (saved) setPercentages(JSON.parse(saved));
+        }
         
         // Also update localStorage as backup
         localStorage.setItem('testResult', data.result);
@@ -205,7 +214,7 @@ const StudentDashboard = () => {
               <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
                 <h3 className="text-sm font-medium text-gray-500 mb-1">Plan</h3>
                 <p className="text-2xl font-bold text-purple-600">Premium</p>
-                <p className="text-xs text-gray-400 mt-1">Future Fit Premium</p>
+                <p className="text-xs text-gray-400 mt-1">RAAH Premium</p>
               </div>
             </div>
 
@@ -260,6 +269,83 @@ const StudentDashboard = () => {
                   <h2 className="text-2xl font-semibold mb-2">Your Personality Type</h2>
                   <p className="text-6xl font-bold tracking-wider">{mbtiType}</p>
                 </div>
+
+                {/* Personality Percentages */}
+                {percentages && (
+                  <div className="mb-8">
+                    <h3 className="text-lg font-semibold text-[#14442E] mb-4">Personality Breakdown</h3>
+                    <div className="space-y-4">
+                      {/* E vs I */}
+                      <div>
+                        <div className="flex rounded-lg overflow-hidden h-10">
+                          <div
+                            className="bg-[#14442E] flex items-center px-4"
+                            style={{ width: `${percentages.E}%` }}
+                          >
+                            <span className="text-white text-sm font-bold whitespace-nowrap">Extrovert {percentages.E}%</span>
+                          </div>
+                          <div
+                            className="bg-gray-200 flex items-center justify-end px-4"
+                            style={{ width: `${percentages.I}%` }}
+                          >
+                            <span className="text-gray-700 text-sm font-bold whitespace-nowrap">{percentages.I}% Introvert</span>
+                          </div>
+                        </div>
+                      </div>
+                      {/* S vs N */}
+                      <div>
+                        <div className="flex rounded-lg overflow-hidden h-10">
+                          <div
+                            className="bg-[#14442E] flex items-center px-4"
+                            style={{ width: `${percentages.S}%` }}
+                          >
+                            <span className="text-white text-sm font-bold whitespace-nowrap">Sensing {percentages.S}%</span>
+                          </div>
+                          <div
+                            className="bg-gray-200 flex items-center justify-end px-4"
+                            style={{ width: `${percentages.N}%` }}
+                          >
+                            <span className="text-gray-700 text-sm font-bold whitespace-nowrap">{percentages.N}% Intuition</span>
+                          </div>
+                        </div>
+                      </div>
+                      {/* T vs F */}
+                      <div>
+                        <div className="flex rounded-lg overflow-hidden h-10">
+                          <div
+                            className="bg-[#14442E] flex items-center px-4"
+                            style={{ width: `${percentages.T}%` }}
+                          >
+                            <span className="text-white text-sm font-bold whitespace-nowrap">Thinking {percentages.T}%</span>
+                          </div>
+                          <div
+                            className="bg-gray-200 flex items-center justify-end px-4"
+                            style={{ width: `${percentages.F}%` }}
+                          >
+                            <span className="text-gray-700 text-sm font-bold whitespace-nowrap">{percentages.F}% Feeling</span>
+                          </div>
+                        </div>
+                      </div>
+                      {/* J vs P */}
+                      <div>
+                        <div className="flex rounded-lg overflow-hidden h-10">
+                          <div
+                            className="bg-[#14442E] flex items-center px-4"
+                            style={{ width: `${percentages.J}%` }}
+                          >
+                            <span className="text-white text-sm font-bold whitespace-nowrap">Judging {percentages.J}%</span>
+                          </div>
+                          <div
+                            className="bg-gray-200 flex items-center justify-end px-4"
+                            style={{ width: `${percentages.P}%` }}
+                          >
+                            <span className="text-gray-700 text-sm font-bold whitespace-nowrap">{percentages.P}% Perceiving</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* WhatsApp Message */}
                 <div className="bg-green-50 border-l-4 border-green-500 p-6 rounded-md">
@@ -325,7 +411,7 @@ const StudentDashboard = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Subscription Plan</label>
                     <div className="bg-gray-50 p-3 rounded-lg border">
-                      <p className="text-gray-900">Future Fit Premium</p>
+                      <p className="text-gray-900">RAAH Premium</p>
                     </div>
                   </div>
                 </div>
@@ -370,7 +456,7 @@ const StudentDashboard = () => {
                 <div className="w-12 h-px bg-[#14442E] opacity-40" />
               </div>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Exclusive for Future Fit Premium plan users. Discover fully funded scholarships for your education journey.
+                Exclusive for RAAH Premium plan users. Discover fully funded scholarships for your education journey.
               </p>
             </div>
 

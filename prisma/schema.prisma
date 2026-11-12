@@ -89,14 +89,15 @@ model Test {
 
 // Test Submission Status Model
 model TestSubmission {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  completed Boolean  @default(false)
-  result    String?  // MBTI result (e.g., "ENFP")
-  answers   Json?    // JSON array of answers
-  languages Json?    // JSON array of selected languages
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  email       String   @unique
+  completed   Boolean  @default(false)
+  result      String?  // MBTI result (e.g., "ENFP")
+  percentages Json?    // JSON object e.g. { E: 75, I: 25, S: 42, N: 58, T: 66, F: 34, J: 50, P: 50 }
+  answers     Json?    // JSON array of answers
+  languages   Json?    // JSON array of selected languages
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@map("test_submissions")
 }
@@ -115,13 +116,30 @@ model Proof {
   @@map("proofs")
 }
 
-// Contact Form Model
+// School Inquiry Form Model
+model SchoolInquiry {
+  id            String   @id @default(cuid())
+  schoolName    String
+  city          String
+  address       String
+  contactNo     String
+  applicantName String
+  email         String
+  preferredContact String  // "phone" or "email"
+  message       String?
+  createdAt     DateTime @default(now())
+
+  @@map("school_inquiries")
+}
 model Contact {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  message   String
-  createdAt DateTime @default(now())
+  id            String   @id @default(cuid())
+  name          String
+  email         String
+  phoneNumber   String?
+  subject       String?
+  maritalStatus String?
+  message       String
+  createdAt     DateTime @default(now())
 
   @@map("contacts")
 }

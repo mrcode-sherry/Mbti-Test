@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
-    const { email, answers, result, languages } = await req.json();
+    const { email, answers, result, percentages, languages } = await req.json();
 
     if (!email) {
       return NextResponse.json({ success: false, message: "Email required" }, { status: 400 });
@@ -38,6 +38,7 @@ export async function POST(req) {
         email, 
         completed: true,
         result: result,
+        percentages: percentages || null,
         answers: answers || [],
         languages: languages || []
       }
@@ -46,7 +47,8 @@ export async function POST(req) {
     return NextResponse.json({ 
       success: true, 
       message: "Test submitted successfully",
-      result: newSubmission.result
+      result: newSubmission.result,
+      percentages: newSubmission.percentages
     });
   } catch (error) {
     console.error("Test Submission Error:", error);
@@ -88,6 +90,7 @@ export async function GET(req) {
       success: true, 
       result: submission.result,
       completed: submission.completed,
+      percentages: submission.percentages || null,
       answers: submission.answers || [],
       languages: submission.languages || []
     });
