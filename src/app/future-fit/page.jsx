@@ -6,6 +6,7 @@ import CategoryPage from '@/components/CategoryPage';
 import { Users, BookOpen, Award, Target, TrendingUp, CheckCircle } from 'lucide-react';
 import PaymentProofPopup from '@/components/PaymentProofPopup';
 import TestPopupForm from '@/components/TestPopupForm';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 const FeatureItem = ({ text }) => (
   <li className="flex items-start gap-2 text-gray-700 text-sm">
@@ -333,7 +334,7 @@ const FutureFitPage = () => {
               <div className="flex items-center justify-center gap-4 mb-4">
                 <div className="w-12 h-px bg-[#14442E] opacity-40" />
                 <p className="uppercase text-sm tracking-widest text-[#14442E] font-medium">
-                  RAAH Plan
+                  RAAH Plans
                 </p>
                 <div className="w-12 h-px bg-[#14442E] opacity-40" />
               </div>
@@ -342,41 +343,116 @@ const FutureFitPage = () => {
               </p>
             </div>
 
-            {/* Pricing Card */}
-            <div className="flex justify-center">
-              <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[400px] justify-between h-full">
+            {/* Pricing Cards — side by side */}
+            <div className="flex flex-col md:flex-row justify-center gap-8">
+
+              {/* ── ADVANCE CARD (active) ── */}
+              <div className="bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[380px] justify-between">
                 <div className="flex flex-col flex-grow">
-                  <h3 className="text-3xl font-bold text-[#14442E] mb-6 text-center">RAAH Premium</h3>
-                  <div className="bg-gray-100 rounded-lg p-4 mb-6 h-[430px] md:h-[385px]">
+                  {/* Badge */}
+                  <div className="flex justify-center mb-4">
+                    <span className="bg-gradient-to-r from-[#FDCA00] to-[#f0c000] text-[#14442E] text-xs font-bold px-4 py-1 rounded-full animate-pulse">
+                      POPULAR
+                    </span>
+                  </div>
+                  <h3 className="text-3xl font-bold text-[#14442E] mb-2 text-center">Advance</h3>
+
+                  {/* Price with sale */}
+                  <div className="text-center mb-4">
+                    <div className="flex items-center justify-center gap-2 mb-1">
+                      <span className="line-through text-gray-400 text-base">Rs. 3000</span>
+                      <span className="bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded-full">33% OFF</span>
+                    </div>
+                    <p className="text-3xl font-bold text-[#14442E]">Rs. 2000</p>
+                    <p className="text-gray-500 text-xs mt-1">One-time payment</p>
+                  </div>
+
+                  <div className="bg-gray-100 rounded-lg p-4 mb-6">
                     <h4 className="text-lg font-semibold text-[#14442E] mb-4 border-b border-gray-300 pb-2">Benefits</h4>
                     <ul className="space-y-3 text-gray-700 text-sm leading-relaxed">
-                      <FeatureItem text="Report on your Strengths" />
-                      <FeatureItem text="Report on your weaknesses" />
-                      <FeatureItem text="What success means to you" />
-                      <FeatureItem text="Strategies for your success" />
-                      <FeatureItem text="Problematic areas" />
-                      <FeatureItem text="Rules for success" />
-                      <FeatureItem text="Career recommendations" />
-                      <FeatureItem text="Scholarships guidance" />
-                      <FeatureItem text="Career roadmap" />
+                      <FeatureItem text="NSR (Natural Strength Report)" />
+                      <FeatureItem text="NWR (Natural Weakness Report)" />
+                      <FeatureItem text="SMU (Success Means To You)" />
+                      <FeatureItem text="PAR (Problematic Areas Report)" />
+                      <FeatureItem text="EPR (Educational Pathway Report)" />
+                      <FeatureItem text="PCS (Potential Careers and Skills)" />
+                      <FeatureItem text="National Scholarships" />
+                      <FeatureItem text="International Scholarships" />
                     </ul>
-                  </div>
-                  <div className="mt-auto text-center mb-6">
-                    <h3 className="text-2xl font-bold text-[#14442E] rounded-lg inline-block">
-                      Rs. 3000
-                    </h3>
                   </div>
                 </div>
                 <div className="text-center">
                   <button
                     onClick={handlePlanClick}
                     disabled={checkingStatus}
-                    className="bg-[#14442E] hover:bg-[#0f3a26] cursor-pointer hover:shadow-lg duration-500 hover:scale-105 text-white px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="bg-[#14442E] hover:bg-[#0f3a26] cursor-pointer hover:shadow-lg duration-500 hover:scale-105 text-white px-8 py-2.5 rounded-lg text-sm font-medium transition disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {checkingStatus ? 'Processing...' : 'Get Started'}
                   </button>
                 </div>
               </div>
+
+              {/* ── PREMIUM CARD (coming soon — not clickable) ── */}
+              <div className="relative bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[380px] justify-between opacity-70 select-none">
+                {/* Coming Soon overlay ribbon */}
+                <div className="absolute top-4 right-4">
+                  <span className="bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Coming Soon
+                  </span>
+                </div>
+
+                <div className="flex flex-col flex-grow">
+                  <div className="flex justify-center mb-4">
+                    <span className="bg-gray-200 text-gray-500 text-xs font-bold px-4 py-1 rounded-full">
+                      FUTURE PLAN
+                    </span>
+                  </div>
+                  <h3 className="text-3xl font-bold text-gray-400 mb-2 text-center">Premium</h3>
+
+                  <div className="text-center mb-4">
+                    <p className="text-3xl font-bold text-gray-400">Rs. 5000</p>
+                    <p className="text-gray-400 text-xs mt-1">One-time payment</p>
+                  </div>
+
+                  <div className="bg-gray-50 rounded-lg p-4 mb-6 border border-dashed border-gray-300">
+                    <h4 className="text-lg font-semibold text-gray-400 mb-4 border-b border-gray-200 pb-2">Benefits</h4>
+                    <ul className="space-y-3 text-gray-400 text-sm leading-relaxed">
+                      {[
+                        "NSR (Natural Strength Report)",
+                        "NWR (Natural Weakness Report)",
+                        "SMU (Success Means To You)",
+                        "PAR (Problematic Areas Report)",
+                        "EPR (Educational Pathway Report)",
+                        "PCS (Potential Careers and Skills)",
+                        "National Scholarships",
+                        "International Scholarships",
+                        "30 Minutes Online Session",
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <CheckCircle className="text-gray-300 mt-1 flex-shrink-0" size={18} />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Coming soon note */}
+                  <p className="text-center text-xs text-gray-400 italic mb-4">
+                    🚀 This plan will be available soon. Stay tuned!
+                  </p>
+                </div>
+
+                {/* Disabled button */}
+                <div className="text-center">
+                  <button
+                    disabled
+                    className="bg-gray-300 text-gray-500 px-8 py-2.5 rounded-lg text-sm font-medium cursor-not-allowed w-full"
+                  >
+                    Not Available Yet
+                  </button>
+                </div>
+              </div>
+
             </div>
           </section>
         )}
@@ -459,6 +535,7 @@ const FutureFitPage = () => {
         userEmail={user?.email || ''}
         onProofSubmitted={handleProofSubmitted}
       />
+      <WhatsAppButton />
 
       {/* Waiting for Approval Popup - Enhanced Design */}
       {showWaitingPopup && (

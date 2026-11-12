@@ -669,9 +669,14 @@ const CategoryPage = ({
             >
               {hasCompletedTest ? "View Dashboard" : ctaButtonText}
             </button>
-            <button className="border-2 border-white text-white px-12 py-5 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#05503C] transition-all duration-300 bg-white/10 backdrop-blur-sm shadow-lg hover:shadow-xl">
+            <a
+              href="https://wa.me/923356960094?text=Hi%20I%20need%20help%20with%20RAAH%20test"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-2 border-white text-white px-12 py-5 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#05503C] transition-all duration-300 bg-white/10 backdrop-blur-sm shadow-lg hover:shadow-xl"
+            >
               WhatsApp for help
-            </button>
+            </a>
           </div>
         </div>
       </section>
