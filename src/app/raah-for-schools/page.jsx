@@ -1,14 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Users, BookOpen, Award, TrendingUp, Target, CheckCircle,
   School, MapPin, Phone, Mail, MessageSquare, ChevronDown,
-  ArrowRight, ShieldCheck, Star, Lightbulb, BarChart2, ClipboardList,
-  ChevronLeft, ChevronRight
+  ArrowRight, ShieldCheck, ClipboardList
 } from 'lucide-react';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import RaahReportsSlider from '@/components/RaahReportsSlider';
 
 // ─── Advantage Card ───────────────────────────────────────────────────────────
 const AdvantageCard = ({ icon: Icon, title, desc }) => (
@@ -21,15 +21,6 @@ const AdvantageCard = ({ icon: Icon, title, desc }) => (
   </div>
 );
 
-// ─── Report Card ──────────────────────────────────────────────────────────────
-const ReportCard = ({ icon: Icon, title }) => (
-  <div className="bg-white rounded-xl p-4 flex flex-col items-center gap-2 text-center shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-    <div className="w-10 h-10 bg-[#F3F2ED] rounded-full flex items-center justify-center">
-      <Icon className="h-5 w-5 text-[#05503C]" />
-    </div>
-    <p className="text-sm font-medium text-[#14442E]">{title}</p>
-  </div>
-);
 
 // ─── Step Card ────────────────────────────────────────────────────────────────
 const StepCard = ({ number, title, desc }) => (
@@ -60,52 +51,6 @@ export default function RaahForSchoolsPage() {
   });
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState(null);
-
-  // Slider state
-  const [sliderIndex, setSliderIndex] = useState(0);
-  const sliderTimer = useRef(null);
-  const VISIBLE = 4;
-
-  const reports = [
-    { icon: Target, title: 'Career Clarity Report' },
-    { icon: Users, title: 'Personality Profile Report' },
-    { icon: BookOpen, title: 'Learning Style Report' },
-    { icon: ArrowRight, title: 'Educational Pathway Report' },
-    { icon: Star, title: 'Strength & Potential Report' },
-    { icon: MessageSquare, title: 'Parent Guidance Report' },
-    { icon: BarChart2, title: 'Class Summary Report' },
-    { icon: Award, title: 'Academic Support Report' },
-    { icon: Lightbulb, title: 'Career Interest Report' },
-    { icon: ClipboardList, title: 'Subject Preference Report' },
-    { icon: ShieldCheck, title: 'Life Skills Readiness Report' },
-    { icon: TrendingUp, title: 'Future Readiness Report' },
-  ];
-
-  const totalSlides = reports.length;
-
-  const nextSlide = useCallback(() => {
-    setSliderIndex(prev => (prev + 1) % totalSlides);
-  }, [totalSlides]);
-
-  const prevSlide = () => {
-    setSliderIndex(prev => (prev - 1 + totalSlides) % totalSlides);
-  };
-
-  const startTimer = useCallback(() => {
-    if (sliderTimer.current) clearInterval(sliderTimer.current);
-    sliderTimer.current = setInterval(nextSlide, 5000);
-  }, [nextSlide]);
-
-  useEffect(() => {
-    startTimer();
-    return () => clearInterval(sliderTimer.current);
-  }, [startTimer]);
-
-  const handlePrev = () => { prevSlide(); startTimer(); };
-  const handleNext = () => { nextSlide(); startTimer(); };
-
-  // Get 4 visible cards (circular)
-  const visibleReports = Array.from({ length: VISIBLE }, (_, i) => reports[(sliderIndex + i) % totalSlides]);
 
   useEffect(() => {
     const stored = localStorage.getItem('user');
@@ -180,9 +125,9 @@ export default function RaahForSchoolsPage() {
             <div className="flex justify-center order-1 lg:order-2">
               <div className="relative">
                 <img
-                  src="/Banners/about-banner.jpg"
+                  src="/raahschool/hero.png"
                   alt="RAAH for Schools"
-                  className="w-full max-w-xl md:max-w-2xl lg:max-w-4xl h-auto rounded-2xl shadow-xl"
+                  className="w-full max-w-xl md:max-w-2xl lg:max-w-4xl h-auto"
                 />
                 <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-[#FDCA00] to-[#f0c000] rounded-full shadow-lg animate-bounce" />
                 <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r from-[#05503C] to-[#044029] rounded-full shadow-lg" />
@@ -190,40 +135,59 @@ export default function RaahForSchoolsPage() {
             </div>
 
             {/* Left Content */}
-            <div className="order-2 lg:order-1 space-y-6">
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FDCA00]/20 to-[#FDCA00]/10 rounded-full px-4 py-2">
+            <div className="order-2 lg:order-1">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FDCA00]/20 to-[#FDCA00]/10 rounded-full px-4 py-2 mb-6">
                 <div className="w-2 h-2 bg-[#FDCA00] rounded-full animate-pulse" />
                 <span className="text-sm font-medium text-[#05503C]">RAAH for Schools</span>
               </div>
 
-              {/* Big RAAH + subtitle */}
-              <div>
-                <h1 className="text-5xl md:text-7xl font-black text-[#14442E] leading-none tracking-tight">
-                  RAAH
-                </h1>
-                <p className="text-lg md:text-xl font-semibold text-[#14442E] mt-2 leading-snug">
-                  Roadmap for Aspirations,<br />Ambitions &amp; Horizons
-                </p>
+              <h1 className="text-4xl md:text-6xl font-bold text-[#05503C] mb-4 leading-tight">
+                RAAH
+              </h1>
+              <p className="text-xl text-gray-600 mb-6 leading-relaxed">
+                Roadmap for Aspirations, Ambitions &amp; Horizons
+              </p>
+
+              <p className="text-base md:text-lg font-bold text-gray-800 leading-snug mb-1">
+                Every year, thousands of students choose their future blindly.
+              </p>
+              <p className="text-sm md:text-base text-gray-500 italic mb-8">
+                Will your school guide them — or let them guess?
+              </p>
+
+              {/* Feature Pills */}
+              <div className="grid grid-cols-2 gap-4 mb-10 max-w-md">
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-4 flex items-center gap-3 shadow-lg border border-[#FDCA00]/20 hover:shadow-xl transition-all duration-300">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#FDCA00] to-[#f0c000] flex items-center justify-center shadow-sm">
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+                  <span className="text-sm text-gray-700 font-semibold">12+ Report Types</span>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-4 flex items-center gap-3 shadow-lg border border-[#FDCA00]/20 hover:shadow-xl transition-all duration-300">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#FDCA00] to-[#f0c000] flex items-center justify-center shadow-sm">
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+                  <span className="text-sm text-gray-700 font-semibold">On-Campus Sessions</span>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-4 flex items-center gap-3 shadow-lg border border-[#FDCA00]/20 hover:shadow-xl transition-all duration-300">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#FDCA00] to-[#f0c000] flex items-center justify-center shadow-sm">
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+                  <span className="text-sm text-gray-700 font-semibold">Parent-Friendly</span>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-5 py-4 flex items-center gap-3 shadow-lg border border-[#FDCA00]/20 hover:shadow-xl transition-all duration-300">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#FDCA00] to-[#f0c000] flex items-center justify-center shadow-sm">
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+                  <span className="text-sm text-gray-700 font-semibold">Data-Driven Guidance</span>
+                </div>
               </div>
 
-              {/* Bold statement */}
-              <div>
-                <p className="text-base md:text-lg font-bold text-gray-800 leading-snug">
-                  Every year, thousands of students<br />choose their future blindly.
-                </p>
-                <p className="text-sm md:text-base text-gray-500 italic mt-1">
-                  Will your school guide them — or let them guess?
-                </p>
-              </div>
-
-              {/* CTA button — yellow style matching RAAH page */}
+              {/* CTA button */}
               <button
                 onClick={scrollToForm}
-                className="inline-flex items-center gap-3 bg-[#FDCA00] text-[#14442E] font-bold px-7 py-3 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 text-base"
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-[#05503C] to-[#044029] text-white font-bold px-10 py-5 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-lg"
               >
-                <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
                 Partner with RAAH Today →
               </button>
             </div>
@@ -236,10 +200,11 @@ export default function RaahForSchoolsPage() {
       <section ref={formRef} className="py-16 md:px-16 px-8 bg-[#F3F2ED]">
         <div className="max-w-3xl mx-auto">
           {/* Section label */}
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="w-12 h-px bg-[#14442E] opacity-40" />
-            <p className="uppercase text-sm tracking-widest text-[#14442E] font-medium">Partner With Us</p>
-            <div className="w-12 h-px bg-[#14442E] opacity-40" />
+          <div className="flex justify-center mb-4">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FDCA00]/20 to-[#FDCA00]/10 rounded-full px-6 py-3">
+              <div className="w-2 h-2 bg-[#FDCA00] rounded-full"></div>
+              <span className="text-sm font-semibold text-[#05503C]">Partner With Us</span>
+            </div>
           </div>
           <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] text-center mb-2">
             Get in Touch Today
@@ -511,10 +476,11 @@ export default function RaahForSchoolsPage() {
       <section className="py-16 md:px-16 px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="w-12 h-px bg-[#14442E] opacity-40" />
-              <p className="uppercase text-sm tracking-widest text-[#14442E] font-medium">Why RAAH</p>
-              <div className="w-12 h-px bg-[#14442E] opacity-40" />
+            <div className="flex justify-center mb-4">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FDCA00]/20 to-[#FDCA00]/10 rounded-full px-6 py-3">
+                <div className="w-2 h-2 bg-[#FDCA00] rounded-full"></div>
+                <span className="text-sm font-semibold text-[#05503C]">Why RAAH</span>
+              </div>
             </div>
             <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-3">The RAAH Advantage for Schools</h2>
             <p className="text-gray-500 max-w-2xl mx-auto text-sm">More insight. Better guidance. Greater value for your institution.</p>
@@ -531,90 +497,17 @@ export default function RaahForSchoolsPage() {
       </section>
 
       {/* ── REPORTS SLIDER ───────────────────────────────────────────────── */}
-      <section className="py-16 md:px-16 px-8 bg-[#F3F2ED]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="w-12 h-px bg-[#14442E] opacity-40" />
-              <p className="uppercase text-sm tracking-widest text-[#14442E] font-medium">Reports</p>
-              <div className="w-12 h-px bg-[#14442E] opacity-40" />
-            </div>
-            <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-2">Powerful Insights with 12+ Types of Reports</h2>
-            <p className="text-gray-500 text-sm max-w-2xl mx-auto">Choose the reports that best fit your school's needs.</p>
-          </div>
-
-          {/* Slider */}
-          <div className="relative">
-            {/* Left button */}
-            <button
-              onClick={handlePrev}
-              className="absolute -left-4 md:-left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-[#14442E] text-white rounded-full shadow-lg flex items-center justify-center hover:bg-[#0c2f1e] hover:scale-110 transition-all duration-300"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            {/* Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 overflow-hidden">
-              {visibleReports.map((r, i) => (
-                <div
-                  key={`${sliderIndex}-${i}`}
-                  className="bg-white rounded-xl p-6 flex flex-col items-center gap-3 text-center shadow-sm hover:shadow-md transition-all duration-500 border border-gray-100 hover:border-[#FDCA00] hover:-translate-y-1"
-                  style={{
-                    animation: `fadeSlideIn 0.4s ease forwards`,
-                    animationDelay: `${i * 60}ms`,
-                    opacity: 0
-                  }}
-                >
-                  <div className="w-12 h-12 bg-[#F3F2ED] rounded-full flex items-center justify-center group-hover:bg-[#14442E] transition-colors duration-300">
-                    <r.icon className="h-6 w-6 text-[#05503C]" />
-                  </div>
-                  <p className="text-sm font-semibold text-[#14442E] leading-snug">{r.title}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Right button */}
-            <button
-              onClick={handleNext}
-              className="absolute -right-4 md:-right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-[#14442E] text-white rounded-full shadow-lg flex items-center justify-center hover:bg-[#0c2f1e] hover:scale-110 transition-all duration-300"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Dot indicators */}
-          <div className="flex justify-center gap-2 mt-8">
-            {reports.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => { setSliderIndex(i); startTimer(); }}
-                className={`rounded-full transition-all duration-300 ${
-                  i === sliderIndex
-                    ? 'w-6 h-2 bg-[#14442E]'
-                    : 'w-2 h-2 bg-gray-300 hover:bg-[#14442E]/50'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Keyframe style */}
-        <style jsx>{`
-          @keyframes fadeSlideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to   { opacity: 1; transform: translateX(0); }
-          }
-        `}</style>
-      </section>
+      <RaahReportsSlider />
 
       {/* ── HOW IT WORKS ─────────────────────────────────────────────────── */}
       <section className="py-16 md:px-16 px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="w-12 h-px bg-[#14442E] opacity-40" />
-              <p className="uppercase text-sm tracking-widest text-[#14442E] font-medium">How It Works</p>
-              <div className="w-12 h-px bg-[#14442E] opacity-40" />
+            <div className="flex justify-center mb-4">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FDCA00]/20 to-[#FDCA00]/10 rounded-full px-6 py-3">
+                <div className="w-2 h-2 bg-[#FDCA00] rounded-full"></div>
+                <span className="text-sm font-semibold text-[#05503C]">How It Works</span>
+              </div>
             </div>
             <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-2">A Simple 4-Step Journey for Your School</h2>
           </div>

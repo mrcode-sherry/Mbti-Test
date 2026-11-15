@@ -2,6 +2,7 @@ import Benefits from "@/components/Benefits";
 import Comparison from "@/components/Comparison";
 import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
+import RaahReportsSlider from "@/components/RaahReportsSlider";
 import Slider from "@/components/Slider";
 import Testimonial from "@/components/Testimonial";
 import TrustedWorldwide from "@/components/TrustedWorldwide";
@@ -16,6 +17,9 @@ export default function Home() {
     </section>
     <section>
       <TrustedWorldwide/>
+    </section>
+    <section>
+      <RaahReportsSlider/>
     </section>
     <section>
       <Benefits/>

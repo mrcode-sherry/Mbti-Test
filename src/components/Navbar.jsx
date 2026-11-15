@@ -197,7 +197,7 @@ const Navbar = () => {
                           </div>
                           <p className="text-sm font-medium">
                             Please pay your fees to continue.{" "}
-                            <Link href="/future-fit" className="underline text-[#14442E] hover:text-[#0f3a26] font-bold">Pay Fees</Link>
+                            <Link href="/raah-for-student" className="underline text-[#14442E] hover:text-[#0f3a26] font-bold">Pay Fees</Link>
                           </p>
                         </>
                       );
@@ -265,7 +265,7 @@ const Navbar = () => {
               <button
                 onClick={() => setRaahOpen(prev => !prev)}
                 className={`flex items-center gap-1 px-3 py-1.5 rounded-lg transition-all duration-200
-                  ${pathname === '/future-fit' || pathname === '/raah-for-schools'
+                  ${pathname === '/raah-for-student' || pathname === '/raah-for-schools'
                     ? 'text-white bg-[#14442E] font-semibold'
                     : 'text-[#14442E] hover:text-white hover:bg-[#14442E]'
                   }`}
@@ -280,10 +280,10 @@ const Navbar = () => {
                   style={{ animation: 'fadeSlideDown 0.18s ease forwards' }}
                 >
                   <Link
-                    href="/future-fit"
+                    href="/raah-for-student"
                     onClick={() => setRaahOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 text-sm font-medium transition-colors duration-150
-                      ${pathname === '/future-fit'
+                      ${pathname === '/raah-for-student'
                         ? 'bg-[#14442E] text-white'
                         : 'text-[#14442E] hover:bg-[#F3F2ED]'
                       }`}
@@ -448,29 +448,22 @@ const Navbar = () => {
                 <Link href="/about" onClick={toggleMenu} className={`block px-3 py-2 rounded-lg transition-all duration-200 ${pathname === '/about' ? 'bg-[#14442E] text-white font-semibold' : 'text-[#14442E] hover:bg-[#14442E] hover:text-white'}`}>About</Link>
               </li>
 
-              {/* RAAH Dropdown Mobile */}
+              {/* RAAH Mobile - Direct links, no dropdown */}
               <li>
-                <button
-                  onClick={() => setRaahOpen(prev => !prev)}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-200
-                    ${pathname === '/future-fit' || pathname === '/raah-for-schools'
-                      ? 'bg-[#14442E] text-white font-semibold'
-                      : 'text-[#14442E] hover:bg-[#14442E] hover:text-white'
-                    }`}
+                <a
+                  href="/raah-for-student"
+                  className={`block px-3 py-2 rounded-lg transition-all duration-200 ${pathname === '/raah-for-student' ? 'bg-[#14442E] text-white font-semibold' : 'text-[#14442E] hover:bg-[#14442E] hover:text-white'}`}
                 >
-                  RAAH
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${raahOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {raahOpen && (
-                  <div className="mt-1 ml-4 flex flex-col gap-1">
-                    <Link href="/future-fit" onClick={() => { toggleMenu(); setRaahOpen(false); }} className={`block px-3 py-2 rounded-lg text-sm transition-all duration-200 ${pathname === '/future-fit' ? 'bg-[#14442E] text-white' : 'text-[#14442E] hover:bg-[#F3F2ED]'}`}>
-                      → RAAH for Students
-                    </Link>
-                    <Link href="/raah-for-schools" onClick={() => { toggleMenu(); setRaahOpen(false); }} className={`block px-3 py-2 rounded-lg text-sm transition-all duration-200 ${pathname === '/raah-for-schools' ? 'bg-[#14442E] text-white' : 'text-[#14442E] hover:bg-[#F3F2ED]'}`}>
-                      → RAAH for Schools
-                    </Link>
-                  </div>
-                )}
+                  RAAH for Students
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/raah-for-schools"
+                  className={`block px-3 py-2 rounded-lg transition-all duration-200 ${pathname === '/raah-for-schools' ? 'bg-[#14442E] text-white font-semibold' : 'text-[#14442E] hover:bg-[#14442E] hover:text-white'}`}
+                >
+                  RAAH for Schools
+                </a>
               </li>
 
               {/* Student Dashboard */}
@@ -521,10 +514,7 @@ const Navbar = () => {
                     <div className="space-y-2 mb-4">
                       {user?.role !== 'admin' && completed && (
                         <button
-                          onClick={() => {
-                            router.push('/student-dashboard');
-                            toggleMenu();
-                          }}
+                          onClick={() => { router.push('/student-dashboard'); toggleMenu(); }}
                           className="w-full flex items-center space-x-3 bg-white/10 hover:bg-white/20 rounded-lg p-3 transition-colors duration-200"
                         >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -535,10 +525,7 @@ const Navbar = () => {
                       )}
                       
                       <button
-                        onClick={() => {
-                          router.push('/contact');
-                          toggleMenu();
-                        }}
+                        onClick={() => { router.push('/contact'); toggleMenu(); }}
                         className="w-full flex items-center space-x-3 bg-white/10 hover:bg-white/20 rounded-lg p-3 transition-colors duration-200"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -550,10 +537,7 @@ const Navbar = () => {
                     
                     {/* Logout Button */}
                     <button
-                      onClick={() => {
-                        handleLogout();
-                        toggleMenu();
-                      }}
+                      onClick={() => { handleLogout(); toggleMenu(); }}
                       className="w-full flex items-center justify-center space-x-2 bg-red-600 hover:bg-red-700 rounded-lg p-3 transition-colors duration-200 font-medium"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

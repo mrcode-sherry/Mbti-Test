@@ -331,12 +331,11 @@ const FutureFitPage = () => {
             )}
 
             <div className="text-center mb-12">
-              <div className="flex items-center justify-center gap-4 mb-4">
-                <div className="w-12 h-px bg-[#14442E] opacity-40" />
-                <p className="uppercase text-sm tracking-widest text-[#14442E] font-medium">
-                  RAAH Plans
-                </p>
-                <div className="w-12 h-px bg-[#14442E] opacity-40" />
+              <div className="flex justify-center mb-4">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FDCA00]/20 to-[#FDCA00]/10 rounded-full px-6 py-3">
+                  <div className="w-2 h-2 bg-[#FDCA00] rounded-full"></div>
+                  <span className="text-sm font-semibold text-[#05503C]">RAAH Plans</span>
+                </div>
               </div>
               <p className="text-[29px] md:text-4xl text-[#14442E] font-bold md:w-[1100px] w-full mx-auto mb-4">
                 Invest in Your Future Today
@@ -393,10 +392,10 @@ const FutureFitPage = () => {
               </div>
 
               {/* ── PREMIUM CARD (coming soon — not clickable) ── */}
-              <div className="relative bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[380px] justify-between opacity-70 select-none">
+              <div className="relative bg-white shadow-lg rounded-xl p-8 flex flex-col md:w-[380px] justify-between opacity-70 select-none overflow-hidden">
                 {/* Coming Soon overlay ribbon */}
-                <div className="absolute top-4 right-4">
-                  <span className="bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full">
+                <div className="absolute top-4 right-4 max-w-[calc(100%-2rem)]">
+                  <span className="bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
                     Coming Soon
                   </span>
                 </div>

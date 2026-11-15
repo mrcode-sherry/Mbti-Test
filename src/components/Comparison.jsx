@@ -60,7 +60,7 @@ const Comparison = () => {
 
               <button
                 onClick={() => {
-                  window.location.href = '/future-fit';
+                  window.location.href = '/raah-for-student';
                   setTimeout(() => {
                     const pricingSection = document.querySelector('[data-pricing-section]');
                     if (pricingSection) pricingSection.scrollIntoView({ behavior: 'smooth' });
