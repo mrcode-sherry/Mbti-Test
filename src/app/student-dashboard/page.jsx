@@ -369,7 +369,7 @@ const StudentDashboard = () => {
               <div className="bg-white rounded-lg shadow-md p-8 text-center">
                 <p className="text-gray-500 mb-4">No test results found. Please complete your test first.</p>
                 <button
-                  onClick={() => router.push("/future-fit")}
+                  onClick={() => router.push("/raah-for-student")}
                   className="bg-[#14442E] text-white px-6 py-2 rounded-lg hover:bg-[#0f3a26] transition duration-200"
                 >
                   Take Test

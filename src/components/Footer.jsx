@@ -72,10 +72,10 @@ const Footer = () => {
 
           {/* Social Icons */}
           <div className="flex gap-4">
-            <Link href="https://facebook.com" target="_blank" className="hover:text-green-400 transition">
+            <Link href="https://www.facebook.com/profile.php?id=61581334505572" target="_blank" className="hover:text-green-400 transition">
               <Facebook size={20} />
             </Link>
-            <Link href="https://instagram.com" target="_blank" className="hover:text-green-400 transition">
+            <Link href="https://www.instagram.com/aptitudecounsel/" target="_blank" className="hover:text-green-400 transition">
               <Instagram size={20} />
             </Link>
           </div>
@@ -87,7 +87,7 @@ const Footer = () => {
           <ul className="flex flex-col gap-2 text-sm">
             <li><Link href="/" className="hover:underline">Home</Link></li>
             <li><Link href="/about" className="hover:underline">About</Link></li>
-            <li><Link href="/future-fit" className="hover:underline">RAAH</Link></li>
+            <li><Link href="/raah-for-student" className="hover:underline">RAAH</Link></li>
             <li><Link href="/raah-for-schools" className="hover:underline">RAAH for Schools</Link></li>
           </ul>
         </div>
@@ -121,7 +121,7 @@ const Footer = () => {
               : "Click below to start your assessment and discover your insights."
             }
           </p>
-          <Link href={isTestCompleted ? "/student-dashboard" : "/future-fit"}>
+          <Link href={isTestCompleted ? "/student-dashboard" : "/raah-for-student"}>
             <button
               type="button"
               className="bg-white text-[#14442E] px-6 py-2 hover:scale-105 duration-300 rounded-md font-medium hover:bg-gray-100 transition w-fit cursor-pointer"

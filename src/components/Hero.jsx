@@ -9,14 +9,14 @@ const Hero = () => {
   const typedEl = useRef(null);
 
   const handleTryItNow = () => {
-    router.push('/future-fit');
+    router.push('/raah-for-student');
   };
 
   // ✅ Typed.js Effect
   useEffect(() => {
     const typed = new Typed(typedEl.current, {
       strings: [
-        "Gen-Z<br/>Career Guidance",
+        "Plan your<br/>Successful Career",
         "From Confusion to Direction",
       ],
       typeSpeed: 60,       
