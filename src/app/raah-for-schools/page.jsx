@@ -196,166 +196,6 @@ export default function RaahForSchoolsPage() {
         </div>
       </section>
 
-      {/* ── FORM ─────────────────────────────────────────────────────────── */}
-      <section ref={formRef} className="py-16 md:px-16 px-8 bg-[#F3F2ED]">
-        <div className="max-w-3xl mx-auto">
-          {/* Section label */}
-          <div className="flex justify-center mb-4">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FDCA00]/20 to-[#FDCA00]/10 rounded-full px-6 py-3">
-              <div className="w-2 h-2 bg-[#FDCA00] rounded-full"></div>
-              <span className="text-sm font-semibold text-[#05503C]">Partner With Us</span>
-            </div>
-          </div>
-          <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] text-center mb-2">
-            Get in Touch Today
-          </h2>
-          <p className="text-gray-500 text-center mb-10 text-sm">
-            Fill the form below and our team will contact you to discuss how RAAH can benefit your school.
-          </p>
-
-          {!user && (
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md mb-6 text-yellow-800 text-sm font-medium">
-              ⚠️ Please{' '}
-              <button onClick={() => router.push('/login')} className="underline font-bold cursor-pointer">
-                log in
-              </button>{' '}
-              to submit this form.
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-md p-8 space-y-5">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {/* School Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">School Name *</label>
-                <div className="relative">
-                  <School className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text" name="schoolName" value={formData.schoolName}
-                    onChange={handleChange} required placeholder="e.g. Govt. High School, Lahore"
-                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
-                  />
-                </div>
-              </div>
-
-              {/* City */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text" name="city" value={formData.city}
-                    onChange={handleChange} required placeholder="e.g. Lahore"
-                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
-                  />
-                </div>
-              </div>
-
-              {/* Address */}
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">School Address *</label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-3.5 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text" name="address" value={formData.address}
-                    onChange={handleChange} required placeholder="e.g. Street 5, Model Town, Lahore"
-                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
-                  />
-                </div>
-              </div>
-
-              {/* Contact No */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Contact Number *</label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="tel" name="contactNo" value={formData.contactNo}
-                    onChange={handleChange} required
-                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
-                  />
-                </div>
-              </div>
-
-              {/* Applicant Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Name of Applicant *</label>
-                <div className="relative">
-                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text" name="applicantName" value={formData.applicantName}
-                    onChange={handleChange} required placeholder="e.g. Muhammad Ahmed"
-                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
-                  />
-                </div>
-              </div>
-
-              {/* Email */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="email" name="email" value={formData.email}
-                    onChange={handleChange} required placeholder="school@example.com"
-                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
-                  />
-                </div>
-              </div>
-
-              {/* Preferred Contact Dropdown */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Contact Method *</label>
-                <div className="relative">
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                  <select
-                    name="preferredContact" value={formData.preferredContact}
-                    onChange={handleChange} required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors appearance-none bg-white"
-                  >
-                    <option value="">Select preferred contact</option>
-                    <option value="Available 24 hours – Contact Number">Available 24 hours – Contact Number</option>
-                    <option value="Available 24 hours – Email">Available 24 hours – Email</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Message */}
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Message (Optional)</label>
-                <div className="relative">
-                  <MessageSquare className="absolute left-3 top-3.5 w-4 h-4 text-gray-400" />
-                  <textarea
-                    name="message" value={formData.message}
-                    onChange={handleChange} rows={4}
-                    placeholder="Tell us about your school, number of students, or any specific requirements..."
-                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors resize-none"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="submit" disabled={loading || !user}
-              className="w-full bg-[#14442E] text-white py-3 rounded-lg font-semibold hover:bg-[#0c2f1e] hover:scale-[1.01] duration-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              {loading ? 'Submitting...' : (
-                <>
-                  Submit Inquiry
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
-
-            {feedback && (
-              <p className={`text-sm font-medium text-center pt-1 ${feedback.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
-                {feedback.type === 'success' ? '✅ ' : '❌ '}{feedback.message}
-              </p>
-            )}
-          </form>
-        </div>
-      </section>
-
       {/* ── WHY SCHOOLS NEED RAAH + THE RAAH JOURNEY ────────────────────── */}
       <section className="py-16 md:px-16 px-8 bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -523,73 +363,205 @@ export default function RaahForSchoolsPage() {
       {/* ── TOP TRUSTED ASSESSMENT TOOLS ─────────────────────────────────── */}
       <section className="py-16 md:px-16 px-8 bg-[#F3F2ED]">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
-            {/* LEFT — Tools list */}
-            <div>
-              <h2 className="text-2xl md:text-3xl font-black text-[#14442E] mb-8 leading-tight">
-                The Top, Most Trusted<br />Assessment Tools
-              </h2>
-
-              <div className="space-y-3">
-                {[
-                  { emoji: '🔷', name: 'The Holland Code (RIASEC)' },
-                  { emoji: '🧠', name: 'Myers-Briggs Type Indicator (MBTI)' },
-                  { emoji: '📊', name: 'CliftonStrengths (Gallup)' },
-                  { emoji: '🌀', name: 'The Enneagram' },
-                  { emoji: '🌐', name: 'The Big Five (OCEAN)' },
-                ].map((tool, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-4 bg-white rounded-xl px-5 py-4 shadow-sm border border-gray-100 hover:border-[#FDCA00] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
-                    style={{ animationDelay: `${i * 80}ms` }}
-                  >
-                    <span className="text-2xl flex-shrink-0">{tool.emoji}</span>
-                    <span className="text-gray-800 font-semibold text-sm md:text-base">{tool.name}</span>
-                  </div>
-                ))}
-              </div>
-
-              <p className="text-gray-500 text-sm mt-6 italic">
-                Used by global universities, Fortune 500 companies, and leadership organizations.
-              </p>
-            </div>
-
-            {/* RIGHT — Visual callout */}
-            <div className="flex flex-col gap-6">
-              {/* Big stat card */}
-              <div className="bg-[#14442E] rounded-2xl p-8 text-white relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[#FDCA00]/10 rounded-full blur-2xl" />
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full blur-xl" />
-                <div className="relative z-10">
-                  <p className="text-5xl md:text-6xl font-black text-[#FDCA00] mb-2">5</p>
-                  <p className="text-lg font-bold text-white mb-1">World-Class Frameworks</p>
-                  <p className="text-white/70 text-sm">Combined into one powerful assessment for Pakistani students.</p>
-                </div>
-              </div>
-
-              {/* Two smaller cards */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 text-center hover:shadow-md hover:border-[#FDCA00] transition-all duration-300">
-                  <p className="text-3xl font-black text-[#14442E] mb-1">48</p>
-                  <p className="text-xs text-gray-500 font-medium">Research-based Questions</p>
-                </div>
-                <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 text-center hover:shadow-md hover:border-[#FDCA00] transition-all duration-300">
-                  <p className="text-3xl font-black text-[#14442E] mb-1">16</p>
-                  <p className="text-xs text-gray-500 font-medium">Personality Types Identified</p>
-                </div>
-                <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 text-center hover:shadow-md hover:border-[#FDCA00] transition-all duration-300">
-                  <p className="text-3xl font-black text-[#14442E] mb-1">12+</p>
-                  <p className="text-xs text-gray-500 font-medium">Report Types Available</p>
-                </div>
-                <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 text-center hover:shadow-md hover:border-[#FDCA00] transition-all duration-300">
-                  <p className="text-3xl font-black text-[#14442E] mb-1">100%</p>
-                  <p className="text-xs text-gray-500 font-medium">Confidential & Secure</p>
-                </div>
+          {/* Section header — same style as RaahReportsSlider */}
+          <div className="text-center mb-10">
+            <div className="flex justify-center mb-4">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FDCA00]/20 to-[#FDCA00]/10 rounded-full px-6 py-3">
+                <div className="w-2 h-2 bg-[#FDCA00] rounded-full"></div>
+                <span className="text-sm font-semibold text-[#05503C]">5 World-Class Frameworks</span>
               </div>
             </div>
-
+            <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] mb-2">
+              The Top, Most Trusted Assessment Tools
+            </h2>
+            <p className="text-gray-500 text-sm max-w-2xl mx-auto">
+              Used by global universities, Fortune 500 companies, and leadership organizations.
+            </p>
           </div>
+
+          {/* 5 tool cards — 3 on first row, 2 on second row */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { emoji: '🔷', name: 'The Holland Code (RIASEC)', desc: 'Matches interests to real-world careers across 6 personality types.' },
+              { emoji: '🧠', name: 'Myers-Briggs Type Indicator (MBTI)', desc: 'Identifies 16 personality types to guide career and learning styles.' },
+              { emoji: '📊', name: 'CliftonStrengths (Gallup)', desc: 'Reveals top natural talents to build on for academic and career success.' },
+              { emoji: '🌀', name: 'The Enneagram', desc: 'Uncovers core motivations and thinking patterns for self-awareness.' },
+              { emoji: '🌐', name: 'The Big Five (OCEAN)', desc: 'Measures five key personality dimensions backed by global research.' },
+            ].map((tool, i) => (
+              <div
+                key={i}
+                className="flex items-start gap-4 bg-white rounded-xl px-5 py-5 shadow-sm border border-gray-100 hover:border-[#FDCA00] hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+              >
+                <span className="text-3xl flex-shrink-0 mt-0.5">{tool.emoji}</span>
+                <div>
+                  <p className="text-gray-800 font-bold text-sm md:text-base">{tool.name}</p>
+                  <p className="text-gray-500 text-xs mt-1 leading-relaxed">{tool.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── FORM ─────────────────────────────────────────────────────────── */}
+      <section ref={formRef} className="py-16 md:px-16 px-8 bg-[#F3F2ED]">
+        <div className="max-w-3xl mx-auto">
+          {/* Section label */}
+          <div className="flex justify-center mb-4">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FDCA00]/20 to-[#FDCA00]/10 rounded-full px-6 py-3">
+              <div className="w-2 h-2 bg-[#FDCA00] rounded-full"></div>
+              <span className="text-sm font-semibold text-[#05503C]">Partner With Us</span>
+            </div>
+          </div>
+          <h2 className="text-[29px] md:text-4xl font-bold text-[#14442E] text-center mb-2">
+            Get in Touch Today
+          </h2>
+          <p className="text-gray-500 text-center mb-10 text-sm">
+            Fill the form below and our team will contact you to discuss how RAAH can benefit your school.
+          </p>
+
+          {!user && (
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md mb-6 text-yellow-800 text-sm font-medium">
+              ⚠️ Please{' '}
+              <button onClick={() => router.push('/login')} className="underline font-bold cursor-pointer">
+                log in
+              </button>{' '}
+              to submit this form.
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-md p-8 space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* School Name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">School Name *</label>
+                <div className="relative">
+                  <School className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="text" name="schoolName" value={formData.schoolName}
+                    onChange={handleChange} required placeholder="e.g. Govt. High School, Lahore"
+                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* City */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="text" name="city" value={formData.city}
+                    onChange={handleChange} required placeholder="e.g. Lahore"
+                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* Address */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-1">School Address *</label>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-3.5 w-4 h-4 text-gray-400" />
+                  <input
+                    type="text" name="address" value={formData.address}
+                    onChange={handleChange} required placeholder="e.g. Street 5, Model Town, Lahore"
+                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* Contact No */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Contact Number *</label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="tel" name="contactNo" value={formData.contactNo}
+                    onChange={handleChange} required
+                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* Applicant Name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Name of Applicant *</label>
+                <div className="relative">
+                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="text" name="applicantName" value={formData.applicantName}
+                    onChange={handleChange} required placeholder="e.g. Muhammad Ahmed"
+                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="email" name="email" value={formData.email}
+                    onChange={handleChange} required placeholder="school@example.com"
+                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* Preferred Contact Dropdown */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Contact Method *</label>
+                <div className="relative">
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                  <select
+                    name="preferredContact" value={formData.preferredContact}
+                    onChange={handleChange} required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors appearance-none bg-white"
+                  >
+                    <option value="">Select preferred contact</option>
+                    <option value="Available 24 hours – Contact Number">Available 24 hours – Contact Number</option>
+                    <option value="Available 24 hours – Email">Available 24 hours – Email</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Message */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Message (Optional)</label>
+                <div className="relative">
+                  <MessageSquare className="absolute left-3 top-3.5 w-4 h-4 text-gray-400" />
+                  <textarea
+                    name="message" value={formData.message}
+                    onChange={handleChange} rows={4}
+                    placeholder="Tell us about your school, number of students, or any specific requirements..."
+                    className="w-full pl-9 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors resize-none"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="submit" disabled={loading || !user}
+              className="w-full bg-[#14442E] text-white py-3 rounded-lg font-semibold hover:bg-[#0c2f1e] hover:scale-[1.01] duration-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              {loading ? 'Submitting...' : (
+                <>
+                  Submit Inquiry
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+
+            {feedback && (
+              <p className={`text-sm font-medium text-center pt-1 ${feedback.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                {feedback.type === 'success' ? '✅ ' : '❌ '}{feedback.message}
+              </p>
+            )}
+          </form>
         </div>
       </section>
 

@@ -74,6 +74,7 @@ model Test {
   boardInstitution     String?
   mediumOfInstruction  String?
   expectedResult       String?
+  stream               String?  // e.g. Science, Computer Science, etc.
   extraCurricularActivities String[] // Array of strings
   fatherOccupation     String?
   motherOccupation     String?

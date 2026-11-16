@@ -11,6 +11,22 @@ const StudentDashboard = () => {
   const [mbtiType, setMbtiType] = useState(null);
   const [percentages, setPercentages] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [submission, setSubmission] = useState(null);
+
+  // Build display type: replace letter with X where both sides are 50/50
+  const getDisplayType = (type, percs) => {
+    if (!type || !percs) return type;
+    const pairs = [
+      { idx: 0, a: 'E', b: 'I' },
+      { idx: 1, a: 'S', b: 'N' },
+      { idx: 2, a: 'T', b: 'F' },
+      { idx: 3, a: 'J', b: 'P' },
+    ];
+    return pairs.map(({ idx, a, b }) => {
+      if (percs[a] === percs[b]) return 'X';
+      return type[idx] || (percs[a] > percs[b] ? a : b);
+    }).join('');
+  };
 
   useEffect(() => {
     // Check if user is logged in
@@ -27,6 +43,11 @@ const StudentDashboard = () => {
       // Check for test results
       if (parsedUser?.email) {
         checkTestCompletion(parsedUser.email);
+        // Fetch form submission data
+        fetch(`/api/showtest?email=${encodeURIComponent(parsedUser.email)}`)
+          .then(res => res.json())
+          .then(data => { if (data.success && data.data) setSubmission(data.data); })
+          .catch(() => {});
       } else {
         setLoading(false);
       }
@@ -208,7 +229,7 @@ const StudentDashboard = () => {
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
                 <h3 className="text-sm font-medium text-gray-500 mb-1">Personality Type</h3>
-                <p className="text-2xl font-bold text-blue-600">{mbtiType || 'N/A'}</p>
+                <p className="text-2xl font-bold text-blue-600">{getDisplayType(mbtiType, percentages) || 'N/A'}</p>
                 <p className="text-xs text-gray-400 mt-1">Your MBTI result</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
@@ -267,7 +288,18 @@ const StudentDashboard = () => {
                 {/* MBTI Type Display */}
                 <div className="bg-[#14442E] text-white rounded-lg p-8 text-center mb-8">
                   <h2 className="text-2xl font-semibold mb-2">Your Personality Type</h2>
-                  <p className="text-6xl font-bold tracking-wider">{mbtiType}</p>
+                  <p className="text-6xl font-bold tracking-wider">
+                    {getDisplayType(mbtiType, percentages)?.split('').map((letter, i) => (
+                      <span key={i} className={letter === 'X' ? 'text-[#FDCA00]' : ''}>
+                        {letter}
+                      </span>
+                    ))}
+                  </p>
+                  {getDisplayType(mbtiType, percentages)?.includes('X') && (
+                    <p className="text-sm text-white/70 mt-3">
+                      ⚖️ <span className="text-[#FDCA00] font-semibold">X</span> means equal score on that dimension
+                    </p>
+                  )}
                 </div>
 
                 {/* Personality Percentages */}
@@ -391,7 +423,13 @@ const StudentDashboard = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                     <div className="bg-gray-50 p-3 rounded-lg border">
-                      <p className="text-gray-900">{user?.name || 'N/A'}</p>
+                      <p className="text-gray-900">{submission?.fullName || user?.name || 'N/A'}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Father's Name</label>
+                    <div className="bg-gray-50 p-3 rounded-lg border">
+                      <p className="text-gray-900">{submission?.fatherName || 'N/A'}</p>
                     </div>
                   </div>
                   <div>
@@ -400,23 +438,117 @@ const StudentDashboard = () => {
                       <p className="text-gray-900">{user?.email || 'N/A'}</p>
                     </div>
                   </div>
-                </div>
-                <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Account Type</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Age</label>
                     <div className="bg-gray-50 p-3 rounded-lg border">
-                      <p className="text-gray-900">Student Account</p>
+                      <p className="text-gray-900">{submission?.age || 'N/A'}</p>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Subscription Plan</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
                     <div className="bg-gray-50 p-3 rounded-lg border">
-                      <p className="text-gray-900">RAAH Premium</p>
+                      <p className="text-gray-900">{submission?.gender || 'N/A'}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Class / Education Level</label>
+                    <div className="bg-gray-50 p-3 rounded-lg border">
+                      <p className="text-gray-900">{submission?.currentEducationLevel || 'N/A'}</p>
+                    </div>
+                  </div>
+                  {submission?.stream && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Stream</label>
+                      <div className="bg-gray-50 p-3 rounded-lg border">
+                        <p className="text-gray-900">{submission.stream}</p>
+                      </div>
+                    </div>
+                  )}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Board / Institution</label>
+                    <div className="bg-gray-50 p-3 rounded-lg border">
+                      <p className="text-gray-900">{submission?.boardInstitution || 'N/A'}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Medium of Instruction</label>
+                    <div className="bg-gray-50 p-3 rounded-lg border">
+                      <p className="text-gray-900">{submission?.mediumOfInstruction || 'N/A'}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Test Category</label>
+                    <div className="bg-gray-50 p-3 rounded-lg border">
+                      <p className="text-gray-900">{submission?.testCategory || 'N/A'}</p>
                     </div>
                   </div>
                 </div>
               </div>
-              
+
+              {/* Academic Info */}
+              {submission && (
+                <div className="mt-6 pt-6 border-t border-gray-200 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {submission.favouriteSubjects?.length > 0 && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Favourite Subjects</label>
+                      <div className="bg-gray-50 p-3 rounded-lg border">
+                        <p className="text-gray-900">{submission.favouriteSubjects.join(", ")}</p>
+                      </div>
+                    </div>
+                  )}
+                  {submission.weakSubjects?.length > 0 && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Weak Subjects</label>
+                      <div className="bg-gray-50 p-3 rounded-lg border">
+                        <p className="text-gray-900">{submission.weakSubjects.join(", ")}</p>
+                      </div>
+                    </div>
+                  )}
+                  {submission.extraCurricularActivities?.length > 0 && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Extra-Curricular Activities</label>
+                      <div className="bg-gray-50 p-3 rounded-lg border">
+                        <p className="text-gray-900">{submission.extraCurricularActivities.join(", ")}</p>
+                      </div>
+                    </div>
+                  )}
+                  {submission.careerPreferences && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Career Preferences</label>
+                      <div className="bg-gray-50 p-3 rounded-lg border">
+                        <p className="text-gray-900">{submission.careerPreferences}</p>
+                      </div>
+                    </div>
+                  )}
+                  {submission.fatherOccupation && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Father's Occupation</label>
+                      <div className="bg-gray-50 p-3 rounded-lg border">
+                        <p className="text-gray-900">{submission.fatherOccupation}</p>
+                      </div>
+                    </div>
+                  )}
+                  {submission.motherOccupation && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Mother's Occupation</label>
+                      <div className="bg-gray-50 p-3 rounded-lg border">
+                        <p className="text-gray-900">{submission.motherOccupation}</p>
+                      </div>
+                    </div>
+                  )}
+                  {submission.socioeconomicBracket && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Socioeconomic Bracket</label>
+                      <div className="bg-gray-50 p-3 rounded-lg border">
+                        <p className="text-gray-900">{submission.socioeconomicBracket}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* Account Status */}
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Status</h3>

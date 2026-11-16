@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -13,6 +13,7 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
 
     // Section 2: Education Details
     currentEducationLevel: '',
+    stream: '',
     boardInstitution: '',
     mediumOfInstruction: '',
     expectedResult: '',
@@ -59,6 +60,16 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [tabErrors, setTabErrors] = useState({});
+
+  // Add/remove popup-open class on body to hide WhatsApp button
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('popup-open');
+    } else {
+      document.body.classList.remove('popup-open');
+    }
+    return () => document.body.classList.remove('popup-open');
+  }, [isOpen]);
 
   const tabs = [
     'Student Profile',
@@ -108,17 +119,16 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
           formData.fullName.trim().length >= 2 &&
           formData.fatherName.trim().length >= 2 &&
           formData.age &&
-          parseInt(formData.age) >= 15 &&
+          parseInt(formData.age) >= 1 &&
           parseInt(formData.age) <= 100 &&
           formData.gender &&
           ['Male', 'Female', 'Other'].includes(formData.gender)
         );
       case 1: // Education Details
         return (
-          formData.currentEducationLevel.trim().length >= 5 &&
+          formData.currentEducationLevel.trim().length >= 2 &&
           formData.boardInstitution.trim().length >= 3 &&
-          formData.mediumOfInstruction.trim().length >= 3 &&
-          formData.expectedResult.trim().length >= 3
+          formData.mediumOfInstruction.trim().length >= 3
         );
       case 2: // Academic Self-Report
         return (
@@ -146,15 +156,14 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
       case 0: // Student Profile
         if (formData.fullName.trim().length < 2) errors.push("Full name must be at least 2 characters");
         if (formData.fatherName.trim().length < 2) errors.push("Father's name must be at least 2 characters");
-        if (!formData.age || parseInt(formData.age) < 15) errors.push("Age must be 15 or older");
+        if (!formData.age || parseInt(formData.age) < 1) errors.push("Please enter a valid age");
         if (parseInt(formData.age) > 100) errors.push("Please enter a valid age");
         if (!formData.gender) errors.push("Please select your gender");
         break;
       case 1: // Education Details
-        if (formData.currentEducationLevel.trim().length < 5) errors.push("Please select your current education level");
+        if (formData.currentEducationLevel.trim().length < 2) errors.push("Please enter your current class / education level");
         if (formData.boardInstitution.trim().length < 3) errors.push("Board/Institution name is required");
         if (formData.mediumOfInstruction.trim().length < 3) errors.push("Please select medium of instruction");
-        if (formData.expectedResult.trim().length < 3) errors.push("Please select your expected result/status");
         break;
       case 2: // Academic Self-Report
         if (formData.favouriteSubjects.filter(s => s.trim().length > 0).length < 1) errors.push("Please add at least one favourite subject");
@@ -279,55 +288,53 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
             </div>
             
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Student Name *</label>
+              <label className="block font-medium mb-2 text-[#374151]">Student Name *</label>
               <input
                 type="text"
                 name="fullName"
                 placeholder="Enter your full name"
                 value={formData.fullName}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
                 required
               />
             </div>
 
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Father's Name *</label>
+              <label className="block font-medium mb-2 text-[#374151]">Father's Name *</label>
               <input
                 type="text"
                 name="fatherName"
                 placeholder="Enter father's name"
                 value={formData.fatherName}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
                 required
               />
             </div>
 
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Age * (must be 15 or older)</label>
+              <label className="block font-medium mb-2 text-[#374151]">Age *</label>
               <input
                 type="number"
                 name="age"
                 placeholder="Enter your age"
-                min="15"
+                min="1"
+                max="100"
                 value={formData.age}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
                 required
               />
-              {formData.age && parseInt(formData.age) < 15 && (
-                <p className="text-red-500 text-sm mt-1">Age must be 15 or older</p>
-              )}
             </div>
 
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Gender *</label>
+              <label className="block font-medium mb-2 text-[#374151]">Gender *</label>
               <select
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
                 required
               >
                 <option value="">Select Gender</option>
@@ -347,70 +354,68 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
             </div>
             
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Current Education Level *</label>
-              <select
+              <label className="block font-medium mb-2 text-[#374151]">Current Class / Education Level *</label>
+              <input
+                type="text"
                 name="currentEducationLevel"
+                placeholder="e.g., Class 9, Class 11, O-Levels, A-Levels, Bachelor's"
                 value={formData.currentEducationLevel}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
                 required
-              >
-                <option value="">Select Education Level</option>
-                <option value="Matriculation (Science) — Class 10">Matriculation (Science) — Class 10</option>
-                <option value="Matriculation (Arts) — Class 10">Matriculation (Arts) — Class 10</option>
-                <option value="Intermediate (Pre-Medical) — Class 12">Intermediate (Pre-Medical) — Class 12</option>
-                <option value="Intermediate (Pre-Engineering) — Class 12">Intermediate (Pre-Engineering) — Class 12</option>
-                <option value="Intermediate (Commerce) — Class 12">Intermediate (Commerce) — Class 12</option>
-                <option value="A-Levels">A-Levels</option>
-                <option value="Bachelor's Degree">Bachelor's Degree</option>
-              </select>
+              />
+              <p className="text-sm text-gray-500 mt-1">Type your class or education level</p>
             </div>
 
+            {/* Stream selector — shown only for Class 9 and above */}
+            {formData.currentEducationLevel &&
+              /^(class\s*)?(9|10|11|12|o[\s-]?level|a[\s-]?level|intermediate|matric|bachelor|fsc|fa)/i.test(formData.currentEducationLevel.trim()) && (
+              <div>
+                <label className="block font-medium mb-2 text-[#374151]">Stream *</label>
+                <select
+                  name="stream"
+                  value={formData.stream || ''}
+                  onChange={handleChange}
+                  className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
+                >
+                  <option value="">Select Stream</option>
+                  <option value="Science">Science</option>
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="General Science">General Science</option>
+                  <option value="Arts / Humanities">Arts / Humanities</option>
+                  <option value="Commerce">Commerce</option>
+                  <option value="Pre-Medical">Pre-Medical</option>
+                  <option value="Pre-Engineering">Pre-Engineering</option>
+                </select>
+              </div>
+            )}
+
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Board / Institution *</label>
+              <label className="block font-medium mb-2 text-[#374151]">Board / Institution *</label>
               <input
                 type="text"
                 name="boardInstitution"
-                placeholder="e.g., BISE Lahore / Govt. Pilot Secondary School, Wahdat Road, Lahore"
+                placeholder="e.g., BISE Lahore / Govt. Pilot Secondary School"
                 value={formData.boardInstitution}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
                 required
               />
             </div>
 
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Medium of Instruction *</label>
+              <label className="block font-medium mb-2 text-[#374151]">Medium of Instruction *</label>
               <select
                 name="mediumOfInstruction"
                 value={formData.mediumOfInstruction}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
                 required
               >
                 <option value="">Select Medium</option>
                 <option value="Urdu Medium (English as second language)">Urdu Medium (English as second language)</option>
                 <option value="English Medium">English Medium</option>
                 <option value="Mixed (Urdu & English)">Mixed (Urdu & English)</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block font-medium mb-2 text-gray-700">Expected Result / Status *</label>
-              <select
-                name="expectedResult"
-                value={formData.expectedResult}
-                onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
-                required
-              >
-                <option value="">Select Status</option>
-                <option value="Awaiting (Board Exams completed)">Awaiting (Board Exams completed)</option>
-                <option value="Currently Studying">Currently Studying</option>
-                <option value="Completed with A+ Grade">Completed with A+ Grade</option>
-                <option value="Completed with A Grade">Completed with A Grade</option>
-                <option value="Completed with B Grade">Completed with B Grade</option>
-                <option value="Completed with C Grade">Completed with C Grade</option>
               </select>
             </div>
           </div>
@@ -424,8 +429,8 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
             </div>
             
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Favourite Subjects (Self‑reported) *</label>
-              <p className="text-sm text-gray-500 mb-3">Add subjects you enjoy and perform well in</p>
+              <label className="block font-medium mb-2 text-[#374151]">Favourite Subjects (Self‑reported) *</label>
+              <p className="text-sm text-[#6B7280] mb-3">Add subjects you enjoy and perform well in</p>
               {formData.favouriteSubjects.map((subject, idx) => (
                 <div key={idx} className="flex gap-2 mb-3">
                   <input
@@ -433,7 +438,7 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
                     placeholder={`e.g., ${idx === 0 ? 'Mathematics' : idx === 1 ? 'Computer Science' : 'Physics'}`}
                     value={subject}
                     onChange={(e) => handleArrayChange('favouriteSubjects', idx, e.target.value)}
-                    className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                    className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
                     required={idx === 0}
                   />
                   {idx > 0 && (
@@ -457,8 +462,8 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
             </div>
 
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Weak Subjects (Self‑reported) *</label>
-              <p className="text-sm text-gray-500 mb-3">Add subjects you find challenging</p>
+              <label className="block font-medium mb-2 text-[#374151]">Weak Subjects (Self‑reported) *</label>
+              <p className="text-sm text-[#6B7280] mb-3">Add subjects you find challenging</p>
               {formData.weakSubjects.map((subject, idx) => (
                 <div key={idx} className="flex gap-2 mb-3">
                   <input
@@ -466,7 +471,7 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
                     placeholder={`e.g., ${idx === 0 ? 'Islamiat (Essay-type)' : idx === 1 ? 'Urdu (Creative Writing)' : 'Chemistry'}`}
                     value={subject}
                     onChange={(e) => handleArrayChange('weakSubjects', idx, e.target.value)}
-                    className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                    className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
                     required={idx === 0}
                   />
                   {idx > 0 && (
@@ -497,8 +502,8 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
             <h3 className="text-xl font-semibold text-[#14442E] mb-6">Section 4: Activities & Interests</h3>
             
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Extra‑Curricular Activities *</label>
-              <p className="text-sm text-gray-500 mb-3">List your activities, clubs, competitions, etc.</p>
+              <label className="block font-medium mb-2 text-[#374151]">Extra‑Curricular Activities *</label>
+              <p className="text-sm text-[#6B7280] mb-3">List your activities, clubs, competitions, etc.</p>
               {formData.extraCurricularActivities.map((activity, idx) => (
                 <div key={idx} className="flex gap-2 mb-3">
                   <input
@@ -506,7 +511,7 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
                     placeholder={`e.g., ${idx === 0 ? 'School Science Fair participant' : idx === 1 ? 'Chess Club' : 'Debate Society'}`}
                     value={activity}
                     onChange={(e) => handleArrayChange('extraCurricularActivities', idx, e.target.value)}
-                    className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                    className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
                     required={idx === 0}
                   />
                   {idx > 0 && (
@@ -540,36 +545,36 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
             </div>
             
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Father's Occupation</label>
+              <label className="block font-medium mb-2 text-[#374151]">Father's Occupation</label>
               <input
                 type="text"
                 name="fatherOccupation"
                 placeholder="e.g., Government School Teacher (BPS‑16)"
                 value={formData.fatherOccupation}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
               />
             </div>
 
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Mother's Occupation</label>
+              <label className="block font-medium mb-2 text-[#374151]">Mother's Occupation</label>
               <input
                 type="text"
                 name="motherOccupation"
                 placeholder="e.g., Homemaker, Teacher, Doctor, etc."
                 value={formData.motherOccupation}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block font-medium mb-2 text-gray-700">Socioeconomic Bracket</label>
+              <label className="block font-medium mb-2 text-[#374151]">Socioeconomic Bracket</label>
               <select
                 name="socioeconomicBracket"
                 value={formData.socioeconomicBracket}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-lg w-full max-w-md focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors"
+                className="border border-gray-300 p-3 rounded-lg w-full max-w-md focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors bg-white text-[#111827]"
               >
                 <option value="">Select Bracket</option>
                 <option value="Lower Class">Lower Class</option>
@@ -588,15 +593,15 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
             <h3 className="text-xl font-semibold text-[#14442E] mb-6">Section 6: Career Preference (Self‑Reported)</h3>
             
             <div>
-              <label className="block font-medium mb-2 text-gray-700">Career Preferences / Current Thinking (Optional)</label>
-              <p className="text-sm text-gray-500 mb-3">What career paths are you currently considering?</p>
+              <label className="block font-medium mb-2 text-[#374151]">Career Preferences / Current Thinking (Optional)</label>
+              <p className="text-sm text-[#6B7280] mb-3">What career paths are you currently considering?</p>
               <textarea
                 name="careerPreferences"
                 placeholder='e.g., "Doctor ya Engineer" (as suggested by family), or your own career interests'
                 value={formData.careerPreferences}
                 onChange={handleChange}
                 rows={6}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors resize-none"
+                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#14442E] focus:border-[#14442E] transition-colors resize-none bg-white text-[#111827]"
               />
             </div>
           </div>

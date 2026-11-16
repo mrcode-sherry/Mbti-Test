@@ -33,8 +33,8 @@ export async function POST(req) {
       return NextResponse.json({ success: false, message: "Father's name must be at least 2 characters" }, { status: 400 });
     }
 
-    if (!data.age || isNaN(data.age) || parseInt(data.age) < 15 || parseInt(data.age) > 100) {
-      return NextResponse.json({ success: false, message: "Age must be between 15 and 100" }, { status: 400 });
+    if (!data.age || isNaN(data.age) || parseInt(data.age) < 1 || parseInt(data.age) > 100) {
+      return NextResponse.json({ success: false, message: "Please enter a valid age" }, { status: 400 });
     }
 
     if (!data.gender || !['Male', 'Female', 'Other'].includes(data.gender)) {
@@ -51,10 +51,6 @@ export async function POST(req) {
 
     if (!data.mediumOfInstruction || data.mediumOfInstruction.trim().length < 3) {
       return NextResponse.json({ success: false, message: "Medium of instruction is required" }, { status: 400 });
-    }
-
-    if (!data.expectedResult || data.expectedResult.trim().length < 3) {
-      return NextResponse.json({ success: false, message: "Expected result/status is required" }, { status: 400 });
     }
 
     // Validate arrays
@@ -112,9 +108,10 @@ export async function POST(req) {
       
       // Education details - sanitized
       currentEducationLevel: data.currentEducationLevel.trim(),
+      stream: data.stream ? data.stream.trim() : '',
       boardInstitution: data.boardInstitution.trim(),
       mediumOfInstruction: data.mediumOfInstruction.trim(),
-      expectedResult: data.expectedResult.trim(),
+      expectedResult: data.expectedResult ? data.expectedResult.trim() : '',
       
       // Academic self-report - validated arrays
       favouriteSubjects: validFavSubjects,
