@@ -1,7 +1,20 @@
 "use client";
 import { MessageCircle } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function WhatsAppButton() {
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setHidden(document.body.classList.contains('popup-open'));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
+
+  if (hidden) return null;
+
   return (
     <a
       href="https://wa.me/923356960094?text=Hi%20I%20want%20to%20know%20more%20about%20your%20services"

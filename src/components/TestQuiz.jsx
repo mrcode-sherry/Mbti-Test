@@ -90,11 +90,15 @@ const TestQuiz = () => {
         counts[ans.dimension]++;
       }
     });
+    const pick = (a, b, letterA, letterB) => {
+      if (counts[a] === counts[b]) return 'X';
+      return counts[a] > counts[b] ? letterA : letterB;
+    };
     return (
-      (counts.E >= counts.I ? 'E' : 'I') +
-      (counts.S >= counts.N ? 'S' : 'N') +
-      (counts.T >= counts.F ? 'T' : 'F') +
-      (counts.J >= counts.P ? 'J' : 'P')
+      pick('E', 'I', 'E', 'I') +
+      pick('S', 'N', 'S', 'N') +
+      pick('T', 'F', 'T', 'F') +
+      pick('J', 'P', 'J', 'P')
     );
   };
 
@@ -362,19 +366,21 @@ const TestQuiz = () => {
             : '4 Important Points Before Taking the personality Test'
           }
         </h1>
-        {checklist.map((item, idx) => (
-          <div
-            key={idx}
-            className={`flex items-start sm:items-center gap-2 text-green-700 font-medium ${
-              isUrdu ? 'flex-row-reverse text-right' : ''
-            }`}
-          >
-            <span className="w-5 h-5 flex items-center justify-center rounded-full border-2 border-green-700 flex-shrink-0">
-              ✓
-            </span>
-            <p className="text-sm sm:text-base">{item}</p>
-          </div>
-        ))}
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+          {checklist.map((item, idx) => (
+            <div
+              key={idx}
+              className={`flex items-start sm:items-center gap-2 text-green-700 font-medium ${
+                isUrdu ? 'flex-row-reverse text-right' : ''
+              }`}
+            >
+              <span className="w-5 h-5 flex items-center justify-center rounded-full border-2 border-green-700 flex-shrink-0">
+                ✓
+              </span>
+              <p className="text-sm sm:text-base">{item}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Category Header - show when new category starts */}

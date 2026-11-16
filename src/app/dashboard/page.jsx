@@ -2,6 +2,21 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+// Helper: replace letter with X where percentages are equal
+const getDisplayType = (type, percs) => {
+  if (!type || !percs) return type;
+  const pairs = [
+    { idx: 0, a: 'E', b: 'I' },
+    { idx: 1, a: 'S', b: 'N' },
+    { idx: 2, a: 'T', b: 'F' },
+    { idx: 3, a: 'J', b: 'P' },
+  ];
+  return pairs.map(({ idx, a, b }) => {
+    if (percs[a] === percs[b]) return 'X';
+    return type[idx] || (percs[a] > percs[b] ? a : b);
+  }).join('');
+};
+
 // ✅ Modal with outside click + hover cross
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -1075,6 +1090,45 @@ const DashboardPage = () => {
                   <b>Budget Range:</b> {selectedTest.budgetRange}
                 </p>
               )}
+
+              {/* ── New fields ── */}
+              {selectedTest.fatherName && (
+                <p className="text-black"><b>Father's Name:</b> {selectedTest.fatherName}</p>
+              )}
+              {selectedTest.age && (
+                <p className="text-black"><b>Age:</b> {selectedTest.age}</p>
+              )}
+              {selectedTest.currentEducationLevel && (
+                <p className="text-black"><b>Class / Education Level:</b> {selectedTest.currentEducationLevel}</p>
+              )}
+              {selectedTest.stream && (
+                <p className="text-black"><b>Stream:</b> {selectedTest.stream}</p>
+              )}
+              {selectedTest.boardInstitution && (
+                <p className="text-black"><b>Board / Institution:</b> {selectedTest.boardInstitution}</p>
+              )}
+              {selectedTest.mediumOfInstruction && (
+                <p className="text-black"><b>Medium of Instruction:</b> {selectedTest.mediumOfInstruction}</p>
+              )}
+              {selectedTest.extraCurricularActivities && selectedTest.extraCurricularActivities.length > 0 && (
+                <p className="text-black"><b>Extra-Curricular Activities:</b> {selectedTest.extraCurricularActivities.join(", ")}</p>
+              )}
+              {selectedTest.fatherOccupation && (
+                <p className="text-black"><b>Father's Occupation:</b> {selectedTest.fatherOccupation}</p>
+              )}
+              {selectedTest.motherOccupation && (
+                <p className="text-black"><b>Mother's Occupation:</b> {selectedTest.motherOccupation}</p>
+              )}
+              {selectedTest.socioeconomicBracket && (
+                <p className="text-black"><b>Socioeconomic Bracket:</b> {selectedTest.socioeconomicBracket}</p>
+              )}
+              {selectedTest.careerPreferences && (
+                <p className="text-black"><b>Career Preferences:</b> {selectedTest.careerPreferences}</p>
+              )}
+              {selectedTest.testCategory && (
+                <p className="text-black"><b>Test Category:</b> {selectedTest.testCategory}</p>
+              )}
+
               <p className="text-xs text-gray-500">
                 Submitted {new Date(selectedTest.createdAt).toLocaleString()}
               </p>
@@ -1082,7 +1136,20 @@ const DashboardPage = () => {
               {/* MBTI Result & Percentages */}
               {selectedTest.mbtiResult && (
                 <div className="mt-4 pt-4 border-t border-gray-200">
-                  <p className="font-semibold text-[#14442E] mb-3">🧠 MBTI Result: <span className="text-2xl font-bold">{selectedTest.mbtiResult}</span></p>
+                  <p className="font-semibold text-[#14442E] mb-3">🧠 MBTI Result:{' '}
+                    <span className="text-2xl font-bold">
+                      {getDisplayType(selectedTest.mbtiResult, selectedTest.mbtiPercentages)?.split('').map((letter, i) => (
+                        <span key={i} className={letter === 'X' ? 'text-orange-500' : ''}>
+                          {letter}
+                        </span>
+                      ))}
+                    </span>
+                    {getDisplayType(selectedTest.mbtiResult, selectedTest.mbtiPercentages)?.includes('X') && (
+                      <span className="ml-2 text-sm font-normal text-gray-500">
+                        (X = equal score)
+                      </span>
+                    )}
+                  </p>
                   {selectedTest.mbtiPercentages && (
                     <div className="space-y-2">
                       {[
