@@ -60,6 +60,22 @@ const FutureFitPage = () => {
     }
   };
 
+  // Scroll to pricing section if navigated from Compare Plans
+  useEffect(() => {
+    if (sessionStorage.getItem('scrollToPricing') === 'true') {
+      sessionStorage.removeItem('scrollToPricing');
+      const tryScroll = (attempts = 0) => {
+        const pricingSection = document.querySelector('[data-pricing-section]');
+        if (pricingSection) {
+          pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (attempts < 10) {
+          setTimeout(() => tryScroll(attempts + 1), 300);
+        }
+      };
+      setTimeout(() => tryScroll(), 500);
+    }
+  }, []);
+
   // Load user from localStorage
   useEffect(() => {
     const savedUser = localStorage.getItem('user');

@@ -643,7 +643,7 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/90 flex justify-center items-center z-50 p-2">
+    <div className="fixed inset-0 bg-black/90 flex justify-center items-center z-50 p-2 sm:p-4">
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-7xl h-[95vh] overflow-hidden flex flex-col">
         {/* Header */}
         <div className="bg-gradient-to-r from-[#14442E] to-[#0f3a26] text-white p-6">
@@ -662,8 +662,33 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
         </div>
 
         {/* Tab Navigation */}
-        <div className="bg-gray-50 px-6 py-4 border-b">
-          <div className="grid grid-cols-7 gap-2">
+        <div className="bg-gray-50 px-4 py-3 border-b">
+          {/* Mobile: show only current step */}
+          <div className="md:hidden flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-[#14442E] text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
+                {currentTab + 1}
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 leading-none mb-0.5">Step {currentTab + 1} of {tabs.length}</p>
+                <p className="text-sm font-semibold text-[#14442E] leading-none">{tabs[currentTab]}</p>
+              </div>
+            </div>
+            {/* Mini progress dots */}
+            <div className="flex gap-1">
+              {tabs.map((_, i) => (
+                <div
+                  key={i}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === currentTab ? 'w-5 bg-[#14442E]' : i < currentTab ? 'w-2 bg-green-400' : 'w-2 bg-gray-200'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop: grid */}
+          <div className="hidden md:grid grid-cols-7 gap-2">
             {tabs.map((tab, index) => (
               <button
                 key={index}
@@ -713,21 +738,21 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
         </div>
 
         {/* Footer Navigation */}
-        <div className="bg-gray-50 px-6 py-4 border-t flex justify-between items-center">
+        <div className="bg-gray-50 px-4 py-3 border-t flex justify-between items-center gap-2">
           <button
             type="button"
             onClick={handlePrevious}
             disabled={currentTab === 0}
-            className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+            className={`px-4 py-2 rounded-lg font-medium transition-colors text-sm ${
               currentTab === 0
                 ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 : 'bg-gray-300 text-gray-700 hover:bg-gray-400 cursor-pointer'
             }`}
           >
-            ← Previous
+            ← Prev
           </button>
 
-          <div className="text-sm text-gray-500">
+          <div className="text-xs text-gray-500 text-center">
             Step {currentTab + 1} of {tabs.length}
           </div>
 
@@ -736,19 +761,19 @@ const TestPopupForm = ({ isOpen, onClose, onSubmit }) => {
               type="button"
               onClick={handleSubmit}
               disabled={loading || !validateCurrentTab()}
-              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-colors text-sm ${
                 loading || !validateCurrentTab()
                   ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   : 'bg-[#14442E] text-white hover:bg-[#0f3a26] cursor-pointer'
               }`}
             >
-              {loading ? 'Submitting...' : 'Submit & Proceed'}
+              {loading ? 'Submitting...' : 'Submit →'}
             </button>
           ) : (
             <button
               type="button"
               onClick={handleNext}
-              className="px-6 py-2 bg-[#14442E] text-white rounded-lg font-medium hover:bg-[#0f3a26] transition-colors cursor-pointer"
+              className="px-4 py-2 bg-[#14442E] text-white rounded-lg font-medium hover:bg-[#0f3a26] transition-colors cursor-pointer text-sm"
             >
               Next →
             </button>

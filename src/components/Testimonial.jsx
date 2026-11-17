@@ -13,19 +13,19 @@ const testimonials = [
     name: 'Ali Raza',
     role: 'Student – Lahore',
     image: '/testimonial/user.jpg',
-    message: 'Golden Future really opened my eyes. Before, I was confused about what to study after matric. Now I feel clear about my strengths and future career path. Highly recommended!',
+    message: 'Premium RAAH really opened my eyes. Before, I was confused about what to study after matric. Now I feel clear about my strengths and future career path. Highly recommended!',
   },
   {
     name: 'Fatima Mariam',
     role: 'Student – Faisalabad',
     image: '/testimonial/user.jpg',
-    message: 'I used to feel lost about my future. Golden Future explained my strengths and careers in such simple words. It feels like a teacher who truly understands students.',
+    message: 'I used to feel lost about my future. Premium RAAH explained my strengths and careers in such simple words. It feels like a teacher who truly understands students.',
   },
   {
     name: 'Ayesha Khan',
     role: 'StudentParent – Islamabad',
     image: '/testimonial/user.jpg',
-    message: 'As a mother, I always worried about my daughter’s future. Golden Future gave her direction with love and care. Now she is motivated and knows what she wants.',
+    message: 'As a mother, I always worried about my daughter’s future. Premium RAAH gave her direction with love and care. Now she is motivated and knows what she wants.',
   },
 ];
 
