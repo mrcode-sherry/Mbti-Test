@@ -141,18 +141,11 @@ export default function RaahForSchoolsPage() {
                 <span className="text-sm font-medium text-[#05503C]">RAAH for Schools</span>
               </div>
 
-              <h1 className="text-4xl md:text-6xl font-bold text-[#05503C] mb-4 leading-tight">
+              <h1 className="text-4xl md:text-6xl font-bold text-[#05503C] mb-6 leading-tight">
                 RAAH
               </h1>
-              <p className="text-xl text-gray-600 mb-6 leading-relaxed">
-                Roadmap for Aspirations, Ambitions &amp; Horizons
-              </p>
-
-              <p className="text-base md:text-lg font-bold text-gray-800 leading-snug mb-1">
-                Every year, thousands of students choose their future blindly.
-              </p>
-              <p className="text-sm md:text-base text-gray-500 italic mb-8">
-                Will your school guide them — or let them guess?
+              <p className="text-xl text-gray-600 mb-10 leading-relaxed">
+                Roadmap for Aspirations, Ambitions &amp; Horizons — Every year, thousands of students choose their future blindly. Will your school guide them or let them guess?
               </p>
 
               {/* Feature Pills */}
@@ -184,12 +177,14 @@ export default function RaahForSchoolsPage() {
               </div>
 
               {/* CTA button */}
-              <button
-                onClick={scrollToForm}
-                className="inline-flex items-center gap-3 bg-gradient-to-r from-[#05503C] to-[#044029] text-white font-bold px-10 py-5 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-lg"
-              >
-                Partner with RAAH Today →
-              </button>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  onClick={scrollToForm}
+                  className="bg-gradient-to-r from-[#05503C] to-[#044029] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl"
+                >
+                  Partner with RAAH Today
+                </button>
+              </div>
             </div>
 
           </div>

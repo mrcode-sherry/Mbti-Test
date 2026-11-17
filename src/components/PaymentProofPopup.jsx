@@ -66,7 +66,7 @@ const PaymentProofPopup = ({ isOpen, onClose, userEmail, onProofSubmitted }) => 
     <>
       {/* Main proof popup */}
       <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-        <div className="bg-white rounded-xl shadow-lg w-full max-w-md p-6 relative">
+        <div className="bg-white rounded-xl shadow-lg w-full max-w-md mx-4 p-6 relative">
           {/* Close */}
           <button
             onClick={onClose}

@@ -6,9 +6,13 @@ export default function WhatsAppButton() {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setHidden(document.body.classList.contains('popup-open'));
-    });
+    const update = () => {
+      setHidden(
+        document.body.classList.contains('popup-open') ||
+        document.body.classList.contains('mobile-menu-open')
+      );
+    };
+    const observer = new MutationObserver(update);
     observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     return () => observer.disconnect();
   }, []);

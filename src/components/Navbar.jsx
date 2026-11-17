@@ -20,7 +20,15 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const raahRef = useRef(null);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => {
+    const next = !isOpen;
+    setIsOpen(next);
+    if (next) {
+      document.body.classList.add('mobile-menu-open');
+    } else {
+      document.body.classList.remove('mobile-menu-open');
+    }
+  };
 
   // Active link helper
   const navLink = (href) => {
@@ -43,7 +51,10 @@ const Navbar = () => {
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.body.classList.remove('mobile-menu-open');
+    };
   }, []);
 
   // ✅ Load user + fetch proof + fetch approval + fetch test submission
@@ -175,7 +186,7 @@ const Navbar = () => {
       {/* ✅ Combined Status Bar + Navbar - No gap */}
       <div className="sticky top-0 z-50">
         {/* Status Bar */}
-        {user && pathname !== '/result' && pathname !== '/dashboard' && pathname !== '/student-dashboard' && pathname !== '/admin' && (
+        {user && pathname !== '/result' && pathname !== '/dashboard' && pathname !== '/student-dashboard' && pathname !== '/admin' && pathname !== '/start_test' && (
           <div className="bg-gradient-to-r from-[#FDCA00] to-[#f0c000] text-[#14442E] shadow-lg">
             <div className="container mx-auto px-4 py-5">
               <div className="flex items-center justify-center text-center">
@@ -437,7 +448,7 @@ const Navbar = () => {
 
         {/* Mobile Dropdown */}
         {isOpen && (
-          <div className="md:hidden bg-white px-8 pb-4">
+          <div className="md:hidden bg-white px-8 pb-4 overflow-y-auto max-h-[80vh]">
             <ul className="flex flex-col gap-2 font-medium">
               {/* Home */}
               <li>

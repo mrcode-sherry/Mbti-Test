@@ -185,7 +185,7 @@ const CategoryPage = ({
       </section>
 
       {/* Pricing Section - Inserted after hero */}
-      {pricingSection}
+      {/* moved to after How It Works */}
 
       {/* Status Section - Inserted after pricing */}
       {statusSection}
@@ -384,6 +384,9 @@ const CategoryPage = ({
           </div>
         </div>
       </section>
+
+      {/* Pricing Section - Moved here after How It Works */}
+      {pricingSection}
 
       {/* FAQs Section */}
       <section className="py-12 px-4 md:px-16 relative">

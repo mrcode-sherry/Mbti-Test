@@ -16,6 +16,7 @@ const TestQuiz = () => {
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showLanguageSelection, setShowLanguageSelection] = useState(true); // Show language selection first
+  const [encouragement, setEncouragement] = useState(null); // encouragement toast message
   const router = useRouter();
 
   useEffect(() => {
@@ -132,10 +133,28 @@ const TestQuiz = () => {
 
   // TTS function removed
 
+  const encouragementMessages = [
+    { emoji: '🌟', text: 'You\'re doing great! Keep it up!' },
+    { emoji: '💪', text: 'Halfway there — you\'re on a roll!' },
+    { emoji: '🎯', text: 'Almost done! Stay focused, you\'ve got this!' },
+  ];
+
+  const showEncouragementToast = (index) => {
+    const msg = encouragementMessages[index] || encouragementMessages[0];
+    setEncouragement(msg);
+    setTimeout(() => setEncouragement(null), 3000);
+  };
+
   const handleNext = async () => {
     const questions = getQuestions();
     if (currentIndex + 1 < questions.length) {
-      setCurrentIndex(currentIndex + 1);
+      // Show encouragement after every 12 questions (at index 11, 23, 35)
+      const nextIndex = currentIndex + 1;
+      if (nextIndex % 12 === 0) {
+        const msgIndex = Math.floor(nextIndex / 12) - 1;
+        showEncouragementToast(Math.min(msgIndex, encouragementMessages.length - 1));
+      }
+      setCurrentIndex(nextIndex);
       setSelectedOptionIndex(null);
     } else {      setLoading(true);
       try {
@@ -438,6 +457,14 @@ const TestQuiz = () => {
               ? (language === 'ur' ? 'اگلا' : language === 'roman' ? 'Agla' : 'Next')
               : (language === 'ur' ? 'ختم' : language === 'roman' ? 'Khatam' : 'Finish')}
           </button>
+        </div>
+      )}
+
+      {/* Encouragement toast */}
+      {encouragement && (
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-[#14442E] text-white px-6 py-4 rounded-2xl shadow-2xl animate-bounce">
+          <span className="text-2xl">{encouragement.emoji}</span>
+          <p className="font-semibold text-sm sm:text-base">{encouragement.text}</p>
         </div>
       )}
     </div>
